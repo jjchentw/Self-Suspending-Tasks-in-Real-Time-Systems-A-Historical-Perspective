@@ -6,5 +6,6 @@ $C_i$ denotes the upper bound on total execution time of each job of $\tau_i$,
 and $S_i$ denotes the upper bound on total suspension time of each job of $\tau_i$. The multi-segment sporadic task suspending model characterizes the execution of a job of a task $\tau_i$ by  specifying its computation segments and suspension intervals are specified as an array
 $(C_{i}^0,S_{i}^0,C_{i}^1,S_{i}^1,...,S_{i}^{m_i-2},C_{i}^{m_i-1})$ composed of $m_i$ computation segments separated by $m_i-1$ suspension intervals. 
 
-From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self\hyp{}suspending systems without considering the juncture of I/O access or computation offloading. 
+From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems without considering the juncture of I/O access or computation offloading. 
 However, from the analysis perspective, such a  dynamic model leads to quite pessimistic results in terms of schedulability since the location of suspensions within a job is oblivious. Therefore, if the suspending patterns are well-defined and characterized with known suspending intervals, the multi-segment self-suspension task model is more appropriate.   
+  
