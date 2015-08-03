@@ -1,7 +1,7 @@
 Introduction_.tex
 Model.tex
-figures/eijkel2/default_figure.png
-formulas.tex
-LNCS_Online.tex
-
+Existing-Solutions.tex
+Hardness.tex
+Summary.tex
+  
   
