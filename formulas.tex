@@ -1,0 +1,78 @@
+\subsection{Formulas}
+
+
+Displayed equations or formulas are centered and set on a separate
+line (with an extra line or halfline space above and below). Displayed
+expressions should be numbered for reference. The numbers should be
+consecutive within each section or within the contribution,
+with numbers enclosed in parentheses and set on the right margin --
+which is the default if you use the \emph{equation} environment, e.g.,
+
+\begin{equation}
+  \psi (u) = \int_{o}^{T} \left[\frac{1}{2}
+  \left(\Lambda_{o}^{-1} u,u\right) + N^{\ast} (-u)\right] dt \;  .
+\end{equation}
+
+Equations should be punctuated in the same way as ordinary
+text but with a small space before the end punctuation mark.
+
+
+\subsection{Footnotes}
+
+
+The superscript numeral used to refer to a footnote appears in the text
+either directly after the word to be discussed or -- in relation to a
+phrase or a sentence -- following the punctuation sign (comma,
+semicolon, or period). Footnotes should appear at the bottom of
+the
+normal text area, with a line of about 2~cm set
+immediately above them.\footnote{The footnote numeral is set flush left
+and the text follows with the usual word spacing.}
+
+
+\subsection{Program Code}
+
+
+Program listings or program commands in the text are normally set in
+typewriter font, e.g., CMTT10 or Courier.
+
+{\it Example of a Computer Program}
+\begin{verbatim}
+program Inflation (Output)
+  {Assuming annual inflation rates of 7%, 8%, and 10%,...
+   years};
+   const
+     MaxYears = 10;
+   var
+     Year: 0..MaxYears;
+     Factor1, Factor2, Factor3: Real;
+   begin
+     Year := 0;
+     Factor1 := 1.0; Factor2 := 1.0; Factor3 := 1.0;
+     WriteLn('Year  7% 8% 10%'); WriteLn;
+     repeat
+       Year := Year + 1;
+       Factor1 := Factor1 * 1.07;
+       Factor2 := Factor2 * 1.08;
+       Factor3 := Factor3 * 1.10;
+       WriteLn(Year:5,Factor1:7:3,Factor2:7:3,Factor3:7:3)
+     until Year = MaxYears
+end.
+\end{verbatim}
+%
+\noindent
+{\small (Example from Jensen K., Wirth N. (1991) Pascal user manual and
+report. Springer, New York)}
+
+
+\subsection{Citations}
+For citations in the text please use
+\LaTeX 's \verb|\cite| mechanism.
+
+
+\subsection{Page Numbering and Running Heads}
+
+
+There is no need to include page numbers. If your paper title is too
+long to serve as a running head, it will be shortened. Your suggestion
+as to how to shorten it would be most welcome.
