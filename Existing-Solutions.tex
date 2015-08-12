@@ -7,7 +7,7 @@ This section reviews existing solutions for scheduling and analyzing the schedul
 
 For self-suspending task systems, while executing, a job may suspend itself. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze the schedulability of the task systems. There are some common strategies to characterize and quantify the impact due to self-suspensions:
 \begin{itemize}
-\item In static-priority scheduling, we can convert the higher-priority self-suspending tasks into equivalent sporadic real-time tasks: When we are analyzing the schedulability of a task $\tau_k$, we can convert the higher-priority self-suspending tasks as sporadic tasks by treating the suspension as computation. That is, a higher-priority task $\tau_i$ has now worst-case execution time $C_i+S_i$. This simplifies the analysis. After converting, we only have one self-suspending task as the lowest-priority task in the system. For example, the analyses in \cite{LR:rtas10,ecrts15nelissen} are in this category.
+\item In static-priority scheduling, we can convert the higher-priority self-suspending tasks into equivalent sporadic real-time tasks: When we are analyzing the schedulability of a task $\tau_k$, we can convert the higher-priority self-suspending tasks as sporadic tasks by treating the suspension as computation. That is, a higher-priority task $\tau_i$ (other than task $\tau_k$) has now worst-case execution time $C_i+S_i$. This simplifies the analysis. After converting, we only have one self-suspending task as the lowest-priority task in the system. For example, the analyses in \cite{LR:rtas10,ecrts15nelissen} are in this category.
 \end{itemize}
 
 
@@ -16,6 +16,7 @@ For self-suspending task systems, while executing, a job may suspend itself. Whi
 \subsubsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
 \subsubsection{Incorrect Quantifications of Jitter}
 \subsection{Rule of Thumb When Considering Self-Suspending Systems}
+  
   
   
   
