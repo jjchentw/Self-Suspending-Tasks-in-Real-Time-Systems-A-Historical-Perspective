@@ -1,11 +1,20 @@
 \section{Existing Solutions of Self-Suspending Tasks}
 
+This section reviews existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. Unfortunately, some of these concepts are incorrect. We will provide concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb when considering self-suspending task systems. 
+
+
 \subsection{Common Strategies}
+
+For self-suspending task systems, while executing, a job may suspend itself. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze the schedulability of the task systems. There are strategies to characterize and quantify the impact due to self-suspensions:
+
+
+
 \subsection{Misconceptions in Some Existing Results}
 \subsubsection{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}
 \subsubsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
 \subsubsection{Incorrect Quantifications of Jitter}
 \subsection{Rule of Thumb When Considering Self-Suspending Systems}
+  
   
   
   
