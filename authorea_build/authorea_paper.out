@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.0.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.0.2}{Self-Suspending Sporadic Real-Time Task Models}{}% 2
+\BOOKMARK [2][-]{subsection.0.2.1}{Examples of Dynamic Self-Suspension Model}{section.0.2}% 3
+\BOOKMARK [2][-]{subsection.0.2.2}{Examples of Segmented Self-Suspension Model}{section.0.2}% 4
+\BOOKMARK [1][-]{section.0.3}{Existing Solutions of Self-Suspending Tasks}{}% 5
+\BOOKMARK [2][-]{subsection.0.3.1}{Common Strategies}{section.0.3}% 6
+\BOOKMARK [2][-]{subsection.0.3.2}{Misconceptions in Some Existing Results}{section.0.3}% 7
+\BOOKMARK [3][-]{section*.1}{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}{subsection.0.3.2}% 8
+\BOOKMARK [3][-]{section*.2}{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}{subsection.0.3.2}% 9
+\BOOKMARK [3][-]{section*.3}{Incorrect Quantifications of Jitter}{subsection.0.3.2}% 10
+\BOOKMARK [2][-]{subsection.0.3.3}{Rule of Thumb When Considering Self-Suspending Systems}{section.0.3}% 11
+\BOOKMARK [1][-]{section.0.4}{Self-Suspending Tasks in Multiprocessor Synchronizations}{}% 12
+\BOOKMARK [1][-]{section.0.5}{Hardness Review of Self-Suspending Task Models}{}% 13
+\BOOKMARK [1][-]{section.0.6}{Short Summary of the Errors and Mistakes in the State of the Art}{}% 14

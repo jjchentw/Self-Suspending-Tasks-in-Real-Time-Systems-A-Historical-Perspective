@@ -1,0 +1,38 @@
+;; RefTeX parse info file
+;; File: /Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex
+;; User: jjchen (Jian-Jia Chen)
+
+(set reftex-docstruct-symbol '(
+
+
+(xr nil "\\\\\\\\\\\\")
+
+(index-tags)
+
+(is-multi nil)
+
+(bibview-cache)
+
+(master-dir . "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/")
+
+(label-numbers)
+
+(bof "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex")
+
+(toc "toc" "    1 Existing Solutions of Self-Suspending Tasks" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 2 "1" "\\section{Existing Solutions of Self-Suspending Tasks}" 1)
+
+(toc "toc" "      1.1 Common Strategies" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 3 "1.1" "\\subsection{Common Strategies}" 546)
+
+(toc "toc" "      1.2 Misconceptions in Some Existing Results" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 3 "1.2" "\\subsection{Misconceptions in Some Existing Results}" 4392)
+
+(toc "toc" "        1.2.1 Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 4 "1.2.1" "\\subsubsection{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}" 4445)
+
+(toc "toc" "        1.2.2 Incorrect Quantifications of Additional Interferences due to Carry-In Jobs" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 4 "1.2.2" "\\subsubsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}" 4537)
+
+(toc "toc" "        1.2.3 Incorrect Quantifications of Jitter" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 4 "1.2.3" "\\subsubsection{Incorrect Quantifications of Jitter}" 4628)
+
+(toc "toc" "      1.3 Rule of Thumb When Considering Self-Suspending Systems" "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex" nil 3 "1.3" "\\subsection{Rule of Thumb When Considering Self-Suspending Systems}" 4680)
+
+(eof "/Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/Existing-Solutions.tex")
+))
+

@@ -1,0 +1,133 @@
+\begin{thebibliography}{10}
+
+\bibitem{ECRTS-AudsleyB04}
+N.~C. Audsley and K.~Bletsas.
+\newblock Fixed priority timing analysis of real-time systems with limited
+  parallelism.
+\newblock In {\em 16th Euromicro Conference on Real-Time Systems {(ECRTS}
+  2004), 30 June - 2 July 1004, Catania, Italy, Proceedings}, pages 231--238,
+  2004.
+
+\bibitem{RTAS-AudsleyB04}
+N.~C. Audsley and K.~Bletsas.
+\newblock Realistic analysis of limited parallel software / hardware
+  implementations.
+\newblock In {\em 10th {IEEE} Real-Time and Embedded Technology and
+  Applications Symposium {(RTAS} 2004), 25-28 May 2004, Toronto, Canada}, pages
+  388--395, 2004.
+
+\bibitem{RTCSA-BletsasA05}
+K.~Bletsas and N.~C. Audsley.
+\newblock Extended analysis with reduced pessimism for systems with limited
+  parallelism.
+\newblock In {\em 11th {IEEE} International Conference on Embedded and
+  Real-Time Computing Systems and Applications {(RTCSA} 2005), 17-19 August
+  2005, Hong Kong, China}, pages 525--531, 2005.
+
+\bibitem{RTSS-ChenL14}
+J.~Chen and C.~Liu.
+\newblock Fixed-relative-deadline scheduling of hard real-time tasks with
+  self-suspensions.
+\newblock In {\em Proceedings of the {IEEE} 35th {IEEE} Real-Time Systems
+  Symposium, {RTSS} 2014, Rome, Italy, December 2-5, 2014}, pages 149--160,
+  2014.
+
+\bibitem{ecrts15nelissen}
+G.~R. Geoffrey~Nelissen, José~Fonseca and V.~Nelis.
+\newblock {Timing Analysis of Fixed Priority Self-Suspending Sporadic Tasks}.
+\newblock In {\em Euromicro Conference on Real-Time Systems (ECRTS)}, 2015.
+
+\bibitem{Huang:multiseg}
+W.-H. Huang and J.-J. Chen.
+\newblock Schedulability and priority assignment for multi-segment
+  self-suspending real-time tasks under fixed-priority scheduling.
+\newblock Technical report, Dortmund, Germany, 2015.
+
+\bibitem{huangpass:dac2015}
+W.-H. Hung, J.-J. Chen, H.~Zhou, and C.~Liu.
+\newblock {PASS}: Priority assignment of real-time tasks with dynamic
+  suspending behavior under fixed-priority scheduling.
+\newblock In {\em Design Automation Conference ({DAC})}, 2015.
+
+\bibitem{Kang:rtss07}
+W.~Kang, S.~Son, J.~Stankovic, and M.~Amirijoo.
+\newblock {I/O-Aware Deadline Miss Ratio Management in Real-Time Embedded
+  Databases}.
+\newblock In {\em Proc. of the 28th IEEE Real-Time Systems Symp. (RTSS)}, pages
+  {277--287}, 2007.
+
+\bibitem{Kato_2011}
+S.~Kato, K.~Lakshmanan, A.~Kumar, M.~Kelkar, Y.~Ishikawa, and R.~Rajkumar.
+\newblock {{RGEM}: A Responsive {GPGPU} Execution Model for Runtime Engines}.
+\newblock In {\em 2011 {IEEE} 32nd Real-Time Systems Symposium}. Institute of
+  Electrical {\&} Electronics Engineers ({IEEE}), nov 2011.
+
+\bibitem{RTCSA-KimCPKH95}
+I.~Kim, K.~Choi, S.~Park, D.~Kim, and M.~Hong.
+\newblock Real-time scheduling of tasks that contain the external blocking
+  intervals.
+\newblock In {\em {RTCSA}}, pages 54--59, 1995.
+
+\bibitem{RTSS-KimANR13}
+J.~Kim, B.~Andersson, D.~de~Niz, and R.~Rajkumar.
+\newblock Segment-fixed priority scheduling for self-suspending real-time
+  tasks.
+\newblock In {\em Proceedings of the {IEEE} 34th Real-Time Systems Symposium,
+  {RTSS} 2013, Vancouver, BC, Canada, December 3-6, 2013}, pages 246--257,
+  2013.
+
+\bibitem{LR:rtas10}
+K.~Lakshmanan and R.~Rajkumar.
+\newblock Scheduling self-suspend- ing real-time tasks with rate-monotonic
+  priorities.
+\newblock In {\em Proceedings of the 16th IEEE Real-Time and Embedded
+  Technology and Applications Symposium}, pages 3--12, 2010.
+
+\bibitem{RTAS-LakshmananR10}
+K.~Lakshmanan and R.~Rajkumar.
+\newblock Scheduling self-suspending real-time tasks with rate-monotonic
+  priorities.
+\newblock In {\em 16th {IEEE} Real-Time and Embedded Technology and
+  Applications Symposium, {RTAS} 2010, Stockholm, Sweden, April 12-15, 2010},
+  pages 3--12, 2010.
+
+\bibitem{LiuChen:rtss2014}
+C.~Liu and J.~Chen.
+\newblock Bursty-interference analysis techniques for analyzing complex
+  real-time task models.
+\newblock In {\em Real-Time Systems Symposium (RTSS)}, pages 173--183, 2014.
+
+\bibitem{Liu:2000:RS:518501}
+J.~W. S.~W. Liu.
+\newblock {\em {Real-Time Systems}}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 1st edition, 2000.
+
+\bibitem{Liu_2014}
+W.~Liu, J.-J. Chen, A.~Toma, T.-W. Kuo, and Q.~Deng.
+\newblock {Computation Offloading by Using Timing Unreliable Components in
+  Real-Time Systems}.
+\newblock In {\em Proceedings of the The 51st Annual Design Automation
+  Conference on Design Automation Conference - {DAC} {\textquotesingle}14}.
+  Association for Computing Machinery ({ACM}), 2014.
+
+\bibitem{Raj:suspension1991}
+R.~Rajkumar.
+\newblock {Dealing with Suspending Periodic Tasks.}
+\newblock Technical report, IBM T. J. Watson Research Center, 1991.
+
+\bibitem{Ridouard_2004}
+F.~Ridouard, P.~Richard, and F.~Cottet.
+\newblock {Negative Results for Scheduling Independent Hard Real-Time Tasks
+  with Self-Suspensions}.
+\newblock In {\em 25th {IEEE} International Real-Time Systems Symposium}.
+  Institute of Electrical {\&} Electronics Engineers ({IEEE}), 2004.
+
+\bibitem{RTSS-SpruntLS88}
+B.~Sprunt, J.~P. Lehoczky, and L.~Sha.
+\newblock Exploiting unused periodic time for aperiodic service using the
+  extended priority exchange algorithm.
+\newblock In {\em Proceedings of the 9th {IEEE} Real-Time Systems Symposium
+  {(RTSS} '88), December 6-8, 1988, Huntsville, Alabama, {USA}}, pages
+  251--258, 1988.
+
+\end{thebibliography}
