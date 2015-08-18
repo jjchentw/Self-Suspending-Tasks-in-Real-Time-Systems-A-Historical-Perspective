@@ -1,13 +1,17 @@
 \section{Self-Suspending Sporadic Real-Time Task Models}
   
 Self-suspending tasks can be classified into two models: \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models. 
-The dynamic self-suspension sporadic task model characterizes each task as a $4$-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum inter-arrival time of $\tau_i$, each job of $\tau_i$ has a relative deadline $D_i$,
+The dynamic self-suspension sporadic task model characterizes each
+task $\tau_i$ as a $4$-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum inter-arrival time (or period) of $\tau_i$, $D_i$ is the relative deadline,
 $C_i$ denotes the upper bound on total execution time of each job of $\tau_i$,
-and $S_i$ denotes the upper bound on total suspension time of each job of $\tau_i$. The multi-segment sporadic task suspending model characterizes the execution of a job of a task $\tau_i$ by  specifying its computation segments and suspension intervals are specified as an array
-$(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$ composed of $m_i$ computation segments separated by $m_i-1$ suspension intervals. 
+and $S_i$ denotes the upper bound on total suspension time of each job of $\tau_i$.  In addition to the above $4$-tuple, the segmented sporadic task model further 
+characterizes the computation segments and suspension intervals as an array
+$(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$, composed of $m_i$ computation segments separated by $m_i-1$ suspension intervals. 
 
-From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems without considering the juncture of I/O access or computation offloading. 
+From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems without considering the juncture of I/O access, computation offloading, or synchronization. 
 However, from the analysis perspective, such a  dynamic model leads to quite pessimistic results in terms of schedulability since the location of suspensions within a job is oblivious. Therefore, if the suspending patterns are well-defined and characterized with known suspending intervals, the multi-segment self-suspension task model is more appropriate.   
+
+\textit{definition of static-, dynamic-priority scheduling, schedulability, response time, worst-case response time, etc.}
 
 \subsection{Examples of Dynamic Self-Suspension Model} 
   \textit{different program paths}
