@@ -8,7 +8,8 @@
 \BOOKMARK [3][-]{section*.1}{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}{subsection.0.3.2}% 8
 \BOOKMARK [3][-]{section*.2}{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}{subsection.0.3.2}% 9
 \BOOKMARK [3][-]{section*.3}{Incorrect Quantifications of Jitter}{subsection.0.3.2}% 10
-\BOOKMARK [2][-]{subsection.0.3.3}{Rule of Thumb When Considering Self-Suspending Systems}{section.0.3}% 11
-\BOOKMARK [1][-]{section.0.4}{Self-Suspending Tasks in Multiprocessor Synchronizations}{}% 12
-\BOOKMARK [1][-]{section.0.5}{Hardness Review of Self-Suspending Task Models}{}% 13
-\BOOKMARK [1][-]{section.0.6}{Short Summary of the Errors and Mistakes in the State of the Art}{}% 14
+\BOOKMARK [3][-]{section*.4}{Incorrect Periodic Execution Enforcement}{subsection.0.3.2}% 11
+\BOOKMARK [2][-]{subsection.0.3.3}{Rule of Thumb When Considering Self-Suspending Systems}{section.0.3}% 12
+\BOOKMARK [1][-]{section.0.4}{Self-Suspending Tasks in Multiprocessor Synchronizations}{}% 13
+\BOOKMARK [1][-]{section.0.5}{Hardness Review of Self-Suspending Task Models}{}% 14
+\BOOKMARK [1][-]{section.0.6}{Short Summary of the Errors and Mistakes in the State of the Art}{}% 15

@@ -40,7 +40,10 @@ The benefit of the former approach is due to that it only pessimistically counts
 
 \item {\bf Enforce Periodic Behaviour by Release Time Enforcement:}   Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
   \begin{itemize}
-  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). (One can imagine that a sporadic server \cite{RTSS-SpruntLS88} with capacity $C_k$ and replenishment period $T_k$ is the reservation server to run task $\tau_k$, by handling the self-suspension.) The period enforcer algorithm shows that ``A deferrable task that is schedulable under its worst-case conditions is also schedulable under the period enforcer algorithm.'' Therefore, we can use the period enforcer algorithm to verify the schedulability of task $\tau_k$ under static-priority scheduling. However, since there is no schedulability test in \cite{Raj:suspension1991}, how to achieve this remains an open problem.
+  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). (One can imagine that a sporadic server \cite{RTSS-SpruntLS88} with capacity $C_k$ and replenishment period $T_k$ is the reservation server to run task $\tau_k$, by handling the self-suspension.) The period enforcer algorithm was shown the have a good property: ``A deferrable task that is schedulable under its worst-case conditions is also schedulable under the period enforcer algorithm.'' in Theorem 3.5 in \cite{Raj:suspension1991}. If the above statement is correct, then handling the execution of self-suspending sporadic tasks can be very easy and effective.
+ However, we will provide a counter example in Section~\ref{sec:wrong-periodic} for the above statement in Section \cite{Raj:suspension1991}.
+
+%Therefore, we can use the period enforcer algorithm to verify the schedulability of task $\tau_k$ under static-priority scheduling. However, since there is no schedulability test in \cite{Raj:suspension1991}, how to achieve this remains an open problem.
   \item {\it Set a constant offset to constrain the release time of a computation segment}: Suppose that the offset for the $j$-th computation segment of task $\tau_i$ is $\phi_i^j$. This means that the $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, in which $r_i$ is the arrival time of a job of task $\tau_i$. With the enforcement, each computation segment can be represented by a sporadic task with a period $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$. (Here, $\phi_{i,m_i+1}$ is set to $D_i$.) Such approaches have been presented in \cite{RTSS-KimANR13,LR:rtas10,RTSS-ChenL14}. The method in \cite{RTSS-ChenL14} is a simple greedy solution for implicit-deadline self-suspending task systems with at most one self-suspension interval per task. It assigns the phase $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative deadline for earliest-deadline-first scheduling. The method in \cite{RTSS-KimANR13} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13}. the schedulability test is not correct, and the proposed mixed-integer linear programming is unsafe for worst-case response time guarantees. The method in \cite{LR:rtas10} is XXX (left to Geoffrey...)
   \end{itemize}
 \item {\bf Special Cases with Good Observations:}
@@ -56,6 +59,10 @@ The benefit of the former approach is due to that it only pessimistically counts
 
 \subsubsection{Incorrect Quantifications of Jitter}
 \label{sec:wrong-jitter}
+
+
+\subsubsection{Incorrect Periodic Execution Enforcement}
+\label{sec:wrong-periodic}
 
 \subsection{Rule of Thumb When Considering Self-Suspending Systems}
   
