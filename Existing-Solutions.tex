@@ -46,7 +46,9 @@ With this schedulability test, it is easy to see that none of the three example 
 
 With the conversion, the fundamental problem is to analyze the worst-case response time of a self-suspending task $\tau_k$ as the lowest-priority task in the task system, when all the other higher priority tasks are ordinary sporadic real-time tasks. One simple strategy is to analyze the worst-case response time $R_k^j$ for each computation segment $C_k^j$. The schedulability test of task $\tau_k$ then is to simply verify whether $R_k^{m_k} + \sum_{j=1}^{m_k-1} R_k^j + S_k^j \leq D_k \leq T_k$. Let's use task set ${\bf T}_1$ as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ in ${\bf T}_1$ are both clearly $5$ by using standard the time demand analysis (TDA). Therefore, we know that the worst-case response time of task $\tau_3$ in ${\bf T}_1$ is at most $15$.
 
+The above test can be pretty pessimistic especially when the suspending time is short. Imagine that we change $S_3^1$ from $5$ to $1$. The above analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks and returns $11$ as the (upper bound of the) worst-case response time. For this new configuration, if we greedily convert the suspension into computation and use TDA analysis, we can conclude that the worst-case response time is at most $9$. 
 
+Therefore, it can be more precise to analyze the higher-priority interference more precisely.
 The problem with only one self-suspending task as the lowest-priority task has been specifically studied in \cite{LR:rtas10,ecrts15nelissen}. Unfortunately, the analysis in \cite{LR:rtas10} is flawed. We will explain the reasons in Section~\ref{sec:wrong-critical}.
 
 
