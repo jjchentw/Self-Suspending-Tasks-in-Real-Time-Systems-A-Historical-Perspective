@@ -48,7 +48,7 @@ With the conversion, the fundamental problem is to analyze the worst-case respon
 
 The above test can be pretty pessimistic especially when the suspending time is short. Imagine that we change $S_3^1$ from $5$ to $1$. The above analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks and returns $11$ as the (upper bound of the) worst-case response time. For this new configuration, if we greedily convert the suspension into computation and use TDA analysis, we can conclude that the worst-case response time is at most $9$. 
 
-Therefore, it can be more precise to analyze the higher-priority interference more precisely.
+Therefore, it can be more precise if the higher-priority interference is analyzed more precisely. But, it has to be done carefully.
 The problem with only one self-suspending task as the lowest-priority task has been specifically studied in \cite{LR:rtas10,ecrts15nelissen}. Unfortunately, the analysis in \cite{LR:rtas10} is flawed. We will explain the reasons in Section~\ref{sec:wrong-critical}.
 
 
