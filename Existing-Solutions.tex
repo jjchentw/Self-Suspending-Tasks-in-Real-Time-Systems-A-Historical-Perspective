@@ -2,8 +2,9 @@
 
 This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The general strategies are correct, but some of misconceptions were used in the literature to tackle the problem. We will provide concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
 
-To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in . 
-\begin{table}
+To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table 1 and Table 2. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples.  
+
+\begin{table} 
     \begin{tabular}{|c|c|c|c|c|}
         & $C_i$ &  $S_i$&  $D_i$ & $T_i$\\ 
         \hline
@@ -12,7 +13,6 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         $\tau_\gamma$ & 1 & 0  & ? & $\infty$ \\ 
         \hline
     \end{tabular} 
-    \label{tab:example-dynamic}
     \caption{Examples for dynamic self-suspending tasks}
 \end{table}
 
