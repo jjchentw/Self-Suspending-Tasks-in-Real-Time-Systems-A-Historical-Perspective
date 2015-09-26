@@ -2,8 +2,9 @@
 
 This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The general strategies are correct, but some of misconceptions were used in the literature to tackle the problem. We will provide concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
 
-To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks. 
+To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the tasks in Table . 
 \begin{table} 
+    \label{table-dynamic-example}
     \begin{tabular}{|c|c|c|c|c|}
         & $C_i$ &  $S_i$&  $D_i$ & $T_i$\\ 
         \hline
@@ -13,7 +14,6 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         \hline
     \end{tabular} 
     \caption{Examples for dynamic self-suspending tasks}
-    \label{table:dynamic-example}
 \end{table}
 
 \begin{table} 
@@ -27,7 +27,6 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         \hline
     \end{tabular} 
     \caption{Examples for dynamic segmented-suspending tasks}
-        \label{table:segmented-example}
 \end{table}
 
 
