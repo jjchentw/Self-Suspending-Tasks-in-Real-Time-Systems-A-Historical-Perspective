@@ -12,8 +12,21 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         $\tau_\gamma$ & 1 & 0  & ? & $\infty$ \\ 
         \hline
     \end{tabular} 
+    \caption{Examples for dynamic self-suspending tasks}
 \end{table}
 
+\begin{table} 
+    \begin{tabular}{|c|c|c|c|}
+        & $(C_i^1, S_i^2, C_i^2)$ &  $D_i$ & $T_i$\\ 
+        \hline
+        $\tau_1 & (2, 0, 0) &  5 & 5\\ 
+        $\tau_2$ &  (2, 0, 0) & 10 & 10 \\ 
+        $\tau_3$ & (1, 5, 1) & 15  & 15\\
+        $\tau_4$ & (3, 0, 0) & ? & $\infty$\\
+        \hline
+    \end{tabular} 
+    \caption{Examples for dynamic segmented-suspending tasks}
+\end{table}
 
 
 \subsection{Common Strategies}
