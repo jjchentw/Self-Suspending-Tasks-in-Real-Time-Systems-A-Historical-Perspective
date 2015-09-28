@@ -2,10 +2,12 @@
 
 This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The general strategies are correct, but some of misconceptions were used in the literature to tackle the problem. We will provide concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
 
-To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table 1 and Table 2. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under Rate-Monotonic scheduling. 
+To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table \ref{table:dynamic-example} and Table \ref{table:static-example}. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under Rate-Monotonic scheduling. 
 
 \begin{table} 
+\centering
     \begin{tabular}{|c|c|c|c|c|}
+ \hline
         & $C_i$ &  $S_i$&  $D_i$ & $T_i$\\ 
         \hline
         $\tau_\alpha$ & 1 & 0 &  2 & 2\\ 
@@ -14,10 +16,13 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         \hline
     \end{tabular} 
     \caption{Examples for dynamic self-suspending tasks}
+    \label{table:dynamic-example}
 \end{table}
 
 \begin{table} 
+\centering
     \begin{tabular}{|c|c|c|c|}
+ \hline
         & $(C_i^1, S_i^2, C_i^2)$ &  $D_i$ & $T_i$\\ 
         \hline
         $\tau_1$ & (2, 0, 0) &  5 & 5\\ 
@@ -27,6 +32,7 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         \hline
     \end{tabular} 
     \caption{Examples for dynamic segmented-suspending tasks}
+    \label{table:static-example}
 \end{table}
 
 
@@ -65,7 +71,7 @@ Let's use task set ${\bf T}_3$ to illustrate the above analysis in \cite[Page 16
 
 Another way to quantify the impact is to model the impact of the carry-in job by using the concept of \emph{jitter}. If the jitter of task $\tau_i$ to model self-suspension is $J_i$, then, the demand of task $\tau_i$ released from $t_i-T_i$ up to time $t+t_k$  (i.e., the demand that can be executed from $t_k$ to $t_k+t$) is $\ceiling{\frac{t+J_i}{T_i} } C_i$. A safe way it to set $J_i$ to $T_i$, which can be imagined as a pessimistic analysis by assuming that the carry-in job of task $\tau_i$ has execution time $C_i$ and the release time $t_i$ is $t_k$. A more precise way to quantify the jitter is to use the worst-case response time of a higher-priority task $\tau_i$. Therefore, we can set the jitter $J_i$ of task $\tau_i$ to $T_i-C_i$ \cite{huangpass:dac2015,Raj:suspension1991} or  $R_i-C_i$ \cite{huangpass:dac2015}, where $R_i$ is the worst-case response time of a higher-priority task $\tau_i$. 
 
-Let's use task set ${\bf T}_3$ to illustrate the above analysis in \cite[Page 164-165]{Liu:2000:RS:518501}. In this case, $J_\beta$ is $20-5=15$. So, the worst-case response time of task $\tau_\gamma$ is upper bounded by the minimum $t$ with $t=C_\gamma+\ceiling{\frac{t}{T_\alpha}} C_\alpha +\ceiling{\frac{t+15}{T_{\beta}}} C_\beta = 1+\ceiling{\frac{t}{2}} 1 +\ceiling{\frac{t+15}{20}} 5$. The above equality holds when $t=22$. Therefore, the worst-case response time of task $\tau_{\gamma}$ in ${\bf T}_3$ is upper bounded by $22$.
+Let's use task set ${\bf T}_3$ to illustrate the above analysis in \cite{huangpass:dac2015}. In this case, $J_\beta$ is $20-5=15$. So, the worst-case response time of task $\tau_\gamma$ is upper bounded by the minimum $t$ with $t=C_\gamma+\ceiling{\frac{t}{T_\alpha}} C_\alpha +\ceiling{\frac{t+15}{T_{\beta}}} C_\beta = 1+\ceiling{\frac{t}{2}} 1 +\ceiling{\frac{t+15}{20}} 5$. The above equality holds when $t=22$. Therefore, the worst-case response time of task $\tau_{\gamma}$ in ${\bf T}_3$ is upper bounded by $22$.
 
 
 There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} which quantify the jitter of task $\tau_i$ by setting $J_i$ to $S_i$. We will explain later in Section \ref{sec:wrong-jitter} why setting $J_i$ to $S_i$ is in general too optimistic. 
@@ -73,6 +79,9 @@ There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RT
 \item In the \emph{segmented self-suspending task model}, we can simply ignore the segmentation structure of computation segments and suspension intervals and directly apply all the strategies for dynamic self-suspending task models. However, the analysis will become pessimistic. This is due to the fact that the segmented-suspensions are not completely dynamic. The static suspension patterns result in also certain (more predictable) suspension patterns. However, characterizing the worst-case suspending patterns of the higher priority tasks to quantify the additional interference under segmented self-suspending task model is not easy. Similarly, one possibility is to characterize the worst-case interference in the carry-in job of a higher-priority task $\tau_i$ by analyzing its self-suspending pattern, as presented in \cite{Huang:multiseg}. Another possibility is to  quantify the interference by modeling it with a jitter term, as presented in \cite{RTCSA-BletsasA05}. We will explain later in Section~\ref{sec:wrong-carryin} why the quantification of the interference in \cite{RTCSA-BletsasA05} is incorrect. {\bf Michael's paper in RTSS1998}.
 \end{itemize}
 
+
+Let's use task set ${\bf T}_2$ to illustrate how the schedulability tests work. \jj{leave to Kevin and Michael.}
+ 
 \item {\bf Handle Self-Suspension Segments of the Task under Analysis:} Greedily converting the suspension time of a job of task $\tau_k$ under analysis into computation can also become very pessimistic if $S_k$ is much larger than $C_k$. However, the decision to convert a task $\tau_k$ has to be done carefully. Now, we can consider a simple example to analyze the worst-case response time of task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$. We can have two options:
 \begin{itemize}
 \item Convert $S_k^2$ into computation, and then apply the above analysis by considering that task $\tau_k$ has execution time $C_k^1+S_k^1+C_k^2$. We simply have to verify whether the worst-case response time is no more than $D_k$.
@@ -80,13 +89,17 @@ There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RT
 \end{itemize}
 The benefit of the former approach is due to that it only pessimistically counts the additional higher-priority interference once. However, it also suffers from the pessimism by converting $S_k^1$ into computation. The benefit of the latter approach is due to the fact that the suspension time is not over-counted as computation. However, it also over-counts the carry-in workload since every computation segment may have to pessimistically count the worst-case workload of the carry-in jobs. Both of these two approaches are adopted in the literature \cite{ecrts15nelissen,Huang:multiseg,RTCSA-BletsasA05}. They can be both applied and the better result is returned.
 
+The example in Convert Higher-Priority Tasks into Sporadic Tasks when $S_3^1$ is $1$ has demonstrated the difference of the above two difference cases. 
+
 \item {\bf Enforce Periodic Behaviour by Release Time Enforcement:}   Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
   \begin{itemize}
-  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). (One can imagine that a sporadic server \cite{RTSS-SpruntLS88} with capacity $C_k$ and replenishment period $T_k$ is the reservation server to run task $\tau_k$, by handling the self-suspension.) The period enforcer algorithm was shown the have a good property: ``A deferrable task that is schedulable under its worst-case conditions is also schedulable under the period enforcer algorithm.'' in Theorem 3.5 in \cite{Raj:suspension1991}. If the above statement is correct, then handling the execution of self-suspending sporadic tasks can be very easy and effective.
- However, we will provide a counter example in Section~\ref{sec:wrong-periodic} for the above statement in \cite{Raj:suspension1991}.
+  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). (One can imagine that a sporadic server \cite{RTSS-SpruntLS88} with capacity $C_k$ and replenishment period $T_k$ is the reservation server to run task $\tau_k$, by handling the self-suspension.) The period enforcer algorithm was shown the have a good property: ``A deferrable task that is schedulable under its worst-case conditions is also schedulable under the period enforcer algorithm.'' in Theorem 3.5 in \cite{Raj:suspension1991}. 
+% Therefore, we can use the period enforcer algorithm to verify the schedulability of task $\tau_k$ under static-priority scheduling. However, since there is no schedulability test in \cite{Raj:suspension1991}, how to achieve this remains an open problem.
+\jj{leave this to Raj.}
+  \item {\it Set a constant offset to constrain the release time of a computation segment}: Suppose that the offset for the $j$-th computation segment of task $\tau_i$ is $\phi_i^j$. This means that the $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, in which $r_i$ is the arrival time of a job of task $\tau_i$. With the enforcement, each computation segment can be represented by a sporadic task with a period $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$. (Here, $\phi_{i,m_i+1}$ is set to $D_i$.) Such approaches have been presented in \cite{RTSS-KimANR13,LR:rtas10,RTSS-ChenL14}. The method in \cite{RTSS-ChenL14} is a simple greedy solution for implicit-deadline self-suspending task systems with at most one self-suspension interval per task. It assigns the phase $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative deadline for earliest-deadline-first scheduling. 
 
-%Therefore, we can use the period enforcer algorithm to verify the schedulability of task $\tau_k$ under static-priority scheduling. However, since there is no schedulability test in \cite{Raj:suspension1991}, how to achieve this remains an open problem.
-  \item {\it Set a constant offset to constrain the release time of a computation segment}: Suppose that the offset for the $j$-th computation segment of task $\tau_i$ is $\phi_i^j$. This means that the $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, in which $r_i$ is the arrival time of a job of task $\tau_i$. With the enforcement, each computation segment can be represented by a sporadic task with a period $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$. (Here, $\phi_{i,m_i+1}$ is set to $D_i$.) Such approaches have been presented in \cite{RTSS-KimANR13,LR:rtas10,RTSS-ChenL14}. The method in \cite{RTSS-ChenL14} is a simple greedy solution for implicit-deadline self-suspending task systems with at most one self-suspension interval per task. It assigns the phase $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative deadline for earliest-deadline-first scheduling. The method in \cite{RTSS-KimANR13} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13}. the schedulability test is not correct, and the proposed mixed-integer linear programming is unsafe for worst-case response time guarantees. The method in \cite{LR:rtas10} is XXX (left to Geoffrey...)
+
+The method in \cite{RTSS-KimANR13} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13}, the schedulability test is not correct, and the proposed mixed-integer linear programming is unsafe for worst-case response time guarantees. The method in \cite{LR:rtas10} is XXX (left to Geoffrey...)
   \end{itemize}
 \item {\bf Special Cases with Good Observations:}
 \end{itemize}

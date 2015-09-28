@@ -2,7 +2,7 @@
 \BOOKMARK [1][-]{section.0.2}{Self-Suspending Sporadic Real-Time Task Models}{}% 2
 \BOOKMARK [2][-]{subsection.0.2.1}{Examples of Dynamic Self-Suspension Model}{section.0.2}% 3
 \BOOKMARK [2][-]{subsection.0.2.2}{Examples of Segmented Self-Suspension Model}{section.0.2}% 4
-\BOOKMARK [1][-]{section.0.3}{Existing Solutions of Self-Suspending Tasks}{}% 5
+\BOOKMARK [1][-]{section.0.3}{Existing Solutions of Self-Suspending Tasks in Uniprocessor Platforms}{}% 5
 \BOOKMARK [2][-]{subsection.0.3.1}{Common Strategies}{section.0.3}% 6
 \BOOKMARK [2][-]{subsection.0.3.2}{Misconceptions in Some Existing Results}{section.0.3}% 7
 \BOOKMARK [3][-]{section*.1}{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}{subsection.0.3.2}% 8
