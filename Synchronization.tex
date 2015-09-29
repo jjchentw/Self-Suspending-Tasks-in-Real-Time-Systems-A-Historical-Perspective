@@ -51,10 +51,10 @@ $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$ & 0 & 0\\ \hline
 $\tau_3$ & $\epsilon$    & 14 & 0 & 0 & 1 & $\epsilon$\\ \hline
 $\tau_4$ & 6             & 14 & 1 & $4-\epsilon$ & 1 & $\epsilon$\\ \hline
 \end{tabular}
-\label{tab:parameters}
+\label{table:parameters}
 \end{table}
 
-Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in Table \ref{table:parameters}, where $N_{k,1}$ ($N_{k,2}$) denotes the maximum number of requests that a job of $\tau_k$ can issue to resource $\res_1$ ($\res_2$), and $L_{k,1}$ ($L_{k,2}$) denotes the corresponding maximum critical section length), ordered by decreasing order of priority, that are scheduled on two processors using \pfp scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ and $\tau_4$   each once access a shared resource $\res_1$  ($N_{2,1} = 1$ and $N_{4,1} = 1$). Jobs of $\tau_4$ each once access a shared resource $\res_2$ ($N_{4,2} = 1$). Each job of $\tau_2$ uses $\res_1$ for a duration of at most $L_{2,1} = \varepsilon < 1$ time units (an arbitrarily small quantity), and each job of $\tau_4$ uses $\res_1$ and $\res_2$ for at most $L_{4,1} = 4-\varepsilon$ and $L_{4,1} = \varepsilon$ time units respectively. 
+Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in Table \ref{table:parameters}, where $N_{k,1}$ ($N_{k,2}$) denotes the maximum number of requests that a job of $\tau_k$ can issue to resource $\res_1$ ($\res_2$), and $L_{k,1}$ ($L_{k,2}$) denotes the corresponding maximum critical section length), ordered by decreasing order of priority, that are scheduled on two processors using P-FP scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ and $\tau_4$   each once access a shared resource $\res_1$  ($N_{2,1} = 1$ and $N_{4,1} = 1$). Jobs of $\tau_4$ each once access a shared resource $\res_2$ ($N_{4,2} = 1$). Each job of $\tau_2$ uses $\res_1$ for a duration of at most $L_{2,1} = \varepsilon < 1$ time units (an arbitrarily small quantity), and each job of $\tau_4$ uses $\res_1$ and $\res_2$ for at most $L_{4,1} = 4-\varepsilon$ and $L_{4,1} = \varepsilon$ time units respectively. 
 
 Consider the response-time of $\tau_3$. Since $\tau_3$ is the lowest-priority task on its processor, it does not incur any local blocking (\ie,$s_3 \sum_{\tau_l \in \fun{lp}(3) \cap P(\tau_3)} \max_{1 \leq j < s_l} C_{l,j}^{\prime} = 0$). While each time $\tau_3$ requests $\res_2$, it may be delayed by $\tau_4$ for at most $\epsilon$. Thus, the maximum remote blocking of $\tau_3$ is bounded by $B_3^r = \epsilon$ \footnote{In general, the upper bound on blocking of course depends on the specific locking protocol in use, but in this example, by construction, the stated bound holds under any reasonable locking protocol. Recent surveys of multiprocessor semaphore protocols may be found in \cite{bbb-2013,yang-2015}.}. With regard to the remote blocking incurred by each higher-priority task, we have $B_1^r = 0$ because $\tau_1$ does not request any global resource. Further, each time when a job of $T_2$ requests $\res_1$, it may be delayed for a duration of at most $4-\varepsilon$, thus $B_2^r = 4-\varepsilon$. Therefore, according to Eq. \ref{eqn:wcrt}, we have
 \begin{align*}
@@ -88,7 +88,7 @@ where $\fun{rbf_{FP}}(k,t)$ is the \emph{request bound function} of $\tau_k$, wh
 In Eq. \ref{eqn:rbf-2}, $B_k$ denotes the total blocking time of $\tau_k$. By substituting $B_k$ and $\fun{mtbt}_k$, $\fun{mtbt}_k$ is then computed by
 
 \begin{equation}
-\label{eqn:eq:bloc-tolerate}
+\label{eqn:bloc-tolerate}
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left( t - ( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i ) \right).
 \end{equation}
 
