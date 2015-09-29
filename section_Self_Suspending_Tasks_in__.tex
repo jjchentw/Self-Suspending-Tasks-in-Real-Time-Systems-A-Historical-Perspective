@@ -1,6 +1,3 @@
-\section{Self-Suspending Tasks in Multiprocessor Synchronizations}
-\label{sec:syn}
-
 In this section, we consider multiprocessors subject to \emph{partitioned fixed-priority (\pfp)} scheduling, and review the general analysis strategies for tasks that synchronize access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). Unfortunately, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors also spread to the analysis of partitioned multiprocessor real-time locking protocols. In particular, as we show with a counterexample, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced in \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is flawed. Finally, a straightforward solution for these problems are discussed. 
 
 \subsection{Existing analysis strategies}
