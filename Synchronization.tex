@@ -8,10 +8,6 @@ In this section, we consider multiprocessors subject to \emph{partitioned fixed-
 
 \pfp scheduling is a widespread choice in practice due to the wide support in industrial standards such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc Under \pfp scheduling, each task has a fixed base priority and is statically assigned to a specific processor, and the tasks on each processors are scheduled as in uniprocessors. 
 
-\iffalse
-At runtime, a resource-holding job may be assigned a temporarily elevated effective priority according to the employed locking protocol. Thus on each processor, the ready job with highest effective priority is scheduled.\todo{Why are effective priorities relevant here? Just cut it?} 
-\fi
-
 Under partitioned scheduling, a resource accessed by tasks from different processors is called a \emph{global resource}, otherwise it is called a \emph{local resource}. When a job requests a global resource, it may incur \emph{remote blocking} if the global resource is held by a job on another processor. Also, a job may incur \emph{local blocking} if it is prevented from being scheduled by a resource-holding job of a lower-priority task on its local processor. 
 
 Under suspension-based protocols, such as the \emph{multiprocessor priority ceiling protocol (MPCP)}~\cite{rajkumar-1990}, tasks that are denied to access shared resources are suspended. From the perspective of local schedule on each processor, remote blocking, caused by external events (\ie, resource contention due to tasks on the other processors), pushes the execution of higher-priority tasks to a later time point regardless of the schedule on the local processor (\ie, even if the local processor is idle), thus may cause additional interference on lower-priority tasks. To this end, remote blocking is considered as self-suspension in analysis. Whereas, local blocking takes place only if a local lower-priority task is scheduled (\ie, the local processor is busy). Consequently, local blocking is accounted for as regular blocking as in uniprocessors, but not as self-suspension.
@@ -35,8 +31,28 @@ Unfortunately, the analysis approach based on \equref{wcrt} fails to guarantee a
 
 We show the existence of a schedule in which a task that is considered schedulable according to the analysis in \cite{lakshmanan-2009} is in fact unschedulable.
 
-\input{counterexample}
-\input{parameters}
+\begin{figure}[!ht]
+\captionsetup{belowskip=-1pt}
+\begin{center}
+\includegraphics[width=12cm]{Counterexample}
+\caption{An example schedule in which the first job of $\tau_3$ misses its deadline. 
+}
+\label{fig:counterexample}
+\end{center}
+\end{figure}
+
+\begin{table} 
+\centering
+\caption{Task parameters}
+\begin{tabular}{|c|c|c|c|c|c|c|} \hline
+$\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $N_{k,1}$ & $L_{k,1}$ & $N_{k,2}$ & $L_{k,2}$\\ \hline
+$\tau_1$ & 2           & 6  & 0 & 0 & 0 & 0\\ \hline
+$\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$ & 0 & 0\\ \hline
+$\tau_3$ & $\epsilon$    & 14 & 0 & 0 & 1 & $\epsilon$\\ \hline
+$\tau_4$ & 6             & 14 & 1 & $4-\epsilon$ & 1 & $\epsilon$\\ \hline
+\end{tabular}
+\label{tab:parameters}
+\end{table}
 
 Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in \tabref{parameters}, where $N_{k,1}$ ($N_{k,2}$) denotes the maximum number of requests that a job of $\tau_k$ can issue to resource $\res_1$ ($\res_2$), and $L_{k,1}$ ($L_{k,2}$) denotes the corresponding maximum critical section length), ordered by decreasing order of priority, that are scheduled on two processors using \pfp scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ and $\tau_4$   each once access a shared resource $\res_1$  ($N_{2,1} = 1$ and $N_{4,1} = 1$). Jobs of $\tau_4$ each once access a shared resource $\res_2$ ($N_{4,2} = 1$). Each job of $\tau_2$ uses $\res_1$ for a duration of at most $L_{2,1} = \varepsilon < 1$ time units (an arbitrarily small quantity), and each job of $\tau_4$ uses $\res_1$ and $\res_2$ for at most $L_{4,1} = 4-\varepsilon$ and $L_{4,1} = \varepsilon$ time units respectively. 
 
