@@ -43,15 +43,18 @@ We show the existence of a schedule in which a task that is considered schedulab
 
 \begin{table} 
 \centering
-\caption{Task parameters}
-\begin{tabular}{|c|c|c|c|c|c|c|} \hline
-$\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $N_{k,1}$ & $L_{k,1}$ & $N_{k,2}$ & $L_{k,2}$\\ \hline
-$\tau_1$ & 2           & 6  & 0 & 0 & 0 & 0\\ \hline
-$\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$ & 0 & 0\\ \hline
-$\tau_3$ & $\epsilon$    & 14 & 0 & 0 & 1 & $\epsilon$\\ \hline
-$\tau_4$ & 6             & 14 & 1 & $4-\epsilon$ & 1 & $\epsilon$\\ \hline
-\end{tabular}
-\label{table:parameters}
+    \begin{tabular}{|c|c|c|c|c|c|c|} 
+\hline
+        & $\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $N_{k,1}$ & $L_{k,1}$ & $N_{k,2}$ & $L_{k,2}$\\
+        \hline
+        $\tau_1$ & 2             & 6  & 0 & 0 & 0 & 0\\ 
+        $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$ & 0 & 0\\
+        $\tau_3$ & $\epsilon$    & 14 & 0 & 0 & 1 & $\epsilon$\\
+        $\tau_4$ & 6             & 14 & 1 & $4-\epsilon$ & 1 & $\epsilon$\\ 
+        \hline
+    \end{tabular}
+    \caption{Task parameters}
+    \label{table:parameters}
 \end{table}
 
 Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in Table \ref{table:parameters}, where $N_{k,1}$ ($N_{k,2}$) denotes the maximum number of requests that a job of $\tau_k$ can issue to resource $\res_1$ ($\res_2$), and $L_{k,1}$ ($L_{k,2}$) denotes the corresponding maximum critical section length), ordered by decreasing order of priority, that are scheduled on two processors using P-FP scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ and $\tau_4$   each once access a shared resource $\res_1$  ($N_{2,1} = 1$ and $N_{4,1} = 1$). Jobs of $\tau_4$ each once access a shared resource $\res_2$ ($N_{4,2} = 1$). Each job of $\tau_2$ uses $\res_1$ for a duration of at most $L_{2,1} = \varepsilon < 1$ time units (an arbitrarily small quantity), and each job of $\tau_4$ uses $\res_1$ and $\res_2$ for at most $L_{4,1} = 4-\varepsilon$ and $L_{4,1} = \varepsilon$ time units respectively. 
@@ -94,7 +97,7 @@ In Eq. \ref{eqn:rbf-2}, $B_k$ denotes the total blocking time of $\tau_k$. By su
 
 However, from to the analysis in section 4.2, we can already infer that the analysis used in Eq. \ref{eqn:rbf-1} and Eq. \ref{eqn:rbf-2}, which ignores the effects of remote blocking on interference and quantifies the total interference from a task $\tau_i$ on $\tau_k$ over a duration of length $t$ as $\left \lceil \frac{t}{T_i} \right \rceil \cdot C_i$, is over optimistic. 
 
-Consider $\tau_3$ in the previous example (with parameters listed in \ref{table:parameters}). According to Eq. \ref{eqn:bloc-tolerate}, $\fun{mtbt}_3$ is $12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+2\epsilon)) = 4-3\epsilon$ (when $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-3\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ is unschedulable even without incurring any blocking, as shown in \figref{counterexample}.
+Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq. \ref{eqn:bloc-tolerate}, $\fun{mtbt}_3$ is $12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+2\epsilon)) = 4-3\epsilon$ (when $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-3\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ is unschedulable even without incurring any blocking, as shown in \figref{counterexample}.
 
 \subsection{A Safe Response Time Bound}
 \label{sec:safe_bound}
