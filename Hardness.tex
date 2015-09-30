@@ -6,8 +6,11 @@ Verifying the existence of a feasible schedule for segmented self-suspending tas
 
 The only results with speedup factor analysis for fixed-priority scheduling and dynamic priority scheduling can be found in \cite{RTSS-ChenL14} and \cite{WC16-suspend-DATE}. The analysis with speedup factor $3$ in \cite{RTSS-ChenL14} can be used for systems with at most one self-suspension interval per task in dynamic priority scheduling. The analysis with a bounded speedup factor in \cite{WC16-suspend-DATE} can be used for fixed-priority and dynamic-priority systems with any number of self-suspension intervals per task. However, the speedup factor in \cite{WC16-suspend-DATE} depends on, and grows quadratically with respect to the number of self-suspension intervals. Therefore, it can only be used for a few number of suspension intervals. The scheduling policy used in \cite{WC16-suspend-DATE} is \emph{laxity-monotonic} (LM) scheduling, which assigns the highest priority to the task with the least laxity, that is, $D_i-S_i$.
 
+With respect to this scheduling problem, there was no theoretical lower bound (with respect to the speedup factors) of this scheduling problem. 
 
-With respect to this problem, there was no lower bound (with respect to the speedup factors) of this scheduling problem. 
+
+The above analysis also implies that the priority assignment in fixed-priority scheduling should be carefully designed. Traditional approaches like RM or EDF do not work very well. LM may work for a few self-suspending intervals, but how to perform the optimal priority assignment is an open problem.
+
 
 \paragraph{Hardness for scheduling dynamic self-suspending tasks}
 The complexity class for verifying the existence of a feasible schedule for dynamic self-suspending task systems was unknown in the literature. The proof in \cite{Ridouard_2004} cannot be applied to this case. 
@@ -19,23 +22,29 @@ It is proved in \cite{huangpass:dac2015} that the speed-up factor for RM, DM, an
 \item  $C_2=\epsilon$, $S_2=T-1-\epsilon$, $T_2=T$
 \end{itemize}
 where $T$ is any natural number larger than $1$ and $\epsilon$ can be arbitrary small.
+
 It is clear that this task set is schedulable if we assign higher priority to
 task $\tau_2$ than task $\tau_1$.
+Under either RM, DM, and LM scheduling, task $\tau_1$ has higher priority than task $\tau_2$. It was proved in \cite{huangpass:dac2015} that this example has a speed-up factor $\infty$ when $\epsilon$ is close to $0$.
 
-Under either RM, DM, and LM scheduling, task $\tau_1$ has higher priority than task $\tau_2$. 
-Thanks to the harmonic system, the schedulability of task $\tau_2$ can be analyzed by examining the demand from task $\tau_1$ together with its upper bound on total execution time and suspension length at its deadline, as the two tasks release simultaneously.
-Thus, jobs of $\tau_2$ will miss deadlines since $T( 1-2\epsilon)+\epsilon+(T-1-\epsilon) > T$.
-In order to be schedulable upon this system under RM, DM, or LM on $\alpha$-speed processor the following must hold:
-\begin{equation*}
-\frac{T( 1-2\epsilon)+\epsilon}{\alpha}+(T-1-\epsilon) \le T
-\end{equation*}
-After reformulation, we have $\alpha\ge \frac{T( 1-2\epsilon)+\epsilon}{1+\epsilon}$. Thus, $\alpha\rightarrow \infty$ as $T \rightarrow \infty$.
+There is no upper bound of this problem in the most general case. The analysis in \cite{huangpass:dac2015} for a speedup factor $2$ uses a trick to compare the speedup factor with respect to the \emph{optimal fixed-priority schedule} instead of the \emph{optimal schedule}. There is no proof or evident to show that this factor $2$ is also the factor when the reference is the \emph{optimal schedule}.
+
+With respect to this problem, there was no theoretical lower bound (with respect to the speedup factors) of this scheduling problem. 
 
 
-   
-\begin{itemize}
-\item \textbf{The complexity class of scheduling policies}
-\item \textbf{Open problems for schedulability analysis, etc.}
-\end{itemize}
+The above analysis also implies that the priority assignment in fixed-priority scheduling should be carefully designed. Traditional approaches like RM or EDF do not work very well. LM also does not work well. The priority assignment used in \cite{huangpass:dac2015} is based on the optimal-priority algorithm (OPA) from Audsley \cite{audsley-1993} with an OPA-compatible schedulability analysis. However, since the schedulability test used in \cite{huangpass:dac2015}  is not exact, the priority assignment is also not the optimal solution.
+Finding the optimal priority assignment here is also an open problem.
+
+
+\paragraph{Hardness for Schedulability Tests for Segmented Self-Suspension}
+Suppose that the task system is scheduled by using preemptive fixed-priority scheduling. The complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. The evidence provided in \cite{ecrts15nelissen} also suggests that this problem may be very difficult even for a task system with \emph{only one self-suspending task}. The solution in \cite{ecrts15nelissen}  requires exponential time for $n-1$ sporadic tasks and 1 self-suspending task. The other solutions \cite{Huang:multiseg}\cite{PH:rtss98} require pseudo-polynomial time complexity but are only sufficient schedulability tests.
+
+The lack of something like the critical instant theorem to constrain the worst-case behaviour has led to the complexity explosion to test exponential combinations of release patterns. 
+
+\paragraph{Hardness for Schedulability Tests for Dynamic Self-Suspension}
+Suppose that the task system is scheduled by using preemptive fixed-priority scheduling. Similarly, the complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. There is \emph{no exact} schedulability analysis for this problem up to now. The solutions by \cite{Liu:2000:RS:518501}\cite{LiuChen:rtss2014}\cite{huangpass:dac2015} are only sufficient schedulability tests. 
+
+The lack of something like the critical instant theorem to constrain the worst-case behaviour and the dynamic self-suspending behaviour have constrained the current researches to provide exact schedulability tests.
+
   
 \section{Rule of Thumb to Handle Self-Suspending Task Systems}
