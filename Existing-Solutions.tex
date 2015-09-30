@@ -1,6 +1,6 @@
-\section{Existing Solutions of Self-Suspending Tasks in Uniprocessor Platforms}
+\section{General Design and Analysis Strategies in Uniprocessor Platforms}
 
-This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The general strategies are correct, but some of misconceptions were used in the literature to tackle the problem. We will provide concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
+This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The  strategies are generally correct, but the analysis has to be done carefully.  In the next section, we will explain some of misconceptions used in the literature by giving concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
 
 To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table \ref{table:dynamic-example} and Table \ref{table:static-example}. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under Rate-Monotonic scheduling. 
 
@@ -34,9 +34,6 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
     \caption{Examples for dynamic segmented-suspending tasks}
     \label{table:static-example}
 \end{table}
-
-
-\subsection{Common Strategies}
 
 For self-suspending sporadic task systems, while executing, a job may suspend itself or even must suspend itself in the segmented self-suspension model. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze the schedulability of the task systems. 
 
@@ -105,22 +102,21 @@ The method in \cite{RTSS-KimANR13} assigns each computation segment a static-pri
 \end{itemize}
 
 
-\subsection{Misconceptions in Some Existing Results}
-\subsubsection{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}
+\section{Misconceptions in Some Existing Results}
+\subsection{Incorrect Assumptions in Critical Instant Theorem with Synchronous Releases}
 \label{sec:wrong-critical}
 
-\subsubsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
+\subsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
 \label{sec:wrong-carryin}
 
-\subsubsection{Incorrect Quantifications of Jitter}
+\subsection{Incorrect Quantifications of Jitter}
 \label{sec:wrong-jitter}
 
 
-\subsubsection{Incorrect Periodic Execution Enforcement}
+\subsection{Incorrect Periodic Execution Enforcement}
 \label{sec:wrong-periodic}
 
-\subsection{Rule of Thumb When Considering Self-Suspending Systems}
-  
+
   
   
   
