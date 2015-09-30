@@ -4,25 +4,20 @@ This section reviews the hardness for designing scheduling algorithms and schedu
 \paragraph{Hardness for scheduling segmented self-suspending tasks}
 Verifying the existence of a feasible schedule for segmented self-suspending task systems is proved to be ${\cal NP}$-hard in the strong sense in \cite{Ridouard_2004}. It is also shown that EDF and RM do not have any speedup factor bound in in \cite{Ridouard_2004} and \cite{RTSS-ChenL14}, respectively. 
 
-The only results with speedup factor analysis for fixed-priority scheduling and dynamic priority scheduling can be found in \cite{RTSS-ChenL14} and \cite{WC16-suspend-DATE}. The analysis with speedup factor $3$ in \cite{RTSS-ChenL14} can be used for systems with at most one self-suspension interval per task in dynamic priority scheduling. The analysis with a bounded speedup factor in \cite{WC16-suspend-DATE} can be used for fixed-priority and dynamic-priority systems with any number of self-suspension intervals per task. However, the speedup factor in \cite{WC16-suspend-DATE} depends on, and grows quadratically with respect to the number of self-suspension intervals. Therefore, it can only be used for a few number of suspension intervals. 
+The only results with speedup factor analysis for fixed-priority scheduling and dynamic priority scheduling can be found in \cite{RTSS-ChenL14} and \cite{WC16-suspend-DATE}. The analysis with speedup factor $3$ in \cite{RTSS-ChenL14} can be used for systems with at most one self-suspension interval per task in dynamic priority scheduling. The analysis with a bounded speedup factor in \cite{WC16-suspend-DATE} can be used for fixed-priority and dynamic-priority systems with any number of self-suspension intervals per task. However, the speedup factor in \cite{WC16-suspend-DATE} depends on, and grows quadratically with respect to the number of self-suspension intervals. Therefore, it can only be used for a few number of suspension intervals. The scheduling policy used in \cite{WC16-suspend-DATE} is \emph{laxity-monotonic} (LM) scheduling, which assigns the highest priority to the task with the least laxity, that is, $D_i-S_i$.
+
 
 With respect to this problem, there was no lower bound (with respect to the speedup factors) of this scheduling problem. 
 
 \paragraph{Hardness for scheduling dynamic self-suspending tasks}
 The complexity class for verifying the existence of a feasible schedule for dynamic self-suspending task systems was unknown in the literature. The proof in \cite{Ridouard_2004} cannot be applied to this case. 
 
-
-\begin{theorem}
-The speed-up factor for RM, DM, and LM scheduling is $\infty$.
-\end{theorem}
-\begin{proof}
-Consider the following implicit-deadline task set with one SSS task and one sporadic task:
+It is proved in \cite{huangpass:dac2015} that the speed-up factor for RM, DM, and LM scheduling is $\infty$. Consider the following implicit-deadline task set with one self-suspending task and one sporadic task:
 \begin{itemize}
  \setlength\itemsep{0em}
 \item $C_1=1-2\epsilon$, $S_1=0$, $T_1=1$
 \item  $C_2=\epsilon$, $S_2=T-1-\epsilon$, $T_2=T$
 \end{itemize}
-
 where $T$ is any natural number larger than $1$ and $\epsilon$ can be arbitrary small.
 It is clear that this task set is schedulable if we assign higher priority to
 task $\tau_2$ than task $\tau_1$.
