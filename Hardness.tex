@@ -12,7 +12,7 @@ With respect to this problem, there was no lower bound (with respect to the spee
 \paragraph{Hardness for scheduling dynamic self-suspending tasks}
 The complexity class for verifying the existence of a feasible schedule for dynamic self-suspending task systems was unknown in the literature. The proof in \cite{Ridouard_2004} cannot be applied to this case. 
 
-It is proved in \cite{huangpass:dac2015} that the speed-up factor for RM, DM, and LM scheduling is $\infty$. Consider the following implicit-deadline task set with one self-suspending task and one sporadic task:
+It is proved in \cite{huangpass:dac2015} that the speed-up factor for RM, DM, and LM scheduling is $\infty$. Here, we repeat the example in \cite{huangpass:dac2015}. Consider the following implicit-deadline task set with one self-suspending task and one sporadic task:
 \begin{itemize}
  \setlength\itemsep{0em}
 \item $C_1=1-2\epsilon$, $S_1=0$, $T_1=1$
@@ -25,8 +25,7 @@ task $\tau_2$ than task $\tau_1$.
 Under either RM, DM, and LM scheduling, task $\tau_1$ has higher priority than task $\tau_2$. 
 Thanks to the harmonic system, the schedulability of task $\tau_2$ can be analyzed by examining the demand from task $\tau_1$ together with its upper bound on total execution time and suspension length at its deadline, as the two tasks release simultaneously.
 Thus, jobs of $\tau_2$ will miss deadlines since $T( 1-2\epsilon)+\epsilon+(T-1-\epsilon) > T$.
-
-In order to be schedulable upon this system under RM, DM, or LM on $\alpha$-speed processor the following must hold\footnote{On a speed-$\alpha$ uniprocessor the worst-case execution times $C_{i}$ become $\frac{C_{i}}{\alpha}$. However, $S_i$ remains the same.}:
+In order to be schedulable upon this system under RM, DM, or LM on $\alpha$-speed processor the following must hold:
 \begin{equation*}
 \frac{T( 1-2\epsilon)+\epsilon}{\alpha}+(T-1-\epsilon) \le T
 \end{equation*}
