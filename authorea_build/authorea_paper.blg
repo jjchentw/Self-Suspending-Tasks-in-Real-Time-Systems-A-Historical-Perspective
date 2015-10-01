@@ -3,8 +3,6 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: authorea_paper.aux
 The style file: abbrv.bst
 Database file #1: /Users/jjchen/repository/github/Self-Suspending-Tasks-in-Real-Time-Systems-A-Historical-Perspective/bibliography/biblio.bib
-A bad cross reference---entry "RTAS-LakshmananR10"
-refers to entry "DBLP:conf/rtas/2010", which doesn't exist
 A bad cross reference---entry "ECRTS-AudsleyB04"
 refers to entry "DBLP:conf/ecrts/2004", which doesn't exist
 A bad cross reference---entry "RTAS-AudsleyB04"
@@ -17,53 +15,60 @@ A bad cross reference---entry "RTSS-KimANR13"
 refers to entry "DBLP:conf/rtss/2013", which doesn't exist
 A bad cross reference---entry "RTSS-ChenL14"
 refers to entry "DBLP:conf/rtss/2014", which doesn't exist
+Warning--I didn't find a database entry for "LA:rtss09"
+Warning--I didn't find a database entry for "Chen:DAC2014"
+Warning--I didn't find a database entry for "LA:rtas10"
+Warning--I didn't find a database entry for "LA:rtcsa10"
+Warning--I didn't find a database entry for "LA:rtss12"
+Warning--I didn't find a database entry for "Kato:rtss11"
 Warning--I didn't find a database entry for "DBLP:conf/rtss/2013"
-Warning--I didn't find a database entry for "DBLP:conf/rtas/2010"
 Warning--I didn't find a database entry for "DBLP:conf/rtss/2014"
 Warning--I didn't find a database entry for "DBLP:conf/rtss/1988"
 Warning--I didn't find a database entry for "DBLP:conf/rtas/2004"
 Warning--I didn't find a database entry for "DBLP:conf/ecrts/2004"
 Warning--I didn't find a database entry for "DBLP:conf/rtcsa/2005"
+Warning--empty booktitle in WC16-suspend-DATE
+Warning--empty year in WC16-suspend-DATE
 Warning--empty institution in Huang:multiseg
-You've used 19 entries,
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            631 strings with 8618 characters,
-and the built_in function-call counts, 7451 in all, are:
-= -- 726
-> -- 325
-< -- 11
-+ -- 127
-- -- 108
-* -- 440
-:= -- 1138
-add.period$ -- 60
-call.type$ -- 19
-change.case$ -- 113
+            713 strings with 10941 characters,
+and the built_in function-call counts, 12028 in all, are:
+= -- 1132
+> -- 570
+< -- 12
++ -- 223
+- -- 190
+* -- 745
+:= -- 1898
+add.period$ -- 101
+call.type$ -- 33
+change.case$ -- 196
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 343
-empty$ -- 634
-format.name$ -- 108
-if$ -- 1665
+cite$ -- 36
+duplicate$ -- 533
+empty$ -- 1026
+format.name$ -- 190
+if$ -- 2631
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 18
-newline$ -- 98
-num.names$ -- 38
-pop$ -- 161
+int.to.str$ -- 33
+missing$ -- 32
+newline$ -- 167
+num.names$ -- 66
+pop$ -- 274
 preamble$ -- 1
-purify$ -- 92
+purify$ -- 161
 quote$ -- 0
-skip$ -- 264
+skip$ -- 380
 stack$ -- 0
-substring$ -- 413
-swap$ -- 124
-text.length$ -- 11
+substring$ -- 606
+swap$ -- 157
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 74
-warning$ -- 1
-while$ -- 69
-width$ -- 21
-write$ -- 210
-(There were 7 error messages)
+type$ -- 130
+warning$ -- 3
+while$ -- 103
+width$ -- 35
+write$ -- 352
+(There were 6 error messages)

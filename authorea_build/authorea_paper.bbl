@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{audsley-1993}
+N.~Audsley, A.~Burns, M.~Richardson, K.~Tindell, and A.~Wellings.
+\newblock Applying new scheduling theory to static priority pre-emptive
+  scheduling.
+\newblock {\em Software Engineering Journal}, 8(5):284--292, 1993.
+
 \bibitem{ECRTS-AudsleyB04}
 N.~C. Audsley and K.~Bletsas.
 \newblock Fixed priority timing analysis of real-time systems with limited
@@ -24,6 +30,18 @@ K.~Bletsas and N.~C. Audsley.
   Real-Time Computing Systems and Applications {(RTCSA} 2005), 17-19 August
   2005, Hong Kong, China}, pages 525--531, 2005.
 
+\bibitem{bbb-2013}
+B.~Brandenburg.
+\newblock Improved analysis and evaluation of real-time semaphore protocols for
+  {P-FP} scheduling.
+\newblock In {\em RTAS}, 2013.
+
+\bibitem{carminati-2014}
+A.~Carminati, R.~de~Oliveira, and L.~Friedrich.
+\newblock Exploring the design space of multiprocessor synchronization
+  protocols for real-time systems.
+\newblock {\em Journal of Systems Architecture}, 60(3):258--270, 2014.
+
 \bibitem{RTSS-ChenL14}
 J.~Chen and C.~Liu.
 \newblock Fixed-relative-deadline scheduling of hard real-time tasks with
@@ -32,10 +50,29 @@ J.~Chen and C.~Liu.
   Symposium, {RTSS} 2014, Rome, Italy, December 2-5, 2014}, pages 149--160,
   2014.
 
+\bibitem{DBLP:conf/ecrts/Ekberg015}
+P.~Ekberg and W.~Yi.
+\newblock Uniprocessor feasibility of sporadic tasks with constrained deadlines
+  is strongly conp-complete.
+\newblock In {\em 27th Euromicro Conference on Real-Time Systems, {ECRTS}},
+  pages 281--286, 2015.
+
 \bibitem{ecrts15nelissen}
 G.~R. Geoffrey~Nelissen, José~Fonseca and V.~Nelis.
 \newblock {Timing Analysis of Fixed Priority Self-Suspending Sporadic Tasks}.
 \newblock In {\em Euromicro Conference on Real-Time Systems (ECRTS)}, 2015.
+
+\bibitem{han-2014}
+G.~Han, H.~Zeng, M.~Natale, X.~Liu, and W.~Dou.
+\newblock Experimental evaluation and selection of data consistency mechanisms
+  for hard real-time applications on multicore platforms.
+\newblock {\em IEEE Transactions on Industrial Informatics}, 10(2):903--918,
+  2014.
+
+\bibitem{WC16-suspend-DATE}
+W.-H. Huang and J.-J. Chen.
+\newblock Self-suspension real-time tasks under fixed-relative-deadline
+  fixed-priority scheduling.
 
 \bibitem{Huang:multiseg}
 W.-H. Huang and J.-J. Chen.
@@ -62,6 +99,11 @@ S.~Kato, K.~Lakshmanan, A.~Kumar, M.~Kelkar, Y.~Ishikawa, and R.~Rajkumar.
 \newblock In {\em 2011 {IEEE} 32nd Real-Time Systems Symposium}. Institute of
   Electrical {\&} Electronics Engineers ({IEEE}), nov 2011.
 
+\bibitem{kim-2014}
+H.~Kim, S.~Wang, and R.~Rajkumar.
+\newblock {vMPCP}: a synchronization framework for multi-core virtual machines.
+\newblock In {\em RTSS}, 2014.
+
 \bibitem{RTCSA-KimCPKH95}
 I.~Kim, K.~Choi, S.~Park, D.~Kim, and M.~Hong.
 \newblock Real-time scheduling of tasks that contain the external blocking
@@ -76,20 +118,18 @@ J.~Kim, B.~Andersson, D.~de~Niz, and R.~Rajkumar.
   {RTSS} 2013, Vancouver, BC, Canada, December 3-6, 2013}, pages 246--257,
   2013.
 
+\bibitem{lakshmanan-2009}
+K.~Lakshmanan, D.~De~Niz, and R.~Rajkumar.
+\newblock Coordinated task scheduling, allocation and synchronization on
+  multiprocessors.
+\newblock In {\em RTSS}, 2009.
+
 \bibitem{LR:rtas10}
 K.~Lakshmanan and R.~Rajkumar.
 \newblock Scheduling self-suspend- ing real-time tasks with rate-monotonic
   priorities.
 \newblock In {\em Proceedings of the 16th IEEE Real-Time and Embedded
   Technology and Applications Symposium}, pages 3--12, 2010.
-
-\bibitem{RTAS-LakshmananR10}
-K.~Lakshmanan and R.~Rajkumar.
-\newblock Scheduling self-suspending real-time tasks with rate-monotonic
-  priorities.
-\newblock In {\em 16th {IEEE} Real-Time and Embedded Technology and
-  Applications Symposium, {RTAS} 2010, Stockholm, Sweden, April 12-15, 2010},
-  pages 3--12, 2010.
 
 \bibitem{LiuChen:rtss2014}
 C.~Liu and J.~Chen.
@@ -110,6 +150,24 @@ W.~Liu, J.-J. Chen, A.~Toma, T.-W. Kuo, and Q.~Deng.
   Conference on Design Automation Conference - {DAC} {\textquotesingle}14}.
   Association for Computing Machinery ({ACM}), 2014.
 
+\bibitem{NBN:11}
+F.~Nemati, M.~Behnam, and T.~Nolte.
+\newblock Independently-developed real-time systems on multi-cores with shared
+  resources.
+\newblock In {\em ECRTS}, 2011.
+
+\bibitem{PH:rtss98}
+J.~C. Palencia and M.~G. Harbour.
+\newblock Schedulability analysis for tasks with static and dynamic offsets.
+\newblock In {\em Proceedings of the 19th IEEE Real-Time Systems Symposium},
+  pages 26--37, 1998.
+
+\bibitem{rajkumar-1990}
+R.~Rajkumar.
+\newblock Real-time synchronization protocols for shared memory
+  multiprocessors.
+\newblock In {\em ICDCS}, 1990.
+
 \bibitem{Raj:suspension1991}
 R.~Rajkumar.
 \newblock {Dealing with Suspending Periodic Tasks.}
@@ -129,5 +187,30 @@ B.~Sprunt, J.~P. Lehoczky, and L.~Sha.
 \newblock In {\em Proceedings of the 9th {IEEE} Real-Time Systems Symposium
   {(RTSS} '88), December 6-8, 1988, Huntsville, Alabama, {USA}}, pages
   251--258, 1988.
+
+\bibitem{yang-2013}
+M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
+\newblock {PK-OMLP}: An {OMLP} based k-exclusion real-time locking protocol for
+  multi- {GPU} sharing under partitioned scheduling.
+\newblock In {\em DASC}, 2013.
+
+\bibitem{yang-2014}
+M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
+\newblock Improved blocking timg analysis and evaluation for the multiprocessor
+  priority ceiling protocol.
+\newblock {\em Jounal of Computer Science and Technology}, 29(6):1003--1013,
+  2014.
+
+\bibitem{yang-2015}
+M.~Yang, A.~Wieder, and B.~Brandenburg.
+\newblock Global real-time semaphore protocols: A survey, unified analysis, and
+  comparison.
+\newblock {\em to appear in 2015 RTSS}, 2015.
+
+\bibitem{zeng-2011}
+H.~Zeng and M.~Natale.
+\newblock Mechanisms for guaranteeing data consistency and flow preservation in
+  {AUTOSAR} software on multi-core platforms.
+\newblock In {\em SIES}, 2011.
 
 \end{thebibliography}
