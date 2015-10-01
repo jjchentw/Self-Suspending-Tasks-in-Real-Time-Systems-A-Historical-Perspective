@@ -1,5 +1,24 @@
 \section{Hardness Review of Self-Suspending Task Models}
-This section reviews the hardness for designing scheduling algorithms and schedulability analysis of self-suspending task systems. Table \jj{XXX} summarizes the complexity classes of the corresponding problems. \jj{more introductory words...}
+This section reviews the hardness for designing scheduling algorithms and schedulability analysis of self-suspending task systems. Table \ref{table:complexity} summarizes the complexity classes of the corresponding problems, in which the complexity problems are reviewed according the considered task models (\ie, segmented or dynamic self-suspending models) and the scheduling strategies (\ie, fixed- or dynamic priority scheduling). Notably, for self-suspending task systems, only the complexity class for verifying the existence of a feasible schedule for segmented tasks is proved in the literature~\cite{Ridouard_2004}, most corresponding problems are still open.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|*5{c|}}\hline
+    Task Model & Scheduling & \multicolumn{3}{c|}{Schedulability Test} \\\hline
+    &  & Fixed-Priority & \multicolumn{2}{c|}{Dynamic-Priority}\\
+    &  & Scheduling     & \multicolumn{2}{c|}{Scheduling}\\\cline{3-5}    
+    Segmented Self- & ${\cal NP}$-hard in &  & Constrained & Implicit\\
+    Suspension  & the strong & at least weakly   & Deadlines   & Deadlines \\\cline{4-5}
+    Models & sense \cite{Ridouard_2004} & ${\cal NP}$-hard & at least co${\cal NP}$- & co${\cal NP}$-hard \\
+    &  & & hard in the & in the strong\\
+    & & & strong sense & sense\\\hline
+    Dynamic Self- & \multirow{3}{*}{Unknown} & & at least co${\cal NP}$- & \multirow{3}{*}{Unknown}\\
+    Suspension & & at least weakly &hard in the & \\
+    models & & ${\cal NP}$-hard & strong sense & \\\hline
+    \end{tabular}
+    \caption{The complexity classes of scheduling and schedulability analysis for self-suspending tasks}
+    \label{table:complexity}
+\end{table}
 
 \subsection{Hardness for Scheduling Segmented Self-Suspending Tasks}
 Verifying the existence of a feasible schedule for segmented self-suspending task systems is proved to be ${\cal NP}$-hard in the strong sense in \cite{Ridouard_2004}. It is also shown that EDF and RM do not have any speedup factor bound in in \cite{Ridouard_2004} and \cite{RTSS-ChenL14}, respectively. 
