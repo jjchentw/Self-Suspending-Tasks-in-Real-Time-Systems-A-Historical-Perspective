@@ -67,11 +67,11 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ is the lowest-priority ta
 & R_3^3 = 2\varepsilon + 0 + \left \lceil \frac{8+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+4\varepsilon.
 \end{align*}
  
-As a result, $R_3 = 8+4\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in \figref{counterexample}, where $\tau_3$  actually misses a deadline at time~20, which implies that the analysis framework in \cite{lakshmanan-2009} is too optimistic (in certain cases). 
+As a result, $R_3 = 8+4\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample}, where $\tau_3$  actually misses a deadline at time~20, which implies that the analysis framework in \cite{lakshmanan-2009} is too optimistic (in certain cases). 
 
 \subsection{Incorrect Time Request Analysis With Global Resource Sharing}
 
-Besides the over-optimistic problem found in \citep{lakshmanan-2009}, a straightforward adoption of the traditional time request analysis with global resource sharing is also not safe, as we show next.
+Besides the over-optimistic problem found in \cite{lakshmanan-2009}, a straightforward adoption of the traditional time request analysis with global resource sharing is also not safe, as we show next.
 
  In \cite{NBN:11}, an \emph{interface-based analysis} based on the time request analysis was derived for real-time open systems, where each processor contains a task set and the tasks on different processors may share global resources. Intuitively, the interface abstracts the requirements of global resource sharing on each processor that should be satisfied to guarantee the schedulability of the system in the processor. In particular, the maximum blocking time that a task $\tau_k$ can tolerate without missing its deadline, denoted by $\fun{mtbt}_k$, is evaluated as following. 
 
@@ -95,9 +95,9 @@ In Eq. \ref{eqn:rbf-2}, $B_k$ denotes the total blocking time of $\tau_k$. By su
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left( t - ( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i ) \right).
 \end{equation}
 
-However, according to the analysis in section 4.2, we can already infer that the analysis used in Eq. \ref{eqn:rbf-1} and Eq. \ref{eqn:rbf-2}, which ignores the effects of remote blocking on interference and quantifies the total interference from a task $\tau_i$ on $\tau_k$ over a duration of length $t$ as $\left \lceil \frac{t}{T_i} \right \rceil \cdot C_i$, is over optimistic. 
+However, from the discussion in section \ref{sec:counterexample} we can already infer that the analysis used in Eq. \ref{eqn:rbf-1} and Eq. \ref{eqn:rbf-2}, which ignores the effects of remote blocking on interference and quantifies the total interference from a task $\tau_i$ on $\tau_k$ over a duration of length $t$ as $\left \lceil \frac{t}{T_i} \right \rceil \cdot C_i$, is over optimistic. 
 
-Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq. \ref{eqn:bloc-tolerate}, $\fun{mtbt}_3$ is $12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+2\epsilon)) = 4-3\epsilon$ (when $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-3\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ is unschedulable even without incurring any blocking, as shown in \figref{counterexample}.
+Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq. \ref{eqn:bloc-tolerate}, $\fun{mtbt}_3$ is $12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+2\epsilon)) = 4-3\epsilon$ (when $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-3\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ is unschedulable even without incurring any blocking, as shown in Fig. \ref{fig:counterexample}.
 
 \subsection{A Safe Response Time Bound}
 \label{sec:safe_bound}
