@@ -64,7 +64,7 @@ As a result, $R_3 = 8+4\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be
 
 A related problem affects an \emph{interface-based analysis}  proposed by \cite{NBN:11}. Targeting \emph{open} real-time systems with globally shared resources (\ie, systems where the final task set composition is not known at analysis time, but tasks may share global resources nonetheless), the goal of the interface-based analysis is to extract a concise abstraction of the constraints that need to be maintained in order  to guarantee the schedulability of all tasks. In particular, the analysis seeks to determine the \emph{maximum tolerable blocking time}, denoted $\fun{mtbt}_k$, that a task $\tau_k$ can tolerate without missing its deadline. 
 
-Recall from classic uniprocessor time-demand analysis \cite{rbf} that, \emph{in the absence of jitter or self-suspensions}, a task $\tau_k$ is considered schedulable if
+Recall from classic uniprocessor time-demand analysis \cite{lehoczky-1989} that, \emph{in the absence of jitter or self-suspensions}, a task $\tau_k$ is considered schedulable if
 \begin{equation}
 \label{eqn:rbf-1}
 \exists t \in (0,D_k]: \fun{rbf_{FP}}(k,t) \leq t, 
@@ -76,7 +76,7 @@ where $\fun{rbf_{FP}}(k,t)$ is the \emph{request bound function} of $\tau_k$, wh
 \fun{rbf_{FP}} = C_k + B_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i.
 \end{equation}
 
-Starting from Eq. \ref{eqn:rbf-2}, \cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:
+Starting from Eq. \ref{eqn:rbf-1}, \cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:
 \begin{equation}
 \label{eqn:bloc-tolerate}
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left( t - ( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i ) \right).
