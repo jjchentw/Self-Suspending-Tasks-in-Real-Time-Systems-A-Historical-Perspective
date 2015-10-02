@@ -21,7 +21,7 @@ In Eq. \ref{eqn:wcrt} below, let $B_k^r$ denote an upper bound on the maximum re
 \label{eqn:wcrt}
 R_k^{n+1} = C_k^{\star} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.  
 \end{equation}
-then task $\tau_k$ is schedulable and its response time is bounded by $R_k^n$. This  response-time analysis framework~\cite{lakshmanan-2009} was subsequently reused to analyze (several variants of) the \mpcp \cite{yang-2013,kim-2014,carminati-2014,yang-2014}  and to compare  different locking protocols under \pfp scheduling~\cite{zeng-2011,bbb-2013,han-2014}.
+then task $\tau_k$ is schedulable and its response time is bounded by $R_k^n$. This  response-time analysis framework~\cite{lakshmanan-2009} was subsequently reused to analyze (several variants of) the MPCP \cite{yang-2013,kim-2014,carminati-2014,yang-2014}  and to compare  different locking protocols under P-FP scheduling~\cite{zeng-2011,bbb-2013,han-2014}.
 
 In Eq. \ref{eqn:wcrt}, the additional interference on $\tau_k$ due to the lock-induced deferred execution of higher-priority tasks is captured by the term ``$+ B^r_i$'' in the interference bound  $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$. Unfortunately, this fails to guarantee a safe response-time bound in certain corner cases, as can be demonstrated with the following counterexample.
 
