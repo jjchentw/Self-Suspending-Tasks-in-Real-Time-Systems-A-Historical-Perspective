@@ -1,7 +1,7 @@
 \section{Self-Suspending Tasks in Multiprocessor Synchronizations}
 \label{sec:syn}
 
-In this section, we consider multiprocessors the analysis of self-suspensions that arise on multiprocessors under \emph{partitioned fixed-priority (P-FP)} scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). Unfortunately, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors also spread to the analysis of partitioned multiprocessor real-time locking protocols. In particular, as we show with a counterexample, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is flawed. Finally, a straightforward solution for these problems is discussed. 
+In this section, we consider the analysis of self-suspensions that arise on multiprocessors under \emph{partitioned fixed-priority (P-FP)} scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). Unfortunately, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors also spread to the analysis of partitioned multiprocessor real-time locking protocols. In particular, as we show with a counterexample, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is flawed. Finally, a straightforward solution for these problems is discussed. 
 
 \subsection{Existing analysis strategies}
 \label{sec:papers}
@@ -36,29 +36,29 @@ We show the existence of a schedule in which a task that is considered schedulab
 \centering
     \begin{tabular}{|c|c|c|c|c|c|} 
  \hline
-        $\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $s_k$ & $C_{k,1}^{\prime}$ & $C_{k,2}^{\prime}$\\
+        $\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $s_k$ & $C_{k,1}^{\prime}$\\
         \hline
-        $\tau_1$ & 2             & 6  & 0 & $\setminus$ & $\setminus$\\ 
-        $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$ & $\setminus$\\
-        $\tau_3$ & $\epsilon$    & 14 & 1 & $\epsilon$ & $\setminus$\\
-        $\tau_4$ & 6             & 14 & 2 & $4-\epsilon$ & $\epsilon$\\ 
+        $\tau_1$ & 2             & 6  & 0 & $\setminus$\\ 
+        $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$\\
+        $\tau_3$ & $\epsilon$    & 14 & 0 & $\setminus$\\
+        $\tau_4$ & 6             & 14 & 1 & $4-\epsilon$\\ 
         \hline
     \end{tabular}
     \caption{Task parameters}
     \label{table:parameters}
 \end{table}
 
-Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in Table \ref{table:parameters}), ordered by decreasing order of priority, that are scheduled on two processors using P-FP scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ each once use a global shared resource $\res_1$  ($s_2 = 1$) for a duration of at most $\varepsilon < 1$ ($C_{2,1}^{\prime} = \varepsilon$), where $\varepsilon$ an arbitrarily small, positive number. While jobs of $\tau_3$ each once use a global shared resource $\res_2$  ($s_3 = 1$) for a duration of at most $C_{3,1}^{\prime} = \varepsilon$. Jobs of $\tau_4$ each once use $\res_1$ for a duration of at most $C_{4,1}^{\prime} = 4-\varepsilon$, and each once use $\res_2$ for a duration of at most $C_{4,2}^{\prime} = \varepsilon$. 
+Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ (with parameters listed in Table \ref{table:parameters}), ordered by decreasing order of priority, that are scheduled on two processors using P-FP scheduling. $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while $T_4$ is assigned to processor 2. Jobs of $\tau_2$ each once use a global shared resource $\res_1$  ($s_2 = 1$) for a duration of at most $\varepsilon < 1$ ($C_{2,1}^{\prime} = \varepsilon$), where $\varepsilon$ an arbitrarily small, positive number. While jobs of $\tau_4$ each once use $\res_1$ for a duration of at most $C_{4,1}^{\prime} = 4-\varepsilon$. 
 
-Consider the response-time of $\tau_3$. Since $\tau_3$ is the lowest-priority task on its processor, it does not incur any local blocking (\ie,$s_3 \sum_{\tau_l \in \fun{lp}(3) \cap P(\tau_3)} \max_{1 \leq j < s_l} C_{l,j}^{\prime} = 0$). While each time $\tau_3$ requests $\res_2$, it may be delayed by $\tau_4$ for at most $\epsilon$. Thus, the maximum remote blocking of $\tau_3$ is bounded by $B_3^r = \epsilon$. With regard to the remote blocking incurred by each higher-priority task, we have $B_1^r = 0$ because $\tau_1$ does not request any global resource. Further, each time when a job of $T_2$ requests $\res_1$, it may be delayed for a duration of at most $4-\varepsilon$, thus $B_2^r = 4-\varepsilon$.\footnote{In general, the upper bound on blocking of course depends on the specific locking protocol in use, but in this example, by construction, the stated bound holds under any reasonable locking protocol. Recent surveys of multiprocessor semaphore protocols may be found in \cite{bbb-2013,yang-2015}.} Therefore, according to Eq. \ref{eqn:wcrt}, we have
+Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any global resource and it is the lowest-priority task on its processor, it does not incur any global or local blocking (\ie, $B_3^r = 0$ and $s_3 \sum_{\tau_l \in \fun{lp}(3) \cap P(\tau_3)} \max_{1 \leq j < s_l} C_{l,j}^{\prime} = 0$). With regard to the remote blocking incurred by each higher-priority task, we have $B_1^r = 0$ because $\tau_1$ does not request any global resource. Further, each time when a job of $T_2$ requests $\res_1$, it may be delayed by $\tau_4$ for a duration of at most $4-\varepsilon$. Thus the maximum remote blocking of $\tau_2$ is bounded by $B_2^r = 4-\varepsilon$.\footnote{In general, the upper bound on blocking of course depends on the specific locking protocol in use, but in this example, by construction, the stated bound holds under any reasonable locking protocol. Recent surveys of multiprocessor semaphore protocols may be found in \cite{bbb-2013,yang-2015}.} Therefore, according to Eq. \ref{eqn:wcrt}, we have
 \begin{align*}
-& R_3^0 = \varepsilon + \varepsilon = 2\varepsilon, \\
-& R_3^1 = 2\varepsilon + \left \lceil \frac{2\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{2\varepsilon + 4 - \varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) =  6+4\varepsilon, \\
-& R_3^2 = 2\varepsilon + \left \lceil \frac{6+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{6+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+4\varepsilon, \\
-& R_3^3 = 2\varepsilon + \left \lceil \frac{8+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+4\varepsilon.
+& R_3^0 = \varepsilon + 0 = \varepsilon, \\
+& R_3^1 = \varepsilon + \left \lceil \frac{2\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{2\varepsilon + 4 - \varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) =  6+3\varepsilon, \\
+& R_3^2 = \varepsilon + \left \lceil \frac{6+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{6+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+3\varepsilon, \\
+& R_3^3 = \varepsilon + \left \lceil \frac{8+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+3\varepsilon.
 \end{align*}
  
-As a result, $R_3 = 8+4\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, where $\tau_3$  actually misses a deadline at time~20, which implies that Eq. \ref{eqn:wcrt} does not always yield a sound response-time bound. 
+As a result, $R_3 = 8+3\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, where $\tau_3$  actually misses a deadline at time~20, which implies that Eq. \ref{eqn:wcrt} does not always yield a sound response-time bound. 
 
 \subsection{Incorrect Time Request Analysis With Global Resource Sharing}
 
@@ -87,6 +87,6 @@ However, based on the example in secition \ref{sec:counterexample}, we can immed
 \subsection{A Safe Response Time Bound}
 \label{sec:safe_bound}
 
-In Eq. \ref{eqn:wcrt}, the remote blocking of each higher-priority task (\ie, $B_i^r$) is counted in a similar way as release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in section XXX. A straightforward fix is thus to replace $B_i^r$, in the ceiling function (\ie, the second term in Eq. \ref{eqn:wcrt}), with a larger value such as $D_i$ (as proved/discussed in section XXX) or $R_i - C_i$ (as proved / discussed in section XXX). Similarly, replacing $\sum_{\tau_i \in \fun{hp}(k)} \lceil t / T_i \rceil \cdot C_i$ in Eq. \ref{eqn:rbf-2} and Eq. \ref{eqn:bloc-tolerate} with $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+D_i) / T_i \rceil \cdot C_i$ or $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+R_i-C_i) / T_i \rceil \cdot C_i$ can fix the over-optimistic problem in \cite{NBN:11}.
+In Eq. \ref{eqn:wcrt}, the remote blocking of each higher-priority task (\ie, $B_i^r$) is counted in a similar way as release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in section XXX. A straightforward fix is thus to replace $B_i^r$, in the ceiling function (\ie, the second term in Eq. \ref{eqn:wcrt}), with a larger value such as $D_i$ (as proved/discussed in section XXX) or $R_i - C_i$ (as proved / discussed in section XXX). Similarly, replacing $\sum_{\tau_i \in \fun{hp}(k)} \lceil t / T_i \rceil \cdot C_i$ in Eq. \ref{eqn:rbf-2} and Eq. \ref{eqn:bloc-tolerate} with $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+D_i) / T_i \rceil \cdot C_i$ or $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+R_i-C_i) / T_i \rceil \cdot C_i$ can fix the corresponding over-optimistic problem.
 
-Further, since \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} reviewed in section \ref{sec:papers} merely reused the over-optimistic analysis approach introduced in \cite{lakshmanan-2009}, the stated fix may be used to correct the response-time tests in these papers without additional changes.
+Further, since \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} reviewed in section \ref{sec:papers} merely reused the over-optimistic analysis approach introduced in \cite{lakshmanan-2009} (\ie, reusing $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$ as an interference bound of $\tau_i$ on $tau_k$), the stated fix may be used to correct the response-time tests in these papers without additional changes.
