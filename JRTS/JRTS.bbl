@@ -30,6 +30,11 @@ K.~Bletsas and N.~C. Audsley.
   Real-Time Computing Systems and Applications {(RTCSA} 2005), 17-19 August
   2005, Hong Kong, China}, pages 525--531, 2005.
 
+\bibitem{block-2007}
+A.~Block, H.~Leontyev, B.~Brandenburg, and J.~Anderson.
+\newblock A flexible real-time locking protocol for multiprocessors.
+\newblock In {\em RTCSA}, 2007.
+
 \bibitem{bbb-2013}
 B.~Brandenburg.
 \newblock Improved analysis and evaluation of real-time semaphore protocols for
@@ -50,12 +55,25 @@ J.~Chen and C.~Liu.
   Symposium, {RTSS} 2014, Rome, Italy, December 2-5, 2014}, pages 149--160,
   2014.
 
+\bibitem{EisenbrandR08}
+F.~Eisenbrand and T.~Rothvo{\ss}.
+\newblock Static-priority real-time scheduling: Response time computation is
+  np-hard.
+\newblock In {\em Proceedings of the 29th {IEEE} Real-Time Systems Symposium,
+  {RTSS}}, pages 397--406, 2008.
+
 \bibitem{DBLP:conf/ecrts/Ekberg015}
 P.~Ekberg and W.~Yi.
 \newblock Uniprocessor feasibility of sporadic tasks with constrained deadlines
   is strongly conp-complete.
 \newblock In {\em 27th Euromicro Conference on Real-Time Systems, {ECRTS}},
   pages 281--286, 2015.
+
+\bibitem{RidouardR06}
+R.~Frederic and R.~Pascal.
+\newblock Worst-case analysis of feasibility tests for self-suspending tasks.
+\newblock In {\em proc. 14th Real-Time and Network Systems {RTNS}, Poitiers},
+  pages 15--24, 2006.
 
 \bibitem{ecrts15nelissen}
 G.~R. Geoffrey~Nelissen, José~Fonseca and V.~Nelis.
@@ -81,7 +99,7 @@ W.-H. Huang and J.-J. Chen.
 \newblock Technical report, Dortmund, Germany, 2015.
 
 \bibitem{huangpass:dac2015}
-W.-H. Hung, J.-J. Chen, H.~Zhou, and C.~Liu.
+W.-H. Huang, J.-J. Chen, H.~Zhou, and C.~Liu.
 \newblock {PASS}: Priority assignment of real-time tasks with dynamic
   suspending behavior under fixed-priority scheduling.
 \newblock In {\em Design Automation Conference ({DAC})}, 2015.
@@ -131,6 +149,20 @@ K.~Lakshmanan and R.~Rajkumar.
 \newblock In {\em Proceedings of the 16th IEEE Real-Time and Embedded
   Technology and Applications Symposium}, pages 3--12, 2010.
 
+\bibitem{RTAS-LakshmananR10}
+K.~Lakshmanan and R.~Rajkumar.
+\newblock Scheduling self-suspending real-time tasks with rate-monotonic
+  priorities.
+\newblock In {\em 16th {IEEE} Real-Time and Embedded Technology and
+  Applications Symposium, {RTAS} 2010, Stockholm, Sweden, April 12-15, 2010},
+  pages 3--12, 2010.
+
+\bibitem{lehoczky-1989}
+J.~Lehoczky, L.~Sha, and Y.~Ding.
+\newblock The rate monotonic scheduling algorithm: exact characterization and
+  average case behavior.
+\newblock In {\em RTSS}, pages 166--171, 1989.
+
 \bibitem{LiuChen:rtss2014}
 C.~Liu and J.~Chen.
 \newblock Bursty-interference analysis techniques for analyzing complex
@@ -173,6 +205,13 @@ R.~Rajkumar.
 \newblock {Dealing with Suspending Periodic Tasks.}
 \newblock Technical report, IBM T. J. Watson Research Center, 1991.
 
+\bibitem{Ric03}
+P.~Richard.
+\newblock On the complexity of scheduling real-time tasks with self-suspensions
+  on one processor.
+\newblock In {\em Proceedings. 15th Euromicro Conference onReal-Time Systems,
+  {ECRTS},2003}, pages 187--194, 2003.
+
 \bibitem{Ridouard_2004}
 F.~Ridouard, P.~Richard, and F.~Cottet.
 \newblock {Negative Results for Scheduling Independent Hard Real-Time Tasks
@@ -187,6 +226,12 @@ B.~Sprunt, J.~P. Lehoczky, and L.~Sha.
 \newblock In {\em Proceedings of the 9th {IEEE} Real-Time Systems Symposium
   {(RTSS} '88), December 6-8, 1988, Huntsville, Alabama, {USA}}, pages
   251--258, 1988.
+
+\bibitem{wieder-2013}
+A.~Wieder and B.~Brandenburg.
+\newblock On spin locks in {AUTOSAR}: blocking analysis of {FIFO}, unordered,
+  and priority-ordered spin locks.
+\newblock In {\em RTSS}, 2013.
 
 \bibitem{yang-2013}
 M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
