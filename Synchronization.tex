@@ -57,7 +57,15 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
 & R_3^2 = \varepsilon + \left \lceil \frac{6+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{6+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+3\varepsilon, \\
 & R_3^3 = \varepsilon + \left \lceil \frac{8+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+3\varepsilon.
 \end{align*}
- 
+
+\ifpaper
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.85\linewidth]{../figures/Counterexample1/Counterexample1.pdf}
+  \caption{An example schedule where $\tau_3$ misses a deadline.}\label{fig:counterexample_protocol}
+\end{figure}
+ \fi
+
 As a result, $R_3 = 8+3\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, where $\tau_3$  actually misses a deadline at time~20, which implies that Eq. \ref{eqn:wcrt} does not always yield a sound response-time bound. 
 
 \subsection{Incorrect Time Request Analysis With Global Resource Sharing}

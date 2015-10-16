@@ -5,14 +5,14 @@
 
 Over the years, it has been well accepted that the characterization of the critical instant for self-suspending tasks is a complex problem. Nevertheless, although the complexity of verifying the existence of a feasible schedule for segmented self-suspending tasks has been proven to be ${\cal NP}$-hard in the strong sense \cite{Ridouard_2004}, the complexity of verifying the schedulability of a task set has only been studied for segmented self-suspending tasks with constrained deadlines scheduled with a fixed-priority scheduling algorithm (see Section~\ref{sec:hardness}), hence leaving hope for the existence efficient schedulability tests for more constrained systems. 
 
-Following that idea, Lakshmanan and Rajkumar \cite{RTAS-LakshmananR10} propose a pseudo-polynomial worst-case response time analysis for one segmented self-suspending (with one self-suspending interval) task $\tau_k$ assuming that 
+Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} propose a pseudo-polynomial worst-case response time analysis for one segmented self-suspending (with one self-suspending interval) task $\tau_k$ assuming that 
 \begin{itemize}
 \item the scheduling algorithm is fixed priority (FP);
 \item $\tau_k$ is the lowest priority task; 
 \item all the higher priority tasks are sporadic;
 \item all the higher priority tasks are non-self-suspending.
 \end{itemize}
-The analysis, presented \cite{RTAS-LakshmananR10}, is based on the notion of critical instant, i.e., an instant at which, considering the state of the system, an execution request for $\tau_k$ will generate the largest response time. This critical instant was defined as follows:
+The analysis, presented \cite{LR:rtas10}, is based on the notion of critical instant, i.e., an instant at which, considering the state of the system, an execution request for $\tau_k$ will generate the largest response time. This critical instant was defined as follows:
 \begin{itemize}
 	\item every task releases a job simultaneously with $\tau_k$;
 	\item the jobs of higher priority tasks that are eligible to be released during the self-suspension interval of $\tau_k$ are delayed to be aligned with the release of the subsequent computation segment of $\tau_k$; and
@@ -38,15 +38,18 @@ This definition of the critical instant is very similar to the definition of the
     \label{table:ex-synch-releases}
 \end{table}
 
-\begin{figure}
+\ifpaper
+\begin{figure}[t]
   \centering
-  \subfloat[Worst-case response-time of $\tau_3$ when when all tasks release a job synchronously.]{\label{fig:ex-phi} }%\includegraphics[width=0.85\linewidth]{ex-phi}} \\
-  \subfloat[Worst-case response-time of $\tau_3$ when when all tasks do not release a job synchronously.]{\label{fig:ex-no-phi} }%\includegraphics[width=0.85\linewidth]{ex-no-phi}}
-  \caption{Counter-example to the synchronous release of all tasks.}
+\captionsetup[subfigure]{width=\columnwidth}
+  \subfloat[all tasks release a job synchronously.]{\label{fig:ex-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-phi/ex-phi.pdf} \\
+  \subfloat[all tasks do not release a job synchronously.]{\label{fig:ex-no-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-no-phi/ex-no-phi}
+  \caption{Counter-example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
   \label{fig:ex-synch-releases}
 \end{figure}
+\fi
 
-Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (i.e., the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{RTAS-LakshmananR10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-phi}). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
+Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (i.e., the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-phi}). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
 $$R_3 = R_3^1 + S_3^2 + R_3^2 = 3 + 2 +4 = 9$$
 
 Now, let us consider a job release pattern as shown in Figure~\ref{fig:ex-no-phi}. Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Fig.~\ref{fig:ex-no-phi}). Thus, the total response time of $\tau_3$ in a scenario where not all higher priority tasks release a job synchronously with $\tau_3$ is equal to 
@@ -54,14 +57,57 @@ $$R_3 = R_3^1 + S_3^2 + R_3^2 = 2+2+6 = 10$$
 
 To conclude, the synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. It was however proven in \cite{ecrts15nelissen} that in the critical instant of a self-suspending task $\tau_k$, every higher priority task releases a job synchronously with the arrival of at least one computation segment of $\tau_k$, but not all higher priority tasks must release a job synchronously with the same computation segment.
 
-\subsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
-\label{sec:wrong-carryin}
 
 \subsection{Incorrect Quantifications of Jitter}
 \label{sec:wrong-jitter}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=.8\columnwidth]{../figures/CounterexampleDynamicSuspension/counterex1.pdf}   
+	\caption{A counterexample for the analysis in \cite{RTCSA-BletsasA05}}
+	\label{fig:counterex-rtcsa05}
+\end{figure}
+
+
+Consider a one-segmented self-suspension system consisting of three tasks: sporadic task $\tau_1=((1),4,4)$, SSS task $\tau_2=((1,2,1),6,6)$ with one suspension interval and two computation segments, and sporadic task $\tau_3=((1),T,3)$ where $T \geq 4$. We assume that the minimum and maximum times on the suspension interval of task $\tau_2$ are same. 
+Task $\tau_1$ is assigned with the highest priority whereas task $\tau_3$ with the lowest priority. 
+It is clear that task $\tau_1$ and task $\tau_2$ are schedulable.
+We then check the schedulability of task $\tau_3$.
+The response time analysis proposed by Bletsas and Audsley\cite{RTCSA-BletsasA05} is shown as follows:
+
+\begin{equation}
+R_k=C_k+\hat{S}_k+\sum_{i\in hp(k)}\sum_{j=0}^{n(\tau_i)}\ceiling{\frac{R_k-O_{i}^{j}+A_i}{T_i}}u(R_k-O_{i}^{j})C_{i}^{j}
+\label{eq:bltetsas-rta}
+\end{equation}
+where 
+\begin{equation}
+O_{i}^j=\sum_{j=0}^{M_i-1}(C_{i}^j+\breve{S}_{i}^j)
+\end{equation}
+\begin{equation}
+A_i=S_i-\breve{S_i}
+\end{equation}
+and
+\begin{numcases}{u(t)=}
+1&\text{if }$t\ge 0$, \nonumber\\
+0&\text{otherwise.} 
+\end{numcases}
+
+According to their analysis, a transformation, called \emph{synthetic} distribution, has to be done first to provide an upper bound on the worst-case interference. 
+%Their idea behind the transformation is similar to that proposed by Mok and Chen for multiframe tasks~\cite{mok1997multiframe} where the frames have to be reordered to assure the so-called Accumulatively Monotonic (AM) property.
+Due to the equal size of the computation segments and suspension intervals of task $\tau_2$ in our example, such a transformation has no impact in our example. In addition, since the maximum and minimum times on suspension intervals are the same, the jitter $A_i$ is set to zero.
+Consequently, the worst-case scenario provided by Eq.~\eqref{eq:bltetsas-rta} is to release all the higher-priority tasks as synchronous arrival releases and the following jobs as early as possible. By using the response time analysis by Bletsas and Audsley\cite{RTCSA-BletsasA05} a response time of $3$ for task $\tau_3$ is answered, whereas the asynchronous release, arriving at time-instant $4$, results in a response time of $4$, as shown in Figure~\ref{fig:counterex-rtcsa05}. Hence, the analysis proposed by Bletsas and Audsley in \cite{RTCSA-BletsasA05} guarantees the schedulability of task $\tau_3$ that in fact misses its deadline in the worst-case.
+
+\subsection{Incorrect Quantifications of Additional Interferences due to Carry-In Jobs}
+\label{sec:wrong-carryin}
 
 \subsection{Incorrect Periodic Execution Enforcement}
 \label{sec:wrong-periodic}
 
 
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "JRTS/JRTS.tex"
+%%% End:

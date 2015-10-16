@@ -1,0 +1,118 @@
+\documentclass[border=0pt]{standalone}
+
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{sansmath}
+\tikzset{>=latex}
+
+\begin{document}
+	\begin{sansmath}
+		\renewcommand{\arraystretch}{1.3}
+		
+		\def\ux{0.3cm}\def\uy{0.5cm} 
+		
+		\begin{tikzpicture}[y=\uy, font=\sffamily,thick]  
+		\tikzset{
+			task/.style={fill=#1,  rectangle, text height=.3cm},
+			task1a/.style={task=green!30},
+			task1b/.style={task=green},
+			task2a/.style={task=orange!30},
+			task2b/.style={task=orange, minimum width=13mm},
+			task3a/.style={task=pink, minimum width=13mm},
+			task3b/.style={task=pink!80, minimum width=13mm},
+			task4a/.style={task=cyan, minimum width=13mm},
+			task4b/.style={task=cyan!50},
+			task5/.style={task=blue},
+			task6/.style={task=purple},
+			task7/.style={,minimum height=\ux,draw},
+			task8/.style={minimum height=\ux,draw,thick},
+			task9/.style={task=gray,minimum height=0.7cm,draw},
+		}
+		\tikzstyle{jobs}=[ fill=black!50];
+		
+		
+		\begin{scope}[shift={(0,-1.5)}]
+		%%timeline
+		
+		
+		
+		
+		\node[task7, minimum width=\uy,
+		anchor=south west] (carry-in)at ( 0.5, 0){};
+		\node[task7, minimum width=\uy,
+		anchor=south west] (carry-in)at ( 1.5, 0){};
+		
+		
+		\node[task7, minimum width=\uy,
+		anchor=south west] (carry-in)at ( 2.5, 0){};
+		\node[task7, minimum width=\uy,
+		anchor=south west] (carry-in)at ( 3.5, 0){};
+		
+	
+		
+		
+		
+		
+		
+		
+		\draw[<-](0,1.1) -- (0,0)node[anchor=north] {$$};
+		
+		
+		
+		
+		
+		\draw[-](1,0.3)  -- (1.5,0.3) ;
+		\draw[-](3,0.3)  -- (3.5,0.3) ;
+
+		
+		\draw[<->](2,1.1) -- (2,0)node[anchor=north] {$$};
+		\draw[<->](4,1.1) -- (4,0)node[anchor=north] {$$};
+		
+		
+		
+		\draw[->] (0,0)node[anchor=east] {$\tau_2$} -- coordinate (xaxis) (4.5,0);
+	
+		
+		
+		\end{scope}
+		\begin{scope}[shift={(0,0)}]
+		
+		\draw[<->](4,1.1) -- (4,0)node[anchor=north] {$$};
+		
+		
+		\draw[->] (0,0) node[anchor=east] {$\tau_1$}-- coordinate (xaxis) (4.5,0);
+		\draw[<-](0,1.1) -- (0,0)node[anchor=north] {$$};
+		\draw[<->](2,1.1) -- (2,0)node[anchor=north] {$$};
+		
+		\node[task7, minimum width=\uy,
+		anchor=south west]at (0, 0){};
+		\node[task7, minimum width=\uy,
+		anchor=south west]at (2, 0){};
+
+	
+		
+		
+		
+		\end{scope}
+		\begin{scope}[shift={(0,-3)}]
+		
+		
+		
+		\draw[->] (0,0) node[anchor=east] {$\tau_3$}-- coordinate (xaxis) (4.5,0);
+		\draw[<-](0,1.1) -- (0,0)node[anchor=north] {$$};
+		
+		\draw[->](1.5,1.1) -- (1.5,0)node[anchor=north] {$$};
+		\node[task7, minimum width=\uy,
+		anchor=south west]at (1, 0){};
+		
+		\foreach \x in {0,...,8}{
+			\draw[-](.5*\x,0.1) -- (.5*\x,-0.1)
+			node[below] {\small $\x$};
+			
+		}
+		\end{scope}
+		
+		\end{tikzpicture}  
+		\end{sansmath}
+		\end{document}

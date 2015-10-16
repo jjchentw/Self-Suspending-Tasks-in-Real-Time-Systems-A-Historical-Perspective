@@ -5,7 +5,11 @@ This section reviews the existing solutions for scheduling and analyzing the sch
 
 To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table \ref{table:dynamic-example} and Table \ref{table:static-example}. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under Rate-Monotonic scheduling. 
 
+\ifpaper
+\begin{table}[t]
+\else
 \begin{table} 
+\fi
 \centering
     \begin{tabular}{|c|c|c|c|c|}
  \hline
@@ -20,7 +24,11 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
     \label{table:dynamic-example}
 \end{table}
 
+\ifpaper
+\begin{table}[t]
+\else
 \begin{table} 
+\fi
 \centering
     \begin{tabular}{|c|c|c|c|}
  \hline
@@ -40,13 +48,16 @@ For self-suspending sporadic task systems, while executing, a job may suspend it
 
 {\bf an example}
 
-There are some common strategies to characterize and quantify the impact due to self-suspensions:
-\begin{itemize}
-\item {\bf Convert All Self-Suspension into Computation:} This is the simplest and the most pessimistic strategy. It basically converts all self-suspending time into computation time. That is, we can consider that the execution time of task $\tau_i$ is always $C_i+S_i$. After the conversion, we only have sporadic real-time tasks. Therefore, all the existing results for sporadic task systems can be adopted. The proof can be done with the following simple interpretation: The suspension of a job may make the processor idle. If two jobs suspend at the same time and the processor idles in a certain time interval in the actual schedule, it can be imagined that one of these two jobs have shorter execution time (than its worst-case execution time $C_i+S_i$). Such earlier completion does not affect the schedulability analysis. Therefore, putting $C_i+S_i$ as the worst-case execution time for every task $\tau_i$ is a very safe analysis for both dynamic- and static-scheduling policies.  Such an approach has been widely used as the baseline of more accurate analyses in the literature.
+There are some common strategies to characterize and quantify the impact due to self-suspensions. We categorize these methods in the following subsections.
+
+\subsection{Convert All Self-Suspension into Computation}
+ This is the simplest and the most pessimistic strategy. It basically converts all self-suspending time into computation time. That is, we can consider that the execution time of task $\tau_i$ is always $C_i+S_i$. After the conversion, we only have sporadic real-time tasks. Therefore, all the existing results for sporadic task systems can be adopted. The proof can be done with the following simple interpretation: The suspension of a job may make the processor idle. If two jobs suspend at the same time and the processor idles in a certain time interval in the actual schedule, it can be imagined that one of these two jobs have shorter execution time (than its worst-case execution time $C_i+S_i$). Such earlier completion does not affect the schedulability analysis. Therefore, putting $C_i+S_i$ as the worst-case execution time for every task $\tau_i$ is a very safe analysis for both dynamic- and static-scheduling policies.  Such an approach has been widely used as the baseline of more accurate analyses in the literature.
 
 With this schedulability test, it is easy to see that none of the three example task sets ${\bf T}_1$, ${\bf T}_2$, ${\bf T}_3$ cannot be classified as feasible since $\frac{1}{2} + \frac{5+5}{20} + \frac{1}{D_\gamma} > 1$ and $\frac{2}{5}+\frac{2}{10}+\frac{1+5+1}{15} > 1$.
 
-\item {\bf Convert Higher-Priority Tasks into Sporadic Tasks:} In static-priority scheduling, we can convert the higher-priority self-suspending tasks into equivalent sporadic real-time tasks: When we analyze the schedulability of a task $\tau_k$, we can convert the higher-priority self-suspending tasks into sporadic tasks by treating the suspension as computation. That is, a higher-priority task $\tau_i$ (higher than task $\tau_k$) has now worst-case execution time $C_i+S_i$. This simplifies the analysis. After converting, we only have one self-suspending task left as the lowest-priority task in the system.  Such a conversion is useful for analyzing segmented self-suspending task model. However, such a conversion is not very useful for analyzing dynamic self-suspending task models, since we have to consider the worst case that the self-suspension of task $\tau_k$ makes the processor idle. Therefore, we also have to convert $\tau_k$'s self-suspension into computation. This results in identical analysis by converting self-suspension into computation for all the tasks. 
+\subsection{Convert Higher-Priority Tasks into Sporadic Tasks} 
+
+In static-priority scheduling, we can convert the higher-priority self-suspending tasks into equivalent sporadic real-time tasks: When we analyze the schedulability of a task $\tau_k$, we can convert the higher-priority self-suspending tasks into sporadic tasks by treating the suspension as computation. That is, a higher-priority task $\tau_i$ (higher than task $\tau_k$) has now worst-case execution time $C_i+S_i$. This simplifies the analysis. After converting, we only have one self-suspending task left as the lowest-priority task in the system.  Such a conversion is useful for analyzing segmented self-suspending task model. However, such a conversion is not very useful for analyzing dynamic self-suspending task models, since we have to consider the worst case that the self-suspension of task $\tau_k$ makes the processor idle. Therefore, we also have to convert $\tau_k$'s self-suspension into computation. This results in identical analysis by converting self-suspension into computation for all the tasks. 
 
 With the conversion, the fundamental problem is to analyze the worst-case response time of a self-suspending task $\tau_k$ as the lowest-priority task in the task system, when all the other higher priority tasks are ordinary sporadic real-time tasks. One simple strategy is to analyze the worst-case response time $R_k^j$ for each computation segment $C_k^j$. The schedulability test of task $\tau_k$ then is to simply verify whether $R_k^{m_k} + \sum_{j=1}^{m_k-1} R_k^j + S_k^j \leq D_k \leq T_k$. Let's use task set ${\bf T}_1$ as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ in ${\bf T}_1$ are both clearly $5$ by using standard the time demand analysis (TDA). Therefore, we know that the worst-case response time of task $\tau_3$ in ${\bf T}_1$ is at most $15$.
 
@@ -58,7 +69,8 @@ The problem with only one self-suspending task as the lowest-priority task has b
 
 
 
-\item {\bf Quantify Additional Interference due to Self-Suspensions:} Suspension may result in more workload from higher-priority jobs to interfere with a lower-priority job. This strategy is to convert the suspension time of a job of task $\tau_k$ under analysis into computation. Suppose that this job under analysis arrives at time $t_k$. The other higher-priority jobs except the job under analysis are considered to (possibly) have self-suspensions. This is the completely opposite strategy to the previous strategy. Since a higher-priority self-suspending job may suspend itself before $t_k$ and resume after $t_k$, the self-suspending behaviour of a task $\tau_i$ can be considered to bring \emph{at most} one \emph{carry-in} job to be \emph{partially} executed after $t_k$ if $D_i \leq T_i$. As we have converted task $\tau_k$'s self-suspension time into computation, the finishing time of the job of task $\tau_k$ is the earliest moment after $t_k$ such that the processor idles. 
+\subsection{Quantify Additional Interference due to Self-Suspensions}
+ Suspension may result in more workload from higher-priority jobs to interfere with a lower-priority job. This strategy is to convert the suspension time of a job of task $\tau_k$ under analysis into computation. Suppose that this job under analysis arrives at time $t_k$. The other higher-priority jobs except the job under analysis are considered to (possibly) have self-suspensions. This is the completely opposite strategy to the previous strategy. Since a higher-priority self-suspending job may suspend itself before $t_k$ and resume after $t_k$, the self-suspending behaviour of a task $\tau_i$ can be considered to bring \emph{at most} one \emph{carry-in} job to be \emph{partially} executed after $t_k$ if $D_i \leq T_i$. As we have converted task $\tau_k$'s self-suspension time into computation, the finishing time of the job of task $\tau_k$ is the earliest moment after $t_k$ such that the processor idles. 
 \begin{itemize}
 \item In the \emph{dynamic self-suspending task model}, the above analysis implies that the higher-priority jobs arrived after time $t_k$ \emph{should not} suspend themselves to create the maximum interference. Therefore, suppose that the first arrival time of task $\tau_i$ after $t_k$ is $t_i$, i.e., $t_i \geq t_k$. Then, the demand of task $\tau_i$ released at time $t \geq t_i$ is $\ceiling{\frac{t-t_i}{T_i} } C_i$. So, we just have to account the demand of the carry-in job of task $\tau_i$ executed between $t_k$ and $t_i$. The workload of the carry-in job can be up to $C_i$, but can also be characterized in a more precise manner. The approaches in this category are presented in \cite{huangpass:dac2015,LiuChen:rtss2014} by greedily counting $C_i$ in the carry-in job. 
 Jane W.S. Liu in her textbook \cite[Page 164-165]{Liu:2000:RS:518501} presents an approach to quantify the higher-priority tasks by setting up the \emph{blocking time} induced by self-suspensions. In her analysis, a job of task $\tau_k$ can suffer from the \emph{extra delay} due to self-suspending behavior as a factor of blocking time, denoted as $B_k$, as follows: (1) The blocking time contributed from task $\tau_k$ is $S_k$. (2) A higher-priority task $\tau_i$ can only block the execution of task $\tau_k$ by at most $b_i=min(C_i, S_i)$ time units. In the textbook \cite{Liu:2000:RS:518501}, the blocking time $B_k=S_k+\sum_{i=1}^{k-1} b_i$ is then used to perform utilization-based analysis for rate-monotonic scheduling. However, there was no proof in the textbook. Fortunately, the recent report from Chen [XXX] has provided a proof to support the correctness of the above method in \cite{Liu:2000:RS:518501}.
@@ -80,7 +92,9 @@ There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RT
 
 Let's use task set ${\bf T}_2$ to illustrate how the schedulability tests work. \jj{leave to Kevin and Michael.}
  
-\item {\bf Handle Self-Suspension Segments of the Task under Analysis:} Greedily converting the suspension time of a job of task $\tau_k$ under analysis into computation can also become very pessimistic if $S_k$ is much larger than $C_k$. However, the decision to convert a task $\tau_k$ has to be done carefully. Now, we can consider a simple example to analyze the worst-case response time of task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$. We can have two options:
+\subsection{Handle Self-Suspension Segments of the Task under Analysis}
+
+ Greedily converting the suspension time of a job of task $\tau_k$ under analysis into computation can also become very pessimistic if $S_k$ is much larger than $C_k$. However, the decision to convert a task $\tau_k$ has to be done carefully. Now, we can consider a simple example to analyze the worst-case response time of task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$. We can have two options:
 \begin{itemize}
 \item Convert $S_k^2$ into computation, and then apply the above analysis by considering that task $\tau_k$ has execution time $C_k^1+S_k^1+C_k^2$. We simply have to verify whether the worst-case response time is no more than $D_k$.
 \item Treat each of the computation segments of task $\tau_k$ individually by applying the worst-case higher-priority interference, regardless of its previous computation segments. We need to verify if the suspension time $S_k$ plus sum of the worst-case response time of all the computation segments of task $\tau_k$ is no more than $D_k$. 
@@ -89,19 +103,21 @@ The benefit of the former approach is due to that it only pessimistically counts
 
 The example in Convert Higher-Priority Tasks into Sporadic Tasks when $S_3^1$ is $1$ has demonstrated the difference of the above two difference cases. 
 
-\item {\bf Enforce Periodic Behaviour by Release Time Enforcement:}   Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
+\subsection{Enforce Periodic Behaviour by Release Time Enforcement}   Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
   \begin{itemize}
-  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). \jj{rewrite this...} (One can imagine that a sporadic server \cite{RTSS-SpruntLS88} with capacity $C_k$ and replenishment period $T_k$ is the reservation server to run task $\tau_k$, by handling the self-suspension.) The period enforcer algorithm was shown the have a good property: ``A deferrable task that is schedulable under its worst-case conditions is also schedulable under the period enforcer algorithm.'' in Theorem 3.5 in \cite{Raj:suspension1991}. 
-% Therefore, we can use the period enforcer algorithm to verify the schedulability of task $\tau_k$ under static-priority scheduling. However, since there is no schedulability test in \cite{Raj:suspension1991}, how to achieve this remains an open problem.
-\jj{leave this to Raj.}
+  \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). In a nutshell, the period enforcer algorithm artificially increases the length of certain suspensions whenever a task's activation pattern carries the risk of inducing undue interference in lower-priority tasks. By \cite{Raj:suspension1991}, the period enforcer algorithm ``forces tasks to behave like ideal periodic tasks from the scheduling point of view with no associated scheduling penalties''. The period enforcer is revisited by Chen and Brandenburg \cite{ChenBrandenburg}, with the following three observations:
+\begin{enumerate}
+	\item period enforcement can be a cause of deadline misses in self-suspending tasks sets that are otherwise schedulable;
+	\item with current techniques, schedulability analysis of the period enforcer algorithm requires a task set transformation that is subject to exponential time complexity; and 	
+        \item the period enforcer algorithm is incompatible with all existing analyses of suspension-based locking protocols, and can in fact cause ever-increasing suspension times until a deadline is missed.
+\end{enumerate}
   \item {\it Set a constant offset to constrain the release time of a computation segment}: Suppose that the offset for the $j$-th computation segment of task $\tau_i$ is $\phi_i^j$. This means that the $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, in which $r_i$ is the arrival time of a job of task $\tau_i$. With the enforcement, each computation segment can be represented by a sporadic task with a period $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$. (Here, $\phi_{i,m_i+1}$ is set to $D_i$.) Such approaches have been presented in \cite{RTSS-KimANR13,LR:rtas10,RTSS-ChenL14}. The method in \cite{RTSS-ChenL14} is a simple greedy solution for implicit-deadline self-suspending task systems with at most one self-suspension interval per task. It assigns the phase $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative deadline for earliest-deadline-first scheduling. 
 
 
 The method in \cite{RTSS-KimANR13} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13}, the schedulability test is not correct, and the proposed mixed-integer linear programming is unsafe for worst-case response time guarantees. The method in \cite{LR:rtas10} is XXX (left to Geoffrey...)
   \end{itemize}
-\item {\bf Special Cases with Good Observations:}
-\end{itemize}
 
+\subsection{Special Cases with Good Observations}
 
   
   
@@ -119,13 +135,12 @@ The method in \cite{RTSS-KimANR13} assigns each computation segment a static-pri
   
   
   
-
-
 
 
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "authorea_build/authorea_paper.tex"
+%%% TeX-master: "JRTS/JRTS.tex"
 %%% End:
+
 
   
