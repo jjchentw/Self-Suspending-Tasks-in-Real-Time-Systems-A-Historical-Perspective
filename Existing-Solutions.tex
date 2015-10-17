@@ -88,7 +88,7 @@ Let's use task set ${\bf T}_3$ to illustrate the above analysis in \cite{huangpa
 
 There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} which quantify the jitter of task $\tau_i$ by setting $J_i$ to $S_i$. We will explain later in Section \ref{sec:wrong-jitter-dynamic} why setting $J_i$ to $S_i$ is in general too optimistic. 
 
-\item In the \emph{segmented self-suspending task model}, we can simply ignore the segmentation structure of computation segments and suspension intervals and directly apply all the strategies for dynamic self-suspending task models. However, the analysis will become pessimistic. This is due to the fact that the segmented-suspensions are not completely dynamic. The static suspension patterns result in also certain (more predictable) suspension patterns. However, characterizing the worst-case suspending patterns of the higher priority tasks to quantify the additional interference under segmented self-suspending task model is not easy. Similarly, one possibility is to characterize the worst-case interference in the carry-in job of a higher-priority task $\tau_i$ by analyzing its self-suspending pattern, as presented in \cite{Huang:multiseg}. Another possibility is to  quantify the interference by modeling it with a jitter term, as presented in \cite{RTCSA-BletsasA05}. We will explain later in Section~\ref{sec:wrong-carryin} why the quantification of the interference in \cite{RTCSA-BletsasA05} is incorrect. {\bf Michael's paper in RTSS1998}.
+\item In the \emph{segmented self-suspending task model}, we can simply ignore the segmentation structure of computation segments and suspension intervals and directly apply all the strategies for dynamic self-suspending task models. However, the analysis will become pessimistic. This is due to the fact that the segmented-suspensions are not completely dynamic. The static suspension patterns result in also certain (more predictable) suspension patterns. However, characterizing the worst-case suspending patterns of the higher priority tasks to quantify the additional interference under segmented self-suspending task model is not easy. Similarly, one possibility is to characterize the worst-case interference in the carry-in job of a higher-priority task $\tau_i$ by analyzing its self-suspending pattern, as presented in \cite{Huang:multiseg}. Another possibility is to  quantify the interference by modeling it with a jitter term, as presented in \cite{RTCSA-BletsasA05}. We will explain later in Section~\ref{sec:wrong-jitter-segmented} why the quantification of the interference in \cite{RTCSA-BletsasA05} is incorrect. {\bf Michael's paper in RTSS1998}.
 \end{itemize}
 
 
@@ -105,7 +105,10 @@ The benefit of the former approach is due to that it only pessimistically counts
 
 The example in Convert Higher-Priority Tasks into Sporadic Tasks when $S_3^1$ is $1$ has demonstrated the difference of the above two difference cases. 
 
-\subsection{Enforce Periodic Behaviour by Release Time Enforcement}   Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
+\subsection{Enforce Periodic Behaviour by Release Time Enforcement}   
+\label{sec:periodic-enforce}
+
+Self-suspension can cause substantial schedulability degradation. To leviate the impact on additional interference due to self-suspension, one possibility is to enforce the periodic behaviour by enforcing the release time of the computation segments. There are two categories of such enforcement. 
   \begin{itemize}
   \item {\it Use resource reservation servers}: Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} algorithm to handle the impact of uncertain releases (like self-suspensions). In a nutshell, the period enforcer algorithm artificially increases the length of certain suspensions whenever a task's activation pattern carries the risk of inducing undue interference in lower-priority tasks. By \cite{Raj:suspension1991}, the period enforcer algorithm ``forces tasks to behave like ideal periodic tasks from the scheduling point of view with no associated scheduling penalties''. The period enforcer is revisited by Chen and Brandenburg \cite{ChenBrandenburg}, with the following three observations:
 \begin{enumerate}
@@ -116,10 +119,9 @@ The example in Convert Higher-Priority Tasks into Sporadic Tasks when $S_3^1$ is
   \item {\it Set a constant offset to constrain the release time of a computation segment}: Suppose that the offset for the $j$-th computation segment of task $\tau_i$ is $\phi_i^j$. This means that the $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, in which $r_i$ is the arrival time of a job of task $\tau_i$. With the enforcement, each computation segment can be represented by a sporadic task with a period $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$. (Here, $\phi_{i,m_i+1}$ is set to $D_i$.) Such approaches have been presented in \cite{RTSS-KimANR13,LR:rtas10,RTSS-ChenL14}. The method in \cite{RTSS-ChenL14} is a simple greedy solution for implicit-deadline self-suspending task systems with at most one self-suspension interval per task. It assigns the phase $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative deadline for earliest-deadline-first scheduling. 
 
 
-The method in \cite{RTSS-KimANR13} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13}, the schedulability test is not correct, and the proposed mixed-integer linear programming is unsafe for worst-case response time guarantees. The method in \cite{LR:rtas10} is XXX (left to Geoffrey...)
+The methods in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} assigns each computation segment a static-priority level and a phase. Unfortunately,  in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, the schedulability tests are not correct, and the proposed mixed-integer linear programming \cite{RTSS-KimANR13} is unsafe for worst-case response time guarantees. 
   \end{itemize}
 
-\subsection{Special Cases with Good Observations}
 
   
   
