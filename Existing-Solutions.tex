@@ -1,4 +1,4 @@
-\section{General Design and Analysis Strategies in Uniprocessor Platforms}
+\section{General Design and Analysis Strategies}
 \label{sec:review}
 
 This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The  strategies are generally correct, but the analysis has to be done carefully.  In the next section, we will explain some of misconceptions used in the literature by giving concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
@@ -46,16 +46,17 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
 
 For self-suspending sporadic task systems, while executing, a job may suspend itself or even must suspend itself in the segmented self-suspension model. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze the schedulability of the task systems. 
 
-{\bf an example}
-
 There are some common strategies to characterize and quantify the impact due to self-suspensions. We categorize these methods in the following subsections.
 
 \subsection{Convert All Self-Suspension into Computation}
+\label{sec:oblivious}
+
  This is the simplest and the most pessimistic strategy. It basically converts all self-suspending time into computation time. That is, we can consider that the execution time of task $\tau_i$ is always $C_i+S_i$. After the conversion, we only have sporadic real-time tasks. Therefore, all the existing results for sporadic task systems can be adopted. The proof can be done with the following simple interpretation: The suspension of a job may make the processor idle. If two jobs suspend at the same time and the processor idles in a certain time interval in the actual schedule, it can be imagined that one of these two jobs have shorter execution time (than its worst-case execution time $C_i+S_i$). Such earlier completion does not affect the schedulability analysis. Therefore, putting $C_i+S_i$ as the worst-case execution time for every task $\tau_i$ is a very safe analysis for both dynamic- and static-scheduling policies.  Such an approach has been widely used as the baseline of more accurate analyses in the literature.
 
 With this schedulability test, it is easy to see that none of the three example task sets ${\bf T}_1$, ${\bf T}_2$, ${\bf T}_3$ cannot be classified as feasible since $\frac{1}{2} + \frac{5+5}{20} + \frac{1}{D_\gamma} > 1$ and $\frac{2}{5}+\frac{2}{10}+\frac{1+5+1}{15} > 1$.
 
-\subsection{Convert Higher-Priority Tasks into Sporadic Tasks} 
+\subsection{Convert Higher-Priority Tasks into Sporadic Tasks}
+\label{sec:high-as-sporadic} 
 
 In static-priority scheduling, we can convert the higher-priority self-suspending tasks into equivalent sporadic real-time tasks: When we analyze the schedulability of a task $\tau_k$, we can convert the higher-priority self-suspending tasks into sporadic tasks by treating the suspension as computation. That is, a higher-priority task $\tau_i$ (higher than task $\tau_k$) has now worst-case execution time $C_i+S_i$. This simplifies the analysis. After converting, we only have one self-suspending task left as the lowest-priority task in the system.  Such a conversion is useful for analyzing segmented self-suspending task model. However, such a conversion is not very useful for analyzing dynamic self-suspending task models, since we have to consider the worst case that the self-suspension of task $\tau_k$ makes the processor idle. Therefore, we also have to convert $\tau_k$'s self-suspension into computation. This results in identical analysis by converting self-suspension into computation for all the tasks. 
 
@@ -95,6 +96,7 @@ There have been some flawed analyses in the literature \cite{ECRTS-AudsleyB04,RT
 Let's use task set ${\bf T}_2$ to illustrate how the schedulability tests work. \jj{leave to Kevin and Michael.}
  
 \subsection{Handle Self-Suspension Segments of the Task under Analysis}
+\label{sec:suspend-or-not} 
 
  Greedily converting the suspension time of a job of task $\tau_k$ under analysis into computation can also become very pessimistic if $S_k$ is much larger than $C_k$. However, the decision to convert a task $\tau_k$ has to be done carefully. Now, we can consider a simple example to analyze the worst-case response time of task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$. We can have two options:
 \begin{itemize}
@@ -125,13 +127,14 @@ The methods in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} assigns each c
   \end{itemize}
 
 
+
+\subsection{Multiprocessor Scheduling for Self-Suspending Tasks}
+\label{sec:multiprocessor-HRT}
   
+The first suspension-aware worst-case response time analysis for dynamic self-suspending sporadic tasks in a multiprocessor platform is presented in \cite{DBLP:conf/ecrts/LiuA13}. 
+The studied scheduling scheme is global scheduling, in which the jobs can be executed on any of the given $M$ identical processors. The analysis in \cite{DBLP:conf/ecrts/LiuA13} is mainly based on the existing results in the literature for global fixed-priority scheduling and dynamic-priority scheduling for ordinary sporadic task systems without self-suspensions. Unfortunately, the schedulability test provided in \cite{DBLP:conf/ecrts/LiuA13} for global fixed-priority scheduling has two flaws: (1) the calculation in Lemma 3 in \cite{DBLP:conf/ecrts/LiuA13}  to calculate the workload bound is unsafe, and (2) it is too optimistic to claim that there are at most $M-1$ carry-in jobs in the analysis interval. The first flaw in (1) can be fixed by using a safe upper bound. The second flaw in (2) is due to the inherited flaw from \cite{DBLP:conf/rtss/GuanSYY09}, in which the flaw has been pointed out in \cite{sun2014improving,DBLP:conf/rtns/HuangC15}, and the fixed solutions are also provided in \cite{sun2014improving,DBLP:conf/rtns/HuangC15}. Therefore, by adopting the analysis from \cite{DBLP:conf/rtns/HuangC15}, which is consistent with the analysis in \cite{DBLP:conf/ecrts/LiuA13}, the flaw can be easily fixed. Please refer to \cite{erratu-cong-anderson}.
   
-  
-  
-  
-  
-  
+Chen et al. \cite{ChenHLRTSS2015} study global rate-monotonic scheduling in multiprocessor systems, including dynamic self-suspending tasks. The proposed utilization-based schedulability analysis  in \cite{ChenHLRTSS2015} can be easily extended to handle constrained-deadline task systems and any given fixed-priority assignment.
   
   
   

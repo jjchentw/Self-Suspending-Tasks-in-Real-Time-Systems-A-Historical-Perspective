@@ -21,7 +21,8 @@ However, from the analysis perspective, such a  dynamic model leads to quite pes
 
 
 Throughout this paper, we will use ${\bf T}$ to denote the input task
-set and use $n$ to denote the number of tasks in ${\bf T}$. 
+set and use $n$ to denote the number of tasks in ${\bf T}$. The
+utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
 equal to the period $T_k$, such a task set ${\bf T}$ is an
@@ -53,7 +54,7 @@ Implicitly, we will assume that the system schedules the jobs in a
 \emph{preemptive} manner, unless specified.  The cost of preemption
 has been subsumed into the worst-case execution time of each task. In
 uniprocessor systems, i.e., Section~\ref{sec:review} and
-Section~\ref{sec:misconceptions}, we will consider both
+Section~\ref{sec:misconceptions} (except Section~\ref{sec:multiprocessor-HRT}), we will consider both
 dynamic-priority scheduling and fixed-priority (FP)
 scheduling. A task changes its priority levels in dynamic-priority
 scheduling during run-time. One well-known dynamic-priority scheduling
