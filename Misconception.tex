@@ -1,5 +1,8 @@
 
 \section{Misconceptions in Some Existing Results}
+\label{sec:misconceptions}
+
+This section presents several misconceptions in some existing results by exploiting concrete examples to demonstrate the potential overstatements. These examples are constructed cases by cases. Therefore, each misconception will be explained by using one specific example. 
 
 \subsection{Incorrect Quantifications of Jitter - Dynamic Self-Suspension}
 \label{sec:wrong-jitter-dynamic}
@@ -192,10 +195,41 @@ $S_1$ to $T_1$ and lies in the range of $0$ to $2^{\frac{1}{n-1}}-1$.
   \end{equation}
 This also implies that the utilization bound (for implicit-deadline task systems) is still Liu and Layland bound $n(2^{\frac{1}{n}}-1)$ \cite{Liu_1973}, regardless of the ratio of $S_1/T_1$. 
 
-\subsection{Incorrect Scheduling with Periodic Execution Enforcement}
+\subsection{Incorrect Segmented Fixed-Priority Scheduling with Periodic Enforcement}
 \label{sec:wrong-periodic}
 
-We now introduce another misconception. 
+We now introduce misconceptions to adopt periodic enforcement for segmented self-suspending task systems. As mentioned in Section~\ref{sec:periodic-enforce}, we can set a constant offset to constrain the release time of a computation segment. If this offset is given, each computation segment behaves like a standard sporadic (or periodic) tasks. Therefore, the schedulability test for sporadic task systems can be directly applied. Since the offsets of two computation segments of a task may be different, one may want to assign each computation segment a \emph{fixed-priority} level.  However, this has to be carefully handled. 
+
+Consider the following example. Task $\tau_1$ has $T_1=D_1=30$ and execution time $C_1=10$ without self-suspension. Task $\tau_2$ has $T_2=D_2=40$, and $C_2^1=5$, $S_2^1=5$, and $C_2^2=16$. Suppose that the offset of the computation segment $C_2^1$ is $0$ and the offset of the computation segment $C_2^2$ is $10$. This setting creates three sporadic tasks.
+Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest priority and $C_2^2$ the lowest priority. It should be clear that the worst-case response time of $C_2^1$ is $5$ and the worst-case response time of $C_1$ is $15$. Let's focus on the WCRT analysis of $C_2^2$.
+
+
+Since the two computation segments of task $\tau_2$ should not have any overlap, one may think that during the analysis of the worst-case response time of $C_2^2$, we do not have to consider the computation segment $C_2^1$. The worst-case response time of $C_2^2$ (after its constant offset $10$) for this case is $26$ since $\ceiling{\frac{26}{30}} C_1 + C_2^2 = 26$. 
+Since $26+10 < 40$, one may conclude that this enforcement results in a feasible schedule. This analysis is adopted in Section IV in \cite{RTSS-KimANR13} and Section 3 in \cite{DBLP:journals/ieicet/DingTT09}. 
+
+Unfortunately, it is not. Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of $C_2^2$ is larger than $30$, which implies a deadline miss. In fact, the $5$ units execution time of $C_2^1$ pushes $C_1$ and results in a deadline miss of task $\tau_2$.
+
+
+
+
+\begin{figure}[t]
+\begin{center}
+\input{../figures/CounterexampleFixedPrioritySegmented/carry-in-body.tex}
+\end{center}
+\caption{A schedule to release the two tasks in Section~\ref{sec:wrong-periodic} simultaneously at time $0$.}
+\label{fig:counterexample-FP-segment-level}
+\end{figure}
+
+{\bf Consequences:} The priority assignment algorithms in \cite{RTSS-KimANR13} and \cite{DBLP:journals/ieicet/DingTT09} use the above unsafe schedulability test to verify the priority assignments. Therefore, their results are flawed due to the unsafe schedulability test.
+
+{\bf Solutions:} This requires to a revisit of the schedulability test of a given segmented fixed-priority priority assignment. This can be observed as a reduction to 
+the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. A GMF task $\psi_i$ consisting of $m_i$ frames is characterized by the $3$-tuple $(\vec{C_i},\vec{D_i},\vec{T_i})$, where $\vec{C_i}$,$\vec{D_i}$, and $\vec{T_i}$ are $m_i$-ary vectors $(C_{i}^0,C_{i}^1,...,C_{i}^{m_i-1})$ of execution requirements, $(D_{i}^0,D_{i}^1,...,D_{i}^{m_i-1})$ of relative deadlines, $(T_{i}^0,T_{i}^1,...,T_{i}^{m_i-1})$ of minimum inter-arrival times, respectively.
+In fact, from the analysis perspective, a self-suspension task $\tau_i$ under the offset enforcement is equivalent to a GMF task $\psi_i$,  by considering the computation segments as the frames with different separation times.
+
+However, most of the existing fixed-priority scheduling results for GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
+
+% \subsection{Incorrect Scheduling with Slack Enforcement}
+% \label{sec:wrong-slack}
 
 
 

@@ -16,3 +16,11 @@
 JRTS/JRTS.bbl
 
 JRTS/JRTS.aux
+
+*.bbl
+
+*.bbl
+
+*.blg
+
+*.aux
