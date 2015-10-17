@@ -1,7 +1,7 @@
 \section{Soft Real-Time Self-Suspending Task Systems}
 
 The goal of real-time scheduling is to guarantee timing predictability; in other words, every task is schedulable if it meets the predefined timing constraints at design time. Being ``schedulable'' depends on whether task deadlines are hard or soft. 
-For a hard real-time (HRT) task, its deadline must be met; while for a soft real-time (SRT) task, missing some deadlines can be tolerated. We assume a well-studied SRT notion \cite{mills2010stochastic,erickson2012soft,johndissertation,BBBdissertation,devidissertation,leontyevdissertation} that a SRT task is schedulable if its tardiness can be provably bounded. (Such bounds would be expected to be reasonably small.) A task's tardiness is defined to be its maximum job tardiness, which is calculated by a job's completion time minus the job's absolute deadline.
+For a hard real-time (HRT) task, its deadline must be met; while for a soft real-time (SRT) task, missing some deadlines can be tolerated. We assume a well-studied SRT notion that a SRT task is schedulable if its tardiness can be provably bounded. (Such bounds would be expected to be reasonably small.) A task's tardiness is defined to be its maximum job tardiness, which is calculated by a job's completion time minus the job's absolute deadline.
 
 \paragraph{Overview on Soft Real-Time Self-Suspending Task Scheduling.}
 The schedulability analysis techniques on soft real-time self-suspending task systems can be categorized into two categories: suspension-oblivious analysis v.s. suspension-aware analysis.
