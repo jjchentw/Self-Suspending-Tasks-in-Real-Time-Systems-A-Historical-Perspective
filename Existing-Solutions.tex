@@ -3,7 +3,7 @@
 
 This section reviews the existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first explain the commonly adopted strategies in those solutions. The  strategies are generally correct, but the analysis has to be done carefully.  In the next section, we will explain some of misconceptions used in the literature by giving concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. At the end of this section, we will provide the rule of thumb for analyzing self-suspending task systems. 
 
-To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table \ref{table:dynamic-example} and Table \ref{table:static-example}. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under Rate-Monotonic scheduling. 
+To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table \ref{table:dynamic-example} and Table \ref{table:static-example} in this section. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified, we will implicitly assume that these three example task sets are scheduled under rate-monotonic (RM) scheduling in this section. 
 
 \ifpaper
 \begin{table}[t]
@@ -20,7 +20,7 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         $\tau_\gamma$ & 1 & 0  & ? & $\infty$ \\ 
         \hline
     \end{tabular} 
-    \caption{Examples for dynamic self-suspending tasks}
+    \caption{Examples for dynamic self-suspending tasks to be used in Section~\ref{sec:review}.}
     \label{table:dynamic-example}
 \end{table}
 
@@ -40,7 +40,7 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
         $\tau_4$ & (3, 0, 0) & ? & $\infty$\\
         \hline
     \end{tabular} 
-    \caption{Examples for dynamic segmented-suspending tasks}
+    \caption{Examples for dynamic segmented-suspending tasks to be used in Section~\ref{sec:review}.}
     \label{table:static-example}
 \end{table}
 
