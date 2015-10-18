@@ -1,3 +1,120 @@
-\section{Short Summary of the Errors and Mistakes in the State of the Art}
+\section{Open Issues in the Existing Results}
+
+We have carefully re-examined the results related to self-suspending
+real-time tasks in the literature in the past 25 years. However, there
+are also some results in the literature that may require further
+elaborations. These include the following results in the literature
+\begin{itemize}
+\item Devi (in Theorem 8 in \cite[Section
+  4.5]{DBLP:conf/ecrts/Devi03}) extends the analysis proposed by Jane
+  W.S. Liu in her textbook \cite[Page 164-165]{Liu:2000:RS:518501} to
+  EDF scheduling. This method quantifies the additional interference
+  due to self-suspensions from the higher-priority jobs by setting up
+  the \emph{blocking time} induced by self-suspensions. However, there
+  is no formal proof in \cite{DBLP:conf/ecrts/Devi03}. The proof made
+  by Chen et al. in \cite{ChenHuangNelissen} for fixed-priority
+  scheduling cannot be directly extended to EDF scheduling. The
+  correctness of Theorem 8 in \cite[Section
+  4.5]{DBLP:conf/ecrts/Devi03} should be supported with a rigorous
+  proof, since self-suspension behaviour has induced several
+  non-trivial phenomena.
+
+\item For segmented self-suspending task systems with at most one
+  self-suspending interval, Lakshmanan and Rajkumar propose two slack
+  enforcement mechanisms in \cite{LR:rtas10} to shape the demand of a
+  self-suspending task so that the task behaves like an ideal periodic
+  task.  From the scheduling point of view, this means that there is
+  no \emph{potentially} scheduling penalty when analyzing the interferences of the
+  higher-priority tasks. (But, the suspension time of the task under
+  analysis has to be converted into computation.) The correctness of the dynamic slack
+  enforcement in \cite{LR:rtas10} is heavily based on the statement in Lemma
+  3 in \cite{LR:rtas10}. However, the proof is not rigorous with the
+  following reasons:
+  \begin{itemize}
+  \item Firstly, the proof argues: ``\emph{Let the duration $R$ under
+    consideration start from time $s$ and finish at time $s +
+    R$. Observe that if $s$ does not coincide with the start of the
+    Level-$i$ busy period at $s$, then $s$ can be shifted to the left
+    to coincide with the start of the Level-$i$ busy period. Doing so
+    will not decrease the Level-$i$ interference over $R$.}'' This
+    argument has to be proved by also handling cases in which a task
+    may suspend before the $Level-i$ busy period. This results in the
+    possibility that a higher-priority task $\tau_j$ starts with the
+    second computation segment in the Level-$i$ busy
+    period. Therefore, the first and the third paragraphs in the proof
+    of Lemma 3 \cite{LR:rtas10} require a more rigorous flow.
+
+  \item Secondly, the proof argues: ``\emph{The only property
+      introduced by dynamic slack enforcement is that under worst-case
+      interference from higher-priority tasks there is no slack
+      available to $J_j^p$ between $f_j^p$ and $\rho_j^p + R_j$.
+      $\ldots$ The second segment of $\tau_j$ is never delayed under
+      this transformation, and is released sporadically.} '' In fact,
+    the slack enforcement may make the second computation segment
+    arrive earlier than its worst-case. For example, we can greedily
+    start with the worst-case interference of task $\tau_j$ in the
+    first iteration, and do not release the higher-priority tasks
+    (higher than $\tau_j$) after the arrival of the second job of task
+    $\tau_j$. This can immediately create some release jitter of the
+    second computation segment $C_j^2$.
+  \end{itemize}
+  With the same reasons, the static slack enforcement algorithm in
+  \cite{LR:rtas10} also requires a more rigorous proof.
+\end{itemize}
+
+
+
+
+\section{Summary and Conclusions}
   
-  A table to list the erratum that can be found and the reasons for the mistakes and errors.
+ Self-suspending behaviour is becoming an increasingly prominent
+characteristic in real-time systems such as: (i) I/O-intensive systems
+(ii) multi-processor synchronization and scheduling, and (iii)
+computation offloading with coprocessors, like Graphics Processing
+Units (GPUs).  This paper reviews the literature in the light of
+recent developments in the analysis of self-suspending tasks,
+explains the general methodologies, summarizes the hardness and
+the complexity classes, and points out several 
+misconceptions in the literature for this topic. We
+explain concrete examples to demonstrate the effect of these
+misconceptions, list the flawed statements in the literatures, and
+present the potential solutions. These misconceptions include:
+\begin{itemize}
+\item Incorrect quantifications of jitter for dynamic self-suspending
+  task systems, which was used in
+  \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95}.  This
+  misconception was unfortunately adopted in
+  \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
+  partitioned multiprocessor real-time locking protocols.
+\item Incorrect quantifications of jitter for dynamic self-suspending
+  task systems, which was used in  \cite{RTCSA-BletsasA05}.
+\item Incorrect assumptions in the critical instant with
+  synchronous releases, which was used in \cite{LR:rtas10}.
+\item Counting highest-priority self-suspending time to reduce the
+  interference, which was used in  \cite{RTSS-KimANR13}. 
+\item Incorrect segmented fixed-priority scheduling with periodic
+  enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
+\end{itemize}
+For completeness, the above misconceptions are listed in Table \jj{XXX}.
+
+In order to make all the statements in this review rigorous, several
+individual reports are filed by the subset of the authors. These
+include the proof \cite{ChenHuangNelissen} of the correctness of the
+analysis from Jane W.S. Liu in her textbook \cite[Page
+164-165]{Liu:2000:RS:518501}, the re-examination and the limitations
+\cite{ChenBrandenburg} of the period enforcer algorithm proposed in
+\cite{Raj:suspension1991}, the erratum report \cite{BletsasReport2015}
+of the misconceptions in
+\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}, the updated
+erratum \cite{erratu-cong-anderson} of the unsafe analysis in
+\cite{erratu-cong-anderson}, and the erratum \jj{XXXX} of the
+misconceptions in \cite{RTSS-KimANR13}.  In order not to make this
+review too lengthy, these reports and errata are shortly summarized in
+this review. We encourage the readers to refer to these reports and
+errata for more detailed explanations.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "JRTS/JRTS.tex"
+%%% End:
