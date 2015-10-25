@@ -46,9 +46,9 @@ In this paper, we will specifically examine the existing results for multiproces
          node[] {\pgfmathtruncatemacro\yi{\x} \yi};
        }
 
-       \draw[->](0, 6.5) -- (0, 7.2) node[anchor=south]{\footnotesize $\tau_1$ arrives};
-       \draw[->](4, 6.5) -- (4, 7.2) node[anchor=south, yshift=0.3cm]{\footnotesize $\tau_2$ arrives};
-       \draw[->](8, 6.5) -- (8, 7.2) node[anchor=south]{\footnotesize $\tau_3$ arrives};
+       \draw[->](0, 6.5) -- (0, 7.2) node[anchor=south, xshift=-0.4cm]{\footnotesize $\tau_1$ arrives};
+       \draw[->](4, 6.5) -- (4, 7.2) node[anchor=south]{\footnotesize $\tau_2$ arrives};
+       \draw[->](8, 6.5) -- (8, 7.2) node[anchor=south, xshift=0.4cm]{\footnotesize $\tau_3$ arrives};
 
          \node[task7, minimum width=4*\uxfpga, anchor=south west] at (0, 0){\footnotesize $\tau_1$};         
          \node[task7, minimum width=3*\uxfpga, anchor=south west] at (4, 0){\footnotesize $\tau_2$};         
@@ -86,7 +86,7 @@ In this paper, we will specifically examine the existing results for multiproces
   
  \end{tikzpicture}} }
 
-\subfloat[Not use FPGA in parallel (suspension-oblivious)]{
+\subfloat[Not use FPGA in parallel (suspension oblivious)]{
    \scalebox{0.8}{
       \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
         \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
