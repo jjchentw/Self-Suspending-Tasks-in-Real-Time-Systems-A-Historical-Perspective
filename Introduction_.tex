@@ -29,6 +29,120 @@ In this paper, we will specifically examine the existing results for multiproces
 {\bf Example 3: Hardware Acceleration and Limited Parallel Computation}
 
 
+\begin{figure}[t]
+  \centering
+\def\uxfpga{0.3cm} 
+\subfloat[Use FPGA in parallel (suspension aware)]{
+    \scalebox{0.8}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.75) {CPU};
+       \node[anchor=east] at (0, 2.25) {HW 1};
+       \node[anchor=east] at (0, 3.75) {HW 2};
+       \node[anchor=east] at (0, 5.25) {HW 3};
+       \draw (0, 0) -- (0, 6);
+       \foreach \x in {0,2,...,42}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+
+       \draw[->](0, 6.5) -- (0, 7.2) node[anchor=south]{\footnotesize $\tau_1$ arrives};
+       \draw[->](4, 6.5) -- (4, 7.2) node[anchor=south, yshift=0.3cm]{\footnotesize $\tau_2$ arrives};
+       \draw[->](8, 6.5) -- (8, 7.2) node[anchor=south]{\footnotesize $\tau_3$ arrives};
+
+         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (0, 0){\footnotesize $\tau_1$};         
+         \node[task7, minimum width=3*\uxfpga, anchor=south west] at (4, 0){\footnotesize $\tau_2$};         
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (8, 0){\footnotesize $\tau_3$};         
+         \node[task7, minimum width=6*\uxfpga, anchor=south west] at (10, 0){\footnotesize $\tau_1$};         
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (16, 0){\footnotesize $\tau_2$};         
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (18, 0){\footnotesize $\tau_3$};         
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (24, 0){\footnotesize $\tau_3$};         
+
+        \node[task9, minimum width=6*\uxfpga, anchor=south west] at (4, 1.5){\footnotesize $\tau_1$};         
+        \node[task9, minimum width=9*\uxfpga, anchor=south west] at (7, 3){\footnotesize $\tau_2$};         
+        \node[task9, minimum width=4*\uxfpga, anchor=south west] at (20, 4.5){\footnotesize $\tau_3$};         
+
+
+         \node[](e1) at (4.2, 0.8){};
+         \node[](s1) at (4.2, 2.8){};
+         \node[](r1) at (9.9, 2.8){};
+         \node[](l1) at (9.9, 0.8){};
+         \path[->,>=stealth'] (e1)[anchor=center] edge[bend left] node[anchor=center]{} (s1);
+         \path[->,>=stealth'] (r1)[anchor=center] edge[bend left] node[anchor=center]{} (l1);
+
+        \node[](e2) at (7.2, 0.8){};
+         \node[](s2) at (7.2, 3.8){};
+         \node[](r2) at (15.9, 3.8){};
+         \node[](l2) at (15.9, 0.8){};
+         \path[->,>=stealth'] (e2)[anchor=center] edge[bend left] node[anchor=center]{} (s2);
+         \path[->,>=stealth'] (r2)[anchor=center] edge[bend left] node[anchor=center]{} (l2);
+  
+         \node[](e3) at (20.2, 0.8){};
+         \node[](s3) at (20.2, 5.3){};
+         \node[](r3) at (23.9, 5.3){};
+         \node[](l3) at (23.9, 0.8){};
+         \path[->,>=stealth'] (e3)[anchor=center] edge[bend left] node[anchor=center]{} (s3);
+         \path[->,>=stealth'] (r3)[anchor=center] edge[bend left] node[anchor=center]{} (l3);
+  
+ \end{tikzpicture}} }
+
+\subfloat[Not use FPGA in parallel (suspension-oblivious)]{
+   \scalebox{0.8}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.75) {CPU};
+       \node[anchor=east] at (0, 2.25) {HW 1};
+       \node[anchor=east] at (0, 3.75) {HW 2};
+       \node[anchor=east] at (0, 5.25) {HW 3};
+       \draw (0, 0) -- (0, 6);
+       \foreach \x in {0,2,...,42}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (0, 0){\footnotesize $\tau_1$};         
+
+         \node[task7, minimum width=6*\uxfpga, anchor=south west] at (10, 0){\footnotesize $\tau_1$};         
+
+         \node[task7, minimum width=3*\uxfpga, anchor=south west] at (16, 0){\footnotesize $\tau_2$};         
+
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (28, 0){\footnotesize $\tau_2$};         
+
+         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (30, 0){\footnotesize $\tau_3$};         
+
+         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (38, 0){\footnotesize $\tau_3$};         
+
+        \node[task9, minimum width=6*\uxfpga, anchor=south west] at (4, 1.5){\footnotesize $\tau_1$};         
+        \node[task9, minimum width=9*\uxfpga, anchor=south west] at (19, 3){\footnotesize $\tau_2$};         
+        \node[task9, minimum width=4*\uxfpga, anchor=south west] at (34, 4.5){\footnotesize $\tau_3$};         
+
+
+         \node[](e1) at (4.2, 0.8){};
+         \node[](s1) at (4.2, 2.8){};
+         \node[](r1) at (9.9, 2.8){};
+         \node[](l1) at (9.9, 0.8){};
+         \path[->,>=stealth'] (e1)[anchor=center] edge[bend left] node[anchor=center]{} (s1);
+         \path[->,>=stealth'] (r1)[anchor=center] edge[bend left] node[anchor=center]{} (l1);
+
+        \node[](e2) at (19.2, 0.8){};
+         \node[](s2) at (19.2, 3.8){};
+         \node[](r2) at (27.9, 3.8){};
+         \node[](l2) at (27.9, 0.8){};
+         \path[->,>=stealth'] (e2)[anchor=center] edge[bend left] node[anchor=center]{} (s2);
+         \path[->,>=stealth'] (r2)[anchor=center] edge[bend left] node[anchor=center]{} (l2);
+  
+         \node[](e3) at (34.2, 0.8){};
+         \node[](s3) at (34.2, 5.3){};
+         \node[](r3) at (37.9, 5.3){};
+         \node[](l3) at (37.9, 0.8){};
+         \path[->,>=stealth'] (e3)[anchor=center] edge[bend left] node[anchor=center]{} (s3);
+         \path[->,>=stealth'] (r3)[anchor=center] edge[bend left] node[anchor=center]{} (l3);
+  
+ \end{tikzpicture}}       }
+  \caption{An example of using FPGA for acceleration}
+  \label{fig:example-fpga}
+\end{figure}
+
+
 {\bf Example 4: Computation Offloading}
  
 Since modern embedded systems are designed to execute complicated applications, the limited resources, such as the battery capacity, the memory size, and the processor speed, may not satisfy the required computation demand. Offloading heavy computation to some powerful servers has been shown as an attractive solution, including optimizations for system performance and energy saving.
@@ -112,7 +226,8 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
 When the self-suspending behaviour is present in the periodic/sporadic task model, the scheduling problem becomes much harder to handle. In the ordinary periodic task model, Liu and Layland show that the earliest-deadline-first (EDF) scheduling algorithm is an optimal scheduling policy to meet the deadlines and the rate-monotonic (RM) scheduling algorithm is an optimal fixed-priority scheduling policy to meet the deadlines \cite{Liu_1973}. However, the introduction of suspension behaviour has a negative impact on the timing predictability and causes intractability in hard real-time systems~\cite{Ridouard_2004}. It is shown by Ridouard et al. \cite{Ridouard_2004} that finding an optimal schedule (to meet the deadlines) is ${\cal NP}$-hard in the strong sense even when the suspending behaviour is known a priori.
 
 
-One specific problem due to self-suspending behaviour is the \emph{deferrable} execution phenomena. In the ordinary sporadic and periodic task model, the critical instant theorem by Liu and Layland \cite{Liu_1973} provides concrete worst-case scenarios for fixed-priority scheduling. However, with self-suspensions, such a critical instant theorem does exist any more (at least up to now). Even worse, the suspending behaviour incurs the jitter of the workload to be executed. Therefore, when the real-time tasks may suspend, the system behaviour has become very different. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for the ordinary periodic real-time task systems by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it is shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, are bad, in the sense that they do not provide any performance guarantees. 
+One specific problem due to self-suspending behaviour is the \emph{deferrable} execution phenomena. In the ordinary sporadic and periodic task model, the critical instant theorem by Liu and Layland \cite{Liu_1973} provides concrete worst-case scenarios for fixed-priority scheduling.  That is, the critical instant of a task defines the instant at which, considering the state of the system, an execution request for the task will generate the worst-case response time.
+However, with self-suspensions, such a critical instant theorem does exist any more (at least up to now). Even worse, the suspending behaviour incurs the jitter of the workload to be executed. Therefore, when the real-time tasks may suspend, the system behaviour has become very different. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for the ordinary periodic real-time task systems by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it is shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, are bad, in the sense that they do not provide any performance guarantees. 
 
 Self-suspending tasks can be classified into two models: \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
 The dynamic self-suspension sporadic task model characterizes each
