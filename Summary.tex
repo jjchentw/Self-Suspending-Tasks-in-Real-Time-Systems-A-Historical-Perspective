@@ -105,7 +105,8 @@ present the potential solutions. These misconceptions include:
 \item Incorrect segmented fixed-priority scheduling with periodic
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
 \end{itemize}
-For completeness, the above misconceptions are listed in Table \jj{XXX}.
+For completeness, all the misconceptions, open issues, closed issues,
+and inherited flaws mentioned in this paper are listed in Table~\ref{tab:summary}.
 
 In order to make the statements in this review rigorous, several
 individual reports are filed by the subsets of the authors. These
@@ -122,6 +123,75 @@ misconceptions in \cite{RTSS-KimANR13}.  In order not to make this
 review too lengthy, these reports and errata are shortly summarized in
 this review. We encourage the readers to refer to these reports and
 errata for more detailed explanations.
+
+
+
+\begin{table}[t]
+  \centering
+\scalebox{0.8}{
+\begin{tabular}{||C{3cm}|L{7cm}||C{3cm}|C{2cm}|}  
+  \hline
+  \hline
+  Type of Arguments& Affected papers and statements &
+  Potential Solutions & (flaw/issue) status\\
+  \hline
+  \multirow{6}{*}{Conceptual Flaws} & \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04}: Wrong
+  quantification of jitter& See Section~\ref{sec:wrong-jitter-dynamic} or the
+  erratum filed by the authors \cite{BletsasReport2015}& solved\\
+  \cline{2-4}
+& \cite{RTCSA-KimCPKH95}:   Wrong quantification of jitter & See Section
+\ref{sec:wrong-jitter-dynamic} & solved\\
+  \cline{2-4}
+& \cite{RTCSA-BletsasA05}:   Wrong quantification of jitter & See Section
+\ref{sec:wrong-jitter-segmented} or \cite{BletsasReport2015}& solved\\
+  \cline{2-4}
+& \cite{LR:rtas10}:  Critical instant theorem in Section III and the
+response time analysis are incorrect & See Section
+\ref{sec:wrong-critical} or \cite{ecrts15nelissen} & solved\\
+\cline{2-4}
+  & \cite{RTSS-KimANR13}: Theorems 2 and 3 are incorrect & See
+  Section~\ref{sec:wrong-highest-priority} & solved\\
+  \cline{2-4}
+  & \cite{RTSS-KimANR13}: Section IV is
+  incorrect & See Section~\ref{sec:wrong-periodic} &
+  not solved\\
+  \cline{2-4}
+  & \cite{DBLP:journals/ieicet/DingTT09}: Section 3 is
+  incorrect & See Section~\ref{sec:wrong-periodic} &
+  not solved\\
+  \cline{2-4}
+\hline
+\multirow{2}{*}{Inherited Flaws} &
+\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
+ Adopting wrong quantifications of jitters \jj{Maolin: name all the equations/theorems}& See
+Section~\ref{sec:safe_bound} & solved\\
+\cline{2-4}
+& \cite{DBLP:conf/ecrts/LiuA13}: Inherited flaw from
+\cite{DBLP:conf/rtss/GuanSYY09} and unsafe Lemma 3 to quantify the workload& See the erratum
+\cite{erratu-cong-anderson} filed by the authors & solved\\
+\hline
+\multirow{2}{*}{Closed Issues} & \cite[Page
+164-165]{Liu:2000:RS:518501}: schedulability test without any proof & See
+\cite{ChenHuangNelissen} for the proof& solved\\
+\cline{2-4}
+ &\cite{Raj:suspension1991}: period enforcer can be used for
+ deferrable task systems. It may result in deadline
+ misses for self-suspending tasks and is not compatible with multiprocessor synchronization & See
+ \cite{ChenBrandenburg} for the explanations.& solved\\
+\hline
+\multirow{2}{*}{Open Issues} &  \cite{DBLP:conf/ecrts/Devi03}: Theorem 8 in \cite{DBLP:conf/ecrts/Devi03} has no proof & ?& ?\\
+\cline{2-4}
+ & \cite{LR:rtas10}: Proofs for slack enforcement in Sections IV and V
+ are incomplete & ?& ?\\
+  \hline
+  \hline
+\end{tabular}}
+\vspace{0.1in}
+  \caption{List of flaws/incompleteness and their solutions in the
+    literature. All the references to Section X in the column
+    ``Potential Solutions'' are listed for this paper.}
+  \label{tab:summary}
+\end{table}
 
 
 %%% Local Variables:
