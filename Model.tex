@@ -36,11 +36,14 @@ implicit-deadline task systems in most places, except some parts in
 Section~\ref{sec:soft-realtime}.
 
 \subsection{Examples of Dynamic Self-Suspension Model} 
-  \textit{different program paths}
-  
-  \textit{self-suspension due to synchronizations}
-  
-  etc.
+The dynamic self-suspension model is convenient when it is not possible to know \text{a priori} the number and/or the location of self-suspending regions for a task, e.g. when these may vary for different jobs by the same task.
+
+For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
+of system variables at run-time. Each of those paths may have a different
+number of self-suspending regions. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
+another one may self-suspend shortly before completion. Under such circumstances, it is handy to be able to "collapse" all these possibilities
+by modelling the task according to the dynamic self-suspension model using
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observable under different control flows as each other.
   
 \subsection{Examples of Segmented Self-Suspension Model} 
   \textit{static execution patterns}
