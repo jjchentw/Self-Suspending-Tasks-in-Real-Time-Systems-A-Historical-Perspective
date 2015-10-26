@@ -1,6 +1,7 @@
 \section{Introduction}
 
-The emergence of complex cyber-physical systems, i.e., advanced embedded computing systems that interact with the physical environment, have been rapidly adopted to control and manipulate traditionally human-operated mechanical units in safety-critical systems.  Due to their interaction with the physical environment, in which time naturally progresses, \emph{timeliness} of computation is an essential correctness requirement.  Therefore, such safety-critical systems are typically real-time systems which require both worst-case functional and timeliness correctness guarantees.
+The emergence of complex cyber-physical systems, i.e., advanced embedded computing systems that interact with the physical environment, 
+means that such systems have been rapidly adopted to control and manipulate traditionally human-operated mechanical units in safety-critical domains.  Due to their interaction with the physical environment, in which time naturally progresses, \emph{timeliness} of computation is an essential correctness requirement.  Therefore, such safety-critical systems are typically real-time systems which require both worst-case functional and timeliness correctness guarantees.
 
 The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodic real-time tasks. This is later extended to a widely-adopted sporadic task model in the real-time systems domain \cite{Mok:1983:FDP:888951}. In the periodic/sporadic task model, a task $\tau_i$ is characterized by its relative deadline $D_i$, its period or minimum inter-arrival time $T_i$. A sporadic task is an infinite sequence of task instances, referred to as \emph{jobs}, where two consecutive jobs of a task should arrive no shorter than the minimum inter-arrival time separation. Each sporadic task $\tau_i$ has its worst-case execution time, derived by using static timing analysis.
 
@@ -221,6 +222,21 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
   \label{fig:example-dac}
 \end{figure}
 
+{\bf Example 6: Use of GPUs as accelerators for highly parallelisable workloads}
+
+Graphic Processor Units (GPUs) are massively parallel architectures, which offer immense processing power, compared to CPUs. 
+However, GPUs were traditionally only used for the processing of computer graphics. This changed with the advent of programming
+models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
+applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
+(single-cycle context switch) GPU threads. 
+In the typical setup, the GPU is used as a co-processor. The native application (e.g., x86) running on the host
+copies the input from the main memory to the GPU memory, and then launches the CUDA application (called ``kernel") on the GPU;
+Upon completion, the output is copied from GPU memory to main memory. During the execution of the CUDA kernel, it makes sense for the 
+developer to have the host application suspend, rather than waste host resources by busy-waiting. This is a quintessential example of 
+self-suspension. For many kinds of applications, e.g. scientific, or floating-point heavy, with minimal data dependencies among 
+threads, the speed-up is by tens or hundreds of times.
+
+
 \subsection{Impact of Self-Suspending Behaviour}
 
 When the self-suspending behaviour is present in the periodic/sporadic task model, the scheduling problem becomes much harder to handle. In the ordinary periodic task model, Liu and Layland show that the earliest-deadline-first (EDF) scheduling algorithm is an optimal scheduling policy to meet the deadlines and the rate-monotonic (RM) scheduling algorithm is an optimal fixed-priority scheduling policy to meet the deadlines \cite{Liu_1973}. However, the introduction of suspension behaviour has a negative impact on the timing predictability and causes intractability in hard real-time systems~\cite{Ridouard_2004}. It is shown by Ridouard et al. \cite{Ridouard_2004} that finding an optimal schedule (to meet the deadlines) is ${\cal NP}$-hard in the strong sense even when the suspending behaviour is known a priori.
@@ -271,6 +287,9 @@ During the preparation of this review paper, several reports, i.e., \cite{ChenHu
 %%% TeX-master: "JRTS/JRTS.tex"
 %%% End:
 
+
+    
+  
 
     
   
