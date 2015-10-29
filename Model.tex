@@ -46,12 +46,10 @@ by modelling the task according to the dynamic self-suspension model using
 just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observable under different control flows as each other.
   
 \subsection{Examples of Segmented Self-Suspension Model} 
-  \textit{static execution patterns}
-  
-  \textit{multiprocessor synchronization with critical sections}
- 
-  etc.
-  
+The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity, i.e., there is a deterministic number of self-suspending regions interleaved between portions of processor-based code with single-entry single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic model discussed earlier, but this would discard information about constraints in the location of self-suspensions inside a task activation. The segmented self-suspension model preserves this information, and in principle, this can be used by the timing analysis to derive tighter bounds on worst-case response time, where applicable, relative to analysis which only considers the dynamic model. 
+
+As we will see in the next Section, it is possible for both the dynamic model and the segmented model to be employed simultaneously during the analysis of the same task set: for example, by using the segmented model for those tasks which are modelable acccording to it and using the dynamic model for all other tasks.
+
 \subsection{Terminologies and Notations for Scheduling}
 
 Implicitly, we will assume that the system schedules the jobs in a
