@@ -14,7 +14,7 @@ Due to the evolution in computer architecture to use multicore systems and to ha
 \subsection{Examples of Self-Suspending Task Systems}
 \label{sec:examples}
 
-We demonstrate the reasons to consider self-suspending task systems by using the following six examples.
+We here demonstrate the reasons to consider self-suspending task systems by using the following six examples.
 
 {\bf Example 1: I/O- or Memory-Intensive Tasks} Since I/O and memory subsystems are much slower than the processor, an I/O-intensive task may have to use DMA to transfer a large amount of data. This can take up to a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. The job is resumed to the ready queue to be (re)-eligible for execution once the I/O activity completes. The above example can also be applied for systems that dynamically update the content in the scratchpad memory allocated to a task during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the update of the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory/bus.
 
