@@ -27,34 +27,22 @@ Let's use a binary semaphore shared by two tasks assigned on two different proce
 
 In this paper, we will specifically examine the existing results for multiprocessor synchronization problems in Section~\ref{sec:syn}. Such problems have been specifically studied in \cite{rajkumar-1990,lakshmanan-2009,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}.
 
-{\bf Example 6: Hardware Acceleration Using FPGAs or GPUs as Co-Processors}
+{\bf Example 3: Hardware Acceleration Using FPGAs or GPUs as Co-Processors} In many systems, selected portions of programs are preferred to (or even have to) be executed on dedicated hardware co-processors, to satisfy the performance requirements.  Such co-processors in embedded systems include application-specific integrated circuits (ASICs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs), General-Purpose Graphics Processor (GPGPU), etc. There are two typical strategies to utilize the hardware co-processors. One is busy-waiting, also called \emph{suspension oblivious}, in which the software task does give up its privilege on the processor by suspending itself. Another is to suspend the software task, also called \emph{suspension aware}. This  frees up the processor, to be used by other ready tasks. Then, even in single-CPU systems more than one task may be simultuaneously advancing in computation: one task executing on the processor and others on each of the available co-processors. This arrangement is called \emph{limited parallelism} and is illustrated by Figure~\ref{fig:example-fpga}. Such suspending behaviour can usually improve the performance by effectively utilizing the processor and the co-processors, as shown in Figure~\ref{fig:example-fpga}.
 
-In many systems, select portions of system code are executed on dedicated hardware co-processors, for speed-up.
-Different kinds of co-processor exist. Many embedded systems employ customised application-specific hardware co-processors,
-nowadays usually implemented on Field-Programmable Gate Arrays (FPGAs), a popular form of reconfigurable hardware. 
-Often, the processor itelf is synthesised on the same FPGA package as the co-processors. 
+% Another domain which deploys hardware acceleration is that of General-Purpose Graphics Processor (GPGPU) computing. 
+% Unlike FPGAs which are used for the synthesis of custom co-processors, this paradigm uses standard PC hardware as an accelerator.
+% Graphic Processor Units (GPUs) are massively parallel architectures, which offer immense processing power, compared to CPUs. 
+% Traditionally they were only used for the processing of computer graphics. This changed with the advent of programming
+% models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
+% applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
+% (single-cycle context switch) GPU threads, each performing a different part of the overall computation.
+% For many kinds of applications, e.g. scientific, or floating-point heavy, with minimal data dependencies among 
+% threads, the speed-up is by tens or hundreds of times.
 
-The use of co-processors in itself, speeds up the application, compared to a fully CPU-based implementation. However, further
-performance improvements can be had by having the software task self-suspend, for the duration of the hardware operation, instead of 
-busy-waiting. This frees up the processor, to be used by other ready tasks. Then, even in single-CPU systems more than one 
-task may be simultuaneously advancing in computation: one task executing on the processor and others on each of the available 
-co-processors. This arrangement is called Limited Parallelism and is illustrated by Figure~\ref{fig:example-fpga}.
-
-Another domain which deploys hardware acceleration is that of General-Purpose Graphics Processor (GPGPU) computing . 
-Unlike FPGAs which are used for the synthesis of custom co-processors, this paradigm uses standard PC hardware as an accelerator.
-
-Graphic Processor Units (GPUs) are massively parallel architectures, which offer immense processing power, compared to CPUs. 
-Traditionally they were only used for the processing of computer graphics. This changed with the advent of programming
-models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
-applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
-(single-cycle context switch) GPU threads, each performing a different part of the overall computation.
-For many kinds of applications, e.g. scientific, or floating-point heavy, with minimal data dependencies among 
-threads, the speed-up is by tens or hundreds of times.
-
-In the typical setup, the GPU is used as a co-processor. The native application (e.g., x86) running on the host
-copies the input from the main memory to the GPU memory, and then launches the CUDA application (called ``kernel") on the GPU;
-Upon completion, the output is copied from GPU memory to main memory. As with FPGA co-processors, it makes sense to 
-have the host application suspend, for the duration of the CUDA kernel. 
+% In the typical setup, the GPU is used as a co-processor. The native application (e.g., x86) running on the host
+% copies the input from the main memory to the GPU memory, and then launches the CUDA application (called ``kernel") on the GPU;
+% Upon completion, the output is copied from GPU memory to main memory. As with FPGA co-processors, it makes sense to 
+% have the host application suspend, for the duration of the CUDA kernel. 
 
 
 \begin{figure}[t]
