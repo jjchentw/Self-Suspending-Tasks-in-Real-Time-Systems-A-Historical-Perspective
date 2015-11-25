@@ -3,23 +3,23 @@
 
 In this section, we consider the analysis of self-suspensions that arise on multiprocessors under \emph{partitioned fixed-priority (P-FP)} scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). Unfortunately, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors also spread to the analysis of partitioned multiprocessor real-time locking protocols. In particular, as we show with a counterexample, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is flawed. Finally, a straightforward solution for these problems is discussed. 
 
-\subsection{Existing analysis strategies}
+\subsection{Existing Analysis Strategies}
 \label{sec:papers}
 
 P-FP scheduling is a widespread choice in practice due to the wide support in industrial standards such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc Under P-FP scheduling, each task has a fixed base priority and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor. 
 
 Under partitioned scheduling, a resource accessed by tasks from different processors is called a \emph{global resource}, otherwise it is called a \emph{local resource}. When a job requests a global resource, it may incur \emph{remote blocking} if the global resource is held by a job on another processor. Also, a job may incur \emph{local blocking} if it is prevented from being scheduled by a resource-holding job of a lower-priority task on its local processor. 
 
-Under suspension-based protocols, such as the \emph{multiprocessor priority ceiling protocol (MPCP)}~\cite{rajkumar-1990}, tasks that are denied to access shared resources are suspended. From the perspective of local schedule on each processor, remote blocking, caused by external events (\ie, resource contention due to tasks on the other processors), pushes the execution of higher-priority tasks to a later time point regardless of the schedule on the local processor (\ie, even if the local processor is idle), and thus may cause additional interference on lower-priority tasks. As a result, remote blocking must be considered as a self-suspension in the analysis. In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy). Consequently, like in the uniprocessor case, local blocking is accounted for as regular blocking, and not as self-suspension.
+Under suspension-based protocols, such as the \emph{multiprocessor priority ceiling protocol (MPCP)}~\cite{rajkumar-1990}, tasks that are denied to access shared resources are suspended. From the perspective of the local schedule on each processor, remote blocking, caused by external events (\ie, resource contention due to tasks on the other processors), pushes the execution of higher-priority tasks to a later time point regardless of the schedule on the local processor (\ie, even if the local processor is idle), and thus may cause additional interference on lower-priority tasks. As a result, remote blocking must be considered as a self-suspension in the analysis. In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy). Consequently, like in the uniprocessor case, local blocking is accounted for as regular blocking, and not as self-suspension.
 
 A safe yet pessimistic strategy, called \emph{suspension-oblivious analysis}, is to model remote blocking as computation. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. \cite{block-2007} first used this strategy in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling;  \cite{lakshmanan-2009} also adopted this approach in their analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it can also pessimistically overestimate response times by a factor linear in both the number of tasks and the ratio of the largest and the shortest periods~\cite{wieder-2013}.
 
 A less pessimistic alternative to suspension-oblivious analysis is to \emph{explicitly} bound the effects of deferred execution due to remote blocking. Following this approach, Lakshmanan et al. \cite{lakshmanan-2009} proposed the following response-time analysis framework that takes into account the amount of remote blocking to bound the worst case interference.
 
-In Eq. \eqref{eqn:wcrt} below, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{hp(k)}$ and $\fun{lp(k)}$ denote the tasks with higher and lower priority than $\tau_k$, respectively. Furthermore, $P(\tau_k)$ denotes the tasks that are assigned on the same processor as $\tau_k$, and $s_k$ is the maximum number of critical sections of $\tau_k$, and $C_{l,j}^{\prime}$ is an upper bound on the execution time of the $j$\xth critical section of $\tau_l$. \cite{lakshmanan-2009} claimed that, if $R_k^{n+1} = R_k^n \leq D_k$ for some $n > 0$, where $R_k^0 = C_k^{\ast}$ and
+In Eq. \eqref{eqn:wcrt} below, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{hp(k)}$ and $\fun{lp(k)}$ denote the tasks with higher and lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, and $s_k$ is the maximum number of critical sections of $\tau_k$, and $C_{l,j}^{\prime}$ is an upper bound on the execution time of the $j$\xth critical section of $\tau_l$. \cite{lakshmanan-2009} claimed that, if $R_k^{n+1} = R_k^n \leq D_k$ for some $n > 0$, where $R_k^0 = C_k^{\ast}$ and
 \begin{equation}
 \label{eqn:wcrt}
-R_k^{n+1} = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.  
+R_k^{n+1} = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}
 \end{equation}
 then task $\tau_k$ is schedulable and its response time is bounded by $R_k^n$. This  response-time analysis framework~\cite{lakshmanan-2009} was subsequently reused in
 \begin{itemize}
@@ -27,9 +27,9 @@ then task $\tau_k$ is schedulable and its response time is bounded by $R_k^n$. T
 \item \cite{yang-2013} (Equation 6), \cite{bbb-2013} (Equation 1), \cite{carminati-2014} (Equations 3, 12, and 16), and \cite{kim-2014} (Equation 6) to guide the analysis for certain other suspension-based locking protocols.
 \end{itemize}
 
-In Eq. \eqref{eqn:wcrt}, the additional interference on $\tau_k$ due to the lock-induced deferred execution of higher-priority tasks is captured by the term ``$+ B^r_i$'' in the interference bound  $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$. This is very similar to the misconception of self-suspending task systems presented in Section~\ref{sec:wrong-jitter-dynamic} by treating the remote blocking as self-suspension. For completeness, we explain why this fails to guarantee a safe response-time bound in certain corner cases by giving a counter example in the following subsection.
+In Eq. \eqref{eqn:wcrt}, the additional interference on $\tau_k$ due to the lock-induced deferred execution of higher-priority tasks is captured by the term ``$+ B^r_i$'' in the interference bound  $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$. This is very similar to the misconception of self-suspending task systems presented in Section~\ref{sec:wrong-jitter-dynamic} by treating the remote blocking as self-suspension. For completeness, we explain why this fails to guarantee a safe response-time bound in certain corner cases by giving a counterexample in the following subsection.
 
-\subsection{A counterexample}
+\subsection{A Counterexample}
 \label{sec:counterexample}
 
 We show the existence of a schedule in which a task that is considered schedulable according to the analysis in \cite{lakshmanan-2009} is in fact unschedulable.
@@ -38,14 +38,14 @@ We show the existence of a schedule in which a task that is considered schedulab
 
 \begin{table}
 \centering
-    \begin{tabular}{|c|c|c|c|c|} 
+    \begin{tabular}{|c|c|c|c|c|c|} 
  \hline
-        $\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $s_k$ & $C_{k,1}^{\prime}$\\
+        $\tau_k$ & $C_k$ & $T_k$ ($= D_k$) & $s_k$ & $C_{k,1}^{\prime}$ & Processor\\
         \hline
-        $\tau_1$ & 2             & 6  & 0 & $-$\\ 
-        $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$\\
-        $\tau_3$ & $\epsilon$    & 14 & 0 & $-$\\
-        $\tau_4$ & 6             & 14 & 1 & $4-\epsilon$\\ 
+        $\tau_1$ & 2             & 6  & 0 & $-$ & $1$\\ 
+        $\tau_2$ & $4+2\epsilon$ & 13 & 1 & $\epsilon$& $1$\\
+        $\tau_3$ & $\epsilon$    & 14 & 0 & $-$ & $1$\\
+        $\tau_4$ & 6             & 14 & 1 & $4-\epsilon$ & $2$\\ 
         \hline
     \end{tabular}
     \caption{Task parameters for the counter example in Section~\ref{sec:counterexample}.}
@@ -72,6 +72,8 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
  \fi
 
 As a result, $R_3 = 8+3\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, which is perfectly legal, where a job of task $\tau_3$  is released at time $6$ and misses its absolute deadline at time $20$. This implies that Eq. \eqref{eqn:wcrt} does not always yield a sound response-time bound. 
+
+The misconception here is to use the remote blocking of each higher-priority task (\ie, $B_i^r$) in a similar way as release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
 \subsection{Incorrect Time Request Analysis With Global Resource Sharing}
 
@@ -102,7 +104,7 @@ However, based on the example in Section \ref{sec:counterexample}, we can immedi
 
 In Eq. \eqref{eqn:wcrt}, the remote blocking of each higher-priority task (\ie, $B_i^r$) is counted in a similar way as release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}. A straightforward fix is thus to replace $B_i^r$, in the ceiling function (\ie, the second term in Eq. \eqref{eqn:wcrt}), with a larger value such as $D_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}) or $R_i - C_i$ if $R_i \leq T_i$. Similarly, replacing $\sum_{\tau_i \in \fun{hp}(k)} \lceil t / T_i \rceil \cdot C_i$ in Eq. \eqref{eqn:rbf-2} and Eq. \eqref{eqn:bloc-tolerate} with $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+D_i) / T_i \rceil \cdot C_i$ or $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+R_i-C_i) / T_i \rceil \cdot C_i$ can fix the corresponding over-optimistic problem.
 
-Further, since \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} reviewed in Section \ref{sec:papers} merely reused the over-optimistic analysis approach introduced in \cite{lakshmanan-2009} (\ie, reusing $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$ as an interference bound of $\tau_i$ on $\tau_k$), the stated fix may be used to correct the response-time tests in these papers without additional changes.
+Further, since \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} reviewed in Section \ref{sec:papers} merely reused the over-optimistic analysis approach introduced in \cite{lakshmanan-2009} (\ie, reusing $\left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i$ as an interference bound of $\tau_i$ on $\tau_k$), the stated fix as potential solutions may be used to correct the response-time tests in these papers without additional changes.
 
 
   

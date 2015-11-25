@@ -1,7 +1,7 @@
 \section{Open Issues}
 \label{sec:open-issues}
 
-\subsection{Open issues in the existing results}
+\subsection{Open Issues in the Existing Results}
 \label{sec:open-issues-existing} 
 We have carefully re-examined the results related to self-suspending
 real-time tasks in the literature in the past 25 years. However, there
@@ -9,7 +9,7 @@ are also some results in the literature that may require further
 elaborations. These include the following results in the literature
 \begin{itemize}
 \item Devi (in Theorem 8 in \cite[Section
-  4.5]{DBLP:conf/ecrts/Devi03}) extends the analysis proposed by Jane
+  4.5]{DBLP:conf/ecrts/Devi03}) extended the analysis proposed by Jane
   W.S. Liu in her book \cite[Page 164-165]{Liu:2000:RS:518501} to
   EDF scheduling. This method quantifies the additional interference
   due to self-suspensions from the higher-priority jobs by setting up
@@ -23,7 +23,7 @@ elaborations. These include the following results in the literature
   non-trivial phenomena.
 
 \item For segmented self-suspending task systems with at most one
-  self-suspending interval, Lakshmanan and Rajkumar propose two slack
+  self-suspending interval, Lakshmanan and Rajkumar proposed two slack
   enforcement mechanisms in \cite{LR:rtas10} to shape the demand of a
   self-suspending task so that the task behaves like an ideal periodic
   task.  From the scheduling point of view, this means that there is
@@ -31,7 +31,7 @@ elaborations. These include the following results in the literature
   higher-priority tasks. (But, the suspension time of the task under
   analysis has to be converted into computation.) The correctness of the dynamic slack
   enforcement in \cite{LR:rtas10} is heavily based on the statement in Lemma
-  4 in \cite{LR:rtas10}. However, the proof is not rigorous with the
+  4 in \cite{LR:rtas10}. However, the proof is not rigorous for the
   following reasons:
   \begin{itemize}
   \item Firstly, the proof argues: ``\emph{Let the duration $R$ under
@@ -45,7 +45,7 @@ elaborations. These include the following results in the literature
     possibility that a higher-priority task $\tau_j$ starts with the
     second computation segment in the Level-$i$ busy
     period. Therefore, the first and the third paragraphs in the proof
-    of Lemma 4 \cite{LR:rtas10} require a more rigorous flow.
+    of Lemma 4 \cite{LR:rtas10} require more rigorous reasoning.
 
   \item Secondly, the proof argues: ``\emph{The only property
       introduced by dynamic slack enforcement is that under worst-case
@@ -65,7 +65,7 @@ elaborations. These include the following results in the literature
   \cite{LR:rtas10} also requires a more rigorous proof.
 \end{itemize}
 
-\subsection{Open issues for future researches}
+\subsection{Open Issues for Future Researches}
 \label{sec:open-issues-future}
 
 We would also like to point out some possible future research directions for
@@ -85,10 +85,10 @@ Units (GPUs).  This paper reviews the literature in the light of
 recent developments in the analysis of self-suspending tasks,
 explains the general methodologies, summarizes the hardness and
 the complexity classes, and points out several 
-misconceptions in the literature for this topic. We
-explain concrete examples to demonstrate the effect of these
-misconceptions, list the flawed statements in the literature, and
-present the potential solutions. These misconceptions include:
+misconceptions in the literature concerning this topic. We
+have given concrete examples to demonstrate the effect of these
+misconceptions, list some flawed statements in the literature, and
+present potential solutions. These misconceptions include:
 \begin{itemize}
 \item Incorrect quantifications of jitter for dynamic self-suspending
   task systems, which was used in
@@ -118,7 +118,7 @@ analysis from Jane W.S. Liu in her book \cite[Page
 of the misconceptions in
 \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}, the updated
 erratum \cite{erratu-cong-anderson} of the unsafe analysis in
-\cite{erratu-cong-anderson}, and the erratum \jj{XXXX} of the
+\cite{DBLP:conf/ecrts/LiuA13}, and the erratum \jj{XXXX} of the
 misconceptions in \cite{RTSS-KimANR13}.  In order not to make this
 review too lengthy, these reports and errata are shortly summarized in
 this review. We encourage the readers to refer to these reports and

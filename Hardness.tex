@@ -2,7 +2,7 @@
 \label{sec:hardness}
 This section reviews the hardness for designing scheduling algorithms and schedulability analysis of self-suspending task systems. Table \ref{table:complexity} summarizes the complexity classes of the corresponding problems, in which the complexity problems are reviewed according to the considered task models (\ie, segmented or dynamic self-suspending models) and the scheduling strategies (\ie, fixed- or dynamic-priority scheduling). Notably, for self-suspending task systems, only the complexity class for verifying the existence of a feasible schedule for segmented tasks is proved in the literature~\cite{Ric03,Ridouard_2004}, most corresponding problems are still open.
 
-\begin{table}
+\begin{table}[t]
 \centering
     \begin{tabular}{|c|c|c|c|c|}
  \hline
@@ -23,6 +23,7 @@ This section reviews the hardness for designing scheduling algorithms and schedu
         Models & & & strong sense & \\
         \hline
     \end{tabular}
+    \vskip 0.2in
     \caption{The complexity classes of scheduling and schedulability analysis for self-suspending tasks}
     \label{table:complexity}
 \end{table}
@@ -35,7 +36,9 @@ The only results with speedup factor analysis for fixed-priority scheduling and 
 With respect to this scheduling problem, there was no theoretical lower bound (with respect to the speedup factors) of this scheduling problem. 
 
 
-The above analysis also implies that the priority assignment in fixed-priority scheduling should be carefully designed. Traditional approaches like RM or EDF do not work very well. LM may work for a few self-suspending intervals, but how to perform the optimal priority assignment is an open problem. Such a difficulty comes from scheduling anomalies that may occur at run-time. In \cite{Ridouard_2004} is shown using a simple counter example that reducing execution times or self-suspension delays can lead some task to miss deadlines under EDF (i.e., EDF is no longer sustainable). This latter result can be easily extended to static schdeling policies (i.e., RM and DM). Lastly, in \cite{RidouardR06}, it is proved that no deterministic online scheduler can be optimal if the real-time tasks are allowed to suspend themselves.
+The above analysis also implies that the priority assignment in fixed-priority scheduling should be carefully designed. Traditional approaches like RM or EDF do not work very well. LM may work for a few self-suspending intervals, but how to perform the optimal priority assignment is an open problem. Such a difficulty comes from scheduling anomalies that may occur at run-time. In \cite{Ridouard_2004}, it is shown using a simple counter example that reducing execution times or self-suspension delays can lead some task to miss deadlines under EDF (i.e., EDF is no longer sustainable). This latter result can be easily extended to static schdeling policies (i.e., RM and DM). Lastly, in \cite{RidouardR06}, it is proved that no deterministic online scheduler can be optimal if the real-time tasks are allowed to suspend themselves.
+
+\jj{let's give an example from \cite{Ridouard_2004}}
 
 
 \subsection{Hardness for Scheduling Dynamic Self-Suspending Tasks}
@@ -52,7 +55,7 @@ It is clear that this task set is schedulable if we assign higher priority to
 task $\tau_2$.
 Under either RM, DM, and LM scheduling, task $\tau_1$ has higher priority than task $\tau_2$. It was proved in \cite{huangpass:dac2015} that this example has a speed-up factor $\infty$ when $\epsilon$ is close to $0$.
 
-There is no upper bound of this problem in the most general case. The analysis in \cite{huangpass:dac2015} for a speedup factor $2$ uses a trick to compare the speedup factor with respect to the \emph{optimal fixed-priority schedule} instead of the \emph{optimal schedule}. There is no proof or evident to show that this factor $2$ is also the factor when the reference is the \emph{optimal schedule}.
+There is no upper bound of this problem in the most general case. The analysis in \cite{huangpass:dac2015} for a speedup factor $2$ uses a trick to compare the speedup factor with respect to the \emph{optimal fixed-priority schedule} instead of the \emph{optimal schedule}. There is no proof or evidence to show that this factor $2$ is also the factor when the reference is the \emph{optimal schedule}.
 
 With respect to this problem, there was no theoretical lower bound (with respect to the speedup factors) of this scheduling problem. 
 
@@ -65,7 +68,8 @@ Finding the optimal priority assignment here is also an open problem.
 \paragraph{Preemptive Fixed-Priority Scheduling:}   
 For this case, the complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. The evidence provided in \cite{ecrts15nelissen} also suggests that this problem may be very difficult even for a task system with \emph{only one self-suspending task}. The solution in \cite{ecrts15nelissen}  requires exponential time complexity for $n-1$ sporadic tasks and 1 self-suspending task. The other solutions \cite{Huang:multiseg}\cite{PH:rtss98} require pseudo-polynomial time complexity but are only sufficient schedulability tests.
 
-The lack of something like the critical instant theorem in the ordinary sporadic task systems to reduce the search space of the worst-case behaviour has led to the complexity explosion to test exponential combinations of release patterns. The complexity class is at least as hard as the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly NP-hard and the complexity class of the schedulability test is unknown.
+Due to 
+the lack of something like the critical instant theorem to reduce the search space of the worst-case behaviour, testing the tight worst-case behaviour requires to evaluate exponential combinations of release patterns. The complexity class is at least as hard as the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly NP-hard and the complexity class of the schedulability test is unknown.
 Whether the problem (with segmented self-suspension) is ${\cal NP}$-hard in the strong or weak sense is an open problem.
 
 \paragraph{Preemptive Dynamic-Priority Scheduling:} 
@@ -79,7 +83,7 @@ It is also not difficult to see that the implicit-deadline case is also at least
 
 Similarly, for this case, with dynamic self-suspension, the complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. There is \emph{no exact} schedulability analysis for this problem up to now. The solutions in \cite{Liu:2000:RS:518501}\cite{LiuChen:rtss2014}\cite{huangpass:dac2015} are only sufficient schedulability tests. 
 
-The lack of something like the critical instant theorem and the dynamics of the dynamic self-suspending behaviour have constrained the current researches to provide exact schedulability tests. The complexity class is at least as hard as the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly NP-hard and the complexity class of the schedulability test is unknown. Whether the problem (with dynamic self-suspension) is ${\cal NP}$-hard in the weak or strong sense is an open problem.
+The lack of something like the critical instant theorem and the dynamics of the dynamic self-suspending behaviour have constrained current research to provide exact schedulability tests. The complexity class is at least as hard as the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly NP-hard and the complexity class of the schedulability test is unknown. Whether the problem (with dynamic self-suspension) is ${\cal NP}$-hard in the weak or strong sense is an open problem.
 
 \paragraph{Preemptive Dynamic-Priority Scheduling:} 
 For this case, if the task systems are with constrained deadlines, i.e., $D_i \leq T_i$, similarly, the complexity class of this problem is at least co${\cal NP}$-hard in the strong sense, since a special case of this problem is co${\cal NP}$-complete in the strong sense \cite{DBLP:conf/ecrts/Ekberg015}. For implicit-deadline self-suspending task systems, the schedulability test problem is not well-defined, since there is no clear scheduling policy that can be applied and tested. Therefore, we would conclude this as an open problem.

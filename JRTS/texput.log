@@ -1,18 +1,18 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.3)  26 SEP 2015 14:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.3)  18 OCT 2015 00:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**errorstopmode authorea_paper.tex
+**example.tex
 
 ! Emergency stop.
-<*> errorstopmode 
-                  authorea_paper.tex
+<*> example.tex
+               
 End of file on the terminal!
 
  
 Here is how much of TeX's memory you used:
- 2 strings out of 493117
- 95 string characters out of 6135434
+ 3 strings out of 493117
+ 102 string characters out of 6135434
  52909 words of memory out of 5000000
  3568 multiletter control sequences out of 15000+600000
  3640 words of font info for 14 fonts, out of 8000000 for 9000

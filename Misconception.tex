@@ -2,7 +2,7 @@
 \section{Misconceptions in Some Existing Results}
 \label{sec:misconceptions}
 
-This section explains several misconceptions in some existing results by presenting concrete examples to demonstrate their overstatements. These examples are constructed cases by cases. Therefore, each misconception will be explained by using one specific example. 
+This section explains several misconceptions in some existing results by presenting concrete examples to demonstrate their overstatements. These examples are constructed case by case. Therefore, each misconception will be explained by using one specific example. 
 
 \subsection{Incorrect Quantifications of Jitter - Dynamic Self-Suspension}
 \label{sec:wrong-jitter-dynamic}
@@ -13,13 +13,13 @@ R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+S_k}{T_i}} C_i.
 \label{eq:dynamic-flawed}
 \end{equation}
 The term $hp(k)$ is the set of the tasks with higher priority levels than task $\tau_k$. This analysis basically assumes that the jitter of a higher-priority task $\tau_i$ due to self-suspension is at most $S_i$.  Intuitively, it represents the potential internal jitter, \textit{within} an activation of $\tau_i$, i.e., when its execution time $C_i$ is considered by disregarding any time intervals when $\tau_i$ is preempted. 
-However, it is not a real jitter in the general cases, because the execution of $\tau_i$ can be pushed further.
+However, it is not a real jitter in the general cases, because the execution of $\tau_i$ can be pushed further, to be shown in the following example.
 
 
 Consider the dynamic self-suspending task set presented in Table \ref{tab:counterexample-dynamic-suspension}. 
 The analysis in Eq.~(\ref{eq:dynamic-flawed}) would yield $R_3=12$, as illustrated in 
 Figure~\ref{fig:counterexample-dynamic}(a). However, the schedule of Figure~\ref{fig:counterexample-dynamic}(b), which is perfectly legal, 
-disproves the claim that $R_3=12$, because $\tau_3$ in that case has a response time of $32-5\epsilon$ time units, 
+disproves the claim that $R_3=12$, because $\tau_3$ in that case has a response time of $22-5\epsilon$ time units, 
 where $\epsilon$ is an arbitrarily small quantity. 
 
 \begin{table}[t]
@@ -44,7 +44,7 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 \label{fig:counterexample-dynamic}
 \end{figure}
 
-{\bf Consequences:} Since the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} are fully based on the analysis in Eq.~(\ref{eq:dynamic-flawed}), the above unsafe example disproves the correctness of their analyses. The authors of the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} already filed a technical report \cite{BletsasReport2015} to explain in a great detail how to handle this. This misconception was unfortunately picked in \cite{lakshmanan-2009} to analyze the worst-case response time for
+{\bf Consequences:} Since the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} are fully based on the analysis in Eq.~(\ref{eq:dynamic-flawed}), the above unsafe example disproves the correctness of their analyses. The authors of the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} already filed a technical report \cite{BletsasReport2015} to explain in a great detail how to handle this. This misconception was unfortunately applied in \cite{lakshmanan-2009} to analyze the worst-case response time for
 partitioned multiprocessor real-time locking protocols, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}. Therefore, this misconception also causes analytical flaws in the above papers. We will explain such consequences in Section~\ref{sec:syn}.
 Moreover this counterexample also invalidates the comparison in \cite{RidouardR06}, which compares the schedulability tests from \cite{RTCSA-KimCPKH95} and \cite[Page 164-165]{Liu:2000:RS:518501}, since the result derived from \cite{RTCSA-KimCPKH95} is unsafe.
 
@@ -59,7 +59,7 @@ for \emph{constrained-deadline} task systems under the assumption that every hig
 \label{sec:wrong-jitter-segmented}
 
 
-We then explain the existing misconception in the literature to quantify the jitter too optimistically for segmented self-suspending task systems by using fixed-priority scheduling.  The analysis in \cite{RTCSA-BletsasA05} adopts two steps: (1) the computation segments and the self-suspension intervals are reordered such that the computation segments are with decreasing execution time and the suspension intervals are with increasing self-suspending time; and (2) each computation segment has a constant jitter defined by the \emph{early completion of the computation segments and the self-suspension intervals} prior to this computation segment, regardless of the other tasks. 
+We now explain the existing misconception in the literature to quantify the jitter too optimistically for segmented self-suspending task systems by using fixed-priority scheduling.  The analysis in \cite{RTCSA-BletsasA05} adopts two steps: (1) the computation segments and the self-suspension intervals are reordered such that the computation segments are with decreasing execution time and the suspension intervals are with increasing self-suspending time; and (2) each computation segment has a constant jitter defined by the \emph{early completion of the computation segments and the self-suspension intervals} prior to this computation segment, regardless of the other tasks. 
 
 Instead of going into the detailed mathematical formulations, we will demonstrate the above misconception with the following example listed in Table~\ref{tab:counterexample-segmented}.
 In this example, there is only one self-suspending task $\tau_3$. Suppose that all the values of computation time and self-suspension time are all for the actual-case costs. Therefore, both steps mentioned above do not take any effect. The analysis in \cite{RTCSA-BletsasA05} is basically akin to replacing $\tau_3$ with a sporadic task without any jitter or self-suspension, with $C_3=2$ and $D_3=T_3=15$. Therefore, the analysis in \cite{RTCSA-BletsasA05}  concludes that the worst-case response time of task $\tau_4$ is at most $15$ since $C_4+\sum_{i=1}^{3}\ceiling{\frac{15}{T_i}} C_i = 3+ 6 + 4 + 2= 15$.
@@ -103,9 +103,9 @@ $\tau_4$ &  $(3, 0, 0)$                   &    $?$  &   $\infty$    \\ \hline
 \subsection{Incorrect Assumptions in Critical Instant with Synchronous Releases}
 \label{sec:wrong-critical}
 
-Over the years, it has been well accepted that the characterization of the critical instant for self-suspending tasks is a complex problem. Nevertheless, although the complexity of verifying the existence of a feasible schedule for segmented self-suspending tasks has been proven to be ${\cal NP}$-hard in the strong sense \cite{Ridouard_2004}, the complexity of verifying the schedulability of a task set has only been studied for segmented self-suspending tasks with constrained deadlines scheduled with a fixed-priority scheduling algorithm (see Section~\ref{sec:hardness}), hence leaving hope for the existence efficient schedulability tests for more constrained systems. 
+Over the years, it has been well accepted that the characterization of the critical instant for self-suspending tasks is a complex problem. Nevertheless, although the complexity of verifying the existence of a feasible schedule for segmented self-suspending tasks has been proven to be ${\cal NP}$-hard in the strong sense \cite{Ridouard_2004}, the complexity of verifying the schedulability of a task set has only been studied for segmented self-suspending tasks with constrained deadlines scheduled with a fixed-priority scheduling algorithm (see Section~\ref{sec:hardness}), hence leaving hope for the existence of efficient schedulability tests for more constrained systems. 
 
-Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} propose a pseudo-polynomial worst-case response time analysis for one segmented self-suspending (with one self-suspending interval) task $\tau_k$ assuming that 
+Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} proposed a pseudo-polynomial worst-case response time analysis for one segmented self-suspending (with one self-suspending interval) task $\tau_k$ assuming that 
 \begin{itemize}
 \item the scheduling algorithm is fixed priority;
 \item $\tau_k$ is the lowest priority task;  and
@@ -164,16 +164,16 @@ It was however proven in \cite{ecrts15nelissen} that in the critical instant of 
 
 We now present a misconception to handle the highest-priority segmented self-suspension task by using the self-suspension time to reduce its interference to the lower-priority sporadic task systems. 
 We consider fixed-priority preemptive scheduling to schedule $n$ self-suspending sporadic real-time tasks on a single processor, in which $\tau_1$ is the highest priority task and $\tau_n$ is the lowest priority task. We focus on constrained-deadline task systems with $D_i \leq T_i$ or implicit-deadline systems with $D_i=T_i$ for $i=1,\ldots,n$.
-Let's consider the simplest setting of such a case:
+Let us consider the simplest setting of such a case:
 \begin{itemize}
 \item there is only one self-suspending task, which is the highest-priority task, i.e., $\tau_1$,
 \item the self-suspending time is fixed, i.e., early return of self-suspension has to be controlled, and
-\item the actual execution time of the self-suspending task is always equal to the worst-case execution time.
+\item the actual execution time of the self-suspending task is always equal to its worst-case execution time.
 \end{itemize}
-Such a task set (system) is referred to as $\Gamma_{1s}$.  Since $\tau_1$ is the highest-priority task, its execution behaviour is static under the above assumptions. The misconception here is to identify the critical instant  (Theorem 2 in \cite{RTSS-KimANR13}) as follows: ``a critical instant occurs when all the tasks are released at the same time if $C_1 +S_1 < C_i  \leq T_1-C_1-S_1 \mbox{ for } i \in\{i|i\in Z^{+} \mbox{ and } 1<i\leq n\}$ is satisfied.'' The misconception here is to use the self-suspension time (if it is long enough) to \emph{reduce} the computation demand of $\tau_i$ for interfering the lower-priority tasks. 
+Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  Since $\tau_1$ is the highest-priority task, its execution behaviour is static under the above assumptions. The misconception here is to identify the critical instant  (Theorem 2 in \cite{RTSS-KimANR13}) as follows: ``a critical instant occurs when all the tasks are released at the same time if $C_1 +S_1 < C_i  \leq T_1-C_1-S_1 \mbox{ for } i \in\{i|i\in Z^{+} \mbox{ and } 1<i\leq n\}$ is satisfied.'' The misconception here is to use the self-suspension time (if it is long enough) to \emph{reduce} the computation demand of $\tau_i$ for interfering with lower-priority tasks. 
 
 
-{\it Counterexample of Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, i.e., $0 < \epsilon \leq 0.1$. We have $3$ tasks, in which
+{\it Counterexample of Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, i.e., $0 < \epsilon \leq 0.1$. We have three tasks, in which
 (1) $C_1= 1+ \epsilon$, $C_1^1 = \epsilon$, $S_1=S_1^1 = 1$, $C_1^2  = 1$, $T_{1} =D_1= 4 + 10 \epsilon$, (2) $C_2 = 2 + 2\epsilon$, $T_2 =D_2= 6$, and (3)
 $C_3 = 2 + 2\epsilon$, $T_3 =D_3= 6$. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$. The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$, the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
 
@@ -201,7 +201,7 @@ This also implies that the utilization bound (for implicit-deadline task systems
 We now introduce misconceptions to adopt periodic enforcement for segmented self-suspending task systems. As mentioned in Section~\ref{sec:periodic-enforce}, we can set a constant offset to constrain the release time of a computation segment. If this offset is given, each computation segment behaves like a standard sporadic (or periodic) tasks. Therefore, the schedulability test for sporadic task systems can be directly applied. Since the offsets of two computation segments of a task may be different, one may want to assign each computation segment a \emph{fixed-priority} level.  However, this has to be carefully handled. 
 
 Consider the following example. Task $\tau_1$ has $T_1=D_1=30$ and execution time $C_1=10$ without self-suspension. Task $\tau_2$ has $T_2=D_2=40$, and $C_2^1=5$, $S_2^1=5$, and $C_2^2=16$. Suppose that the offset of the computation segment $C_2^1$ is $0$ and the offset of the computation segment $C_2^2$ is $10$. This setting creates three sporadic tasks.
-Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest priority and $C_2^2$ the lowest priority. It should be clear that the worst-case response time of $C_2^1$ is $5$ and the worst-case response time of $C_1$ is $15$. Let's focus on the WCRT analysis of $C_2^2$.
+Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest priority and $C_2^2$ the lowest priority. It should be clear that the worst-case response time of $C_2^1$ is $5$ and the worst-case response time of $C_1$ is $15$. We focus on the WCRT analysis of $C_2^2$.
 
 
 Since the two computation segments of task $\tau_2$ should not have any overlap, one may think that during the analysis of the worst-case response time of $C_2^2$, we do not have to consider the computation segment $C_2^1$. The worst-case response time of $C_2^2$ (after its constant offset $10$) for this case is $26$ since $\ceiling{\frac{26}{30}} C_1 + C_2^2 = 26$. 
@@ -222,9 +222,9 @@ Unfortunately, it is not. Figure~\ref{fig:counterexample-FP-segment-level} provi
 
 {\bf Consequences:} The priority assignment algorithms in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} use the above unsafe schedulability test to verify the priority assignments. Therefore, their results are flawed due to the unsafe schedulability test.
 
-{\bf Solutions:} This requires to a revisit of the schedulability test of a given segmented fixed-priority priority assignment. This can be observed as a reduction to 
+{\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority priority assignment. This can be observed as a reduction to 
 the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. A GMF task $G_i$ consisting of $m_i$ frames is characterized by the $3$-tuple $(\vec{C_i},\vec{D_i},\vec{T_i})$, where $\vec{C_i}$,$\vec{D_i}$, and $\vec{T_i}$ are $m_i$-ary vectors $(C_{i}^0,C_{i}^1,...,C_{i}^{m_i-1})$ of execution requirements, $(D_{i}^0,D_{i}^1,...,D_{i}^{m_i-1})$ of relative deadlines, $(T_{i}^0,T_{i}^1,...,T_{i}^{m_i-1})$ of minimum inter-arrival times, respectively.
-In fact, from the analysis perspective, a self-suspension task $\tau_i$ under the offset enforcement is equivalent to a GMF task $G_i$,  by considering the computation segments as the frames with different separation times \cite{WC16-suspend-DATE,DBLP:journals/ieicet/DingTT09}.
+In fact, from the analysis perspective, a self-suspending task $\tau_i$ under the offset enforcement is equivalent to a GMF task $G_i$,  by considering the computation segments as the frames with different separation times \cite{WC16-suspend-DATE,DBLP:journals/ieicet/DingTT09}.
 
 However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
 
