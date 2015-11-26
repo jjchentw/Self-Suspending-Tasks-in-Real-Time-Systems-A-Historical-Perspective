@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.3)  26 NOV 2015 00:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.2.3)  26 NOV 2015 14:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1164,38 +1164,29 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (../abstract.tex) (../Introduction_.tex [1
 
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \vbox (badness 1102) has occurred while \output is active []
-
- [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
-Overfull \hbox (7.8231pt too wide) in paragraph at lines 250--253
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (7.8231pt too wide) in paragraph at lines 26--29
 []\OT1/cmr/m/n/10 Self-suspending tasks can be clas-si-fied into two mod-els: \
 OT1/cmr/m/it/10 dy-namic \OT1/cmr/m/n/10 self-suspension
  []
 
-
-Underfull \vbox (badness 6252) has occurred while \output is active []
-
- [5]
-Overfull \hbox (7.65591pt too wide) in paragraph at lines 269--271
+[2]
+Overfull \hbox (7.65591pt too wide) in paragraph at lines 44--46
 []\OT1/cmr/m/n/10 Incorrect seg-mented fixed-priority schedul-ing with pe-ri-od
 ic en-force-ment, which
  []
 
-[6]) (../Model.tex
-Overfull \hbox (14.88019pt too wide) in paragraph at lines 4--11
+[3]) (../Model.tex [4] [5]
+Overfull \hbox (27.408pt too wide) in paragraph at lines 229--236
 \OT1/cmr/m/n/10 suspension spo-radic task model char-ac-ter-izes each task $\OM
-L/cmm/m/it/10 ^^\[]$ \OT1/cmr/m/n/10 as a $4$-tuple $(\OML/cmm/m/it/10 C[]\OT1/
-cmr/m/n/10 , \OML/cmm/m/it/10 S[]\OT1/cmr/m/n/10 , \OML/cmm/m/it/10 T[]\OT1/cmr
-/m/n/10 , \OML/cmm/m/it/10 D[]\OT1/cmr/m/n/10 )$:
+L/cmm/m/it/10 ^^\[]$ \OT1/cmr/m/n/10 as a four-tuple $(\OML/cmm/m/it/10 C[]\OT1
+/cmr/m/n/10 , \OML/cmm/m/it/10 S[]\OT1/cmr/m/n/10 , \OML/cmm/m/it/10 T[]\OT1/cm
+r/m/n/10 , \OML/cmm/m/it/10 D[]\OT1/cmr/m/n/10 )$:
  []
 
-[7] [8]) (../Existing-Solutions.tex [9] [10] [11] [12] [13] [14] [15])
-(../Misconception.tex [16]
-<../figures/CounterexampleDynamicSuspension/counterexample_classic.png, id=74, 
+[6] [7] [8]) (../Existing-Solutions.tex [9] [10] [11] [12] [13] [14] [15])
+(../Misconception.tex
+<../figures/CounterexampleDynamicSuspension/counterexample_classic.png, id=71, 
 586.44093pt x 524.71031pt>
 File: ../figures/CounterexampleDynamicSuspension/counterexample_classic.png Gra
 phic file (type png)
@@ -1205,7 +1196,7 @@ Package pdftex.def Info: ../figures/CounterexampleDynamicSuspension/counterexam
 ple_classic.png used on input line 41.
 (pdftex.def)             Requested size: 347.12354pt x 310.5852pt.
 
-[17]
+[16] [17]
 <../figures/CounterexampleSegmentedSuspension/counterexample_synthetic.png, id=
 78, 906.38625pt x 307.90031pt>
 File: ../figures/CounterexampleSegmentedSuspension/counterexample_synthetic.png
@@ -1216,7 +1207,7 @@ Package pdftex.def Info: ../figures/CounterexampleSegmentedSuspension/counterex
 ample_synthetic.png used on input line 92.
 (pdftex.def)             Requested size: 347.12354pt x 117.91476pt.
 
-Underfull \vbox (badness 2932) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [18 <../figures/CounterexampleDynamicSuspension/counterexample_classic.png>] [
 19 <../figures/CounterexampleSegmentedSuspension/counterexample_synthetic.png>]
@@ -1253,10 +1244,8 @@ File: ../figures/ex-no-phi/ex-no-phi.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../figures/ex-no-phi/ex-no-phi.pdf used on input line 
 145.
 (pdftex.def)             Requested size: 295.05711pt x 62.80527pt.
- [20]
-Underfull \vbox (badness 2409) has occurred while \output is active []
-
- [21 <../figures/ex-phi/ex-phi.pdf> <../figures/ex-no-phi/ex-no-phi.pdf>] [22]
+ [20 <../figures/ex-phi/ex-phi.pdf> <../figures/ex-no-phi/ex-no-phi.pdf>] [21] 
+[22]
 (../figures/CounterexampleFixedPrioritySegmented/carry-in-body.tex
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <9> not available
@@ -1270,41 +1259,37 @@ File: ../figures/Counterexample1/Counterexample1.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../figures/Counterexample1/Counterexample1.pdf used on
  input line 69.
 (pdftex.def)             Requested size: 295.05711pt x 208.77727pt.
- [27 <../figures/Counterexample1/Counterexample1.pdf>] [28]) (../soft-realtime.
-tex [29])
+ [27 <../figures/Counterexample1/Counterexample1.pdf>]) (../soft-realtime.tex [
+28] [29])
 (../Hardness.tex
 Overfull \hbox (1.2659pt too wide) in paragraph at lines 3--4
 \OT1/cmr/m/n/10 This sec-tion re-views the hard-ness for de-sign-ing schedul-in
 g al-go-rithms and schedu-
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [30]
-[31] [32] [33]) (../Summary.tex [34]
+[30] [31] [32]) (../Summary.tex [33]
 Overfull \hbox (9.00192pt too wide) in paragraph at lines 50--63
 \OT1/cmr/m/it/10 slack en-force-ment is that un-der worst-case in-ter-fer-ence 
 from higher-priority
  []
 
-[35]
+[34]
 Overfull \hbox (7.65591pt too wide) in paragraph at lines 105--107
 []\OT1/cmr/m/n/10 Incorrect seg-mented fixed-priority schedul-ing with pe-ri-od
 ic en-force-ment, which
  []
 
-
+[35]
 Overfull \hbox (11.17744pt too wide) in paragraph at lines 191--195
  [][] 
  []
 
 ) (./JRTS.bbl [36] [37] [38] [39]) [40] (./JRTS.aux) ) 
 Here is how much of TeX's memory you used:
- 16299 strings out of 493117
- 313993 string characters out of 6135434
- 375484 words of memory out of 5000000
- 19366 multiletter control sequences out of 15000+600000
+ 16257 strings out of 493117
+ 313445 string characters out of 6135434
+ 366011 words of memory out of 5000000
+ 19324 multiletter control sequences out of 15000+600000
  14505 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,14n,68p,1569b,1020s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1335,7 +1320,7 @@ cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm
 cmti7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ti9.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfti090
 0.pfb>
-Output written on JRTS.pdf (40 pages, 772499 bytes).
+Output written on JRTS.pdf (40 pages, 767252 bytes).
 PDF statistics:
  339 PDF objects out of 1000 (max. 8388607)
  227 compressed objects within 3 object streams
