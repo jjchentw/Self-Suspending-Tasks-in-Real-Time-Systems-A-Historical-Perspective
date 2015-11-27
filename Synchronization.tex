@@ -12,11 +12,11 @@ Under partitioned scheduling, a resource accessed by tasks from different proces
 
 Under suspension-based protocols, such as the \emph{multiprocessor priority ceiling protocol (MPCP)}~\cite{rajkumar-1990}, tasks that are denied to access shared resources are suspended. From the perspective of the local schedule on each processor, remote blocking, caused by external events (\ie, resource contention due to tasks on the other processors), pushes the execution of higher-priority tasks to a later time point regardless of the schedule on the local processor (\ie, even if the local processor is idle), and thus may cause additional interference on lower-priority tasks. As a result, remote blocking must be considered as a self-suspension in the analysis. In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy). Consequently, like in the uniprocessor case, local blocking is accounted for as regular blocking, and not as self-suspension.
 
-A safe yet pessimistic strategy, called \emph{suspension-oblivious analysis}, is to model remote blocking as computation. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. \cite{block-2007} first used this strategy in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling;  \cite{lakshmanan-2009} also adopted this approach in their analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it can also pessimistically overestimate response times by a factor linear in both the number of tasks and the ratio of the largest and the shortest periods~\cite{wieder-2013}.
+A safe yet pessimistic strategy, called \emph{suspension-oblivious analysis}, is to model remote blocking as computation. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. This strategy was first used in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling~\cite{block-2007}; it was also adopted in \cite{lakshmanan-2009} for the analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it can also pessimistically overestimate response times by a factor linear in both the number of tasks and the ratio of the largest and the shortest periods~\cite{wieder-2013}.
 
-A less pessimistic alternative to suspension-oblivious analysis is to \emph{explicitly} bound the effects of deferred execution due to remote blocking. Following this approach, Lakshmanan et al. \cite{lakshmanan-2009} proposed the following response-time analysis framework that takes into account the amount of remote blocking to bound the worst case interference.
+A less pessimistic alternative to suspension-oblivious analysis is to \emph{explicitly} bound the effects of deferred execution due to remote blocking. Following this approach, Lakshmanan et al.~\cite{lakshmanan-2009} proposed the following response-time analysis framework that takes into account the amount of remote blocking to bound the worst case interference.
 
-In Eq. \eqref{eqn:wcrt} below, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{hp(k)}$ and $\fun{lp(k)}$ denote the tasks with higher and lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, and $s_k$ is the maximum number of critical sections of $\tau_k$, and $C_{l,j}^{\prime}$ is an upper bound on the execution time of the $j$\xth critical section of $\tau_l$. \cite{lakshmanan-2009} claimed that, if $R_k^{n+1} = R_k^n \leq D_k$ for some $n > 0$, where $R_k^0 = C_k^{\ast}$ and
+In Eq. \eqref{eqn:wcrt} below, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{hp(k)}$ and $\fun{lp(k)}$ denote the tasks with higher and lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, and $s_k$ is the maximum number of critical sections of $\tau_k$, and $C_{l,j}^{\prime}$ is an upper bound on the execution time of the $j$\xth critical section of $\tau_l$. It was claimed in \cite{lakshmanan-2009} that, if $R_k^{n+1} = R_k^n \leq D_k$ for some $n > 0$, where $R_k^0 = C_k^{\ast}$ and
 \begin{equation}
 \label{eqn:wcrt}
 R_k^{n+1} = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k^n + B_i^r}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}
@@ -63,11 +63,77 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
 & R_3^3 = \varepsilon + \left \lceil \frac{8+4\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+4\varepsilon + 4-\varepsilon}{13} \right \rceil \cdot (4+2\varepsilon) = 8+3\varepsilon.
 \end{align*}
 
-\ifpaper
+
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.85\linewidth]{../figures/Counterexample1/Counterexample1.pdf}
-  \caption{An example schedule where $\tau_3$ misses a deadline.}\label{fig:counterexample_protocol}
+  \def\uxfpga{0.4cm}
+    \scalebox{0.9}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (-0.4,0) -- coordinate (xaxis) (24,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (-0.5, 0.5) {$\tau_4$};
+       \node[anchor=east] at (-0.5, 3.5) {$\tau_3$};
+       \node[anchor=east] at (-0.5, 5.5) {$\tau_2$};
+       \node[anchor=east] at (-0.5, 7.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,22}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+
+        \draw[->] (1,0) -- (1,1.75);
+        \draw[->] (15,0) -- (15,1.75);
+        \draw[dashed,--] (-0.4,0) -- (-0.4,2.25);
+        \draw[dashed,--] (22,0) -- (22,2.25);
+        \draw[dashed,--] (-0.4,2.25) -- (22,2.25);
+        \node[anchor=east] at (13, 1.5) {Processor 1};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 0){\footnotesize};         
+        \node[task9, minimum width=3.4*\uxfpga, anchor=south west] at (2, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5.4, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (15, 0){\footnotesize};         
+        \node[task9, minimum width=3.4*\uxfpga, anchor=south west] at (16, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (19.4, 0){\footnotesize};
+        
+        \draw[->] (6,3) -- (6,4.75);
+        \draw[<-,red] (20,3) -- (20,4.2);
+        \draw[dashed,--] (-0.4,2.7) -- (-0.4,9.75);
+        \draw[dashed,--] (22,2.7) -- (22,9.75);
+        \draw[dashed,--] (-0.4,9.75) -- (22,9.75);
+        \draw[dashed,--] (-0.4,2.7) -- (22,2.7);
+        \node[anchor=east,red] at (21, 4.5) {miss};
+        
+        \draw[->] (0,5) -- (0,6.75);
+        \draw[->] (13,5) -- (13,6.75);
+        \draw[--] (2.55,5.3) -- (5.5,5.3);
+        \draw[--] (2.55,5.5) -- (5.5,5.5);
+        \draw[--] (2.55,5.7) -- (5.5,5.7);
+        \node[task7, minimum width=0.1*\uxfpga, anchor=south west] at (2, 5){\footnotesize};         
+        \node[task9, minimum width=0.1*\uxfpga, anchor=south east] at (6, 5){\footnotesize};
+        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (8, 5){\footnotesize}; 
+        \node[task7, minimum width=0.1*\uxfpga, anchor=south west] at (14, 5){\footnotesize};         
+        \node[task9, minimum width=0.1*\uxfpga, anchor=south west] at (14.5, 5){\footnotesize};
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (15.05, 5){\footnotesize};
+        \node[task7, minimum width=0.8*\uxfpga, anchor=south west] at (20, 5){\footnotesize};
+
+        \draw[->] (0,7) -- (0,8.75);
+        \draw[->] (6,7) -- (6,8.75);
+        \draw[->] (12,7) -- (12,8.75);
+        \draw[->] (18,7) -- (18,8.75);
+        \node[anchor=east] at (13, 9.25) {Processor 2};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (0, 7){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (6, 7){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (12, 7){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (18, 7){\footnotesize};
+        
+  \end{tikzpicture}}       
+  \caption{A schedule where $\tau_3$ misses a deadline.}
+  \label{fig:counterexample_protocol}
+\end{figure}
+
+\ifpaper
+%\begin{figure}[t]
+%  \centering
+%  \includegraphics[width=0.85\linewidth]{../figures/Counterexample1/Counterexample1.pdf}
+%  \caption{An example schedule where $\tau_3$ misses a deadline.}\label{fig:counterexample_protocol}
 \end{figure}
  \fi
 
@@ -91,7 +157,7 @@ where $\fun{rbf_{FP}}(k,t)$ is the \emph{request bound function} of $\tau_k$, wh
 \fun{rbf_{FP}} = C_k + B_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i.
 \end{equation}
 
-Starting from Eq. \eqref{eqn:rbf-1}, \cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:
+Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:
 \begin{equation}
 \label{eqn:bloc-tolerate}
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left( t - ( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i ) \right).

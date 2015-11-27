@@ -36,13 +36,209 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 \label{tab:counterexample-dynamic-suspension}
 \end{table}
 
+
 \begin{figure}[t]
-\begin{center}
-\includegraphics[width=\linewidth]{../figures/CounterexampleDynamicSuspension/counterexample_classic.png}
-\end{center}
-\caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
-\label{fig:counterexample-dynamic}
+  \centering
+\def\uxfpga{0.4cm} 
+\subfloat[]{
+    \scalebox{0.8}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (-6,0) -- coordinate (xaxis) (18,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (-6, 0.5) {$\tau_3$};
+       \node[anchor=east] at (-6, 2.5) {$\tau_2$};
+       \node[anchor=east] at (-6, 4.5) {$\tau_1$};
+
+       \foreach \x in {-6,-4,...,16}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[<-,thin,red] (0,1.3) -- (5.3,1.3);
+        \draw[->,thin,red] (6.7,1.3) -- (12,1.3);
+        \draw[<-,thin,red] (0,1.3) -- (5,1.3);
+        \draw[--] (12.05,0) -- (12.05,1.5);
+        \node[anchor=east,red] at (6.7, 1.39) {$12$};
+        \draw[dotted] (12.5,0.5) -- (13.3,0.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (11, 0){\footnotesize};         
+
+        \draw[->] (-5,2) -- (-5,3.75);
+        \draw[->] (15,2) -- (15,3.75);
+        \draw[dotted] (15.5,2.5) -- (16.3,2.5); 
+        \draw[--] (-5,2.3) -- (0,2.3);
+        \draw[--] (-5,2.5) -- (0,2.5);
+        \draw[--] (-5,2.7) -- (0,2.7);
+        \draw[--] (0,2) -- (0,3);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (3, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (7, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 2){\footnotesize};
+                
+        \draw[->] (0,4) -- (0,5.75);
+        \draw[->] (2,4) -- (2,5.75);
+        \draw[->] (4,4) -- (4,5.75);
+        \draw[->] (6,4) -- (6,5.75);
+        \draw[->] (8,4) -- (8,5.75);
+        \draw[->] (10,4) -- (10,5.75);
+        \draw[->] (12,4) -- (12,5.75);
+        \draw[->] (14,4) -- (14,5.75);
+        \draw[dotted] (15.5,4.5) -- (16.3,4.5);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (8, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (12, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 4){\footnotesize};
+ \end{tikzpicture}} }
+
+\subfloat[]{
+    \scalebox{0.8}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (36,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.5) {$\tau_3$};
+       \node[anchor=east] at (0, 2.5) {$\tau_2$};
+       \node[anchor=east] at (0, 4.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,34}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+       
+
+        \draw[->] (10,0) -- (10,1.75);
+        \draw[dotted] (32.5,0.5) -- (33.3,0.5); 
+        \draw[<-,thin,red] (10,1.3) -- (19,1.3);
+        \draw[->,thin,red] (22.4,1.3) -- (31.4,1.3);
+        \node[anchor=east,red] at (22.3, 1.39) {$22-5\varepsilon$};
+        \node[task7, minimum width=0.1*\uxfpga, anchor=south east] at (20, 0){\footnotesize}; 
+        \draw[--] (31,1) -- (31.4,1);
+        \draw[--] (31,0) -- (31.4,0);
+        \draw[--] (31,0) -- (31,1);
+        \draw[--] (31.4,0) -- (31.4,1.5);   
+        
+             
+
+        \draw[->] (0,2) -- (0,3.75);
+        \draw[->] (20,2) -- (20,3.75);
+        \draw[dotted] (35.2,2.5) -- (36,2.5); 
+        \draw[<-] (1.2,3) --(1.8,3.38);
+        \node[anchor=east] at (2.7, 3.5) {$\varepsilon$};
+        \draw[<-] (19.85,3) --(19.1,3.39);
+        \node[anchor=east] at (19.1, 3.5) {$5\varepsilon$};
+        
+        \draw[--] (1,3) -- (1.2,3);
+        \draw[--] (1,2) -- (1.2,2);
+        \draw[--] (1,2) -- (1,3);
+        \draw[--] (1.2,2) -- (1.2,3);        
+        \draw[--] (1.2,2.3) -- (2,2.3);
+        \draw[--] (1.2,2.5) -- (2,2.5);
+        \draw[--] (1.2,2.7) -- (2,2.7);
+        \draw[--] (2,2) -- (2,3);
+        \draw[--] (3,3) -- (3.2,3);
+        \draw[--] (3,2) -- (3.2,2);
+        \draw[--] (3,2) -- (3,3);
+        \draw[--] (3.2,2) -- (3.2,3);        
+        \draw[--] (3.2,2.3) -- (4,2.3);
+        \draw[--] (3.2,2.5) -- (4,2.5);
+        \draw[--] (3.2,2.7) -- (4,2.7);
+        \draw[--] (4,2) -- (4,3);
+        \draw[--] (5,3) -- (5.2,3);
+        \draw[--] (5,2) -- (5.2,2);
+        \draw[--] (5,2) -- (5,3);
+        \draw[--] (5.2,2) -- (5.2,3);        
+        \draw[--] (5.2,2.3) -- (6,2.3);
+        \draw[--] (5.2,2.5) -- (6,2.5);
+        \draw[--] (5.2,2.7) -- (6,2.7);
+        \draw[--] (6,2) -- (6,3);        
+        \draw[--] (7,3) -- (7.2,3);
+        \draw[--] (7,2) -- (7.2,2);
+        \draw[--] (7,2) -- (7,3);
+        \draw[--] (7.2,2) -- (7.2,3);        
+        \draw[--] (7.2,2.3) -- (8,2.3);
+        \draw[--] (7.2,2.5) -- (8,2.5);
+        \draw[--] (7.2,2.7) -- (8,2.7);
+        \draw[--] (8,2) -- (8,3);
+        \draw[--] (9,3) -- (9.2,3);
+        \draw[--] (9,2) -- (9.2,2);
+        \draw[--] (9,2) -- (9,3);
+        \draw[--] (9.2,2) -- (9.2,3);        
+        \draw[--] (9.2,2.3) -- (10,2.3);
+        \draw[--] (9.2,2.5) -- (10,2.5);
+        \draw[--] (9.2,2.7) -- (10,2.7);
+        \draw[--] (10,2) -- (10,3);
+        \node[task7, minimum width=\uxfpga, anchor=south east] at (12, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south east] at (14, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south east] at (16, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south east] at (18, 2){\footnotesize};
+        \draw[--] (19,3) -- (19.4,3);
+        \draw[--] (19,2) -- (19.4,2);
+        \draw[--] (19,2) -- (19,3);
+        \draw[--] (19.4,2) -- (19.4,3);        
+        \draw[--] (19.4,2.3) -- (20,2.3);
+        \draw[--] (19.4,2.5) -- (20,2.5);
+        \draw[--] (19.4,2.7) -- (20,2.7);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (21, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (23, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (25, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (27, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (29, 2){\footnotesize};
+        \draw[--] (30,2.3) -- (35,2.3);
+        \draw[--] (30,2.5) -- (35,2.5);
+        \draw[--] (30,2.7) -- (35,2.7);
+        \draw[--] (35,2) -- (35,3);
+        
+        \draw[->] (0,4) -- (0,5.75);
+        \draw[->] (2,4) -- (2,5.75);
+        \draw[->] (4,4) -- (4,5.75);
+        \draw[->] (6,4) -- (6,5.75);
+        \draw[->] (8,4) -- (8,5.75);
+        \draw[->] (10,4) -- (10,5.75);
+        \draw[->] (12,4) -- (12,5.75);
+        \draw[->] (14,4) -- (14,5.75);
+        \draw[->] (16,4) -- (16,5.75);
+        \draw[->] (18,4) -- (18,5.75);
+        \draw[->] (20,4) -- (20,5.75);
+        \draw[->] (22,4) -- (22,5.75);
+        \draw[->] (24,4) -- (24,5.75);
+        \draw[->] (26,4) -- (26,5.75);
+        \draw[->] (28,4) -- (28,5.75);
+        \draw[->] (30,4) -- (30,5.75);
+        \draw[->] (32,4) -- (32,5.75);
+        \draw[->] (34,4) -- (34,5.75);
+        \draw[dotted] (34.2,4.5) -- (35,4.5);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (8, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (12, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (16, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (18, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (20, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (22, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (26, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (28, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (30, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (32, 4){\footnotesize};
+
+ \end{tikzpicture}}       }
+  \caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
+  \label{fig:counterexample-dynamic}
 \end{figure}
+
+%\begin{figure}[t]
+%\begin{center}
+%\includegraphics[width=\linewidth]{../figures/CounterexampleDynamicSuspension/counterexample_classic.png}
+%\end{center}
+%\caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
+%\label{fig:counterexample-dynamic}
+%\end{figure}
 
 {\bf Consequences:} Since the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} are fully based on the analysis in Eq.~(\ref{eq:dynamic-flawed}), the above unsafe example disproves the correctness of their analyses. The authors of the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} already filed a technical report \cite{BletsasReport2015} to explain in a great detail how to handle this. This misconception was unfortunately applied in \cite{lakshmanan-2009} to analyze the worst-case response time for
 partitioned multiprocessor real-time locking protocols, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}. Therefore, this misconception also causes analytical flaws in the above papers. We will explain such consequences in Section~\ref{sec:syn}.
@@ -84,17 +280,117 @@ $\tau_4$ &  $(3, 0, 0)$                   &    $?$  &   $\infty$    \\ \hline
 \label{tab:counterexample-segmented}
 \end{table}
 
-
-
-
 \begin{figure}[t]
-\begin{center}
-\includegraphics[width=\linewidth]{../figures/CounterexampleSegmentedSuspension/counterexample_synthetic.png}
-\end{center}
-\caption{A schedule for the task set in Table  \ref{tab:counterexample-segmented}. }
-\label{fig:counterexample-segmented}
+  \centering
+  \def\uxfpga{0.25cm}
+    \scalebox{0.77}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (62,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.5) {$\tau_4$};
+       \node[anchor=east] at (0, 2.5) {$\tau_3$};
+       \node[anchor=east] at (0, 4.5) {$\tau_2$};
+       \node[anchor=east] at (0, 6.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,60}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+
+        \draw[->] (40,0) -- (40,1.75);
+        \draw[--] (58.05,1) -- (58.05,1.5);
+        \draw[dotted] (58.5,0.5) -- (60,0.5);
+        \draw[<-,thin,red] (40,1.3) -- (48,1.3);
+        \draw[->,thin,red] (50,1.3) -- (58,1.3);
+        \node[anchor=east,red] at (50, 1.39) {18};
+        
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (48, 0){\footnotesize};         
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (57, 0){\footnotesize};
+        
+        \draw[->] (0,2) -- (0,3.75);
+        \draw[->] (15,2) -- (15,3.75);
+        \draw[->] (30,2) -- (30,3.75);
+        \draw[->] (45,2) -- (45,3.75);
+        \draw[->] (60,2) -- (60,3.75);
+        \draw[dotted] (60.5,2.5) -- (62,2.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 2){\footnotesize};
+        \draw[--] (5,2.3) -- (10,2.3);
+        \draw[--] (5,2.5) -- (10,2.5);
+        \draw[--] (5,2.7) -- (10,2.7);
+        \draw[--] (10,2) -- (10,3);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (17, 2){\footnotesize};
+        \draw[--] (18,2.3) -- (23,2.3);
+        \draw[--] (18,2.5) -- (23,2.5);
+        \draw[--] (18,2.7) -- (23,2.7);
+        \draw[--] (23,2) -- (23,3);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (34, 2){\footnotesize};
+        \draw[--] (35,2.3) -- (40,2.3);
+        \draw[--] (35,2.5) -- (40,2.5);
+        \draw[--] (35,2.7) -- (40,2.7);
+        \draw[--] (40,2) -- (40,3);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (44, 2){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (47, 2){\footnotesize};
+        \draw[--] (48,2.3) -- (53,2.3);
+        \draw[--] (48,2.5) -- (53,2.5);
+        \draw[--] (48,2.7) -- (53,2.7);
+        \draw[--] (53,2) -- (53,3);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (54, 2){\footnotesize};
+                
+        \draw[->] (0,4) -- (0,5.75);
+        \draw[->] (10,4) -- (10,5.75);
+        \draw[->] (20,4) -- (20,5.75);
+        \draw[->] (30,4) -- (30,5.75);
+        \draw[->] (40,4) -- (40,5.75);
+        \draw[->] (50,4) -- (50,5.75);
+        \draw[->] (60,4) -- (60,5.75);
+        \draw[dotted] (60.5,4.5) -- (62,4.5);
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (2, 4){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (12, 4){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (22, 4){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (32, 4){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (42, 4){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (52, 4){\footnotesize};
+        
+        \draw[->] (0,6) -- (0,7.75);
+        \draw[->] (10,6) -- (10,7.75);
+        \draw[->] (20,6) -- (20,7.75);
+        \draw[->] (30,6) -- (30,7.75);
+        \draw[->] (40,6) -- (40,7.75);
+        \draw[->] (50,6) -- (50,7.75);
+        \draw[->] (60,6) -- (60,7.75);
+        \draw[->] (5,6) -- (5,7.75);
+        \draw[->] (15,6) -- (15,7.75);
+        \draw[->] (25,6) -- (25,7.75);
+        \draw[->] (35,6) -- (35,7.75);
+        \draw[->] (45,6) -- (45,7.75);
+        \draw[->] (55,6) -- (55,7.75);
+        \draw[dotted] (60.5,6.5) -- (62,6.5);
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (0, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (5, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (10, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (15, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (20, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (25, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (30, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (35, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (40, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (45, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (50, 6){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (55, 6){\footnotesize};        
+
+  \end{tikzpicture}}       
+  \caption{A schedule for the task set in Table  \ref{tab:counterexample-segmented}. }
+  \label{fig:counterexample-segmented}
 \end{figure}
 
+%\begin{figure}[t]
+%\begin{center}
+%\includegraphics[width=\linewidth]{../figures/CounterexampleSegmentedSuspension/counterexample_synthetic.png}
+%\end{center}
+%\caption{A schedule for the task set in Table  \ref{tab:counterexample-segmented}. }
+%\label{fig:counterexample-segmented}
+%\end{figure}
 
 {\bf Consequences:} This example shows that the analysis in \cite{RTCSA-BletsasA05} is flawed.  The authors in \cite{RTCSA-BletsasA05}  already filed a technical report \cite{BletsasReport2015}.
 
@@ -133,25 +429,111 @@ This definition of the critical instant is very similar to the definition of the
         $\tau_3$ & (1, 2, 3) & 100  \\
         \hline
     \end{tabular} 
-    \caption{Task parameters for the counter-example to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
+    \caption{Task parameters for the counter example to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
     \label{table:ex-synch-releases}
 \end{table}
 
-\ifpaper
 \begin{figure}[t]
   \centering
-\captionsetup[subfigure]{width=\columnwidth}
-  \subfloat[all tasks release a job synchronously.]{\label{fig:ex-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-phi/ex-phi.pdf} \\
-  \subfloat[all tasks do not release a job synchronously.]{\label{fig:ex-no-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-no-phi/ex-no-phi}
-  \caption{Counter-example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
+\def\uxfpga{0.4cm} 
+    \scalebox{1}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.5) {$\tau_3$};
+       \node[anchor=east] at (0, 2.5) {$\tau_2$};
+       \node[anchor=east] at (0, 4.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,10}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+       
+       \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
+       \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
+
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[dotted] (9.5,0.5) -- (10.3,0.5);
+        \draw[<-,thin,red] (0,1.3) -- (3.9,1.3);
+        \draw[->,thin,red] (5.1,1.3) -- (9,1.3);
+        \draw[--] (9.05,0) -- (9.05,1.5);
+        \node[anchor=east,red] at (5, 1.39) {$9$}; 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 0){\footnotesize};     
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (6, 0){\footnotesize};    
+        \draw[--] (3,0.3) -- (5,0.3);
+        \draw[--] (3,0.5) -- (5,0.5);
+        \draw[--] (3,0.7) -- (5,0.7);
+        \draw[--] (5,0) -- (5,1);
+        
+        \draw[->] (0,2) -- (0,3.75);
+        \draw[dotted] (2.5,2.5) -- (3.3,2.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 2){\footnotesize};
+                
+        \draw[->] (0,4) -- (0,5.75);
+        \draw[dashed,->] (4,4) -- (4,5.75);
+        \draw[->] (5,4) -- (5,5.75);
+        \draw[->] (9,4) -- (9,5.75);
+        \draw[dotted] (10.5,4.5) -- (11.3,4.5);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 4){\footnotesize};
+ 
+
+       \draw[->] (15,0) -- coordinate (xaxis) (27,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (15, 0.5) {$\tau_3$};
+       \node[anchor=east] at (15, 2.5) {$\tau_2$};
+       \node[anchor=east] at (15, 4.5) {$\tau_1$};
+
+       \foreach \x in {15,17,...,25}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x-15} \yi};
+       }
+
+        \draw[->] (15,0) -- (15,1.75);
+        \draw[dotted] (25.5,0.5) -- (26.3,0.5); 
+        \draw[<-,thin,red] (15,1.3) -- (19.3,1.3);
+        \draw[->,thin,red] (20.7,1.3) -- (25,1.3);
+        \draw[--] (25.05,0) -- (25.05,1.5);
+        \node[anchor=east,red] at (20.7, 1.39) {$10$}; 
+
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (16, 0){\footnotesize};     
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (21, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 0){\footnotesize};    
+        \draw[--] (17,0.3) -- (19,0.3);
+        \draw[--] (17,0.5) -- (19,0.5);
+        \draw[--] (17,0.7) -- (19,0.7);
+        \draw[--] (19,0) -- (19,1);
+        
+        \draw[->] (19,2) -- (19,3.75);
+        \draw[dotted] (21.5,2.5) -- (22.3,2.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (20, 2){\footnotesize};
+                
+        \draw[->] (15,4) -- (15,5.75);
+        \draw[->] (19,4) -- (19,5.75);
+        \draw[->] (23,4) -- (23,5.75);
+        \draw[dotted] (24.5,4.5) -- (25.3,4.5);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (15, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (19, 4){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (23, 4){\footnotesize};
+ \end{tikzpicture}}       }
+  \caption{Counter example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
   \label{fig:ex-synch-releases}
 \end{figure}
+
+\ifpaper
+%\begin{figure}[t]
+%  \centering
+%\captionsetup[subfigure]{width=\columnwidth}
+%  \subfloat[all tasks release a job synchronously.]{\label{fig:ex-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-phi/ex-phi.pdf} \\
+%  \subfloat[all tasks do not release a job synchronously.]{\label{fig:ex-no-phi} }\includegraphics[width=0.85\linewidth]{../figures/ex-no-phi/ex-no-phi}
+%  \caption{Counter-example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
+%  \label{fig:ex-synch-releases}
+%\end{figure}
 \fi
 
-Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (i.e., the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-phi}). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
+Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (i.e., the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-synch-releases}(a)). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 3 + 2 +4 = 9$$
 
-Now, let us consider a job release pattern as shown in Figure~\ref{fig:ex-no-phi}. Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Fig.~\ref{fig:ex-no-phi}). Thus, the total response time of $\tau_3$ in a scenario where not all higher priority tasks release a job synchronously with $\tau_3$ is equal to 
+Now, let us consider a job release pattern as shown in Figure~\ref{fig:ex-no-phi}. Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Figure~\ref{fig:ex-synch-releases}(b)). Thus, the total response time of $\tau_3$ in a scenario where not all higher priority tasks release a job synchronously with $\tau_3$ is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 2+2+6 = 10$$
 
 {\bf Consequences:} To conclude, the synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. 
@@ -175,7 +557,128 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
 
 {\it Counterexample of Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, i.e., $0 < \epsilon \leq 0.1$. We have three tasks, in which
 (1) $C_1= 1+ \epsilon$, $C_1^1 = \epsilon$, $S_1=S_1^1 = 1$, $C_1^2  = 1$, $T_{1} =D_1= 4 + 10 \epsilon$, (2) $C_2 = 2 + 2\epsilon$, $T_2 =D_2= 6$, and (3)
-$C_3 = 2 + 2\epsilon$, $T_3 =D_3= 6$. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$. The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$, the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
+$C_3 = 2 + 2\epsilon$, $T_3 =D_3= 6$. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(a)). The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(b)), the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
+
+\begin{figure}[t]
+  \centering
+\def\uxfpga{0.4cm} 
+    \scalebox{1}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.5) {$\tau_3$};
+       \node[anchor=east] at (0, 2.5) {$\tau_2$};
+       \node[anchor=east] at (0, 4.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,10}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+       
+       \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
+       \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
+
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (6,0) -- (6,1.75);       
+        \draw[dotted] (6.5,0.5) -- (7.3,0.5);
+        \draw[<-,thin,red] (0,1.3) -- (1.5,1.3);
+        \draw[->,thin,red] (4.1,1.3) -- (5.6,1.3);
+        \node[anchor=east,red] at (4.2, 1.39) {$5+6\varepsilon$};         
+        \draw[--] (3.3,1.03) -- (4.8,1.03);
+        \draw[--] (3.3,0) -- (3.3,1);
+        \draw[--] (4.8,0) -- (4.8,1);
+        \draw[--] (5,1.03) -- (5.6,1.03);
+        \draw[--] (5,0) -- (5,1);
+        \draw[--] (5.6,0) -- (5.6,1.5);
+        
+        
+        \draw[->] (0,2) -- (0,3.75);
+        \draw[->] (6,2) -- (6,3.75);
+        \draw[dotted] (6.5,2.5) -- (7.3,2.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0.2, 2){\footnotesize};
+        \draw[--] (2.2,2.03) -- (3.3,2.03);
+        \draw[--] (2.2,3.03) -- (3.3,3.03);
+        \draw[--] (2.2,2.03) -- (2.2,3.03);
+        \draw[--] (3.3,2.03) -- (3.3,3.03);
+       
+                        
+        \draw[->] (0,4) -- (0,5.75);
+        \draw[->] (4.8,4) -- (4.8,5.75);
+        \draw[->] (9.6,4) -- (9.6,5.75);
+        \draw[dotted] (10.1,4.5) -- (11,4.5);
+        \draw[--] (0,5.03) -- (0.2,5.03);
+        \draw[--] (0,4.03) -- (0.2,4.03);
+        \draw[--] (0.2,4.03) -- (0.2,5.03);
+        \draw[--] (0.2,4.3) -- (1.2,4.3);
+        \draw[--] (0.2,4.5) -- (1.2,4.5);
+        \draw[--] (0.2,4.7) -- (1.2,4.7);        
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1.2, 4){\footnotesize};
+        \draw[--] (4.8,5.03) -- (5,5.03);
+        \draw[--] (4.8,4.03) -- (5,4.03);
+        \draw[--] (5,4.03) -- (5,5.03);
+        \draw[--] (5,4.3) -- (6,4.3);
+        \draw[--] (5,4.5) -- (6,4.5);
+        \draw[--] (5,4.7) -- (6,4.7);        
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
+                
+      
+       \draw[->] (15,0) -- coordinate (xaxis) (27,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (15, 0.5) {$\tau_3$};
+       \node[anchor=east] at (15, 2.5) {$\tau_2$};
+       \node[anchor=east] at (15, 4.5) {$\tau_1$};
+
+
+
+       \foreach \x in {15,17,...,25}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x-15} \yi};
+       }
+
+        \draw[->] (16.2,0) -- (16.2,1.75);
+        \draw[<-,red] (22.2,0) -- (23.6,1.3);
+        \node[anchor=east,red] at (25.5, 1.68) {miss};
+        \draw[<-,thin,red] (16.2,1.3) -- (18,1.3);
+        \draw[->,thin,red] (20.7,1.3) -- (22.6,1.3);
+        \node[anchor=east,red] at (20.8, 1.4) {$6+5\varepsilon$};
+        \draw[--] (19.25,1.03) -- (19.7,1.03);
+        \draw[--] (19.25,0.03) -- (19.7,0.03);
+        \draw[--] (19.25,0.03) -- (19.25,1.03);
+        \draw[--] (19.7,0.03) -- (19.7,1.03);
+        \draw[--] (19.9,1.03) -- (20.9,1.03);
+        \draw[--] (19.9,0.03) -- (20.9,0.03);
+        \draw[--] (19.9,0.03) -- (19.9,1.03);
+        \draw[--] (20.9,0.03) -- (20.9,1.03);
+        \draw[--] (22,1.03) -- (22.6,1.03);
+        \draw[--] (22,0.03) -- (22,1.03);
+        \draw[--] (22.6,0.03) -- (22.6,1.5);
+        
+        \draw[->] (16.2,2) -- (16.2,3.75);
+        \draw[->] (22.2,2) -- (22.2,3.75);
+        \draw[--] (17.2,3.03) -- (19.25,3.03);
+        \draw[--] (17.2,2.03) -- (19.25,2.03);
+        \draw[--] (17.2,2.03) -- (17.2,3.03);
+        \draw[--] (19.25,2.03) -- (19.25,3.03);
+                
+        \draw[->] (15,4) -- (15,5.75);
+        \draw[->] (19.8,4) -- (19.8,5.75);
+        \draw[->] (24.6,4) -- (24.6,5.75);
+        \draw[--] (15,5.03) -- (15.2,5.03);
+        \draw[--] (15,4.03) -- (15.2,4.03);
+        \draw[--] (15.2,4.03) -- (15.2,5.03);
+        \draw[--] (15.2,4.3) -- (16.2,4.3);
+        \draw[--] (15.2,4.5) -- (16.2,4.5);
+        \draw[--] (15.2,4.7) -- (16.2,4.7);        
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (16.2, 4){\footnotesize};
+        \draw[--] (19.8,5.03) -- (20,5.03);
+        \draw[--] (19.8,4.03) -- (20,4.03);
+        \draw[--] (20,4.03) -- (20,5.03);
+        \draw[--] (20,4.3) -- (21,4.3);
+        \draw[--] (20,4.5) -- (21,4.5);
+        \draw[--] (20,4.7) -- (21,4.7);        
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (21, 4){\footnotesize};
+ \end{tikzpicture}}       }
+  \caption{Counter example to the synchronous release of Theorem 2 in \cite{RTSS-KimANR13}.}
+  \label{fig:counterexample-reduce-interf}
+\end{figure}
 
 This misconception also leads to a wrong statement in Theorem 3 in \cite{RTSS-KimANR13}:
 \begin{quote}
@@ -210,15 +713,50 @@ Since $26+10 < 40$, one may conclude that this enforcement results in a feasible
 Unfortunately, it is not. Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of $C_2^2$ is larger than $30$, which implies a deadline miss. In fact, the $5$ units execution time of $C_2^1$ pushes $C_1$ and results in a deadline miss of task $\tau_2$.
 
 
-
-
 \begin{figure}[t]
-\begin{center}
-\input{../figures/CounterexampleFixedPrioritySegmented/carry-in-body.tex}
-\end{center}
-\caption{A schedule to release the two tasks in Section~\ref{sec:wrong-periodic} simultaneously at time $0$.}
-\label{fig:counterexample-FP-segment-level}
+  \centering
+  \def\uxfpga{0.3cm}
+    \scalebox{0.91}{
+      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+        \draw[->] (0,0) -- coordinate (xaxis) (42,0) node[anchor=north]{$t$};
+       \node[anchor=east] at (0, 0.5) {$\tau_2$};
+       \node[anchor=east] at (0, 2.5) {$\tau_1$};
+
+       \foreach \x in {0,2,...,40}{
+         \draw[-,below](\x,0) -- (\x,-0.3)
+         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+       }
+
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (10,0) -- (10,1.75);
+        \draw[--] (5,0.3) -- (10,0.3);
+        \draw[--] (5,0.5) -- (10,0.5);
+        \draw[--] (5,0.7) -- (10,0.7);
+        \draw[--] (0,1.3) -- (3.3,1.3);
+        \draw[--] (6.6,1.3) -- (10,1.3);
+        \node[anchor=east] at (6.6, 1.49) {offset};
+        \draw[<-,red] (40,0) -- (40,1.2);
+        \node[anchor=east,red] at (41.3, 1.49) {miss};
+        \node[task7, minimum width=5*\uxfpga, anchor=south west] at (0, 0){\footnotesize $C_2^1$};         
+        \node[task7, minimum width=15*\uxfpga, anchor=south west] at (15, 0){\footnotesize $C_2^2$};
+
+        \draw[->] (0,2) -- (0,3.75);
+        \draw[->] (30,2) -- (30,3.75);
+        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (5, 2){\footnotesize};         
+        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (30, 2){\footnotesize};
+
+  \end{tikzpicture}}       
+  \caption{A schedule to release the two tasks in Section~\ref{sec:wrong-periodic} simultaneously.}
+  \label{fig:counterexample-FP-segment-level}
 \end{figure}
+
+%\begin{figure}[t]
+%\begin{center}
+%\input{../figures/CounterexampleFixedPrioritySegmented/carry-in-body.tex}
+%\end{center}
+%\caption{A schedule to release the two tasks in Section~\ref{sec:wrong-periodic} simultaneously at time $0$.}
+%\label{fig:counterexample-FP-segment-level}
+%\end{figure}
 
 {\bf Consequences:} The priority assignment algorithms in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} use the above unsafe schedulability test to verify the priority assignments. Therefore, their results are flawed due to the unsafe schedulability test.
 
