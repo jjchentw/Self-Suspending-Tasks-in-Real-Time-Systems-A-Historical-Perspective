@@ -212,9 +212,16 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
          \node[task7, minimum width=7*\uxDAG, anchor=south west] at (3, 0){\footnotesize $7$};
          \node[task7, minimum width=2*\uxDAG, anchor=south west] at (10, 1.5){\footnotesize $2$};
 
-         \draw[thick][<->] (7,1.7) -- (8.5, 1.7) node[anchor=south]{suspension}-- (10,1.7);
-         \draw[thick][<->] (0.5,0.2) -- (1.75, 0.2) node[anchor=south]{suspension}-- (3,0.2);
-         \draw[thick][<->] (10,0.2) -- (11.3, 0.2) node[anchor=south]{suspension}-- (12,0.2);
+         \draw[thick][--] (7,1.87) -- (8.5, 1.87) node[anchor=south]{suspension}-- (10,1.87);
+         \draw[thick][--] (7,1.775) -- (8.5, 1.775) node[anchor=south]{}-- (10,1.775);
+         \draw[thick][--] (7,1.68) -- (8.5, 1.68) node[anchor=south]{}-- (10,1.68);
+         \draw[thick][--] (0.54,0.37) -- (1.75, 0.37) node[anchor=south]{suspension}-- (3,0.37);
+         \draw[thick][--] (0.54,0.275) -- (1.75, 0.275) node[anchor=south]{}-- (3,0.275);
+         \draw[thick][--] (0.54,0.17) -- (1.75, 0.17) node[anchor=south]{}-- (3,0.17);
+         \draw[thick][--] (10,0.37) -- (11.3, 0.37) node[anchor=south]{suspension}-- (12,0.37);
+         \draw[thick][--] (10,0.275) -- (11.3, 0.275) node[anchor=south]{}-- (12,0.275);
+         \draw[thick][--] (10,0.17) -- (11.3, 0.17) node[anchor=south]{}-- (12,0.17);
+         \draw[--] (12,0) -- (12,0.5);
        \end{scope}
   \end{tikzpicture}}       
   \caption{An example of partitioned DAG schedule.}
