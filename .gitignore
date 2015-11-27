@@ -15,8 +15,6 @@
 
 JRTS/JRTS.bbl
 
-JRTS/JRTS.aux
-
 *.bbl
 
 *.bbl
@@ -24,3 +22,7 @@ JRTS/JRTS.aux
 *.blg
 
 *.aux
+JRTS/JRTS.log
+JRTS/JRTS.synctex.gz
+JRTS/JRTS.log
+JRTS/JRTS.blg

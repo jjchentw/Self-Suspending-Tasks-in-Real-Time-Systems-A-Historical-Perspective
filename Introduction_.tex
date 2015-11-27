@@ -1,270 +1,35 @@
 \section{Introduction}
 
 The emergence of complex cyber-physical systems, i.e., advanced embedded computing systems that interact with the physical environment, 
-means that such systems have been rapidly adopted to control and manipulate traditionally human-operated mechanical units in safety-critical domains.  Due to their interaction with the physical environment, in which time naturally progresses, \emph{timeliness} of computation is an essential correctness requirement.  Therefore, such safety-critical systems are typically real-time systems which require both worst-case functional and timeliness correctness guarantees.
+means that such systems have been rapidly adopted to control and manipulate traditionally human-operated mechanical units in safety-critical domains.  Due to their interaction with the physical environment, in which time naturally progresses, \emph{timeliness} of computation is an essential correctness requirement.  Therefore, such safety-critical systems are typically real-time systems that require both worst-case functional and timeliness correctness guarantees.
 
-The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodic real-time tasks. This is later extended to a widely-adopted sporadic task model in the real-time systems domain \cite{Mok:1983:FDP:888951}. In the periodic/sporadic task model, a task $\tau_i$ is characterized by its relative deadline $D_i$, its period or minimum inter-arrival time $T_i$. A sporadic task is an infinite sequence of task instances, referred to as \emph{jobs}, where two consecutive jobs of a task should arrive no shorter than the minimum inter-arrival time separation. Each sporadic task $\tau_i$ has its worst-case execution time, derived by using static timing analysis.
-
-
-Over half a decade, researchers in real-time systems have devoted themselves to effectively design and efficiently analyze different recurrent task models to ensure that the tasks can meet their specified deadlines. In most of these studies, \emph{task suspensions are usually not allowed}. That is, after a job is released to the system, the job is either executed or stays in the ready queue, but it is not moved to the suspension state. 
- Such an assumption is valid only under the following conditions: (1) the latency of the memory accesses and I/O peripherals is considered to be part of the worst-case execution time of a job, (2) there is no external device for accelerating the computation or the communication between the accelerators and the main processing unit is done by using asynchronous message passing, and (3) there is no synchronization between different tasks on different processors in a multiprocessor or distributed computing platform.
-
-Due to the evolution in computer architecture towards using multicore systems and local/remote accelerators, self-suspension behaviour has become more and more visible in designing real-time embedded systems.  The suspension-oblivious approaches, by considering the suspension time as computation, have become very pessimistic. Self-suspensions have been even more pervasive in many emerging embedded cyber-physical systems in which the computation components frequently interact with external and physical devices~\cite{Kang:rtss07,Kato_2011}.  Typically, the resulting suspension delays range from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (\eg, offloading computation to GPUs~\cite{Kato_2011,Liu_2014}). 
-
-\subsection{Examples of Self-Suspending Task Systems}
-\label{sec:examples}
-
-We demonstrate the reasons to consider self-suspending task systems by using the following six examples.
-
-{\bf Example 1: I/O- or Memory-Intensive Tasks} Since I/O and memory subsystems are much slower than the processor, an I/O-intensive task may have to use DMA to transfer a large amount of data. This can take up to a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. The job is resumed to the ready queue to be (re)-eligible for execution once the I/O activity completes. The above example can also be applied for systems that dynamically update the content in the scratchpad memory allocated to a task during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the update of the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory/bus.
-
-{\bf Example 2: Multiprocessor Synchronizations:} \hspace{0.1in}
-In multiprocessor systems, self-suspensions can arise under partitioned scheduling (in which each task is assigned statically on a dedicated processor) when the tasks have to synchronize their access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). 
-
-Let's use a binary semaphore shared by two tasks assigned on two different processors as an example. Suppose each of these two tasks has a critical section protected by the semaphore. If one of them, says task $\tau_1$, is using the semaphore on the first processor and another, says task $\tau_2$, executed on the second processor intends to enter the critical section, then task $\tau_2$ has to wait until the critical section of task $\tau_1$ finishes on the first processor. During the execution of task $\tau_1$'s critical section (which can be pretty long), task $\tau_2$ \emph{suspends} itself. 
-
-% There are several synchronization protocols in the literature, some of them prevent the above self-suspending behaviour by using \emph{spin-locking} by pessimistically increasing the worst-case execution time. Some of them try to utilize the unused resource on the second processor in the above example by running other jobs. 
-
-In this paper, we will specifically examine the existing results for multiprocessor synchronization problems in Section~\ref{sec:syn}. Such problems have been specifically studied in \cite{rajkumar-1990,lakshmanan-2009,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}.
-
-{\bf Example 3: Hardware Acceleration by Using Co-Processors} In many systems, selected portions of programs are preferably (or even necessarily) executed on dedicated hardware co-processors, to satisfy the performance requirements.  Such co-processors in embedded systems include application-specific integrated circuits (ASICs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs), General-Purpose Graphics Processors (GPGPUs), etc. There are two typical strategies for utilizing the hardware co-processors. One is busy-waiting, in which the software task does give up its privilege on the processor by suspending itself. Another is to suspend the software task. This strategy frees the processor so that it can be used by other ready tasks. Therefore, even in single-CPU systems more than one task may be simultaneously executed in computation: one task executing on the processor and others on each of the available co-processors. This arrangement is called \emph{limited parallelism} \cite{RTAS-AudsleyB04} and is illustrated by Figure~\ref{fig:example-fpga}. Such suspending behaviour can usually improve the performance by effectively utilizing the processor and the co-processors, as shown in Figure~\ref{fig:example-fpga}.
-
-% Another domain which deploys hardware acceleration is that of General-Purpose Graphics Processor (GPGPU) computing. 
-% Unlike FPGAs which are used for the synthesis of custom co-processors, this paradigm uses standard PC hardware as an accelerator.
-% Graphic Processor Units (GPUs) are massively parallel architectures, which offer immense processing power, compared to CPUs. 
-% Traditionally they were only used for the processing of computer graphics. This changed with the advent of programming
-% models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
-% applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
-% (single-cycle context switch) GPU threads, each performing a different part of the overall computation.
-% For many kinds of applications, e.g. scientific, or floating-point heavy, with minimal data dependencies among 
-% threads, the speed-up is by tens or hundreds of times.
-
-% In the typical setup, the GPU is used as a co-processor. The native application (e.g., x86) running on the host
-% copies the input from the main memory to the GPU memory, and then launches the CUDA application (called ``kernel") on the GPU;
-% Upon completion, the output is copied from GPU memory to main memory. As with FPGA co-processors, it makes sense to 
-% have the host application suspend, for the duration of the CUDA kernel. 
+The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodic real-time tasks. This was later extended to the widely adopted sporadic task model \cite{Mok:1983:FDP:888951}. In the periodic/sporadic task model, a task $\tau_i$ is characterized by its relative deadline $D_i$, its period or minimum inter-arrival time $T_i$. A sporadic task is an infinite sequence of task instances, referred to as \emph{jobs}, where two consecutive jobs of the task should arrive no closer together than the minimum inter-arrival time separation. Each sporadic task $\tau_i$ has its worst-case execution time, derived by using timing analysis of the program.
 
 
-\begin{figure}[t]
-  \centering
-\def\uxfpga{0.3cm} 
-\subfloat[Use FPGA in parallel (suspension aware)]{
-    \scalebox{0.8}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.75) {CPU};
-       \node[anchor=east] at (0, 2.25) {HW 1};
-       \node[anchor=east] at (0, 3.75) {HW 2};
-       \node[anchor=east] at (0, 5.25) {HW 3};
-       \draw (0, 0) -- (0, 6);
-       \foreach \x in {0,2,...,42}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-
-       \draw[->](0, 6.5) -- (0, 7.2) node[anchor=south, xshift=-0.4cm]{\footnotesize $\tau_1$ arrives};
-       \draw[->](4, 6.5) -- (4, 7.2) node[anchor=south]{\footnotesize $\tau_2$ arrives};
-       \draw[->](8, 6.5) -- (8, 7.2) node[anchor=south, xshift=0.4cm]{\footnotesize $\tau_3$ arrives};
-
-         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (0, 0){\footnotesize $\tau_1$};         
-         \node[task7, minimum width=3*\uxfpga, anchor=south west] at (4, 0){\footnotesize $\tau_2$};         
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (8, 0){\footnotesize $\tau_3$};         
-         \node[task7, minimum width=6*\uxfpga, anchor=south west] at (10, 0){\footnotesize $\tau_1$};         
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (16, 0){\footnotesize $\tau_2$};         
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (18, 0){\footnotesize $\tau_3$};         
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (24, 0){\footnotesize $\tau_3$};         
-
-        \node[task9, minimum width=6*\uxfpga, anchor=south west] at (4, 1.5){\footnotesize $\tau_1$};         
-        \node[task9, minimum width=9*\uxfpga, anchor=south west] at (7, 3){\footnotesize $\tau_2$};         
-        \node[task9, minimum width=4*\uxfpga, anchor=south west] at (20, 4.5){\footnotesize $\tau_3$};         
+For over half a decade, researchers in real-time systems have devoted themselves to effective design and efficient analyses of different recurrent task models to ensure that tasks can meet their specified deadlines. In most of these studies, \emph{task suspensions are usually not allowed}. That is, after a job is released, the job is either executed or stays in the ready queue, but it is not moved to the suspension state. 
+ Such an assumption is valid only under the following conditions: (1) the latency of the memory accesses and I/O peripherals is considered to be part of the worst-case execution time of a job, (2) there is no external device for accelerating the computation, and (3) there is no synchronization between different tasks on different processors in a multiprocessor or distributed computing platform.
 
 
-         \node[](e1) at (4.2, 0.8){};
-         \node[](s1) at (4.2, 2.8){};
-         \node[](r1) at (9.9, 2.8){};
-         \node[](l1) at (9.9, 0.8){};
-         \path[->,>=stealth'] (e1)[anchor=center] edge[bend left] node[anchor=center]{} (s1);
-         \path[->,>=stealth'] (r1)[anchor=center] edge[bend left] node[anchor=center]{} (l1);
-
-        \node[](e2) at (7.2, 0.8){};
-         \node[](s2) at (7.2, 3.8){};
-         \node[](r2) at (15.9, 3.8){};
-         \node[](l2) at (15.9, 0.8){};
-         \path[->,>=stealth'] (e2)[anchor=center] edge[bend left] node[anchor=center]{} (s2);
-         \path[->,>=stealth'] (r2)[anchor=center] edge[bend left] node[anchor=center]{} (l2);
-  
-         \node[](e3) at (20.2, 0.8){};
-         \node[](s3) at (20.2, 5.3){};
-         \node[](r3) at (23.9, 5.3){};
-         \node[](l3) at (23.9, 0.8){};
-         \path[->,>=stealth'] (e3)[anchor=center] edge[bend left] node[anchor=center]{} (s3);
-         \path[->,>=stealth'] (r3)[anchor=center] edge[bend left] node[anchor=center]{} (l3);
-  
- \end{tikzpicture}} }
-
-\subfloat[Not use FPGA in parallel (suspension oblivious)]{
-   \scalebox{0.8}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.75) {CPU};
-       \node[anchor=east] at (0, 2.25) {HW 1};
-       \node[anchor=east] at (0, 3.75) {HW 2};
-       \node[anchor=east] at (0, 5.25) {HW 3};
-       \draw (0, 0) -- (0, 6);
-       \foreach \x in {0,2,...,42}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (0, 0){\footnotesize $\tau_1$};         
-
-         \node[task7, minimum width=6*\uxfpga, anchor=south west] at (10, 0){\footnotesize $\tau_1$};         
-
-         \node[task7, minimum width=3*\uxfpga, anchor=south west] at (16, 0){\footnotesize $\tau_2$};         
-
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (28, 0){\footnotesize $\tau_2$};         
-
-         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (30, 0){\footnotesize $\tau_3$};         
-
-         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (38, 0){\footnotesize $\tau_3$};         
-
-        \node[task9, minimum width=6*\uxfpga, anchor=south west] at (4, 1.5){\footnotesize $\tau_1$};         
-        \node[task9, minimum width=9*\uxfpga, anchor=south west] at (19, 3){\footnotesize $\tau_2$};         
-        \node[task9, minimum width=4*\uxfpga, anchor=south west] at (34, 4.5){\footnotesize $\tau_3$};         
-
-
-         \node[](e1) at (4.2, 0.8){};
-         \node[](s1) at (4.2, 2.8){};
-         \node[](r1) at (9.9, 2.8){};
-         \node[](l1) at (9.9, 0.8){};
-         \path[->,>=stealth'] (e1)[anchor=center] edge[bend left] node[anchor=center]{} (s1);
-         \path[->,>=stealth'] (r1)[anchor=center] edge[bend left] node[anchor=center]{} (l1);
-
-        \node[](e2) at (19.2, 0.8){};
-         \node[](s2) at (19.2, 3.8){};
-         \node[](r2) at (27.9, 3.8){};
-         \node[](l2) at (27.9, 0.8){};
-         \path[->,>=stealth'] (e2)[anchor=center] edge[bend left] node[anchor=center]{} (s2);
-         \path[->,>=stealth'] (r2)[anchor=center] edge[bend left] node[anchor=center]{} (l2);
-  
-         \node[](e3) at (34.2, 0.8){};
-         \node[](s3) at (34.2, 5.3){};
-         \node[](r3) at (37.9, 5.3){};
-         \node[](l3) at (37.9, 0.8){};
-         \path[->,>=stealth'] (e3)[anchor=center] edge[bend left] node[anchor=center]{} (s3);
-         \path[->,>=stealth'] (r3)[anchor=center] edge[bend left] node[anchor=center]{} (l3);
-  
- \end{tikzpicture}}       }
-  \caption{An example of using FPGA for acceleration}
-  \label{fig:example-fpga}
-\end{figure}
-
-
-{\bf Example 4: Computation Offloading}
-Since modern embedded systems are designed to execute complicated applications, the limited resources, such as the battery capacity, the memory size, and the processor speed, may not satisfy the required computation demand. Offloading heavy computation to some powerful servers has been shown as an attractive solution, including optimizations for system performance and energy saving.
-
-Computation offloading with real-time constraints has been specifically studied in two categories. In the first category, computation offloading always takes place at the end of a job and the post-processing time to process the result from the server is negligible. Such offloading scenarios do not incur self-suspending behaviour, \eg, the studied problems in \cite{nimmagadda2010real,DBLP:conf/ecrts/TomaC13}. In the second category, non-negligible computation time is needed, in a certain amount of time after computation offloading. For example, the computation offloading model studied in \cite{Liu_2014} defines three segments of a task: (1) the first segment is the local computation time to encrypt, extract, or compress the data, (2) the second segment is the worst-case waiting time to receive the result from the server, and (3) the third segment is either the local compensation if the result from the server is not received in time or the post processing if the result from the server is received in time. Another similar model for soft real-time systems is adopted by Liu et al. \cite{DBLP:conf/ecrts/LiuLZGH015} by assuming that the offloading results are always received within a specified amount of time.
-
-\begin{figure}[t]
-  \centering
-\scalebox{0.85}{
-  \begin{tikzpicture}
-  \draw[thick][->] (4,0) -- (14.5,0) node[anchor=north]{$t$};
-  \draw[thick][->] (4,0) -- (4,0.8);
-  \draw[thick][->] (14,0.8) -- (14,0);
-  \draw[thick][<->] (7.1,0.3) -- (9.1, 0.3) node[anchor=south]{offloading (failed)}-- (11.1,0.3);
-  \node[task7,minimum width=2.8cm,anchor=south west](a) at (4.3,0) {\tiny pre-processing};
-  \node[task7,minimum width=1cm,anchor=south west](d) at (11.1,0) {\tiny compensation.};
-  \node(b1) at (2.2,0.2) {\footnotesize $Local$ $Compensation$};
-  
-  
-  \draw[thick][->] (4,1) -- (14.5,1) node[anchor=north]{$t$};
-  \draw[thick][->] (4,1) -- (4,1.8);
-  \draw[thick][->] (14,1.8) -- (14,1);
-  \draw[thick][<->] (7.1,1.3) -- (8.6, 1.3) node[anchor=south]{offloading}-- (10.1,1.3);
-  \node[task7,minimum width=2.8cm,anchor=south west](c) at (4.3,1) {\tiny pre-processing};
-  \node[task7,minimum width=1cm,anchor=south west](d) at (10.1,1) {\tiny post-p.};
-  \node(b2) at (2.7,1.2) {\footnotesize $Receive$ $Results$};
- \end{tikzpicture} }
-  \caption{An example of computation offloading.}
-  \label{fig:offloading}
-\end{figure}
-
-
-{\bf Example 5: Partitioned Scheduling for DAG-Structured Tasks}
-
-To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are 5 subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,2$ on the second processor and the subtasks with execution times $0.5, 7$ on the first processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors will experience some idle time 
-due to the precedence constraint of the DAG task. Such idle time intervals can also be considered as suspensions. 
-
-
-
-
-\begin{figure}[t]
-  \centering
-    \scalebox{0.8}{
-\def\uxDAG{0.75cm} 
-      \begin{tikzpicture}[x=\uxDAG,auto, thick]
-    \node [draw,circle](t0)at(0,4){$0.5$};
-    \node [draw,circle](t1)at(0,2){$3$};
-    \node [draw,circle](t2)at(2,3){$4$};
-    \node [draw,circle](t3)at(2,2){$7$};
-    \node [draw,circle](t4)at(4,4){$2$};
-    \draw[->] (t3) -- (t4);%kappa 1    
-    \draw[->] (t1) -- (t2);%kappa 1    
-    \draw[->] (t1) -- (t3);%kappa 2
-    \draw[->] (t2) -- (t4);%kappa 3    
-
-      \begin{scope}[shift={(6.3,2)}]
-       \draw[->] (0,0) -- coordinate (xaxis) (12.5,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.3) {Proc. 1};
-       \node[anchor=east] at (0, 1.8) {Proc. 2};
-       \foreach \x in {0,1,...,12}{
-         \draw[-,below](\x,0) -- (\x,-0.1)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-         \node[task7, minimum width=0.5*\uxDAG, anchor=south west] at (0, 0){\tiny $.5$};         
-         \node[task7, minimum width=3*\uxDAG, anchor=south west] at (0, 1.5){\footnotesize $3$};
-         \node[task7, minimum width=4*\uxDAG, anchor=south west] at (3, 1.5){\footnotesize $4$};
-         \node[task7, minimum width=7*\uxDAG, anchor=south west] at (3, 0){\footnotesize $7$};
-         \node[task7, minimum width=2*\uxDAG, anchor=south west] at (10, 1.5){\footnotesize $2$};
-         
-         %\draw[--] (7.1.6) -- (8.5,1.6);
-         %\draw[--] (7.1.75) -- (8.5,1.75);
-         %\draw[--] (7.1.9) -- (8.5,1.9);
-         \draw[thick][--] (7,1.87) -- (8.5, 1.87) node[anchor=south]{suspension}-- (10,1.87);
-         \draw[thick][--] (7,1.775) -- (8.5, 1.775) node[anchor=south]{}-- (10,1.775);
-         \draw[thick][--] (7,1.68) -- (8.5, 1.68) node[anchor=south]{}-- (10,1.68);
-         \draw[thick][--] (0.54,0.37) -- (1.75, 0.37) node[anchor=south]{suspension}-- (3,0.37);
-         \draw[thick][--] (0.54,0.275) -- (1.75, 0.275) node[anchor=south]{}-- (3,0.275);
-         \draw[thick][--] (0.54,0.17) -- (1.75, 0.17) node[anchor=south]{}-- (3,0.17);
-         \draw[thick][--] (10,0.37) -- (11.3, 0.37) node[anchor=south]{suspension}-- (12,0.37);
-         \draw[thick][--] (10,0.275) -- (11.3, 0.275) node[anchor=south]{}-- (12,0.275);
-         \draw[thick][--] (10,0.17) -- (11.3, 0.17) node[anchor=south]{}-- (12,0.17);
-         \draw[--] (12,0) -- (12,0.5);
-
-       \end{scope}
-  \end{tikzpicture}}       
-  \caption{An example of partitioned DAG schedule}
-  \label{fig:example-dac}
-\end{figure}
-
+Due to the evolution in computer architecture towards using multicore systems and accelerators, self-suspension behaviour has become more visible in designing real-time embedded systems.  The suspension-oblivious approach, which considers the suspension time as computation, can be very pessimistic if the suspension time is long. Self-suspensions have been even more pervasive in many emerging embedded cyber-physical systems in which the computational components frequently interact with external and physical devices~\cite{Kang:rtss07,Kato_2011}.  Typically, the resulting suspension delays range from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (\eg, offloading computation to GPUs~\cite{Kato_2011,Liu_2014}). 
 
 
 
 \subsection{Impact of Self-Suspending Behaviour}
 
-When the self-suspending behaviour is present in the periodic/sporadic task model, the scheduling problem becomes much harder to handle. In the ordinary periodic task model, Liu and Layland show that the earliest-deadline-first (EDF) scheduling algorithm is an optimal scheduling policy to meet the deadlines and the rate-monotonic (RM) scheduling algorithm is an optimal fixed-priority scheduling policy to meet the deadlines \cite{Liu_1973}. However, the introduction of suspension behaviour has a negative impact on the timing predictability and causes intractability in hard real-time systems~\cite{Ridouard_2004}. It is shown by Ridouard et al. \cite{Ridouard_2004} that finding an optimal schedule (to meet the deadlines) is ${\cal NP}$-hard in the strong sense even when the suspending behaviour is known a priori.
+When the self-suspending behaviour is present in the periodic/sporadic task model, the scheduling problem becomes much harder to handle. In the ordinary periodic task model, Liu and Layland showed that the earliest-deadline-first (EDF) scheduling algorithm is an optimal scheduling policy to meet all deadlines and the rate-monotonic (RM) scheduling algorithm is an optimal fixed-priority (FP) scheduling policy to meet all deadlines \cite{Liu_1973}. However, the introduction of suspension behaviour has a negative impact on the timing predictability and causes intractability in hard real-time systems~\cite{Ridouard_2004}. It was shown by Ridouard et al. \cite{Ridouard_2004} that finding an optimal schedule (to meet all deadlines) is ${\cal NP}$-hard in the strong sense even when the suspending behaviour is known a priori.
 
 
-One specific problem due to self-suspending behaviour is the \emph{deferrable} execution phenomena. In the ordinary sporadic and periodic task model, the critical instant theorem by Liu and Layland \cite{Liu_1973} provides concrete worst-case scenarios for fixed-priority scheduling.  That is, the critical instant of a task defines the instant at which, considering the state of the system, an execution request for the task will generate the worst-case response time.
-However, with self-suspensions, such a critical instant theorem does exist any more (at least up to now). Even worse, the suspending behaviour incurs the jitter of the workload to be executed. Therefore, when the real-time tasks may suspend, the system behaviour has become very different. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for the ordinary periodic real-time task systems by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it is shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, are bad, in the sense that they do not provide any performance guarantees. 
+One specific problem due to self-suspending behaviour is the \emph{deferrable} execution phenomena. In the ordinary sporadic and periodic task model, the critical instant theorem by Liu and Layland \cite{Liu_1973} provides concrete worst-case scenarios for fixed-priority scheduling.  That is, the critical instant of a task defines the instant at which, considering the state of the system, an execution request for the task will generate the worst-case response time (if the job completes before next jobs of the task are released).
+However, with self-suspensions, no critical instant theorem has yet been established.
+% Even worse, the suspending behaviour incurs the jitter of the workload to be executed. 
+Therefore, when real-time tasks may suspend, the system behaviour has become very different. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for ordinary periodic real-time task systems by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it was shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, do not perform well, in the sense that they do not provide any bounded performance guarantees. 
 
 Self-suspending tasks can be classified into two models: \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
 The dynamic self-suspension sporadic task model characterizes each
 task $\tau_i$ with predefined worst-case execution time and worst-case self-suspending time, in which self-suspension can take place as long as it does not suspend longer than the specified worst case. The segmented self-suspending sporadic task model defines the execution behaviour of a job of a task by predefined computation segments and self-suspension intervals.  
 
 \subsection{Purpose and Organization of This Paper}
-
-There have been several researches, focusing on the design of scheduling algorithms and schedulability analysis of the task system when self-suspending tasks are present. Due to the prevailing self-suspending scenarios in modern computing systems, several results in the literature have been recently re-examined. We have found out that the literature of real-time scheduling for self-suspending task systems has been seriously flawed. Several misconceptions were adopted in the literature including 
+There have been several research efforts, focusing on the design of scheduling algorithms and schedulability analysis of task systems when self-suspending tasks are present. Due to the prevailing self-suspending scenarios in modern computing systems, several results in the literature have been recently re-examined. We have found out that the literature of real-time scheduling for self-suspending task systems has been seriously flawed. Several misconceptions were adopted in the literature including 
 \begin{itemize}
 \item Incorrect quantifications of jitter for dynamic self-suspending
   task systems, which was used in
@@ -281,17 +46,22 @@ There have been several researches, focusing on the design of scheduling algorit
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
 \end{itemize}
 
+
 \noindent Due to the above misconceptions and the lack of a survey and review paper of this research area, the authors, who have worked in this area in the past years, have jointly worked together to review the existing results in this area. This review paper serves to
 \begin{itemize}
 \item summarize the existing self-suspending task models in Section~\ref{sec:model}, 
 \item provide the general methodologies to handle self-suspending task systems in hard real-time systems in Section~\ref{sec:review} and soft real-time systems in Section~\ref{sec:soft-realtime}, 
 \item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws in Section~\ref{sec:misconceptions}, 
-\item examine the inherited flaws in multiprocessor synchronization, due to the flawed analysis in self-suspending task models, in Section~\ref{sec:syn}, and
+\item examine the inherited flaws in multiprocessor synchronization, due to the flawed analysis in self-suspending task models in Section~\ref{sec:syn}, and
 \item provide the summary of the complexity classes and hardness for different self-suspending task models and systems in Section~\ref{sec:hardness}.
 \end{itemize}
-Some results in the literature are listed with open issues, that require further detailed examinations to confirm their correctness. These are listed in Section~\ref{sec:open-issues-existing}. We have also listed the potential research topics that can be interesting in the future for tackling the challenging self-suspending task models in Section~\ref{sec:open-issues-future}.
+Some results in the literature are listed with open issues, that require further detailed examinations to confirm their correctness. These are listed in Section~\ref{sec:open-issues-existing}. We have also listed the potential future research topics pertaining to self-suspending task models in Section~\ref{sec:open-issues-future}.
 
-During the preparation of this review paper, several reports, i.e., \cite{ChenHuangNelissen,ChenBrandenburg,erratu-cong-anderson,BletsasReport2015}, have been filed to discuss about the flaws, the limits, and the proofs of individual papers and methods. This review paper would become too lengthy if we had to include all of them in detail.  The purpose of this review is not to present the individual discussions, evaluations and comparisons of the results in the literature. Our focus of this review is to provide a systematic picture about this research area, the misconceptions, and the state of the art of self-suspending task scheduling. Although it is unfortunate that many results in this area were flawed due to some misconceptions that may look at beginning correct, we hope that this review can serve as a milestone of this research area to provide the readers a solid base for future researches to cope with self-suspending task systems.
+During the preparation of this review paper, several reports, i.e., \cite{ChenHuangNelissen,ChenBrandenburg,erratu-cong-anderson,BletsasReport2015}, have been filed to discuss the flaws, the limits, and the proofs of individual papers and methods. This review paper would become too lengthy if we had to include all of them in detail.  The purpose of this review is not to present the individual discussions, evaluations and comparisons of the results in the literature. Our focus of this review is to provide a systematic picture about this research area, the misconceptions, and the state of the art of self-suspending task scheduling. Although it is unfortunate that many results in this area were flawed due to some misconceptions that are seemingly correct, we hope that this review can serve as a milestone in this research area to provide a solid base for future research to cope with self-suspending task systems.
+
+
+
+
 
 
 
