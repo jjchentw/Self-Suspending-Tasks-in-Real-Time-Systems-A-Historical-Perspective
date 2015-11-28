@@ -82,9 +82,9 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
 
         \draw[->] (1,0) -- (1,1.75);
         \draw[->] (15,0) -- (15,1.75);
-        \draw[dashed,--] (-0.4,0) -- (-0.4,2.25);
-        \draw[dashed,--] (22,0) -- (22,2.25);
-        \draw[dashed,--] (-0.4,2.25) -- (22,2.25);
+        \draw[dashed] (-0.4,0) -- (-0.4,2.25);
+        \draw[dashed] (22,0) -- (22,2.25);
+        \draw[dashed] (-0.4,2.25) -- (22,2.25);
         \node[anchor=east] at (13, 1.5) {Processor 1};
         \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 0){\footnotesize};         
         \node[task9, minimum width=3.4*\uxfpga, anchor=south west] at (2, 0){\footnotesize};
@@ -95,17 +95,17 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
         
         \draw[->] (6,3) -- (6,4.75);
         \draw[<-,red] (20,3) -- (20,4.2);
-        \draw[dashed,--] (-0.4,2.7) -- (-0.4,9.75);
-        \draw[dashed,--] (22,2.7) -- (22,9.75);
-        \draw[dashed,--] (-0.4,9.75) -- (22,9.75);
-        \draw[dashed,--] (-0.4,2.7) -- (22,2.7);
+        \draw[dashed] (-0.4,2.7) -- (-0.4,9.75);
+        \draw[dashed] (22,2.7) -- (22,9.75);
+        \draw[dashed] (-0.4,9.75) -- (22,9.75);
+        \draw[dashed] (-0.4,2.7) -- (22,2.7);
         \node[anchor=east,red] at (21, 4.5) {miss};
         
         \draw[->] (0,5) -- (0,6.75);
         \draw[->] (13,5) -- (13,6.75);
-        \draw[--] (2.55,5.3) -- (5.5,5.3);
-        \draw[--] (2.55,5.5) -- (5.5,5.5);
-        \draw[--] (2.55,5.7) -- (5.5,5.7);
+        \draw[] (2.55,5.3) -- (5.5,5.3);
+        \draw[] (2.55,5.5) -- (5.5,5.5);
+        \draw[] (2.55,5.7) -- (5.5,5.7);
         \node[task7, minimum width=0.1*\uxfpga, anchor=south west] at (2, 5){\footnotesize};         
         \node[task9, minimum width=0.1*\uxfpga, anchor=south east] at (6, 5){\footnotesize};
         \node[task7, minimum width=4*\uxfpga, anchor=south west] at (8, 5){\footnotesize}; 
@@ -134,7 +134,7 @@ Consider the response-time of $\tau_3$. Since $\tau_3$ does not access any globa
 %  \centering
 %  \includegraphics[width=0.85\linewidth]{../figures/Counterexample1/Counterexample1.pdf}
 %  \caption{An example schedule where $\tau_3$ misses a deadline.}\label{fig:counterexample_protocol}
-\end{figure}
+%\end{figure}
  \fi
 
 As a result, $R_3 = 8+3\varepsilon < 14 = D_3$, and $\tau_3$ is considered to be schedulable according to the analysis in \cite{lakshmanan-2009}. However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, which is perfectly legal, where a job of task $\tau_3$  is released at time $6$ and misses its absolute deadline at time $20$. This implies that Eq. \eqref{eqn:wcrt} does not always yield a sound response-time bound. 
