@@ -3,7 +3,51 @@
 
 This section reviews existing solutions for scheduling and analyzing the schedulability of self-suspending task models. We will first describe the commonly adopted strategies in those solutions. The  strategies are generally correct, but the analysis has to be done carefully.  In the next section, we will explain some of misconceptions used in the literature by giving concrete reasons and some counterexamples to explain why such misconceptions may lead to over-optimistic analysis. 
 
-\emph{We will implicitly assume uniprocessor systems in this section}, except in Section~\ref{sec:multiprocessor-HRT}.
+For self-suspending sporadic task systems, while executing, a job may suspend itself or even must suspend itself in the segmented self-suspension model. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze schedulability.
+
+\emph{We will implicitly assume uniprocessor systems in this section}, except in Section~\ref{sec:multiprocessor-HRT}. There are some common strategies to characterize and quantify the impact due to self-suspensions. We categorize these methods as follows:
+\begin{itemize}
+\item \textbf{Convert All Self-Suspension into Computation} (in
+  Section~\ref{sec:oblivious}): This method converts all self-suspending time
+  into computation time. Such a strategy is also referred to as
+  \emph{suspension-oblivious} analysis in the literature.
+\item \textbf{Convert Higher-Priority Tasks into Ordinary Sporadic Tasks} (in
+  Section~\ref{sec:high-as-sporadic}): This method converts all the
+  higher-priority tasks into periodic tasks without self-suspensions,
+  except the lowest-priority task under FP scheduling. This also leads
+  to one of the most fundamental problems of self-suspending task
+  systems: \emph{How can we efficiently analyze the worst-case response time
+  of a self-suspending task $\tau_k$ as the lowest-priority task in
+  the task system, when all the other higher priority tasks are
+  ordinary sporadic real-time tasks?}
+\item \textbf{Quantify Additional Interference due to
+    Self-Suspensions} (in
+  Section~\ref{sec:method-quantify-interference}): It is well-known
+  that uncontrolled deferred executions (due to self-suspension) can
+  impose scheduling penalty. The methods in this category aim to
+  quantify the additional interference due to self-suspending
+  behaviour while performing schedulability tests or worst-case
+  response time analysis.
+
+\item \textbf{Treat Self-Suspension Segments as Idling or Computation
+    Alternatively} (in Section~\ref{sec:suspend-or-not}): When we
+  analyze the worst-case response time of a segmented self-suspending
+  task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$, there are two
+  options (1) convert $S_k^1$ into computation or (2) treat $S_k^1$ as
+  if the processor idles. Due to the lack of the critical instant
+  theorem for such a problem under fixed-priority scheduling, these two treatments
+  do not dominate each other and have different benefits, to be
+  discussed in Section~\ref{sec:suspend-or-not}.
+
+\item \textbf{Enforce Periodic Behaviour by Release Time Enforcement} (in
+  Section~\ref{sec:periodic-enforce}): The uncontrolled
+  self-suspending behaviour can result in additional interference.  To
+  alleviate the impact on the additional interference, the methods in
+  this category aim to control the release time of the computation
+  segments to enforce periodic release behaviour.
+\end{itemize}
+
+
 To demonstrate how the scheduling algorithms and the schedulability tests work in existing approaches, we will mainly use the following tasks in Table~\ref{table:dynamic-example} and Table~\ref{table:static-example} in this section. For demonstrating the worst-case response time analysis, we leave some relative deadline with "?" and period $\infty$. Specifically, we will use task set ${\bf T}_1 = \setof{\tau_1, \tau_2, \tau_3}$, ${\bf T}_2 = \setof{\tau_1, \tau_2, \tau_3, \tau_4}$, ${\bf T}_3 = \setof{\tau_\alpha, \tau_\beta, \tau_\gamma}$ in our examples. Unless specified otherwise, we will assume that these three example task sets are scheduled under rate-monotonic (RM) scheduling in this section. 
 
 \ifpaper
@@ -45,49 +89,8 @@ To demonstrate how the scheduling algorithms and the schedulability tests work i
     \label{table:static-example}
 \end{table}
 
-For self-suspending sporadic task systems, while executing, a job may suspend itself or even must suspend itself in the segmented self-suspension model. While a job suspends, the scheduler removes the job from the ready queue. Such suspensions should be well characterized and the resulting workload interference should be well quantified to analyze schedulability.
 
-There are some common strategies to characterize and quantify the impact due to self-suspensions. We categorize these methods as follows:
-\begin{itemize}
-\item \textbf{Convert All Self-Suspension into Computation} (in
-  Section~\ref{sec:oblivious}): This method converts all self-suspending time
-  into computation time. Such a strategy is also referred to as
-  \emph{suspension-oblivious} analysis in the literature.
-\item \textbf{Convert Higher-Priority Tasks into Ordinary Sporadic Tasks} (in
-  Section~\ref{sec:high-as-sporadic}): This method converts all the
-  higher-priority tasks into periodic tasks without self-suspensions,
-  except the lowest-priority task under FP scheduling. This also leads
-  to one of the most fundamental problems of self-suspending task
-  systems: \emph{How can we efficiently analyze the worst-case response time
-  of a self-suspending task $\tau_k$ as the lowest-priority task in
-  the task system, when all the other higher priority tasks are
-  ordinary sporadic real-time tasks?}
-\item \textbf{Quantify Additional Interference due to
-    Self-Suspensions} (in
-  Section~\ref{sec:method-quantify-interference}): It is well-known
-  that uncontrolled deferred executions (due to self-suspension) can
-  impose scheduling penalty. The methods in this category aim to
-  quantify the additional interference due to self-suspending
-  behaviour while performing schedulability tests or worst-case
-  response time analysis.
 
-\item \textbf{Treat Self-Suspension Segments as Idling or Computation
-    Alternatively} (in Section~\ref{sec:suspend-or-not}): When we
-  analyze the worst-case response time of a segmented self-suspending
-  task $\tau_k = ((C_k^1, S_k^1, C_k^2), T_k, D_k)$, there are two
-  options (1) convert $S_k^1$ into computation or (2) treat $S_k^1$ as
-  if the processor idles. Due to the lack of the critical instant
-  theorem for such a problem under fixed-priority scheduling, these two treatments
-  do not dominate each other and have different benefits, to be
-  discussed in Section~\ref{sec:suspend-or-not}.
-
-\item \textbf{Enforce Periodic Behaviour by Release Time Enforcement} (in
-  Section~\ref{sec:periodic-enforce}): The uncontrolled
-  self-suspending behaviour can result in additional interference.  To
-  alleviate the impact on the additional interference, the methods in
-  this category aim to control the release time of the computation
-  segments to enforce periodic release behaviour.
-\end{itemize}
 
 \subsection{Convert All Self-Suspension into Computation}
 \label{sec:oblivious}

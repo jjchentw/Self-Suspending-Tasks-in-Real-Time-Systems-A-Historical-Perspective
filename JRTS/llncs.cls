@@ -808,12 +808,12 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \def\fps@table{htbp}
 \def\fnum@table{\tablename~\thetable}
 \renewenvironment{table}
-               {\setlength\abovecaptionskip{0\p@}%
+               {\setlength\abovecaptionskip{10\p@}%
                 \setlength\belowcaptionskip{10\p@}%
                 \@float{table}}
                {\end@float}
 \renewenvironment{table*}
-               {\setlength\abovecaptionskip{0\p@}%
+               {\setlength\abovecaptionskip{10\p@}%
                 \setlength\belowcaptionskip{10\p@}%
                 \@dblfloat{table}}
                {\end@dblfloat}

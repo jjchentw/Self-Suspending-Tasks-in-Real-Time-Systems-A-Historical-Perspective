@@ -233,8 +233,8 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
 \section{Self-Suspending Sporadic Real-Time Task Models}
 \label{sec:model}
   
-Self-suspending tasks can be classified into two models: \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models. 
-The dynamic self-suspension sporadic task model characterizes each
+Self-suspending task models can be classified into \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models. 
+The dynamic self-suspension sporadic task model characterizes a
 task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum inter-arrival time (or period) of $\tau_i$, $D_i$ is the relative deadline of $\tau_i$,
 $C_i$ denotes an upper bound on the total execution time of each job of $\tau_i$,
 and $S_i$ denotes an upper bound on the total suspension time of each job of $\tau_i$.  In addition to the above four-tuple, the segmented sporadic task model further 
@@ -308,7 +308,7 @@ same priority level. Examples are rate-monotonic (RM) scheduling
 higher priority level, and deadline-monotonic (DM) scheduling, under which
 the task with a shorter relative deadline has a higher priority level.
 This has been explored in
-\cite{Raj:suspension1991,RTCSA-KimCPKH95,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}.
+\cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}.
 Moreover, in some results in the literature, e.g.,
 \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, each computation
 segment in the segmented self-suspending task model has its own unique
@@ -354,6 +354,11 @@ algorithms:
   where $hp(k)$ is the set of the tasks with higher-priority levels
   than $\tau_k$.  
 \end{itemize}
+
+
+To resolve the computational complexity issues in many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then it guarantees that \emph{the schedule derived from the algorithm ${\cal A}$ is always feasible by running at speed $\rho$, if the input task set admits a feasible schedule on a unit-speed processor}. 
+%In other words, by taking the negation of the above statement, if an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then it guarantees that \emph{if the schedule derived from the algorithm ${\cal A}$ is not feasible, then the input does not admit a feasible schedule by running at speed $\frac{1}{\rho}$}.
+
 
 %% Commented due to Cong's comment on 24,11,2015
 % It is well known that uncontrolled deferred execution (due to

@@ -25,9 +25,10 @@ elaborations. These include the following results in the literature
 \item For segmented self-suspending task systems with at most one
   self-suspending interval, Lakshmanan and Rajkumar proposed two slack
   enforcement mechanisms in \cite{LR:rtas10} to shape the demand of a
-  self-suspending task so that the task behaves like an ideal periodic
+  self-suspending task so that the task behaves like an ideal ordinary
+  periodic
   task.  From the scheduling point of view, this means that there is
-  no \emph{potentially} scheduling penalty when analyzing the interferences of the
+  no \emph{potential} scheduling penalty when analyzing the interferences of the
   higher-priority tasks. (But, the suspension time of the task under
   analysis has to be converted into computation.) The correctness of the dynamic slack
   enforcement in \cite{LR:rtas10} is heavily based on the statement in Lemma
@@ -80,8 +81,8 @@ scheduling self-suspending task systems.
  Self-suspending behaviour is becoming an increasingly prominent
 characteristic in real-time systems such as: (i) I/O-intensive systems
 (ii) multi-processor synchronization and scheduling, and (iii)
-computation offloading with coprocessors, like Graphics Processing
-Units (GPUs).  This paper reviews the literature in the light of
+computation offloading with coprocessors, like graphics processing
+units (GPUs).  This paper reviews the literature in the light of
 recent developments in the analysis of self-suspending tasks,
 explains the general methodologies, summarizes the hardness and
 the complexity classes, and points out several 
@@ -92,7 +93,7 @@ present potential solutions. These misconceptions include:
 \begin{itemize}
 \item Incorrect quantifications of jitter for dynamic self-suspending
   task systems, which was used in
-  \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95}.  This
+  \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
   misconception was unfortunately adopted in
   \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
   partitioned multiprocessor real-time locking protocols.
@@ -100,7 +101,7 @@ present potential solutions. These misconceptions include:
   task systems, which was used in  \cite{RTCSA-BletsasA05}.
 \item Incorrect assumptions in the critical instant with
   synchronous releases, which was used in \cite{LR:rtas10}.
-\item Counting highest-priority self-suspending time to reduce the
+\item Incorrectly counting highest-priority self-suspending time to reduce the
   interference, which was used in  \cite{RTSS-KimANR13}. 
 \item Incorrect segmented fixed-priority scheduling with periodic
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
@@ -139,7 +140,7 @@ errata for more detailed explanations.
   quantification of jitter& See Section~\ref{sec:wrong-jitter-dynamic} or the
   erratum filed by the authors \cite{BletsasReport2015}& solved\\
   \cline{2-4}
-& \cite{RTCSA-KimCPKH95}:   Wrong quantification of jitter & See Section
+& \cite{MingLiRTCSA1994}:   Wrong quantification of jitter & See Section
 \ref{sec:wrong-jitter-dynamic} & solved\\
   \cline{2-4}
 & \cite{RTCSA-BletsasA05}:   Wrong quantification of jitter & See Section
@@ -162,7 +163,7 @@ response time analysis are incorrect & See Section
   \cline{2-4}
 \hline
 \multirow{2}{*}{Inherited Flaws} &
-\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
+\cite{RTCSA-KimCPKH95,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
  Adopting wrong quantifications of jitters (refer to
  Section~\ref{sec:papers} in this paper)& See
 Section~\ref{sec:safe_bound} & solved\\
