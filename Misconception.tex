@@ -38,21 +38,24 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 
 
 \begin{figure}[t]
-  \centering
+\centering
 \def\uxfpga{0.4cm} 
 \subfloat[]{
-    \scalebox{0.8}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (-6,0) -- coordinate (xaxis) (18,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (-6, 0.5) {$\tau_3$};
-       \node[anchor=east] at (-6, 2.5) {$\tau_2$};
-       \node[anchor=east] at (-6, 4.5) {$\tau_1$};
-
-       \foreach \x in {-6,-4,...,16}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-
+\scalebox{0.8}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (-6,0) -- coordinate (xaxis) (18,0) node[anchor=north]{$t$};
+    \foreach \x in {-6,-4,...,16}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+	}
+	\foreach \x in {-6,-5,...,16}{
+         \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+	}	
+	\foreach \y in {2.03,4.03}{
+		\draw[] (-6,\y) -- (16,\y);
+	}
+	
+	\begin{scope}[shift={(0,0)}]
+		\node[anchor=east] at (-6, 0.5) {$\tau_3$};
         \draw[->] (0,0) -- (0,1.75);
         \draw[<-,thin,red] (0,1.3) -- (5.3,1.3);
         \draw[->,thin,red] (6.7,1.3) -- (12,1.3);
@@ -61,175 +64,110 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
         \node[anchor=east,red] at (6.7, 1.39) {$12$};
         \draw[dotted] (12.5,0.5) -- (13.3,0.5); 
         \node[task7, minimum width=\uxfpga, anchor=south west] at (11, 0){\footnotesize};         
+	\end{scope}
 
-        \draw[->] (-5,2) -- (-5,3.75);
-        \draw[->] (15,2) -- (15,3.75);
-        \draw[dotted] (15.5,2.5) -- (16.3,2.5); 
-        \draw[] (-5,2.3) -- (0,2.3);
-        \draw[] (-5,2.5) -- (0,2.5);
-        \draw[] (-5,2.7) -- (0,2.7);
-        \draw[] (0,2) -- (0,3);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (3, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (7, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 2){\footnotesize};
-                
-        \draw[->] (0,4) -- (0,5.75);
-        \draw[->] (2,4) -- (2,5.75);
-        \draw[->] (4,4) -- (4,5.75);
-        \draw[->] (6,4) -- (6,5.75);
-        \draw[->] (8,4) -- (8,5.75);
-        \draw[->] (10,4) -- (10,5.75);
-        \draw[->] (12,4) -- (12,5.75);
-        \draw[->] (14,4) -- (14,5.75);
-        \draw[dotted] (15.5,4.5) -- (16.3,4.5);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (8, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (12, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 4){\footnotesize};
- \end{tikzpicture}} }
+	\begin{scope}[shift={(0,2)}]
+		\node[anchor=east] at (-6, 0.5) {$\tau_2$};
+        \draw[->] (-5,0) -- (-5,1.75);
+        \draw[->] (15,0) -- (15,1.75);
+        \draw[dotted] (15.5,0.5) -- (16.3,0.5); 
+		\foreach \y in {0.3,0.5,0.7}{ 
+        		\draw[] (-5,\y) -- (0,\y);
+        	} 
+        \draw[] (0,0) -- (0,1);
+        \foreach \x in {1,3,...,9}{ 
+        		\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+        	}
+	\end{scope}
+
+	\begin{scope}[shift={(0,4)}]
+		\node[anchor=east] at (-6, 0.5) {$\tau_1$};
+        \foreach \x in {0,2,...,14}{ 
+			\draw[->] (\x,0) -- (\x,1.75);        		
+        		\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+        	}
+        \draw[dotted] (15.5,0.5) -- (16.3,0.5); 
+	\end{scope}                
+\end{tikzpicture}} }
 
 \subfloat[]{
-    \scalebox{0.8}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (36,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.5) {$\tau_3$};
-       \node[anchor=east] at (0, 2.5) {$\tau_2$};
-       \node[anchor=east] at (0, 4.5) {$\tau_1$};
-
-       \foreach \x in {0,2,...,34}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-       
-
+\scalebox{0.8}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (36,0) node[anchor=north]{$t$};
+    \foreach \x in {0,2,...,34}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+	}
+	\foreach \x in {0,1,...,34}{
+         \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+	}	
+	\foreach \y in {2.03,4.03}{
+		\draw[] (0,\y) -- (34,\y);
+	}
+	
+	\begin{scope}[shift={(0,0)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
         \draw[->] (10,0) -- (10,1.75);
         \draw[dotted] (32.5,0.5) -- (33.3,0.5); 
         \draw[<-,thin,red] (10,1.3) -- (19,1.3);
-        \draw[->,thin,red] (22.4,1.3) -- (31.4,1.3);
+        \draw[->,thin,red] (22.4,1.3) -- (31.55,1.3);
         \node[anchor=east,red] at (22.3, 1.39) {$22-5\varepsilon$};
         \node[task7, minimum width=0.1*\uxfpga, anchor=south east] at (20, 0){\footnotesize}; 
-        \draw[] (31,1) -- (31.4,1);
-        \draw[] (31,0) -- (31.4,0);
+        \draw[] (31,1) -- (31.55,1);
+        \draw[] (31,0) -- (31.55,0);
         \draw[] (31,0) -- (31,1);
-        \draw[] (31.4,0) -- (31.4,1.5);   
-        
-             
+        \draw[] (31.55,0) -- (31.55,1.5);   
+	\end{scope}
 
-        \draw[->] (0,2) -- (0,3.75);
-        \draw[->] (20,2) -- (20,3.75);
-        \draw[dotted] (35.2,2.5) -- (36,2.5); 
-        \draw[<-] (1.2,3) --(1.8,3.38);
-        \node[anchor=east] at (2.7, 3.5) {$\varepsilon$};
-        \draw[<-] (19.85,3) --(19.1,3.39);
-        \node[anchor=east] at (19.1, 3.5) {$5\varepsilon$};
-        
-        \draw[] (1,3) -- (1.2,3);
-        \draw[] (1,2) -- (1.2,2);
-        \draw[] (1,2) -- (1,3);
-        \draw[] (1.2,2) -- (1.2,3);        
-        \draw[] (1.2,2.3) -- (2,2.3);
-        \draw[] (1.2,2.5) -- (2,2.5);
-        \draw[] (1.2,2.7) -- (2,2.7);
-        \draw[] (2,2) -- (2,3);
-        \draw[] (3,3) -- (3.2,3);
-        \draw[] (3,2) -- (3.2,2);
-        \draw[] (3,2) -- (3,3);
-        \draw[] (3.2,2) -- (3.2,3);        
-        \draw[] (3.2,2.3) -- (4,2.3);
-        \draw[] (3.2,2.5) -- (4,2.5);
-        \draw[] (3.2,2.7) -- (4,2.7);
-        \draw[] (4,2) -- (4,3);
-        \draw[] (5,3) -- (5.2,3);
-        \draw[] (5,2) -- (5.2,2);
-        \draw[] (5,2) -- (5,3);
-        \draw[] (5.2,2) -- (5.2,3);        
-        \draw[] (5.2,2.3) -- (6,2.3);
-        \draw[] (5.2,2.5) -- (6,2.5);
-        \draw[] (5.2,2.7) -- (6,2.7);
-        \draw[] (6,2) -- (6,3);        
-        \draw[] (7,3) -- (7.2,3);
-        \draw[] (7,2) -- (7.2,2);
-        \draw[] (7,2) -- (7,3);
-        \draw[] (7.2,2) -- (7.2,3);        
-        \draw[] (7.2,2.3) -- (8,2.3);
-        \draw[] (7.2,2.5) -- (8,2.5);
-        \draw[] (7.2,2.7) -- (8,2.7);
-        \draw[] (8,2) -- (8,3);
-        \draw[] (9,3) -- (9.2,3);
-        \draw[] (9,2) -- (9.2,2);
-        \draw[] (9,2) -- (9,3);
-        \draw[] (9.2,2) -- (9.2,3);        
-        \draw[] (9.2,2.3) -- (10,2.3);
-        \draw[] (9.2,2.5) -- (10,2.5);
-        \draw[] (9.2,2.7) -- (10,2.7);
-        \draw[] (10,2) -- (10,3);
-        \node[task7, minimum width=\uxfpga, anchor=south east] at (12, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south east] at (14, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south east] at (16, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south east] at (18, 2){\footnotesize};
-        \draw[] (19,3) -- (19.4,3);
-        \draw[] (19,2) -- (19.4,2);
-        \draw[] (19,2) -- (19,3);
-        \draw[] (19.4,2) -- (19.4,3);        
-        \draw[] (19.4,2.3) -- (20,2.3);
-        \draw[] (19.4,2.5) -- (20,2.5);
-        \draw[] (19.4,2.7) -- (20,2.7);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (21, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (23, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (25, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (27, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (29, 2){\footnotesize};
-        \draw[] (30,2.3) -- (35,2.3);
-        \draw[] (30,2.5) -- (35,2.5);
-        \draw[] (30,2.7) -- (35,2.7);
-        \draw[] (35,2) -- (35,3);
-        
-        \draw[->] (0,4) -- (0,5.75);
-        \draw[->] (2,4) -- (2,5.75);
-        \draw[->] (4,4) -- (4,5.75);
-        \draw[->] (6,4) -- (6,5.75);
-        \draw[->] (8,4) -- (8,5.75);
-        \draw[->] (10,4) -- (10,5.75);
-        \draw[->] (12,4) -- (12,5.75);
-        \draw[->] (14,4) -- (14,5.75);
-        \draw[->] (16,4) -- (16,5.75);
-        \draw[->] (18,4) -- (18,5.75);
-        \draw[->] (20,4) -- (20,5.75);
-        \draw[->] (22,4) -- (22,5.75);
-        \draw[->] (24,4) -- (24,5.75);
-        \draw[->] (26,4) -- (26,5.75);
-        \draw[->] (28,4) -- (28,5.75);
-        \draw[->] (30,4) -- (30,5.75);
-        \draw[->] (32,4) -- (32,5.75);
-        \draw[->] (34,4) -- (34,5.75);
-        \draw[dotted] (34.2,4.5) -- (35,4.5);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (8, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (12, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (16, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (18, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (20, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (22, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (26, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (28, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (30, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (32, 4){\footnotesize};
+	\begin{scope}[shift={(0,2)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (20,0) -- (20,1.75);
+        \draw[dotted] (35.2,0.5) -- (36,0.5); 
+        \draw[<-] (1.2,1) --(1.8,1.38);
+        \node[anchor=east] at (2.7, 1.5) {$\varepsilon$};
+        \draw[<-] (19.85,1) --(19.1,1.39);
+        \node[anchor=east] at (19.2, 1.5) {$5\varepsilon$};        
+		\foreach \y in {0.3,0.5,0.7}{ 
+			\foreach \x in {1.2,3.2,...,9.2}{        		
+        			\draw[] (\x,\y) -- (\x+0.8,\y);
+        	}} 
+        	\foreach \x in {1,3,...,9}{
+        		\draw[] (\x,0) -- (\x,1);
+        		\draw[] (\x+0.2,0) -- (\x+0.2,1);
+        		\draw[] (\x+1,0) -- (\x+1,1);
+        		\draw[] (\x,0) -- (\x+0.2,0);
+        		\draw[] (\x,1) -- (\x+0.2,1);
+        	}
+    		\foreach \x in {11,13,...,15}{
+			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+		}	
+    		\foreach \x in {21,23,...,29}{
+			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+		}
+		\foreach \y in {0.3,0.5,0.7}{ 
+    			\draw[] (30,\y) -- (30,\y);
+        	}
+		\foreach \y in {0.3,0.5,0.7}{ 
+    			\draw[] (19.4,\y) -- (20,\y);
+        	}
+        	\draw[] (19,1) -- (19.4,1);
+        \draw[] (19,0) -- (19.4,0);
+        \draw[] (19,0) -- (19,1);
+        \draw[] (19.4,0) -- (19.4,1);				
+	\end{scope}
 
- \end{tikzpicture}}       }
-  \caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
-  \label{fig:counterexample-dynamic}
+	\begin{scope}[shift={(0,4)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+		\foreach \x in {0,2,...,32}{ 
+    			\draw[->] (\x,0) -- (\x,1.75);
+    			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+        	}        
+        \draw[->] (34,0) -- (34,1.75);
+        \draw[dotted] (34.5,0.5) -- (35.3,0.5); 
+	\end{scope}
+\end{tikzpicture}} }
+\caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
+\label{fig:counterexample-dynamic}
 \end{figure}
 
 %\begin{figure}[t]
@@ -289,107 +227,86 @@ $\tau_4$ &  $(3, 0, 0)$                   &    $?$  &   $\infty$    \\ \hline
 \end{table}
 
 \begin{figure}[t]
-  \centering
-  \def\uxfpga{0.25cm}
-    \scalebox{0.77}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (62,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.5) {$\tau_4$};
-       \node[anchor=east] at (0, 2.5) {$\tau_3$};
-       \node[anchor=east] at (0, 4.5) {$\tau_2$};
-       \node[anchor=east] at (0, 6.5) {$\tau_1$};
-
-       \foreach \x in {0,2,...,60}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-
-        \draw[->] (40,0) -- (40,1.75);
-        \draw[] (58.05,1) -- (58.05,1.5);
-        \draw[dotted] (58.5,0.5) -- (60,0.5);
-        \draw[<-,thin,red] (40,1.3) -- (48,1.3);
-        \draw[->,thin,red] (50,1.3) -- (58,1.3);
-        \node[anchor=east,red] at (50, 1.39) {18};
+\centering
+\def\uxfpga{0.25cm}
+\scalebox{0.77}{
+\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+	\draw[->] (0,0) -- coordinate (xaxis) (62,0) node[anchor=north]{$t$};
+	\foreach \x in {0,5,...,60}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+	}
+	\foreach \x in {0,1,...,60}{
+         \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,8);
+	}     
+	\foreach \y in {2.03,4.03,6.03}{
+		\draw[] (0,\y) -- (60,\y);
+	}
+       
+	\begin{scope}[shift={(0,0)}]       
+		\node[anchor=east] at (0, 0.5) {$\tau_4$};
+		\draw[->] (40,0) -- (40,1.75);
+		\draw[] (58.05,1) -- (58.05,1.5);
+		\draw[dotted] (58.5,0.5) -- (60,0.5);
+		\draw[<-,thin,red] (40,1.3) -- (48,1.3);
+        	\draw[->,thin,red] (50,1.3) -- (58,1.3);
+        	\node[anchor=east,red] at (50, 1.39) {18};
+        	\node[task7, minimum width=2*\uxfpga, anchor=south west] at (48, 0){\footnotesize};         
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (57, 0){\footnotesize};
+	\end{scope}
+      
+    \begin{scope}[shift={(0,2)}]  
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
+		\foreach \x in {0,15,...,60}{
+			\draw[<-](\x,1.75) -- (\x,0);
+		}		
+    		\draw[dotted] (60.5,0.5) -- (62,0.5);         
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (4, 0){\footnotesize};
+        	\foreach \y in {0.3,0.5,0.7}{ 
+        		\draw[] (5,\y) -- (10,\y);
+        	}
+        	\draw[] (10,0) -- (10,1);
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (14, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (17, 0){\footnotesize};
+        	\foreach \y in {0.3,0.5,0.7}{ 
+        	\draw[] (18,\y) -- (23,\y);}
+        	\draw[] (23,0) -- (23,1);
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (24, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (34, 0){\footnotesize};
+        	\foreach \y in {0.3,0.5,0.7}{ 
+        	\draw[] (35,\y) -- (40,\y);}
+        	\draw[] (40,0) -- (40,1);
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (44, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (47, 0){\footnotesize};
+        	\foreach \y in {0.3,0.5,0.7}{ 
+        		\draw[] (48,\y) -- (53,\y);
+        	}
+       	\draw[] (53,0) -- (53,1);
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (54, 0){\footnotesize};
+	\end{scope}
         
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (48, 0){\footnotesize};         
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (57, 0){\footnotesize};
-        
-        \draw[->] (0,2) -- (0,3.75);
-        \draw[->] (15,2) -- (15,3.75);
-        \draw[->] (30,2) -- (30,3.75);
-        \draw[->] (45,2) -- (45,3.75);
-        \draw[->] (60,2) -- (60,3.75);
-        \draw[dotted] (60.5,2.5) -- (62,2.5); 
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (4, 2){\footnotesize};
-        \draw[] (5,2.3) -- (10,2.3);
-        \draw[] (5,2.5) -- (10,2.5);
-        \draw[] (5,2.7) -- (10,2.7);
-        \draw[] (10,2) -- (10,3);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (14, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (17, 2){\footnotesize};
-        \draw[] (18,2.3) -- (23,2.3);
-        \draw[] (18,2.5) -- (23,2.5);
-        \draw[] (18,2.7) -- (23,2.7);
-        \draw[] (23,2) -- (23,3);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (34, 2){\footnotesize};
-        \draw[] (35,2.3) -- (40,2.3);
-        \draw[] (35,2.5) -- (40,2.5);
-        \draw[] (35,2.7) -- (40,2.7);
-        \draw[] (40,2) -- (40,3);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (44, 2){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (47, 2){\footnotesize};
-        \draw[] (48,2.3) -- (53,2.3);
-        \draw[] (48,2.5) -- (53,2.5);
-        \draw[] (48,2.7) -- (53,2.7);
-        \draw[] (53,2) -- (53,3);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (54, 2){\footnotesize};
-                
-        \draw[->] (0,4) -- (0,5.75);
-        \draw[->] (10,4) -- (10,5.75);
-        \draw[->] (20,4) -- (20,5.75);
-        \draw[->] (30,4) -- (30,5.75);
-        \draw[->] (40,4) -- (40,5.75);
-        \draw[->] (50,4) -- (50,5.75);
-        \draw[->] (60,4) -- (60,5.75);
-        \draw[dotted] (60.5,4.5) -- (62,4.5);
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (2, 4){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (12, 4){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (22, 4){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (32, 4){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (42, 4){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (52, 4){\footnotesize};
-        
-        \draw[->] (0,6) -- (0,7.75);
-        \draw[->] (10,6) -- (10,7.75);
-        \draw[->] (20,6) -- (20,7.75);
-        \draw[->] (30,6) -- (30,7.75);
-        \draw[->] (40,6) -- (40,7.75);
-        \draw[->] (50,6) -- (50,7.75);
-        \draw[->] (60,6) -- (60,7.75);
-        \draw[->] (5,6) -- (5,7.75);
-        \draw[->] (15,6) -- (15,7.75);
-        \draw[->] (25,6) -- (25,7.75);
-        \draw[->] (35,6) -- (35,7.75);
-        \draw[->] (45,6) -- (45,7.75);
-        \draw[->] (55,6) -- (55,7.75);
-        \draw[dotted] (60.5,6.5) -- (62,6.5);
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (0, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (5, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (10, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (15, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (20, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (25, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (30, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (35, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (40, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (45, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (50, 6){\footnotesize};
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (55, 6){\footnotesize};        
+    \begin{scope}[shift={(0,4)}]        
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+   		\foreach \x in {0,10,...,60}{
+			\draw[<-](\x,1.75) -- (\x,0);
+		}		
+        	\draw[dotted] (60.5,0.5) -- (62,0.5);
+        	\foreach \x in {2,12,...,52}{
+			\node[task7, minimum width=2*\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+		}
+	\end{scope}
 
-  \end{tikzpicture}}       
-  \caption{A schedule for the task set in Table  \ref{tab:counterexample-segmented}. }
-  \label{fig:counterexample-segmented}
+    \begin{scope}[shift={(0,6)}]        
+		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+		\foreach \x in {0,5,...,55}{
+			\draw[<-](\x,1.75) -- (\x,0);
+			\node[task7, minimum width=2*\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+		}
+		\draw[<-](60,1.75) -- (60,0);		
+		\draw[dotted] (60.5,0.5) -- (62,0.5);
+	\end{scope}
+\end{tikzpicture}}       
+\caption{A schedule for the task set in Table  \ref{tab:counterexample-segmented}. }
+\label{fig:counterexample-segmented}
 \end{figure}
 
 %\begin{figure}[t]
@@ -442,23 +359,25 @@ This definition of the critical instant is very similar to the definition of the
 \end{table}
 
 \begin{figure}[t]
-  \centering
+\centering
 \def\uxfpga{0.4cm} 
-    \scalebox{1}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.5) {$\tau_3$};
-       \node[anchor=east] at (0, 2.5) {$\tau_2$};
-       \node[anchor=east] at (0, 4.5) {$\tau_1$};
-
-       \foreach \x in {0,2,...,10}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
+\scalebox{1}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
+    \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
        
-       \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
-       \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
-
+	\begin{scope}[shift={(0,0)}]       
+    		\draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+    		\foreach \x in {0,2,...,10}{
+			\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+		}
+		\foreach \x in {0,1,...,10}{
+        		\draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+    		}
+    		\foreach \y in {2.03,4.03}{
+			\draw[] (0,\y) -- (10,\y);
+		}		
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
         \draw[->] (0,0) -- (0,1.75);
         \draw[dotted] (9.5,0.5) -- (10.3,0.5);
         \draw[<-,thin,red] (0,1.3) -- (3.9,1.3);
@@ -467,64 +386,78 @@ This definition of the critical instant is very similar to the definition of the
         \node[anchor=east,red] at (5, 1.39) {$9$}; 
         \node[task7, minimum width=\uxfpga, anchor=south west] at (2, 0){\footnotesize};     
         \node[task7, minimum width=3*\uxfpga, anchor=south west] at (6, 0){\footnotesize};    
-        \draw[] (3,0.3) -- (5,0.3);
-        \draw[] (3,0.5) -- (5,0.5);
-        \draw[] (3,0.7) -- (5,0.7);
-        \draw[] (5,0) -- (5,1);
+		\foreach \y in {0.3,0.5,0.7}{        
+			\draw[] (3,\y) -- (5,\y);
+		}
+		\draw[] (5,0) -- (5,1);
+	\end{scope}
+	
+	\begin{scope}[shift={(0,2)}]       
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[dotted] (2.5,0.5) -- (3.3,0.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 0){\footnotesize};
+	\end{scope}	
         
-        \draw[->] (0,2) -- (0,3.75);
-        \draw[dotted] (2.5,2.5) -- (3.3,2.5); 
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 2){\footnotesize};
-                
-        \draw[->] (0,4) -- (0,5.75);
-        \draw[dashed,->] (4,4) -- (4,5.75);
-        \draw[->] (5,4) -- (5,5.75);
-        \draw[->] (9,4) -- (9,5.75);
-        \draw[dotted] (10.5,4.5) -- (11.3,4.5);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 4){\footnotesize};
- 
-
-       \draw[->] (15,0) -- coordinate (xaxis) (27,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (15, 0.5) {$\tau_3$};
-       \node[anchor=east] at (15, 2.5) {$\tau_2$};
-       \node[anchor=east] at (15, 4.5) {$\tau_1$};
-
-       \foreach \x in {15,17,...,25}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x-15} \yi};
-       }
-
-        \draw[->] (15,0) -- (15,1.75);
-        \draw[dotted] (25.5,0.5) -- (26.3,0.5); 
-        \draw[<-,thin,red] (15,1.3) -- (19.3,1.3);
-        \draw[->,thin,red] (20.7,1.3) -- (25,1.3);
-        \draw[] (25.05,0) -- (25.05,1.5);
-        \node[anchor=east,red] at (20.7, 1.39) {$10$}; 
-
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (16, 0){\footnotesize};     
-        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (21, 0){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 0){\footnotesize};    
-        \draw[] (17,0.3) -- (19,0.3);
-        \draw[] (17,0.5) -- (19,0.5);
-        \draw[] (17,0.7) -- (19,0.7);
-        \draw[] (19,0) -- (19,1);
+    \begin{scope}[shift={(0,4)}]
+    		\node[anchor=east] at (0, 0.5) {$\tau_1$};             
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[dashed,->] (4,0) -- (4,1.75);
+        \draw[->] (5,0) -- (5,1.75);
+        \draw[->] (9,0) -- (9,1.75);
+        \draw[dotted] (10.5,0.5) -- (11.3,0.5);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 0){\footnotesize};
+	\end{scope}
+	
+	
+	
+	\begin{scope}[shift={(15,0)}]       
+    		\draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+    		\foreach \x in {0,2,...,10}{
+			\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+		}
+		\foreach \x in {0,1,...,10}{
+        		\draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+    		}
+    		\foreach \y in {2.03,4.03}{
+			\draw[] (0,\y) -- (10,\y);
+		}		
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[dotted] (10.5,0.5) -- (11.3,0.5); 
+        \draw[<-,thin,red] (0,1.3) -- (4.3,1.3);
+        \draw[->,thin,red] (5.7,1.3) -- (10,1.3);
+        \draw[] (10.05,0) -- (10.05,1.5);
+        \node[anchor=east,red] at (5.7, 1.39) {$10$}; 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (1, 0){\footnotesize};     
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (6, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (9, 0){\footnotesize};    
+        \draw[] (4,0) -- (4,1);
+		\foreach \y in {0.3,0.5,0.7}{        
+			\draw[] (2,\y) -- (4,\y);
+		}
+	\end{scope}
+	
+	\begin{scope}[shift={(15,2)}]       
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \draw[->] (4,0) -- (4,1.75);
+        \draw[dotted] (6.5,0.5) -- (7.3,0.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 0){\footnotesize};
+	\end{scope}	
         
-        \draw[->] (19,2) -- (19,3.75);
-        \draw[dotted] (21.5,2.5) -- (22.3,2.5); 
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (20, 2){\footnotesize};
-                
-        \draw[->] (15,4) -- (15,5.75);
-        \draw[->] (19,4) -- (19,5.75);
-        \draw[->] (23,4) -- (23,5.75);
-        \draw[dotted] (24.5,4.5) -- (25.3,4.5);
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (15, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (19, 4){\footnotesize};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (23, 4){\footnotesize};
- \end{tikzpicture}}     
-  \caption{Counter example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
-  \label{fig:ex-synch-releases}
+    \begin{scope}[shift={(15,4)}]             
+        \node[anchor=east] at (0, 0.5) {$\tau_1$};
+        \draw[dotted] (9.5,0.5) -- (10.3,0.5);
+        \foreach \x in {0,4,8} {
+			\draw[->] (\x,0) -- (\x,1.75);
+			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){\footnotesize};
+        }
+	\end{scope}	
+\end{tikzpicture}}     
+\caption{Counter example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
+\label{fig:ex-synch-releases}
 \end{figure}
 
 \ifpaper
@@ -582,23 +515,25 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
 {\it Counterexample of Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, i.e., $0 < \epsilon \leq 0.1$. We have three tasks, listed in Table~\ref{table:ex-highest-priority}. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(a)). The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(b)), the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
 
 \begin{figure}[t]
-  \centering
+\centering
 \def\uxfpga{0.4cm} 
-    \scalebox{1}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.5) {$\tau_3$};
-       \node[anchor=east] at (0, 2.5) {$\tau_2$};
-       \node[anchor=east] at (0, 4.5) {$\tau_1$};
-
-       \foreach \x in {0,2,...,10}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
+\scalebox{1}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
+    \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
        
-       \node[anchor=east] at (11.5, -1.75) {(a) Release jobs synchronously.};
-       \node[anchor=east] at (28, -1.75) {(b) Do not release jobs synchronously.};
-
+	\begin{scope}[shift={(0,0)}]       
+    		\draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+	    \foreach \x in {0,2,...,10}{
+			\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+		}
+		\foreach \x in {0,1,...,10}{
+        		\draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+    		}
+    		\foreach \y in {2.03,4.03}{
+			\draw[] (0,\y) -- (10,\y);
+		}
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
         \draw[->] (0,0) -- (0,1.75);
         \draw[->] (6,0) -- (6,1.75);       
         \draw[dotted] (6.5,0.5) -- (7.3,0.5);
@@ -611,92 +546,89 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
         \draw[] (5,1.03) -- (5.6,1.03);
         \draw[] (5,0) -- (5,1);
         \draw[] (5.6,0) -- (5.6,1.5);
+	\end{scope}
+	
+	\begin{scope}[shift={(0,2)}]       
+        \node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (6,0) -- (6,1.75);
+        \draw[dotted] (6.5,0.5) -- (7.3,0.5); 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (0.2, 0){\footnotesize};
+        \draw[] (2.2,0.03) -- (3.3,0.03);
+        \draw[] (2.2,1.03) -- (3.3,1.03);
+        \draw[] (2.2,0.03) -- (2.2,1.03);
+        \draw[] (3.3,0.03) -- (3.3,1.03);
+	\end{scope}	
         
+    \begin{scope}[shift={(0,4)}]
+    		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+    		\draw[dotted] (10.1,0.5) -- (11,0.5);    		
+    		\foreach \x in {0,4.8}{
+    			\draw[->] (\x,0) -- (\x,1.75);
+    			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x+1.2, 0){\footnotesize};
+    			\draw[] (\x,1.03) -- (\x+0.2,1.03);
+    			\draw[] (\x,0.03) -- (\x+0.2,0.03);
+    			\draw[] (\x+0.2,0) -- (\x+0.2,1);
+    			\foreach \y in {0.3,0.5,0.7}{
+    			\draw[] (\x+0.2,\y) -- (\x+1.2,\y);
+    		}}
+    		\draw[->] (9.6,0) -- (9.6,1.75);
+	\end{scope}
+	
+	
+	
+	
+	\begin{scope}[shift={(15,0)}]       
+    		\draw[->] (0,0) -- coordinate (xaxis) (12,0) node[anchor=north]{$t$};
+	    \foreach \x in {0,2,...,10}{
+			\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+		}
+		\foreach \x in {0,1,...,10}{
+        		\draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,6);
+    		}
+    		\foreach \y in {2.03,4.03}{
+			\draw[] (0,\y) -- (10,\y);
+		}
+        \node[anchor=east] at (0, 0.5) {$\tau_3$};
+        \draw[->] (1.2,0) -- (1.2,1.75);
+        \draw[<-,red] (7.2,0) -- (8.6,1.3);
+        \node[anchor=east,red] at (10.5, 1.68) {miss};
+        \draw[<-,thin,red] (1.2,1.3) -- (3,1.3);
+        \draw[->,thin,red] (5.7,1.3) -- (7.6,1.3);
+        \node[anchor=east,red] at (5.8, 1.4) {$6+5\varepsilon$};
+        \draw[] (4.25,1.03) -- (4.8,1.03);
+        \draw[] (4.25,0.03) -- (4.8,0.03);
+        \draw[] (4.25,0.03) -- (4.25,1.03);
+        \draw[] (4.8,0.03) -- (4.8,1.03);
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (5, 0){\footnotesize};
+        \draw[] (7,1.03) -- (7.6,1.03);
+        \draw[] (7,0.03) -- (7,1.03);
+        \draw[] (7.6,0.03) -- (7.6,1.5);
+	\end{scope}
+	
+	\begin{scope}[shift={(15,2)}]       
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \draw[->] (1.2,0) -- (1.2,1.75);
+        \draw[->] (7.2,0) -- (7.2,1.75);
+        \draw[] (2.2,1.03) -- (4.25,1.03);
+        \draw[] (2.2,0.03) -- (4.25,0.03);
+        \draw[] (2.2,0.03) -- (2.2,1.03);
+        \draw[] (4.25,0.03) -- (4.25,1.03);
+	\end{scope}	
         
-        \draw[->] (0,2) -- (0,3.75);
-        \draw[->] (6,2) -- (6,3.75);
-        \draw[dotted] (6.5,2.5) -- (7.3,2.5); 
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (0.2, 2){\footnotesize};
-        \draw[] (2.2,2.03) -- (3.3,2.03);
-        \draw[] (2.2,3.03) -- (3.3,3.03);
-        \draw[] (2.2,2.03) -- (2.2,3.03);
-        \draw[] (3.3,2.03) -- (3.3,3.03);
-       
-                        
-        \draw[->] (0,4) -- (0,5.75);
-        \draw[->] (4.8,4) -- (4.8,5.75);
-        \draw[->] (9.6,4) -- (9.6,5.75);
-        \draw[dotted] (10.1,4.5) -- (11,4.5);
-        \draw[] (0,5.03) -- (0.2,5.03);
-        \draw[] (0,4.03) -- (0.2,4.03);
-        \draw[] (0.2,4.03) -- (0.2,5.03);
-        \draw[] (0.2,4.3) -- (1.2,4.3);
-        \draw[] (0.2,4.5) -- (1.2,4.5);
-        \draw[] (0.2,4.7) -- (1.2,4.7);        
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (1.2, 4){\footnotesize};
-        \draw[] (4.8,5.03) -- (5,5.03);
-        \draw[] (4.8,4.03) -- (5,4.03);
-        \draw[] (5,4.03) -- (5,5.03);
-        \draw[] (5,4.3) -- (6,4.3);
-        \draw[] (5,4.5) -- (6,4.5);
-        \draw[] (5,4.7) -- (6,4.7);        
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (6, 4){\footnotesize};
-                
-      
-       \draw[->] (15,0) -- coordinate (xaxis) (27,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (15, 0.5) {$\tau_3$};
-       \node[anchor=east] at (15, 2.5) {$\tau_2$};
-       \node[anchor=east] at (15, 4.5) {$\tau_1$};
-
-
-
-       \foreach \x in {15,17,...,25}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x-15} \yi};
-       }
-
-        \draw[->] (16.2,0) -- (16.2,1.75);
-        \draw[<-,red] (22.2,0) -- (23.6,1.3);
-        \node[anchor=east,red] at (25.5, 1.68) {miss};
-        \draw[<-,thin,red] (16.2,1.3) -- (18,1.3);
-        \draw[->,thin,red] (20.7,1.3) -- (22.6,1.3);
-        \node[anchor=east,red] at (20.8, 1.4) {$6+5\varepsilon$};
-        \draw[] (19.25,1.03) -- (19.7,1.03);
-        \draw[] (19.25,0.03) -- (19.7,0.03);
-        \draw[] (19.25,0.03) -- (19.25,1.03);
-        \draw[] (19.7,0.03) -- (19.7,1.03);
-        \draw[] (19.9,1.03) -- (20.9,1.03);
-        \draw[] (19.9,0.03) -- (20.9,0.03);
-        \draw[] (19.9,0.03) -- (19.9,1.03);
-        \draw[] (20.9,0.03) -- (20.9,1.03);
-        \draw[] (22,1.03) -- (22.6,1.03);
-        \draw[] (22,0.03) -- (22,1.03);
-        \draw[] (22.6,0.03) -- (22.6,1.5);
-        
-        \draw[->] (16.2,2) -- (16.2,3.75);
-        \draw[->] (22.2,2) -- (22.2,3.75);
-        \draw[] (17.2,3.03) -- (19.25,3.03);
-        \draw[] (17.2,2.03) -- (19.25,2.03);
-        \draw[] (17.2,2.03) -- (17.2,3.03);
-        \draw[] (19.25,2.03) -- (19.25,3.03);
-                
-        \draw[->] (15,4) -- (15,5.75);
-        \draw[->] (19.8,4) -- (19.8,5.75);
-        \draw[->] (24.6,4) -- (24.6,5.75);
-        \draw[] (15,5.03) -- (15.2,5.03);
-        \draw[] (15,4.03) -- (15.2,4.03);
-        \draw[] (15.2,4.03) -- (15.2,5.03);
-        \draw[] (15.2,4.3) -- (16.2,4.3);
-        \draw[] (15.2,4.5) -- (16.2,4.5);
-        \draw[] (15.2,4.7) -- (16.2,4.7);        
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (16.2, 4){\footnotesize};
-        \draw[] (19.8,5.03) -- (20,5.03);
-        \draw[] (19.8,4.03) -- (20,4.03);
-        \draw[] (20,4.03) -- (20,5.03);
-        \draw[] (20,4.3) -- (21,4.3);
-        \draw[] (20,4.5) -- (21,4.5);
-        \draw[] (20,4.7) -- (21,4.7);        
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (21, 4){\footnotesize};
+    \begin{scope}[shift={(15,4)}]             
+    		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+    		\foreach \x in {0,4.8}{
+    			\draw[->] (\x,0) -- (\x,1.75);
+    			\node[task7, minimum width=\uxfpga, anchor=south west] at (\x+1.2, 0){\footnotesize};
+    			\draw[] (\x,1.03) -- (\x+0.2,1.03);
+    			\draw[] (\x,0.03) -- (\x+0.2,0.03);
+    			\draw[] (\x+0.2,0) -- (\x+0.2,1);
+    			\foreach \y in {0.3,0.5,0.7}{
+    			\draw[] (\x+0.2,\y) -- (\x+1.2,\y);
+    		}}
+    		\draw[->] (9.6,0) -- (9.6,1.75);
+	\end{scope}	
  \end{tikzpicture}}     
   \caption{Counter example to the synchronous release of Theorem 2 in \cite{RTSS-KimANR13}.}
   \label{fig:counterexample-reduce-interf}
@@ -752,37 +684,43 @@ Unfortunately, it is not. Figure~\ref{fig:counterexample-FP-segment-level} provi
 
 
 \begin{figure}[t]
-  \centering
-  \def\uxfpga{0.3cm}
-    \scalebox{0.91}{
-      \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-        \draw[->] (0,0) -- coordinate (xaxis) (42,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.5) {$\tau_2$};
-       \node[anchor=east] at (0, 2.5) {$\tau_1$};
+\centering
+\def\uxfpga{0.3cm}
+\scalebox{0.91}{
+\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (42,0) node[anchor=north]{$t$};
+    \node[anchor=east] at (0, 0.5) {$\tau_2$};
+    \node[anchor=east] at (0, 2.5) {$\tau_1$};
 
-       \foreach \x in {0,2,...,40}{
-         \draw[-,below](\x,0) -- (\x,-0.3)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
+    \foreach \x in {0,5,...,40}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+    }
+    \foreach \x in {0,1,...,40}{
+		\draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
+    }     
 
+	\begin{scope}[shift={(0,0)}]        
+        \draw[] (0,2) -- (40,2);
         \draw[->] (0,0) -- (0,1.75);
         \draw[->] (10,0) -- (10,1.75);
-        \draw[] (5,0.3) -- (10,0.3);
-        \draw[] (5,0.5) -- (10,0.5);
-        \draw[] (5,0.7) -- (10,0.7);
-        \draw[] (0,1.3) -- (3.3,1.3);
-        \draw[] (6.6,1.3) -- (10,1.3);
+        \foreach \y in {0.3,0.5,0.7}{
+			\draw[] (5,\y) -- (10,\y);
+		}
+        \draw[<-,thin] (0,1.3) -- (3.3,1.3);
+        \draw[->,thin] (6.6,1.3) -- (10,1.3);
         \node[anchor=east] at (6.6, 1.49) {offset};
         \draw[<-,red] (40,0) -- (40,1.2);
         \node[anchor=east,red] at (41.3, 1.49) {miss};
         \node[task7, minimum width=5*\uxfpga, anchor=south west] at (0, 0){\footnotesize $C_2^1$};         
         \node[task7, minimum width=15*\uxfpga, anchor=south west] at (15, 0){\footnotesize $C_2^2$};
-
-        \draw[->] (0,2) -- (0,3.75);
-        \draw[->] (30,2) -- (30,3.75);
-        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (5, 2){\footnotesize};         
-        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (30, 2){\footnotesize};
-
+	\end{scope}
+	
+	\begin{scope}[shift={(0,2)}]
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (30,0) -- (30,1.75);
+        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (5, 0){\footnotesize};         
+        \node[task7, minimum width=10*\uxfpga, anchor=south west] at (30, 0){\footnotesize};
+	\end{scope}
   \end{tikzpicture}}       
   \caption{A schedule to release the two tasks in Section~\ref{sec:wrong-periodic} simultaneously.}
   \label{fig:counterexample-FP-segment-level}
