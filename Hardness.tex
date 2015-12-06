@@ -1,6 +1,6 @@
-\section{Hardness Review of Self-Suspending Task Models}
+\section{Computational Complexity and Approximations}
 \label{sec:hardness}
-This section reviews the hardness for designing scheduling algorithms and schedulability analysis of self-suspending task systems. Table \ref{table:complexity} summarizes the complexity classes of the corresponding problems, in which the complexity problems are reviewed according to the considered task models (\ie, segmented or dynamic self-suspending models) and the scheduling strategies (\ie, fixed- or dynamic-priority scheduling). Notably, for self-suspending task systems, only the complexity class for verifying the existence of a feasible schedule for segmented tasks is proved in the literature~\cite{Ric03,Ridouard_2004}, most corresponding problems are still open.
+This section reviews the difficulty for designing scheduling algorithms and schedulability analysis of self-suspending task systems. Table \ref{table:complexity} summarizes the computational complexity classes of the corresponding problems, in which the complexity problems are reviewed according to the considered task models (\ie, segmented or dynamic self-suspending models) and the scheduling strategies (\ie, fixed- or dynamic-priority scheduling). Notably, for self-suspending task systems, only the complexity class for verifying the existence of a feasible schedule for segmented tasks is proved in the literature~\cite{Ric03,Ridouard_2004}, most corresponding problems are still open.
 
 \begin{table}[t]
 \centering
@@ -24,22 +24,24 @@ This section reviews the hardness for designing scheduling algorithms and schedu
         \hline
     \end{tabular}
     \vskip 0.2in
-    \caption{The complexity classes of scheduling and schedulability analysis for self-suspending tasks}
+    \caption{The computational complexity classes of scheduling and schedulability analysis for self-suspending tasks}
     \label{table:complexity}
 \end{table}
 
-\subsection{Hardness for Scheduling Segmented Self-Suspending Tasks}
+\subsection{Computational Complexity of Designing Scheduling Policies}
+
+\subsubsection{Design of Scheduling Segmented Self-Suspending Tasks}
 Verifying the existence of a feasible schedule for segmented self-suspending task systems is proved to be ${\cal NP}$-hard in the strong sense in \cite{Ridouard_2004} for implicit-deadline tasks with at most one self-suspension per task. For this model, it is also shown that EDF and RM do not have any speedup factor bound in \cite{Ridouard_2004} and \cite{RTSS-ChenL14}, respectively. The generalization of the segmented self-suspension model to multi-threaded tasks (i.e., every task is defined by a Directed Acyclic Graph with edges labelled by suspension delays), the feasibility problem is also known to be  ${\cal NP}$-hard in the strong sense  \cite{Ric03} even if all subjobs have unit execution times. 
 
-The only results with speedup factor analysis for fixed-priority scheduling and dynamic priority scheduling can be found in \cite{RTSS-ChenL14} and \cite{WC16-suspend-DATE}. The analysis with speedup factor $3$ in \cite{RTSS-ChenL14} can be used for systems with at most one self-suspension interval per task in dynamic priority scheduling. The analysis with a bounded speedup factor in \cite{WC16-suspend-DATE} can be used for fixed-priority and dynamic-priority systems with any number of self-suspension intervals per task. However, the speedup factor in \cite{WC16-suspend-DATE} depends on, and grows quadratically with respect to the number of self-suspension intervals. Therefore, it can only be \emph{practically} used when there are only a few number of suspension intervals per task. The scheduling policy used in \cite{WC16-suspend-DATE} is \emph{suspension laxity-monotonic} (SLM) scheduling, which assigns the highest priority to the task with the least suspension laxity, defined as $D_i-S_i$.
-
 With respect to this scheduling problem, there was no theoretical lower bound (with respect to the speedup factors) of this scheduling problem. 
+ The only results with speedup factor analysis for fixed-priority scheduling and dynamic priority scheduling can be found in \cite{RTSS-ChenL14} and \cite{WC16-suspend-DATE}. The analysis with speedup factor $3$ in \cite{RTSS-ChenL14} can be used for systems with at most one self-suspension interval per task in dynamic priority scheduling. The analysis with a bounded speedup factor in \cite{WC16-suspend-DATE} can be used for fixed-priority and dynamic-priority systems with any number of self-suspension intervals per task. However, the speedup factor in \cite{WC16-suspend-DATE} depends on, and grows quadratically with respect to the number of self-suspension intervals. Therefore, it can only be \emph{practically} used when there are only a few number of suspension intervals per task. The scheduling policy used in \cite{WC16-suspend-DATE} is \emph{suspension laxity-monotonic} (SLM) scheduling, which assigns the highest priority to the task with the least suspension laxity, defined as $D_i-S_i$.
+
 
 The above analysis also implies that the priority assignment in fixed-priority scheduling should be carefully designed. Traditional approaches like RM or EDF do not work very well. SLM may work for a few self-suspending intervals, but how to perform the optimal priority assignment is an open problem. Such a difficulty comes from scheduling anomalies that may occur at run-time. In \cite{Ridouard_2004}, it is shown using a simple counter example that reducing execution times or self-suspension delays can lead some task to miss deadlines under EDF (i.e., EDF is no longer sustainable). This latter result can be easily extended to static schdeling policies (i.e., RM and DM). Lastly, in \cite{RidouardR06}, it is proved that no deterministic online scheduler can be optimal if the real-time tasks are allowed to suspend themselves.
 
 
 
-\subsection{Hardness for Scheduling Dynamic Self-Suspending Tasks}
+\subsubsection{Design of Scheduling Dynamic Self-Suspending Tasks}
 The complexity class for verifying the existence of a feasible schedule for dynamic self-suspending task systems is unknown in the literature. The proof in \cite{Ridouard_2004} cannot be applied to this case. 
 It is proved in \cite{huangpass:dac2015} that the speed-up factor for RM, DM, and suspension laxity monotonic (SLM) scheduling is $\infty$. Here, we repeat the example in \cite{huangpass:dac2015}. Consider the following implicit-deadline task set with one self-suspending task and one sporadic task:
 \begin{itemize}
@@ -62,7 +64,9 @@ The above analysis also implies that the priority assignment in fixed-priority s
 Finding the optimal priority assignment here is also an open problem.
 
 
-\subsection{Hardness for Schedulability Tests for Segmented Self-Suspension}
+\subsection{Computational Complexity of Schedulability Tests}
+
+\subsubsection{Schedulability Tests for Segmented Self-Suspension}
 \paragraph{Preemptive Fixed-Priority Scheduling:}   
 For this case, the complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. The evidence provided in \cite{ecrts15nelissen} also suggests that this problem may be very difficult even for a task system with \emph{only one self-suspending task}. The solution in \cite{ecrts15nelissen}  requires exponential time complexity for $n-1$ sporadic tasks and 1 self-suspending task. The other solutions \cite{Huang:multiseg}\cite{PH:rtss98} require pseudo-polynomial time complexity but are only sufficient schedulability tests.
 
@@ -76,7 +80,7 @@ For this case, if the task systems are with constrained deadlines, i.e., $D_i \l
 It is also not difficult to see that the implicit-deadline case is also at least co${\cal NP}$-hard.  A special case of segmented self-suspending task system is to allow a task $\tau_i$ having exactly one self-suspension interval with a \emph{fixed} length $S_i$ and one computation segment with WCET $C_i$. Therefore, the relative deadline of the computation segment of task $\tau_i$ (after it is released to be scheduled) is $D_i = T_i-S_i$. Therefore, the implicit-deadline segmented self-suspending task system is equivalent to a constrained-deadline task system, which is co${\cal NP}$-complete in the strong sense. Since a special case of the problem is co${\cal NP}$-complete in the strong sense, the problem is co${\cal NP}$-hard in the strong sense.
 
 
-\subsection{Hardness for Schedulability Tests for Dynamic Self-Suspension}
+\subsubsection{Schedulability Tests for Dynamic Self-Suspension}
 \paragraph{Preemptive Fixed-Priority Scheduling:}   
 
 Similarly, for this case, with dynamic self-suspension, the complexity class of verifying whether the worst-case response time is no more than the relative deadline is \emph{unknown} up to now. There is \emph{no exact} schedulability analysis for this problem up to now. The solutions in \cite{Liu:2000:RS:518501,LiuChen:rtss2014,huangpass:dac2015} are only sufficient schedulability tests. 

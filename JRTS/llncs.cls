@@ -223,7 +223,7 @@
 \setlength\textfloatsep{8mm\@plus 2\p@ \@minus 4\p@}
 \setlength\intextsep   {8mm\@plus 2\p@ \@minus 2\p@}
 
-\setcounter{secnumdepth}{2}
+\setcounter{secnumdepth}{3}
 
 \newcounter {chapter}
 \renewcommand\thechapter      {\@arabic\c@chapter}

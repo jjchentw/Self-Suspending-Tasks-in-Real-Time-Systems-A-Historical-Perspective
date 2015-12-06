@@ -17,7 +17,7 @@ This analysis basically assumes that a safe estimate for $R_k$ can be computed i
 every higher-priority task $\tau_i$ is modelled as an ordinary sporadic
 task with worst-case execution time $C_i$ and release jitter $S_i$.
 Intuitively, it represents the potential internal jitter, \textit{within} an activation of $\tau_i$, i.e., when its execution time $C_i$ is considered by disregarding any time intervals when $\tau_i$ is preempted. 
-However, it is not a real jitter in the general cases, because the execution of $\tau_i$ can be pushed further, to be shown in the following example.
+However, it is not the real jitter in the general cases, because the execution of $\tau_i$ can be pushed further, to be shown in the following example.
 
 
 Consider the dynamic self-suspending task set presented in Table \ref{tab:counterexample-dynamic-suspension}. 
