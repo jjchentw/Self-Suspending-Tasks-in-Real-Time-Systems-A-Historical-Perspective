@@ -653,12 +653,16 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
 
 This misconception also leads to a wrong statement in Theorem 3 in \cite{RTSS-KimANR13}:
 \begin{quote}
-{\it Theorem 3 in \cite{RTSS-KimANR13}}: For a taskset $\Gamma_{1s}$ with implicit deadlines, $\Gamma_{1s}$ is schedulable if the total utilization of the taskset is less than or equal to $n((2+2\gamma)^{\frac{1}{n}}-1)-k$, where $n$ is the number of tasks in $\Gamma_{1s}$, and $\gamma$ is the ratio of
+{\it Theorem 3 in \cite{RTSS-KimANR13}}: For a taskset $\Gamma_{1s}$ with implicit deadlines, $\Gamma_{1s}$ is schedulable if the total utilization of the taskset is less than or equal to $n((2+2\gamma)^{\frac{1}{n}}-1)-\gamma$, where $n$ is the number of tasks in $\Gamma_{1s}$, and $\gamma$ is the ratio of
 $S_1$ to $T_1$ and lies in the range of $0$ to $2^{\frac{1}{n-1}}-1$. 
 \end{quote}
 
 
 {\it Counterexample of Theorem 3 in \cite{RTSS-KimANR13}:} Suppose that the self-suspending task $\tau_1$ has two computation segments, with $C_1^1 = C_1-\epsilon$, $C_1^2 = \epsilon$, and $S_1=S_1^1 > 0$ with very small $0 < \epsilon \ll C_1^1$. For such an example, it is pretty obvious that this self-suspending highest-priority task is like an ordinary sporadic task, i.e., self-suspension does not matter. 
+ In this counterexample, the utilization bound is still Liu and Layland bound $n(2^{\frac{1}{n}}-1)$ \cite{Liu_1973}, regardless of the ratio of $S_1/T_1$. 
+
+The source of the error of Theorem 3 in \cite{RTSS-KimANR13} is due to its Theorem 2 and the footnote 4 in \cite{RTSS-KimANR13}, which claims that the case in Figure 7 in \cite{RTSS-KimANR13} is the worst case. This statement is incorrect and can be disproved by using the above counterexample. 
+
 
 {\bf Consequences:} These examples show that Theorems 2 and 3 in \cite{RTSS-KimANR13} are flawed.  
 
