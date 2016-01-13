@@ -118,7 +118,7 @@ F.~Eisenbrand and T.~Rothvo{\ss}.
 \bibitem{DBLP:conf/ecrts/Ekberg015}
 P.~Ekberg and W.~Yi.
 \newblock Uniprocessor feasibility of sporadic tasks with constrained deadlines
-  is strongly conp-complete.
+  is strongly co{NP}-{C}omplete.
 \newblock In {\em 27th Euromicro Conference on Real-Time Systems, {ECRTS}},
   pages 281--286, 2015.
 
@@ -300,6 +300,13 @@ Y.~Liu, C.~Liu, X.~Zhang, W.~Gao, L.~He, and Y.~Gu.
   systems.
 \newblock In {\em 27th Euromicro Conference on Real-Time Systems, {(ECRTS)}},
   pages 129--138, 2015.
+
+\bibitem{MingLiRTCSA1994}
+L.~Ming.
+\newblock Scheduling of the inter-dependent messages in real-time
+  communication.
+\newblock In {\em Proc. of the First International Workshop on Real-Time
+  Computing Systems and Applications}, 1994.
 
 \bibitem{Mok:1983:FDP:888951}
 A.~K. Mok.

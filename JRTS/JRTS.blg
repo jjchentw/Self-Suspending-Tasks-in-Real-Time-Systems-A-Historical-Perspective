@@ -1,30 +1,30 @@
-This is BibTeX, Version 0.99d (TeX Live 2014)
+This is BibTeX, Version 0.99d (TeX Live 2015)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: JRTS.aux
 The style file: abbrv.bst
 Database file #1: ../bibliography/biblio.bib
-"(" immediately follows a field name---line 198 of file ../bibliography/biblio.bib
+"(" immediately follows a field name---line 204 of file ../bibliography/biblio.bib
  : doi={10.1109/EMRTS.2003.1212743}, javascript:void
  :                                                  (0)
 I'm skipping whatever remains of this entry
-Repeated entry---line 466 of file ../bibliography/biblio.bib
+Repeated entry---line 472 of file ../bibliography/biblio.bib
  : @inproceedings{Kang:rtss07
  :                           ,
 I'm skipping whatever remains of this entry
-A bad cross reference---entry "RTAS-AudsleyB04"
-refers to entry "DBLP:conf/rtas/2004", which doesn't exist
-A bad cross reference---entry "DBLP:conf/ecrts/TomaC13"
-refers to entry "DBLP:conf/ecrts/2013", which doesn't exist
-A bad cross reference---entry "DBLP:conf/ecrts/LiuLZGH015"
-refers to entry "DBLP:conf/ecrts/2015", which doesn't exist
 A bad cross reference---entry "RTSS-ChenL14"
 refers to entry "DBLP:conf/rtss/2014", which doesn't exist
 A bad cross reference---entry "ECRTS-AudsleyB04"
 refers to entry "DBLP:conf/ecrts/2004", which doesn't exist
+A bad cross reference---entry "RTAS-AudsleyB04"
+refers to entry "DBLP:conf/rtas/2004", which doesn't exist
 A bad cross reference---entry "RTCSA-BletsasA05"
 refers to entry "DBLP:conf/rtcsa/2005", which doesn't exist
 A bad cross reference---entry "RTSS-KimANR13"
 refers to entry "DBLP:conf/rtss/2013", which doesn't exist
+A bad cross reference---entry "DBLP:conf/ecrts/TomaC13"
+refers to entry "DBLP:conf/ecrts/2013", which doesn't exist
+A bad cross reference---entry "DBLP:conf/ecrts/LiuLZGH015"
+refers to entry "DBLP:conf/ecrts/2015", which doesn't exist
 A bad cross reference---entry "DBLP:conf/ecrts/LiuA13"
 refers to entry "DBLP:conf/ecrts/2013", which doesn't exist
 Warning--I didn't find a database entry for "DBLP:conf/ecrts/2013"
@@ -39,45 +39,45 @@ Warning--empty institution in ChenHuangNelissen
 Warning--empty institution in Huang:multiseg
 Warning--empty institution in erratu-cong-anderson
 Warning--empty institution in Mok:1983:FDP:888951
-You've used 65 entries,
+You've used 66 entries,
             2118 wiz_defined-function locations,
-            878 strings with 16319 characters,
-and the built_in function-call counts, 23079 in all, are:
-= -- 2162
-> -- 1093
+            884 strings with 16522 characters,
+and the built_in function-call counts, 23315 in all, are:
+= -- 2182
+> -- 1100
 < -- 24
-+ -- 434
-- -- 362
-* -- 1410
-:= -- 3655
-add.period$ -- 196
-call.type$ -- 65
-change.case$ -- 381
++ -- 437
+- -- 364
+* -- 1419
+:= -- 3694
+add.period$ -- 199
+call.type$ -- 66
+change.case$ -- 385
 chr.to.int$ -- 0
-cite$ -- 70
-duplicate$ -- 1028
-empty$ -- 1973
-format.name$ -- 362
-if$ -- 5030
+cite$ -- 71
+duplicate$ -- 1042
+empty$ -- 2001
+format.name$ -- 364
+if$ -- 5082
 int.to.chr$ -- 0
-int.to.str$ -- 65
-missing$ -- 59
-newline$ -- 328
-num.names$ -- 130
-pop$ -- 525
+int.to.str$ -- 66
+missing$ -- 60
+newline$ -- 333
+num.names$ -- 132
+pop$ -- 533
 preamble$ -- 1
-purify$ -- 310
+purify$ -- 313
 quote$ -- 0
-skip$ -- 738
+skip$ -- 745
 stack$ -- 0
-substring$ -- 1136
-swap$ -- 296
+substring$ -- 1141
+swap$ -- 298
 text.length$ -- 24
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 258
+type$ -- 262
 warning$ -- 5
-while$ -- 201
-width$ -- 67
-write$ -- 691
+while$ -- 203
+width$ -- 68
+write$ -- 701
 (There were 10 error messages)
