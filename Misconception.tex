@@ -675,7 +675,7 @@ The source of the error of Theorem 3 in \cite{RTSS-KimANR13} is due to its Theor
     \label{eq:tda-fixed}
 \exists 0 < t \leq D_k, \qquad C_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}}C_i \leq t.    
   \end{equation}
-This also implies that the utilization bound (for implicit-deadline task systems) is still Liu and Layland bound $n(2^{\frac{1}{n}}-1)$ \cite{Liu_1973}, regardless of the ratio of $S_1/T_1$. 
+%This also implies that the utilization bound (for implicit-deadline task systems) is still Liu and Layland bound $n(2^{\frac{1}{n}}-1)$ \cite{Liu_1973}, regardless of the ratio of $S_1/T_1$. 
 
 \subsection{Incorrect Segmented Fixed-Priority Scheduling with Periodic Enforcement}
 \label{sec:wrong-periodic}
@@ -691,7 +691,9 @@ Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest
 Since the two computation segments of task $\tau_2$ should not have any overlap, one may think that during the analysis of the worst-case response time of $C_2^2$, we do not have to consider the computation segment $C_2^1$. The worst-case response time of $C_2^2$ (after its constant offset $10$) for this case is $26$ since $\ceiling{\frac{26}{30}} C_1 + C_2^2 = 26$. 
 Since $26+10 < 40$, one may conclude that this enforcement results in a feasible schedule. This analysis is adopted in Section IV in \cite{RTSS-KimANR13} and Section 3 in \cite{DBLP:journals/ieicet/DingTT09}. 
 
-Unfortunately, it is not. Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of $C_2^2$ is larger than $30$, which implies a deadline miss. In fact, the $5$ units execution time of $C_2^1$ pushes $C_1$ and results in a deadline miss of task $\tau_2$.
+Unfortunately, this analysis is incorrect.
+%it is not.
+Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of $C_2^2$ is larger than $30$, which implies a deadline miss. In fact, the $5$ units of execution time of $C_2^1$ pushes $C_1$ and results in a deadline miss of task $\tau_2$.
 
 \begin{table} [t]
 \centering
