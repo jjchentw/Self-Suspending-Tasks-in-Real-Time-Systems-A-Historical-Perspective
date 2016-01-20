@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  20 JAN 2016 12:23
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  20 JAN 2016 13:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1194,21 +1194,9 @@ Overfull \hbox (8.67932pt too wide) in paragraph at lines 20--22
 1/cmr/bx/n/10 ?\OT1/cmr/m/n/10 ] due to semaphore
  []
 
-
-LaTeX Warning: Reference `eq:classic-pcp-rta' on page 26 undefined on input lin
-e 23.
-
-
-LaTeX Warning: Reference `eq:classic-pcp-rta' on page 26 undefined on input lin
-e 23.
-
 [26]
 
 LaTeX Warning: Citation `SRL:90' on page 27 undefined on input line 37.
-
-
-LaTeX Warning: Reference `eq:classic-pcp-rta' on page 27 undefined on input lin
-e 37.
 
 
 LaTeX Warning: Citation `BA:10b' on page 27 undefined on input line 40.
@@ -1216,12 +1204,7 @@ LaTeX Warning: Citation `BA:10b' on page 27 undefined on input line 40.
 
 LaTeX Warning: Citation `BA:10b' on page 27 undefined on input line 42.
 
-[27] [28] [29]
-
-LaTeX Warning: Reference `eqn:wcrt-pfp-fixed' on page 30 undefined on input lin
-e 219.
-
-) (../soft-realtime.tex [30] [31]) (../Hardness.tex
+[27] [28] [29]) (../soft-realtime.tex [30] [31]) (../Hardness.tex
 Overfull \hbox (1.6826pt too wide) in paragraph at lines 3--4
 \OT1/cmr/m/n/10 This sec-tion re-views the dif-fi-culty for de-sign-ing schedul
 -ing al-go-rithms and schedu-
@@ -1236,6 +1219,9 @@ Overfull \hbox (7.65591pt too wide) in paragraph at lines 27--29
 []\OT1/cmr/m/n/10 Incorrect seg-mented fixed-priority schedul-ing with pe-ri-od
 ic en-force-ment, which
  []
+
+
+LaTeX Warning: Reference `sec:papers' on page 36 undefined on input line 113.
 
 
 Overfull \hbox (11.17744pt too wide) in paragraph at lines 113--117
@@ -1256,14 +1242,11 @@ Underfull \vbox (badness 1668) has occurred while \output is active []
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  14489 strings out of 493315
  262859 string characters out of 6137904
- 346166 words of memory out of 5000000
+ 345197 words of memory out of 5000000
  17561 multiletter control sequences out of 15000+600000
  16791 words of font info for 64 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -1295,7 +1278,7 @@ st/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2013/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2013/texmf-dist/f
 onts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2013/texmf-dist/fon
 ts/type1/public/cm-super/sfti0900.pfb>
-Output written on JRTS.pdf (42 pages, 451634 bytes).
+Output written on JRTS.pdf (42 pages, 451788 bytes).
 PDF statistics:
  249 PDF objects out of 1000 (max. 8388607)
  177 compressed objects within 2 object streams

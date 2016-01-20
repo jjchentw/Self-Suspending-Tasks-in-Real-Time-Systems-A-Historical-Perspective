@@ -235,7 +235,7 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
   
 Self-suspending task models can be classified into \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models. 
 The dynamic self-suspension sporadic task model characterizes a
-task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum inter-arrival time (or period) of $\tau_i$, $D_i$ is the relative deadline of $\tau_i$,
+task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum inter-arrival time (or period) of $\tau_i$, $D_i$ denotes the relative deadline of $\tau_i$,
 $C_i$ denotes an upper bound on the total execution time of each job of $\tau_i$,
 and $S_i$ denotes an upper bound on the total suspension time of each job of $\tau_i$.  In addition to the above four-tuple, the segmented sporadic task model further 
 characterizes the computation segments and suspension intervals as an array
@@ -249,7 +249,7 @@ its absolute deadline $t+D_i$, and  the next instance of
 the task must arrive no earlier than time $t + T_i$.
 
 From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems without considering the juncture of I/O access, computation offloading, or synchronization. 
-However, from an analysis perspective, such a  dynamic model leads to quite pessimistic results in terms of schedulability since the location of suspensions within a job is unspecified. Therefore, if the suspending patterns are well-defined and characterized with known suspending intervals, the multi-segment self-suspension task model is more appropriate.   
+However, from an analysis perspective, such a  dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the segmented self-suspension task model is more appropriate.   
 
 
 Throughout this paper, we will use ${\bf T}$ to denote the input task
