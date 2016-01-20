@@ -368,16 +368,14 @@ To resolve the computational complexity issues in many scheduling problems in re
 % resulting from self-suspending behaviour.
 
 
-\subsection{Terminologies for Multiprocessor Systems}
+\subsection{Terminologies for Multiprocessor Scheduling}
 
-\jj{Cong's job}
-
-Some text from Section 6 that should probably go here:
-
-\emph{partitioned fixed-priority (P-FP)} 
-
-P-FP scheduling is a widespread choice in practice due to the wide support in industrial standards such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc Under P-FP scheduling, each task has a fixed base priority and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor. 
-
+On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioning, and (\textit{ii}) global scheduling. , and (\textit{iii}) clustered scheduling. 
+Under partitioning, tasks are statically partitioned among processors, i.e., each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioning algorithm example is partitioned earliest-deadline-first (PEDF), which uses the EDF algorithm as the per-processor scheduler. 
+Partitioned fixed-priority (P-FP) scheduling is another widespread choice in practice due to the wide support in industrial standards such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc Under P-FP scheduling, each task has a fixed base priority and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
+%Under EDF, jobs with earlier deadlines have higher priority. 
+ In contrast to partitioning, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (GEDF), under which jobs are EDF-scheduled using a single ready queue.  
+ Clustered scheduling is hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying hardware architecture so as to prevent expensive migrations between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (e.g., an automotive system)~\cite{bastoni2010}.
 
 
 %%% Local Variables:
