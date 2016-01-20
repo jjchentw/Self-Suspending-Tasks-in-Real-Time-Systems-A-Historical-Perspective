@@ -52,25 +52,25 @@
 \citation{bini2003rate}
 \citation{Liu_1973}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Terminologies for Multiprocessor Systems}{9}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}General Design and Analysis Strategies}{9}}
-\newlabel{sec:review}{{4}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}General Design and Analysis Strategies}{10}}
+\newlabel{sec:review}{{4}{10}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Examples for dynamic self-suspending tasks to be used in Section\nobreakspace  {}4\hbox {}.\relax }}{11}}
 \newlabel{table:dynamic-example}{{1}{11}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Examples for segmented self-suspending tasks to be used in Section\nobreakspace  {}4\hbox {}.\relax }}{11}}
 \newlabel{table:static-example}{{2}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Convert All Self-Suspension into Computation}{11}}
 \newlabel{sec:oblivious}{{4.1}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Convert Higher-Priority Tasks into Ordinary Sporadic Tasks}{11}}
-\newlabel{sec:high-as-sporadic}{{4.2}{11}}
 \citation{LR:rtas10,ecrts15nelissen}
 \citation{LR:rtas10}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Convert Higher-Priority Tasks into Ordinary Sporadic Tasks}{12}}
+\newlabel{sec:high-as-sporadic}{{4.2}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantify Additional Interference due to Self-Suspensions}{12}}
+\newlabel{sec:method-quantify-interference}{{4.3}{12}}
 \citation{huangpass:dac2015,LiuChen:rtss2014}
 \citation{Liu:2000:RS:518501}
 \citation{Liu:2000:RS:518501}
 \citation{ChenHuangNelissen}
 \citation{Liu:2000:RS:518501}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Quantify Additional Interference due to Self-Suspensions}{12}}
-\newlabel{sec:method-quantify-interference}{{4.3}{12}}
 \citation{Liu:2000:RS:518501}
 \citation{huangpass:dac2015,Raj:suspension1991}
 \citation{huangpass:dac2015}
@@ -91,11 +91,11 @@
 \citation{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}
 \citation{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}
 \citation{RTSS-KimANR13}
-\citation{LR:rtas10}
-\citation{LR:rtas10}
-\citation{LR:rtas10}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Enforce Periodic Behaviour by Release Time Enforcement}{15}}
 \newlabel{sec:periodic-enforce}{{4.5}{15}}
+\citation{LR:rtas10}
+\citation{LR:rtas10}
+\citation{LR:rtas10}
 \citation{DBLP:conf/ecrts/LiuA13}
 \citation{DBLP:conf/ecrts/LiuA13}
 \citation{DBLP:conf/ecrts/LiuA13}
@@ -115,7 +115,6 @@
 \newlabel{sec:misconceptions}{{5}{16}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Incorrect Quantifications of Jitter - Dynamic Self-Suspension}{16}}
 \newlabel{sec:wrong-jitter-dynamic}{{5.1}{16}}
-\newlabel{eq:dynamic-flawed}{{1}{16}}
 \citation{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
 \citation{MingLiRTCSA1994}
 \citation{audsley-1993}
@@ -134,15 +133,15 @@
 \citation{RTCSA-KimCPKH95}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces A set of tasks with dynamic self-suspensions for Section 5.1\hbox {}.\relax }}{17}}
 \newlabel{tab:counterexample-dynamic-suspension}{{3}{17}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Two different schedules for the task set in Table\nobreakspace  {}3\hbox {}.\relax }}{17}}
-\newlabel{fig:counterexample-dynamic}{{3}{17}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{17}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{17}}
+\newlabel{eq:dynamic-flawed}{{1}{17}}
 \citation{ECRTS-AudsleyB04,RTAS-AudsleyB04}
 \citation{BletsasReport2015}
 \citation{huangpass:dac2015,BletsasReport2015}
 \citation{RTCSA-BletsasA05}
-\citation{RTCSA-BletsasA05}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Two different schedules for the task set in Table\nobreakspace  {}3\hbox {}.\relax }}{18}}
+\newlabel{fig:counterexample-dynamic}{{3}{18}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{18}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{18}}
 \newlabel{eq:dynamic-correct}{{2}{18}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Incorrect Quantifications of Jitter - Segmented Self-Suspension}{18}}
 \newlabel{sec:wrong-jitter-segmented}{{5.2}{18}}
@@ -150,32 +149,28 @@
 \citation{RTCSA-BletsasA05}
 \citation{RTCSA-BletsasA05}
 \citation{RTCSA-BletsasA05}
+\citation{RTCSA-BletsasA05}
 \citation{BletsasReport2015}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces A set of segmented self-suspending and sporadic real-time tasks for Section\nobreakspace  {}5.2\hbox {}.\relax }}{19}}
 \newlabel{tab:counterexample-segmented}{{4}{19}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A schedule for the task set in Table 4\hbox {}. \relax }}{19}}
-\newlabel{fig:counterexample-segmented}{{4}{19}}
 \citation{Ridouard_2004}
 \citation{LR:rtas10}
 \citation{LR:rtas10}
 \citation{ecrts15nelissen}
-\citation{LR:rtas10}
-\citation{LR:rtas10}
-\citation{LR:rtas10}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A schedule for the task set in Table 4\hbox {}. \relax }}{20}}
+\newlabel{fig:counterexample-segmented}{{4}{20}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Incorrect Assumptions in Critical Instant with Synchronous Releases}{20}}
 \newlabel{sec:wrong-critical}{{5.3}{20}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Task parameters for the counter example to the synchronous release of all tasks for Section\nobreakspace  {}5.3\hbox {}.\relax }}{21}}
-\newlabel{table:ex-synch-releases}{{5}{21}}
+\citation{LR:rtas10}
+\citation{LR:rtas10}
+\citation{LR:rtas10}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Counter example to the synchronous release of all tasks (by \cite  {LR:rtas10}).\relax }}{21}}
 \newlabel{fig:ex-synch-releases}{{5}{21}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Task parameters for the counter example to the synchronous release of all tasks for Section\nobreakspace  {}5.3\hbox {}.\relax }}{21}}
+\newlabel{table:ex-synch-releases}{{5}{21}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}A Counter-Example to the Synchronous Release}{21}}
 \citation{ecrts15nelissen}
 \citation{ecrts15nelissen}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
 \citation{RTSS-KimANR13}
 \citation{RTSS-KimANR13}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Counting Highest-Priority Self-Suspending Time to Reduce the Interference}{22}}
@@ -183,42 +178,56 @@
 \citation{RTSS-KimANR13}
 \citation{RTSS-KimANR13}
 \citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
 \citation{Liu_1973}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
-\citation{RTSS-KimANR13}
 \@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Task parameters for the counterexample of Theorem 2 in \cite  {RTSS-KimANR13}, $0 < \epsilon \leq 0.1$.\relax }}{23}}
 \newlabel{table:ex-highest-priority}{{6}{23}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Counter example to the synchronous release of Theorem 2 in \cite  {RTSS-KimANR13}.\relax }}{23}}
 \newlabel{fig:counterexample-reduce-interf}{{6}{23}}
-\citation{Liu_1973}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
+\citation{RTSS-KimANR13}
 \citation{RTSS-KimANR13}
 \citation{DBLP:journals/ieicet/DingTT09}
-\citation{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Task parameters for the counterexample in Section\nobreakspace  {}5.5\hbox {}.\relax }}{24}}
-\newlabel{table:ex-periodic}{{7}{24}}
 \newlabel{eq:tda-fixed}{{3}{24}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Incorrect Segmented Fixed-Priority Scheduling with Periodic Enforcement}{24}}
 \newlabel{sec:wrong-periodic}{{5.5}{24}}
+\citation{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}
 \citation{baruah1999generalized}
 \citation{WC16-suspend-DATE,DBLP:journals/ieicet/DingTT09}
 \citation{DBLP:journals/corr/ChenHL15b,huang2015mode}
-\citation{lakshmanan-2009}
-\citation{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Task parameters for the counterexample in Section\nobreakspace  {}5.5\hbox {}.\relax }}{25}}
+\newlabel{table:ex-periodic}{{7}{25}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces A schedule to release the two tasks in Section\nobreakspace  {}5.5\hbox {} simultaneously.\relax }}{25}}
 \newlabel{fig:counterexample-FP-segment-level}{{7}{25}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Self-Suspending Tasks in Multiprocessor Synchronizations}{25}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Self-Suspending Tasks in Multiprocessor Synchronization}{25}}
 \newlabel{sec:syn}{{6}{25}}
+\citation{lakshmanan-2009}
+\citation{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}
+\citation{SRL:90}
+\citation{audsley-1993}
+\citation{SRL:90}
+\citation{Du:99}
 \citation{rajkumar-1990}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Semaphores in Uniprocessor Systems}{26}}
+\newlabel{sec:sem-uni}{{6.1}{26}}
+\newlabel{eq:classic-pcp-rta}{{4}{26}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Semaphores in Partitioned Multiprocessor Systems}{26}}
+\newlabel{sec:sem-multi}{{6.2}{26}}
+\citation{SRL:90}
+\citation{BA:10b}
 \citation{block-2007}
 \citation{lakshmanan-2009}
 \citation{wieder-2013}
+\citation{BA:10b}
+\citation{MingLiRTCSA1994}
 \citation{lakshmanan-2009}
-\citation{lakshmanan-2009}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Existing Analysis Strategies}{26}}
-\newlabel{sec:papers}{{6.1}{26}}
 \citation{lakshmanan-2009}
 \citation{zeng-2011}
 \citation{han-2014}
@@ -229,60 +238,62 @@
 \citation{kim-2014}
 \citation{lakshmanan-2009}
 \citation{bbb-2013,yang-2015}
-\newlabel{eqn:wcrt}{{4}{27}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}A Counterexample}{27}}
-\newlabel{sec:counterexample}{{6.2}{27}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Task parameters for the counter example in Section\nobreakspace  {}6.2\hbox {}.\relax }}{27}}
-\newlabel{table:parameters}{{8}{27}}
 \citation{lakshmanan-2009}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces A schedule where $\tau _3$ misses a deadline.\relax }}{28}}
-\newlabel{fig:counterexample_protocol}{{8}{28}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Task parameters for the counterexample in Section\nobreakspace  {}6.2\hbox {}.\relax }}{28}}
+\newlabel{table:parameters}{{8}{28}}
+\newlabel{eqn:wcrt}{{5}{28}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}A Counterexample}{28}}
+\newlabel{sec:counterexample}{{6.3}{28}}
 \citation{NBN:11}
 \citation{lehoczky-1989}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces A schedule where $\tau _3$ misses a deadline.\relax }}{29}}
+\newlabel{fig:counterexample_protocol}{{8}{29}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Incorrect Contention Bound in Interface-Based Analysis}{29}}
 \citation{NBN:11}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Incorrect Time Request Analysis With Global Resource Sharing}{29}}
-\newlabel{eqn:rbf-1}{{5}{29}}
-\newlabel{eqn:rbf-2}{{6}{29}}
-\newlabel{eqn:bloc-tolerate}{{7}{29}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}A Safe Response Time Bound}{29}}
-\newlabel{sec:safe_bound}{{6.4}{29}}
 \citation{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}
 \citation{lakshmanan-2009}
+\citation{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}
+\newlabel{eqn:rbf-1}{{6}{30}}
+\newlabel{eqn:rbf-2}{{7}{30}}
+\newlabel{eqn:bloc-tolerate}{{8}{30}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}A Safe Response-Time Bound}{30}}
+\newlabel{sec:safe_bound}{{6.5}{30}}
+\newlabel{eqn:wcrt-pfp-fixed}{{9}{30}}
 \citation{Devi2005,Leontyev072}
 \citation{Liu3,Liu4,Liu5,Liu9,Liu11}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Soft Real-Time Self-Suspending Task Systems}{30}}
-\newlabel{sec:soft-realtime}{{7}{30}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Suspension-Oblivious Analysis}{30}}
-\newlabel{sec:sus-oblivious-soft}{{7.1}{30}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Suspension-Aware Analysis}{30}}
-\newlabel{sec:sus-aware-soft}{{7.2}{30}}
 \citation{Liu3}
 \citation{Liu3}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Soft Real-Time Self-Suspending Task Systems}{31}}
+\newlabel{sec:soft-realtime}{{7}{31}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Suspension-Oblivious Analysis}{31}}
+\newlabel{sec:sus-oblivious-soft}{{7.1}{31}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Suspension-Aware Analysis}{31}}
+\newlabel{sec:sus-aware-soft}{{7.2}{31}}
+\newlabel{eq:constraint}{{10}{31}}
 \citation{Liu5}
 \citation{Liu4}
 \citation{Liu4}
 \citation{Liu9,Liu11}
 \citation{Ric03,Ridouard_2004}
-\newlabel{eq:constraint}{{8}{31}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Computational Complexity and Approximations}{31}}
-\newlabel{sec:hardness}{{8}{31}}
 \citation{Ridouard_2004}
 \citation{Ridouard_2004}
 \citation{Ridouard_2004}
 \citation{RTSS-ChenL14}
 \citation{Ric03}
-\citation{RTSS-ChenL14}
-\citation{WC16-suspend-DATE}
-\citation{RTSS-ChenL14}
-\citation{WC16-suspend-DATE}
-\citation{WC16-suspend-DATE}
-\citation{WC16-suspend-DATE}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces The computational complexity classes of scheduling and schedulability analysis for self-suspending tasks\relax }}{32}}
-\newlabel{table:complexity}{{9}{32}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Computational Complexity and Approximations}{32}}
+\newlabel{sec:hardness}{{8}{32}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Computational Complexity of Designing Scheduling Policies}{32}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.1}Design of Scheduling Segmented Self-Suspending Tasks}{32}}
+\citation{RTSS-ChenL14}
+\citation{WC16-suspend-DATE}
+\citation{RTSS-ChenL14}
+\citation{WC16-suspend-DATE}
+\citation{WC16-suspend-DATE}
+\citation{WC16-suspend-DATE}
 \citation{Ridouard_2004}
 \citation{RidouardR06}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces The computational complexity classes of scheduling and schedulability analysis for self-suspending tasks\relax }}{33}}
+\newlabel{table:complexity}{{9}{33}}
 \citation{Ridouard_2004}
 \citation{huangpass:dac2015}
 \citation{huangpass:dac2015}
@@ -291,23 +302,24 @@
 \citation{huangpass:dac2015}
 \citation{audsley-1993}
 \citation{huangpass:dac2015}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.2}Design of Scheduling Dynamic Self-Suspending Tasks}{33}}
 \citation{ecrts15nelissen}
 \citation{ecrts15nelissen}
 \citation{Huang:multiseg}
 \citation{PH:rtss98}
 \citation{EisenbrandR08}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.1.2}Design of Scheduling Dynamic Self-Suspending Tasks}{34}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Computational Complexity of Schedulability Tests}{34}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.1}Schedulability Tests for Segmented Self-Suspension}{34}}
+\@writefile{toc}{\contentsline {paragraph}{Preemptive Fixed-Priority Scheduling:}{34}}
 \citation{DBLP:conf/ecrts/Ekberg015}
 \citation{DBLP:conf/ecrts/Ekberg015}
 \citation{Liu:2000:RS:518501,LiuChen:rtss2014,huangpass:dac2015}
 \citation{EisenbrandR08}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Computational Complexity of Schedulability Tests}{34}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.1}Schedulability Tests for Segmented Self-Suspension}{34}}
-\@writefile{toc}{\contentsline {paragraph}{Preemptive Fixed-Priority Scheduling:}{34}}
-\@writefile{toc}{\contentsline {paragraph}{Preemptive Dynamic-Priority Scheduling:}{34}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.2}Schedulability Tests for Dynamic Self-Suspension}{34}}
-\@writefile{toc}{\contentsline {paragraph}{Preemptive Fixed-Priority Scheduling:}{34}}
 \citation{DBLP:conf/ecrts/Ekberg015}
+\@writefile{toc}{\contentsline {paragraph}{Preemptive Dynamic-Priority Scheduling:}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.2}Schedulability Tests for Dynamic Self-Suspension}{35}}
+\@writefile{toc}{\contentsline {paragraph}{Preemptive Fixed-Priority Scheduling:}{35}}
+\@writefile{toc}{\contentsline {paragraph}{Preemptive Dynamic-Priority Scheduling:}{35}}
 \citation{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}
 \citation{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}
 \citation{RTCSA-BletsasA05}
@@ -323,9 +335,6 @@
 \citation{erratu-cong-anderson}
 \citation{DBLP:conf/ecrts/LiuA13}
 \citation{RTSS-KimANR13}
-\@writefile{toc}{\contentsline {paragraph}{Preemptive Dynamic-Priority Scheduling:}{35}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Open Issues and Summary}{35}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Summary}{35}}
 \citation{ECRTS-AudsleyB04,RTAS-AudsleyB04}
 \citation{BletsasReport2015}
 \citation{MingLiRTCSA1994}
@@ -346,22 +355,25 @@
 \citation{ChenBrandenburg}
 \citation{DBLP:conf/ecrts/Devi03}
 \citation{LR:rtas10}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Open Issues and Summary}{36}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Summary}{36}}
 \citation{DBLP:conf/ecrts/Devi03}
 \citation{Liu:2000:RS:518501}
 \citation{DBLP:conf/ecrts/Devi03}
 \citation{ChenHuangNelissen}
 \citation{DBLP:conf/ecrts/Devi03}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces List of flaws/incompleteness and their solutions in the literature. All the references to Section X in the column ``Potential Solutions'' are listed for this paper.\relax }}{36}}
-\newlabel{tab:summary}{{10}{36}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Open Issues in the Existing Results}{36}}
-\newlabel{sec:open-issues-existing}{{9.2}{36}}
 \citation{LR:rtas10}
 \citation{LR:rtas10}
 \citation{LR:rtas10}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces List of flaws/incompleteness and their solutions in the literature. All the references to Section X in the column ``Potential Solutions'' are listed for this paper.\relax }}{37}}
+\newlabel{tab:summary}{{10}{37}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Open Issues in the Existing Results}{37}}
+\newlabel{sec:open-issues-existing}{{9.2}{37}}
 \citation{LR:rtas10}
 \citation{LR:rtas10}
 \bibdata{../bibliography/biblio}
 \bibcite{audsley-1993}{1}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Acknowledgment}{38}}
 \bibcite{ECRTS-AudsleyB04}{2}
 \bibcite{RTAS-AudsleyB04}{3}
 \bibcite{baruah1999generalized}{4}
