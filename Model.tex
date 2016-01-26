@@ -239,7 +239,7 @@ task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the minimum int
 $C_i$ denotes an upper bound on the total execution time of each job of $\tau_i$,
 and $S_i$ denotes an upper bound on the total suspension time of each job of $\tau_i$.  In addition to the above four-tuple, the segmented sporadic task model further 
 characterizes the computation segments and suspension intervals as an array
-$(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$, composed of $m_i$ computation segments separated by $m_i-1$ suspension intervals. 
+$(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$, composed of $m_i$ computation segments separated by $m_i-1$ suspension intervals.  For segmented sporadic task $\tau_i$, we implicitly set $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$ for notational brevity.
 
 Each sporadic task $\tau_i$ can release an infinite number of jobs
 (also called task instances) under the given minimum inter-arrival
@@ -274,10 +274,17 @@ of system variables at run-time. Each of those paths may have a different
 number of self-suspending regions. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
 another one may self-suspend shortly before completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
-just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observable under different control flows.
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observed under different control flows.
   
 \subsection{Examples of Segmented Self-Suspension Model} 
-The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity, i.e., there is a deterministic number of self-suspending regions interleaved between portions of processor-based code with single-entry single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic model discussed earlier, but this would discard information about constraints in the location of self-suspensions inside a task activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools to derive tighter bounds on worst-case response times, where applicable, relative to analysis that only considers the dynamic model. 
+The segmented self-suspension model, on the other hand, is a natural
+choice when the code structure of a task exhibits a certain linearity,
+i.e., there is a deterministic number of self-suspending regions
+interleaved between portions of processor-based code with single-entry
+single-exit control-flow semantics. Many applications exhibit this
+structure. Such tasks can always be modelled according to the dynamic
+model discussed earlier, but this would discard the information about
+the constraints in the location of self-suspensions inside a task activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools to derive tighter bounds on worst-case response times, where applicable, relative to analysis that only considers the dynamic model. 
 
 As we will see in the next section, it is possible for both the dynamic model and the segmented model to be employed simultaneously during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to it and using the dynamic model for all other tasks.
 
@@ -323,7 +330,7 @@ Section~\ref{sec:soft-realtime}.
 
 The response time of a job is its finishing time minus its arrival
 time.  The worst-case response time (WCRT) of a real-time task
-$\tau_k$ in a task set ${\bf T}$ is defined as an upper bound of the
+$\tau_k$ in a task set ${\bf T}$ is defined as an upper bound on the
 response times of all the jobs of task $\tau_k \in {\bf T}$ for any
 \emph{legal sequence} of the jobs of ${\bf T}$. A sequence of jobs of
 the task system ${\bf T}$ is a legal sequence if any two consecutive
@@ -370,12 +377,15 @@ To resolve the computational complexity issues in many scheduling problems in re
 
 \subsection{Terminologies for Multiprocessor Scheduling}
 
-On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioning, and (\textit{ii}) global scheduling. , and (\textit{iii}) clustered scheduling. 
-Under partitioning, tasks are statically partitioned among processors, i.e., each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioning algorithm example is partitioned earliest-deadline-first (PEDF), which uses the EDF algorithm as the per-processor scheduler. 
-Partitioned fixed-priority (P-FP) scheduling is another widespread choice in practice due to the wide support in industrial standards such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc Under P-FP scheduling, each task has a fixed base priority and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
+On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned, and (\textit{ii}) global scheduling. , and (\textit{iii}) clustered scheduling. 
+Under partitioned scheduling, tasks are statically partitioned among processors, i.e., each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
+Partitioned fixed-priority (P-FP) scheduling is another widespread
+choice in practice due to the wide support in industrial standards
+such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc
+Under P-FP scheduling, each task has a fixed priority level and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
 %Under EDF, jobs with earlier deadlines have higher priority. 
- In contrast to partitioning, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (GEDF), under which jobs are EDF-scheduled using a single ready queue.  
- Clustered scheduling is hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying hardware architecture so as to prevent expensive migrations between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (e.g., an automotive system)~\cite{bastoni2010}.
+ In contrast to partitioned scheduling, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (G-EDF), under which jobs are EDF-scheduled using a single ready queue.  
+ Clustered scheduling is hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying hardware architecture to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (e.g., an automotive system)~\cite{bastoni2010}.
 
 
 %%% Local Variables:
