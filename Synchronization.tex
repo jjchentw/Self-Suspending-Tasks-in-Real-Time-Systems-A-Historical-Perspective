@@ -45,7 +45,7 @@ A less pessimistic alternative to suspension-oblivious analysis is to \emph{expl
 \item \cite{yang-2013} (Equation 6), \cite{bbb-2013} (Equation 1), \cite{carminati-2014} (Equations 3, 12, and 16), and \cite{kim-2014} (Equation 6)  in the context of other suspension-based locking protocols.
 \end{itemize}
 
-To state  Lakshmanan et al.'s claimed bound, some additional notations are required. In the following, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{lp(k)}$ denote the tasks with lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, let $s_k$ denote the maximum number of critical sections of $\tau_k$, and let $C_{l,j}^{\prime}$ denote an upper bound on the execution time of the $j$\xth critical section of $\tau_l$.
+To state  Lakshmanan et al.'s claimed bound, some additional notation is required. In the following, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{lp(k)}$ denote the tasks with lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, let $s_k$ denote the maximum number of critical sections of $\tau_k$, and let $C_{l,j}^{\prime}$ denote an upper bound on the execution time of the $j$\xth critical section of $\tau_l$.
 
 Assuming constrained deadlines, Lakshmanan et al.~\cite{lakshmanan-2009} claimed that the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
