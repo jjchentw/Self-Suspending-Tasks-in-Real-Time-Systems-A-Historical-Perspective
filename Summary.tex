@@ -9,8 +9,8 @@ recent developments in the analysis of self-suspending tasks,
 explains the general methodologies, summarizes the computational complexity classes, and points out several 
 misconceptions in the literature concerning this topic. We
 have given concrete examples to demonstrate the effect of these
-misconceptions, list some flawed statements in the literature, and
-present potential solutions. These misconceptions include:
+misconceptions, listed some flawed statements in the literature, and
+presented potential solutions. These misconceptions include:
 \begin{itemize}
 \item Incorrect quantifications of jitter for dynamic self-suspending
   task systems, which was used in
@@ -38,9 +38,7 @@ analysis from Jane W.S. Liu in her book \cite[Page
 \cite{ChenBrandenburg} of the period enforcer algorithm proposed in
 \cite{Raj:suspension1991}, the erratum report \cite{BletsasReport2015}
 of the misconceptions in
-\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}, the updated
-erratum \cite{erratu-cong-anderson} of the unsafe analysis in
-\cite{DBLP:conf/ecrts/LiuA13}, and the erratum \jj{XXXX} of the
+\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}, and the erratum \cite{Kim2016} of the
 misconceptions in \cite{RTSS-KimANR13}.  In order not to make this
 review too lengthy, these reports and errata are shortly summarized in
 this review. We encourage the readers to refer to these reports and
@@ -120,7 +118,7 @@ of Theorem
 
 
 \subsection{Open Issues in the Existing Results}
-\label{sec:open-issues-existing} 
+\label{sec:open-issues-existing}  
 We have carefully re-examined the results related to self-suspending
 real-time tasks in the literature in the past 25 years. However, there
 are also some results in the literature that may require further
@@ -184,6 +182,9 @@ elaborations. These include the following results in the literature
   \cite{LR:rtas10} also requires a more rigorous proof.
 \end{itemize}
 
+\subsection{Potentially Correct Approaches}
+\label{sec:correct-solutions} 
+
 % \subsection{Open Issues for Future Researches}
 % \label{sec:open-issues-future}
 
@@ -191,7 +192,7 @@ elaborations. These include the following results in the literature
 % scheduling self-suspending task systems. 
 % \begin{itemize}
 
-% \item For segmented self-suspending tasks, the negative results presented in \cite{Ridouard_2004} hold for arbitrary suspension delays. Precisely, there is no relationship between the task execution time and its suspension delay. An interesting open issue is to study if positive results can be obtained if constrained-suspension delays are considered (i.e., the suspension delay of a task does not exceed its execution time: $S_i \leq C_i$, for every task $\tau_i$).
+% \item For segmented self-suspending tasks, the negative results presented in \cite{Ridouard_2004} hold for arbitrary suspension delays. Precisely, there is no relationship between the task execution time and its suspension delay. An interesting open issue is to study if positive results can be obtained if constrained-suspension delays are considered (\ie, the suspension delay of a task does not exceed its execution time: $S_i \leq C_i$, for every task $\tau_i$).
 % \end{itemize}
 
 

@@ -21,7 +21,7 @@ the self-suspension behavior of $\tau_k$ but also by the self-suspension behavio
 %\end{example}
 
 \begin{example}
-\label{ex:tauh_ss}
+\label{ex:tauh_ss} 
 Let $\tau_2$ be an ordinary sporadic task with the following attributes $(C_2, T_2, D_2)=(5,10,10)$ and $\tau_1$ be a self-suspending  sporadic
 task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
 and that $\tau_1$ has higher priority than $\tau_2$. If one should ignore the self-suspending behavior of $\tau_1$ by 
@@ -106,6 +106,7 @@ This strategy is sometimes called ``joint'' \cite{bletsas:thesis} but often refe
 Converting the suspension time of task $\tau_k$ into computation time can become very pessimistic for \emph{segmented} self-suspending tasks. This is especially true when (i) its total self-suspending time $S_k$ is much larger than its worst-case execution time $C_k$ and/or (ii) the lengths of $\tau_k$'s suspension intervals are larger than the periods of (some of) the interfering tasks. 
 
 \begin{example}
+\label{ex:suspension-as-comput}   
 Using the task set presented in Table~\ref{table:static-example} as an example, task $\tau_3$ would be transformed in a non-self-suspending task $\tau_3' = (7, 15, 15)$. Task $\tau_3'$ is obviously not schedulable after this transformation since the total utilization of $\tau_1$, $\tau_2$ and $\tau_3'$ is given by $\frac{2}{5} + \frac{2}{10} + \frac{7}{15} = \frac{16}{15} > 1$. Yet, the self-suspending task $\tau_3$ is schedulable as it will be shown in Section~\ref{sec:model-interferred:split}.
 \hfill\myendproof  
 \end{example}
@@ -143,17 +144,19 @@ in verifying whether $\sum_{j=1}^{m_k} R_k^j + \sum_{j=1}^{m_k-1} S_k^j \leq D_k
 %        $\tau_4$ & (3, 0, 0) & ? & $\infty$\\
         \hline
     \end{tabular} 
-    \caption{Example of a segmented self-suspending task set.}
+    \caption{Example of a segmented self-suspending task set, used in Examples~\ref{ex:suspension-as-comput} and \ref{ex:suspension-as-split-1}.}
     \label{table:static-example}
 \end{table}
 
 \begin{example}
+\label{ex:suspension-as-split-1}   
 Let us use the task set presented in Table~\ref{table:static-example} as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA in Eq.~(\ref{eq:rta}) for ordinary sporadic real-time tasks. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
 \hfill\myendproof  
 \end{example}
 
 The above test can be fairly pessimistic, especially when $S_k$ is short. 
 \begin{example}
+\label{ex:suspension-as-split-2}   
 Imagine that $S_3$ is decreased from $5$ to $1$ in the previous example. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet, the suspension oblivious approach mentioned in Section~\ref{sec:model-interferred-oblivious}, tells us that the worst-case response time of $\tau_3$ is at most $9$.
 \hfill\myendproof  
 \end{example} 
@@ -197,20 +200,7 @@ Further details on the reasons are provided in Section~\ref{sec:wrong-critical}.
 \subsection{Modeling the Interfering Tasks}
 \label{sec:model-interfering}
 
-\begin{table}[t]
-\centering
-    \begin{tabular}{|c|c|c|c|c|}
- \hline
-        & $C_i$ &  $S_i$&  $D_i$ & $T_i$\\ 
-        \hline
-        $\tau_1$ & 1 & 0 &  2 & 2\\ 
-        $\tau_2$ &  5&  5& 20 & 20 \\ 
-        $\tau_3$ & 1 & 0  & 50 & $\infty$ \\ 
-        \hline
-    \end{tabular} 
-    \caption{Example of a dynamic self-suspending task set.}
-    \label{table:dynamic-example}
-\end{table}
+
 
 \subsubsection{Suspension oblivious analysis}
 \label{sec:model-interfering-oblivious}
@@ -247,6 +237,22 @@ If an optimal priority assignment must be computed for a fixed-priority task set
 algorithm~\cite{Audsley1991aOPA}, one can pessimistically assume that $J_i$ is equal to $D_i-C_i$ \cite{huangpass:dac2015,Raj:suspension1991} 
 as long as all the interfering tasks, \ie $\forall \tau_i \in hp(k)$ in fixed-priority scheduling, are schedulable, \ie, $R_i \leq D_i$.
 
+
+\begin{table}[t]
+\centering
+    \begin{tabular}{|c|c|c|c|c|}
+ \hline
+        & $C_i$ &  $S_i$&  $D_i$ & $T_i$\\ 
+        \hline
+        $\tau_1$ & 1 & 0 &  2 & 2\\ 
+        $\tau_2$ &  5&  5& 20 & 20 \\ 
+        $\tau_3$ & 1 & 0  & 50 & $\infty$ \\ 
+        \hline
+    \end{tabular} 
+    \caption{Example of a dynamic self-suspending task set used in Examples~\ref{ex:suspension-jitter} and~\ref{ex:suspension-blocking}.}
+    \label{table:dynamic-example}
+\end{table}
+
 For a fixed-priority task set under the dynamic self-suspension model, the WCRT of $\tau_k$ is upper bounded by the smallest value $R_k$ 
 larger than $0$ such that 
 \begin{equation*}
@@ -256,6 +262,7 @@ R_k=C_k+ \sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{t + J_i}{T_i} \right\
 The response time analysis for EDF can be similarly adapted.
 
 \begin{example}
+\label{ex:suspension-jitter}    
 Consider the fixed priority task set presented in Table~\ref{table:dynamic-example}. In this case, $\tau_1$ is the highest priority task and does not self-suspend. Therefore, its WCRT is $R_1 = C_1$ and $J_1 = R_1 - C_1 = 0$. The jitter $J_2$, however, is upper bounded by $D_2 - C_2 =15$. The WCRT of task $\tau_3$ is thus upper bounded by the minimum $t$ larger than $0$ such that 
 $$t=C_3+ \sum_{i=1}^2\left\lceil \frac{t + J_i}{T_i} \right\rceil C_i = 1+\left\lceil \frac{t}{2} \right\rceil 1 +\left\lceil \frac{t+15}{20} \right\rceil 5.$$ 
 The above equality holds when $t=22$. Therefore, the WCRT of task $\tau_{3}$ is upper bounded by $22$.
@@ -295,6 +302,7 @@ Note that even though \cite{Liu:2000:RS:518501} discusses the intuition behind t
 However, the correctness of that approach has since been proven in \cite{ChenHuangNelissen}. 
 
 \begin{example}
+\label{ex:suspension-blocking}    
 Consider the task set presented in Table~\ref{table:dynamic-example} to illustrate the above analysis. In this case, $b_1 = 0$ and $b_2 = 5$. Therefore, $B_3 = 5$. So, the worst-case response time of task $\tau_3$ is upper bounded by the minimum $t$ larger than $0$ such that 
 \begin{align*}
 t & = B_3+C_3+\sum_{i=1}^2 \left\lceil \frac{t}{T_i} \right\rceil C_i = 6+\left\lceil \frac{t}{2} \right\rceil 1 +\left\lceil \frac{t}{20} \right\rceil 5.
