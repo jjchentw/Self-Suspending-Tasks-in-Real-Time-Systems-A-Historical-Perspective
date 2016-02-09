@@ -298,8 +298,13 @@ of system variables at run-time. Each of those paths may have a different
 number of self-suspending regions. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
 another one may self-suspend shortly before completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
-just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observed under different control flows.
-
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observed under different control flows. 
+Therefore, for such a case,
+\begin{equation*} 
+ C_i =  \max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell                                      \Big)       \qquad\mbox{and} \qquad 
+ S_i =  \max_{\forall \varphi} \Big( \sum_{\ell \in \varphi} S_i^\ell \Big),  
+ \end{equation*}
+where $\varphi$ denotes a control flow (path) of task $\tau_i$ and $C_i^{\ell}$ is the worst-case execution time of the $\ell$-th node in the control flow, and  $S_i^{\ell}$ is the worst-case suspension time of the $\ell$-th node in the control flow.
 More details to compute the parameters of a dynamic self-suspending task based on the control flow graph of the task can be found in \cite{RTAS-AudsleyB04,bletsas:thesis}.
   
 \subsection{Examples of Segmented Self-Suspension Model} 
