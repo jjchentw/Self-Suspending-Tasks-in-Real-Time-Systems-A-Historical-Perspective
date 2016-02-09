@@ -12,8 +12,8 @@ counter-intuitive results is provided in Section~\ref{sec:misconceptions}.
 
 
 Let $\tau_k$ be a self-suspending task.
-As illustrated in the example below, the worst-case response time, and hence the schedulability, of task $\tau_k$ is impacted by 
-the self-suspension behavior of $\tau_k$ but also by the self-suspension behavior of every job in $hp(k)$.
+As illustrated in the example below, the worst-case response time, and hence the schedulability, of task $\tau_k$ is impacted not only by 
+the self-suspension behavior of $\tau_k$ but also by the self-suspension behavior of  the higher-priority jobs.
 
 %\begin{example}
 %\label{ex:taui_ss}
@@ -22,52 +22,83 @@ the self-suspension behavior of $\tau_k$ but also by the self-suspension behavio
 
 \begin{example}
 \label{ex:tauh_ss}
-Let $\tau_2$ be a non-self-suspending task with the following atttibutes $(5,10,10)$ and $\tau_1$ be a self-suspending 
-task defined as $((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm 
-and that $\tau_1$ has a higher priority than $\tau_2$. If one should ignore the self-suspending behavior of $\tau_1$ by 
-assuming a self-suspending task $\tau_1' = (2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
-with the standard response time analysis (RTA) \cite{lehoczky-1989} would be $R_2 = 7$. However, as illustrated on 
-Figure~\ref{fig:ex_sched:thauh_ss}, due to the self-suspension of $\tau_1$, the actual worst-case response time of 
+Let $\tau_2$ be an ordinary sporadic task with the following attributes $(C_2, T_2, D_2)=(5,10,10)$ and $\tau_1$ be a self-suspending  sporadic
+task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
+and that $\tau_1$ has higher priority than $\tau_2$. If one should ignore the self-suspending behavior of $\tau_1$ by 
+assuming a self-suspending task $\tau_1' = (C_1', T_1', D_1')=(2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
+with the standard response time analysis (RTA) in Eq.~(\ref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
+due to the self-suspension of $\tau_1$, the actual worst-case response time of 
 $\tau_2$ is $8$ and is obtained when (i) $\tau_1$ experiences its maximum self-suspending time and (ii) $\tau_2$ is 
 synchronously released with the second computation segment of $\tau_1$.
+\hfill\myendproof  
 \end{example}
 
-As discussed in details in Section~\ref{sec:hardness}, performing the timing analysis of a set of self-suspending tasks has proven extremely complex and even intractable in the general case. For those reasons, most works adopt some common strategies so as to simplify the worst-case response time analysis of self-suspending tasks. We present those strategies in the next two sections by decoupling the modeling of the task under analysis (i.e., $\tau_2$ in the examples above) and the task interfering with the analyzed task (i.e., the set of tasks having jobs in $hp(k)$).
+
+\begin{figure}[t]
+\centering
+\def\uxfpga{0.4cm} 
+\scalebox{0.8}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (15,0) node[anchor=north]{$t$};
+    \draw[] (0,2) -- coordinate (xaxis) (12,2) node[anchor=north]{};
+    \foreach \x in {0,1,...,12}{
+      \draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+    }
+    \foreach \x in {0,3,4,8,9,10}{
+      \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
+    }	
+    
+    \begin{scope}[shift={(0,0)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_2$};
+      \draw[->] (3,0) -- (3,1.75);
+      \draw[<-,thin,red] (3,1.3) -- (7.5,1.3);
+      \draw[->,thin,red] (8.5,1.3) -- (11,1.3);
 
 
-Note that we implicitly assume uniprocessor systems in these sections. The multiprocessor case is covered in Section~\ref{sec:multiprocessor-HRT}.
+        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (4, 0){};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 0){};
 
-\subsection{Modeling of the interfered task}
+      \draw[] (11.05,0) -- (11.05,1.5);
+      \node[anchor=east,red] at (8.5, 1.39) {$8$};
+      \draw[dotted] (11.5,0.5) -- (12.3,0.5); 
+    \end{scope}
+    
+    \begin{scope}[shift={(0,2)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_1$};
+      \foreach \x in {0,8}{ 
+        \draw[->] (\x,0) -- (\x,1.75);        		
+      }
+      \foreach \x in {0,3,8,9}{ 
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){};
+      }
+    \end{scope}                
+  \end{tikzpicture}}
+\caption{Self-suspension can cause substantial schedulability degradation for Example \ref{ex:tauh_ss}.}
+\label{fig:simple-example-suspension}
+\end{figure}
+
+
+As discussed in details in Section~\ref{sec:hardness}, performing the timing analysis for a set of self-suspending tasks has been proven extremely complex and even intractable in the general case. For those reasons, most works adopt some common strategies to simplify the worst-case response time analysis of self-suspending tasks. We present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis (\ie, $\tau_2$ in the examples above) and the task interfering with the analyzed task, respectively. Section~\ref{sec:release-enforce} presents  release enforcement mechanisms to reduce the impact due to self-suspension. Section~\ref{sec:multiprocessor-HRT} will shortly discuss how to handl self-suspending tasks in multiprocessor systems.
+
+
+Note that we implicitly assume uniprocessor systems in these sections. The multiprocessor case is covered in Section~\ref{sec:multiprocessor-HRT}. In Sections~\ref{sec:model-interferred},~\ref{sec:model-interfering},~and~\ref{sec:release-enforce}, in most cases, we will use fixed-priority scheduling to explain the strategies. Therefore, we implicitly consider the timing analysis for task $\tau_k$, in which $hp(k)$ is the set of higher-priority tasks, if fixed-priority scheduling is considered.
+
+\subsection{Modeling the Interfered Task}
+\label{sec:model-interferred}
 
 Two main strategies have been proposed in the literature to simplify the modeling of a self-suspending task $\tau_k$ during its worst-case response time analysis:
 \begin{itemize}
-\item the self-suspension oblivious approach, which models the suspension intervals of $\tau_k$ as if they were usual execution time (Section~\ref{sec:model:oblivious});
-\item the ``split'' approach, which computes the worst-case response time of each computation segment of $\tau_k$ as if they were independent tasks (Section~\ref{sec:model:split}).
+\item the self-suspension \emph{oblivious} approach, which models the suspension intervals of $\tau_k$ as if they were usual execution time (Section~\ref{sec:model-interferred-oblivious});
+\item the \emph{split} approach, which computes the worst-case response time of each computation segment of $\tau_k$ as if they were independent tasks (Section~\ref{sec:model-interferred:split}).
 \end{itemize}
-Strategies combining both approaches have also been investigated as discussed in Section~\ref{sec:model:hybrid}.
+Strategies combining both approaches have also been investigated as discussed in Section~\ref{sec:model-interferred-hybrid}.
+At the date of the writing of this document and to the best of the authors' knowledge, no tractable solution has been found to compute the exact worst-case interference suffered by a segmented self-suspending task. 
 
-At the date of the writing of this document and to the best of the authors knowledge, no tractable solution has been found to compute the exact worst-case interference suffered by a segmented self-suspending task.
 
-
-\begin{table}[t]
-\centering
-    \begin{tabular}{|c|c|c|c|}
- \hline
-        & $(C_i^1, S_i^2, C_i^2)$ &  $D_i$ & $T_i$\\ 
-        \hline
-        $\tau_1$ & (2, 0, 0) &  5 & 5\\ 
-        $\tau_2$ &  (2, 0, 0) & 10 & 10 \\ 
-        $\tau_3$ & (1, 5, 1) & 15  & 15\\
-        $\tau_4$ & (3, 0, 0) & ? & $\infty$\\
-        \hline
-    \end{tabular} 
-    \caption{Example of a segmented self-suspending task set.}
-    \label{table:static-example}
-\end{table}
 
 
 \subsubsection{Modeling suspension as computation}
-\label{sec:model:oblivious}
+\label{sec:model-interferred-oblivious}
 
 This strategy is sometimes called ``joint'' \cite{bletsas:thesis} but often referred to as the \emph{suspension-oblivious} approach in the literature. It consists in assuming that the self-suspending task $\tau_k$ continues executing on the processor when it self-suspends. Its suspension intervals are thus considered as being preemptible. From an analysis perspective, it is equivalent to replacing the self-suspending task $\tau_k$ by a non-self-suspending task $\tau_k' = (C_k + S_k, D_k, T_k)$ with a worst-case execution time equal to $C_k + S_k$. 
 
@@ -75,11 +106,12 @@ This strategy is sometimes called ``joint'' \cite{bletsas:thesis} but often refe
 Converting the suspension time of task $\tau_k$ into computation time can become very pessimistic for \emph{segmented} self-suspending tasks. This is especially true when (i) its total self-suspending time $S_k$ is much larger than its worst-case execution time $C_k$ and/or (ii) the lengths of $\tau_k$'s suspension intervals are larger than the periods of (some of) the interfering tasks. 
 
 \begin{example}
-Using the task set presented in Table~\ref{table:static-example} as an example, task $\tau_3$ would be transformed in a non-self-suspending task $\tau_3' = (7, 15, 15)$. The task $\tau_3'$ is not schedulable since the total utilization of $\tau_1$, $\tau_2$ and $\tau_3'$ is given by $\frac{2}{5} + \frac{2}{10} + \frac{7}{15} = \frac{16}{15} > 1$. Yet, the self-suspending task $\tau_3$ is schedulable as it will be shown in Section~\ref{sec:model:split}.
+Using the task set presented in Table~\ref{table:static-example} as an example, task $\tau_3$ would be transformed in a non-self-suspending task $\tau_3' = (7, 15, 15)$. Task $\tau_3'$ is obviously not schedulable after this transformation since the total utilization of $\tau_1$, $\tau_2$ and $\tau_3'$ is given by $\frac{2}{5} + \frac{2}{10} + \frac{7}{15} = \frac{16}{15} > 1$. Yet, the self-suspending task $\tau_3$ is schedulable as it will be shown in Section~\ref{sec:model-interferred:split}.
+\hfill\myendproof  
 \end{example}
 
-Nevertheless, although non-intuitive, this modeling strategy is an \emph{exact} solution to compute the WCRT of \emph{dynamic} self-suspending tasks. Indeed, as exemplified on Figure~\ref{}, if the computation segments and suspension intervals of $\tau_k$ interleave such that $\tau_k$ self-suspends only between the arrival of higher priority jobs
-(i.e.,  a computation segment of $\tau_k$ is started whenever a higher priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions \cite{xxx}. 
+Nevertheless, although non-intuitive, this modeling strategy is an \emph{exact} solution to compute the WCRT of \emph{dynamic} self-suspending tasks. If the computation segments and suspension intervals of $\tau_k$ interleave such that $\tau_k$ self-suspends only between the arrival of higher priority jobs
+(\ie,  a computation segment of $\tau_k$ is started whenever a higher priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions. This is used in all the analyses for dynamic self-suspension task models, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04}.
 Therefore, when there is no knowledge about how many times, when and for how long $\tau_k$ may self-suspend in each 
 self-suspending interval, modeling the self-suspending time of $\tau_k$ as execution time provides the exact worst-case response 
 time for $\tau_k$.
@@ -90,7 +122,7 @@ time for $\tau_k$.
 %With this schedulability test, it is easy to see that none of the example task sets can be classified as feasible since $\frac{1}{2} + \frac{5+5}{20} + \frac{1}{D_\gamma} > 1$ and $\frac{2}{5}+\frac{2}{10}+\frac{1+5+1}{15} > 1$.
 
 \subsubsection{Modeling each computation segment as an independent task}
-\label{sec:model:split}
+\label{sec:model-interferred:split}
 
 An alternative is to individually compute the WCRT of each of the computation segments of task $\tau_k$ \cite{bletsas:thesis,PH:rtss98}. 
 The WCRT of $\tau_k$ is then upper-bounded by the sum of the segments' worst-case response times added to $S_k$, the maximum length of the overall
@@ -99,42 +131,61 @@ self-suspending intervals.
 Let $R_k^j$ denote the worst-case response time of the computation segment $C_k^j$. The schedulability test of task $\tau_k$ consists 
 in verifying whether $\sum_{j=1}^{m_k} R_k^j + \sum_{j=1}^{m_k-1} S_k^j \leq D_k $. 
 
+\begin{table}[t]
+\centering
+    \begin{tabular}{|c|c|c|c|}
+ \hline
+        & $(C_i^1, S_i^2, C_i^2)$ &  $D_i$ & $T_i$\\ 
+        \hline
+        $\tau_1$ & (2, 0, 0) &  5 & 5\\ 
+        $\tau_2$ &  (2, 0, 0) & 10 & 10 \\ 
+        $\tau_3$ & (1, 5, 1) & 15  & 15\\
+%        $\tau_4$ & (3, 0, 0) & ? & $\infty$\\
+        \hline
+    \end{tabular} 
+    \caption{Example of a segmented self-suspending task set.}
+    \label{table:static-example}
+\end{table}
+
 \begin{example}
-Let us use the task set presented in Table~\ref{table:static-example} as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA for non-self-suspending tasks \cite{lehoczky-1989}. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
+Let us use the task set presented in Table~\ref{table:static-example} as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA in Eq.~(\ref{eq:rta}) for ordinary sporadic real-time tasks. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
+\hfill\myendproof  
 \end{example}
 
-The above test can be fairly pessimistic, especially when the suspension times are short. 
+The above test can be fairly pessimistic, especially when $S_k$ is short. 
 \begin{example}
-Imagine that $S_3$ is decreased from $5$ to $1$ in the previous example. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet, the suspension oblivious approach mentioned in Section~\ref{sec:model:oblivious}, tells us that the worst-case response time of $\tau_3$ is at most $9$.
+Imagine that $S_3$ is decreased from $5$ to $1$ in the previous example. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet, the suspension oblivious approach mentioned in Section~\ref{sec:model-interferred-oblivious}, tells us that the worst-case response time of $\tau_3$ is at most $9$.
+\hfill\myendproof  
 \end{example} 
 
 \subsubsection{Hybrid approaches}
-\label{sec:model:hybrid}
+\label{sec:model-interferred-hybrid}
 
-Both methods discussed above have pros and cons. The ``joint" approach has the advantage of
+Both methods discussed above in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-carry-in} have their pros and cons. The \emph{joint} or \emph{suspension-oblivious} in Section~\ref{sec:model-interferred-oblivious} approach has the advantage of
 respecting the minimum inter-arrival times (or periods) of the higher priority tasks during the schedulability 
-analysis of $\tau_k$. However, it has the disadvantage of assuming that the suspension intervals are preemptible. 
-This renders the analysis pessimistic as it accounts for non-existing interference. The ``split" approach does not assume  
+analysis of $\tau_k$. However, it has the disadvantage of assuming that the suspension intervals are preemptible by converting them as computation. 
+This renders the analysis pessimistic as it accounts for non-existing interference. The \emph{split} approach does not assume  
 preemptible suspension intervals but  considers a worst-case response time for each computation segment independently. Yet, the respective
-release patterns of interfering tasks leading to the worst-case response time of each execution segment may not not be compatible with each other.
+release patterns of interfering tasks leading to the worst-case response time of each computation segment may not not be compatible with each other.
 
-As shown with examples in the two previous sections, the joint and split approaches are not comparable in the sense that none 
+As shown with the above examples, the joint and split approaches are not comparable in the sense that none 
 of them always outperforms the other. Yet, since both provide an upper bound on the worst-case response time of $\tau_k$, one can 
 simply take the minimum response time value obtained with any of them. However, as proposed in \cite{bletsas:thesis} (Chapter 5.4), 
 it is also possible to combine their respective advantages and hence reduce the overall pessimism of the analysis. 
 The technique proposed in \cite{bletsas:thesis}, for tasks of the \emph{segmented} model,
-consists in dividing the self-suspending task in several blocks of consecutive 
-execution segments. The suspension intervals between execution segments pertaining to a same block are modeled as execution time 
-like in the ``joint" approach. The suspension intervals situated between blocks are ``split". A WCRT is then computed for each 
+consists in dividing the self-suspending task $\tau_k$ (that is under analysis) into several blocks of consecutive 
+computation segments. The suspension intervals between computation segments pertaining to the same block are modeled as execution time 
+like in the ``joint" approach. The suspension intervals situated between blocks are ``split". The worst-case response time is then computed for each 
 block independently and $\tau_k$'s WCRT is upper bounded by the sum of the block's WCRTs added to the length of the split suspension 
 intervals. This provides a tighter bound on the WCRT, especially if one considers all possible block sequence decompositions of $\tau_k$. 
-It is clearly a process with an exponential complexity. It was however shown to be applicable to task systems of realistic sizes.
+It is clearly a process with exponential time complexity.
+% It was however shown to be applicable to task systems of realistic sizes.
 
 \subsubsection{Exact schedulability analysis}
 
-As already mentioned in Section~\ref{sec:model:oblivious}, the self-suspension oblivious approach is an exact analysis for dynamic 
+As already mentioned in Section~\ref{sec:model-interferred-oblivious}, the self-suspension oblivious approach is an exact analysis for dynamic 
 self-suspending tasks assuming that there is only one self-suspending task $\tau_k$ and all the interfering tasks do not self-suspend. 
-There is no work providing an exact schedulability analysis in the case where all the tasks may self-suspend.
+There is no work providing an exact schedulability analysis for any other cases under the dynamic self-suspending task model.
 
 The problem of the schedulability analysis of segmented self-suspending tasks has been treated in~\cite{LR:rtas10,ecrts15nelissen}, 
 again assuming only one self-suspending task $\tau_k$. The proposed solutions are based on the notion of the critical instant. 
@@ -143,7 +194,8 @@ generate the largest response time. Unfortunately, the analysis in \cite{LR:rtas
 Further details on the reasons are provided in Section~\ref{sec:wrong-critical}.
 
 
-\subsection{Modeling the interfering tasks}
+\subsection{Modeling the Interfering Tasks}
+\label{sec:model-interfering}
 
 \begin{table}[t]
 \centering
@@ -161,34 +213,39 @@ Further details on the reasons are provided in Section~\ref{sec:wrong-critical}.
 \end{table}
 
 \subsubsection{Suspension oblivious analysis}
+\label{sec:model-interfering-oblivious}
 
 Similarly to the task under analysis, the simplest modeling strategy for the interfering tasks is the suspension oblivious approach, which consists in converting all the suspension times of those tasks into computation times. Each task $\tau_i$ is thus modeled by a non-self-suspending task $\tau_i' = (C'_i, D_i, T_i)$ with a WCET $C'_i = C_i+S_i$. After that conversion, the interfering tasks therefore become a set of usual non-self-suspending sporadic real-time tasks. Although the simplest, it is also the most pessimistic approach. It indeed considers that the suspension intervals of each interfering task $\tau_i$ are causing interference on the task $\tau_k$ under analysis. Yet, suspension intervals truly model durations during which $\tau_i$ stops executing on the processor and hence cannot prevent the execution of $\tau_k$ or any other lower priority job.
 
 
 \subsubsection{Modeling self-suspensions with carry-in jobs}
+\label{sec:model-carry-in}
+
+If all the higher-priority jobs/tasks are ordinary sporadic jobs/tasks without any self-suspensions, then
+the maximum number of interfering jobs that can be released by an interfering (ordinary) sporadic task $\tau_i$ in a window of length $t$, is upper bounded by $\left\lceil \frac{t}{T_i} \right\rceil$ in fixed-priority scheduling and by $\left\lfloor \frac{t}{T_i} \right\rfloor$ in EDF scheduling. The interfering workload is then given by $\sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{t}{T_i} \right\rceil C_i$ for fixed priority scheduling and by $\sum_{\forall \tau_i \in \tau \setminus \tau_k} \left\lfloor \frac{t}{T_i} \right\rfloor C_i$ for EDF scheduling. This assumes that each interfering job asks for the processor as soon as it is released, thereby preventing the task $\tau_k$ under analysis to execute.
+
+With self-suspending tasks however, the \emph{computation segment} of an interfering job may not require a direct access to the processor as it can be delayed by its suspension intervals. Hence, a job of task $\tau_i$ released before the release of a job of task $\tau_k$ may have all its execution time $C_i$ delayed by its suspension intervals so as to entirely interfere with $\tau_k$. 
+This is clearly visible on the example schedule of Figure~\ref{fig:counterexample-segmented}.
+Such a job of $\tau_i$, released before the job of $\tau_k$ under analysis, but interfering with the execution of $\tau_k$, is called a \emph{carry-in job}.
+
+In the worst case, each interfering task $\tau_i$ releases one carry-in job (assuming that they all respect their deadlines and that $D_i \leq T_i$). This extra-workload, which can be up to $C_i$, has been integrated in the schedulability test for self-suspending tasks in \cite{huangpass:dac2015,LiuChen:rtss2014} by greedily adding one interfering job to the interfering workload released by each task $\tau_i$.
 
 
-The maximum number of interfering jobs that can be released by an interfering non-self-suspending task $\tau_i$ in a window of length $t$, is upper bounded by $\left\lceil \frac{t}{T_i} \right\rceil$ in fixed priority systems and by $\left\lfloor \frac{t}{T_i} \right\rfloor$ for an EDF-based system. The interfering workload is then given by $\sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{t}{T_i} \right\rceil C_i$ for fixed priority and by $\sum_{\forall \tau_i \in \tau \setminus \tau_k} \left\lfloor \frac{t}{T_i} \right\rfloor C_i$ for EDF. This assumes that each interfering job asks for the processor as soon as it is released, thereby preventing the task $\tau_k$ under analysis to execute.
-
-With self-suspending tasks however, the \emph{computation segment} of an interfering job may not require a direct access to the processor as it can be delayed by its suspension intervals. Hence, a job of task $\tau_i$ released before the release of a job of task $\tau_k$ may have all its execution time $C_i$ delayed by its suspension intervals so as to entirely interfere with $\tau_k$. This is clearly visible on the example schedule of Figure~\ref{}. Such a job of $\tau_i$, released before the job of $\tau_k$ under analysis, but interfering with the execution of $\tau_k$, is called a \emph{carry-in job}.
-
-In the worst-case, each interfering task $\tau_i$ releases one carry-in job (assuming that they all respect their deadlines and that $D_i \leq T_i$). This extra-workload, which can be up to $C_i$, has been integrated in the schedulability test for self-suspending tasks in \cite{huangpass:dac2015,LiuChen:rtss2014} by greedily adding one interfering job to the interfering workload released by each task $\tau_i$.
+%In the \emph{dynamic self-suspending task model}, the above analysis implies that the higher-priority jobs arrived after time $t_k$ \emph{should not} suspend themselves to create the maximum interference. Therefore, suppose that the first arrival time of task $\tau_i$ after $t_k$ is $t_i$, \ie, $t_i \geq t_k$. Then, the demand of task $\tau_i$ released at time $t \geq t_i$ is $\left\lceil \frac{t-t_i}{T_i} \right\rceil C_i$. So, we just have to account for the demand of the carry-in job of task $\tau_i$ executed between $t_k$ and $t_i$. The workload of the carry-in job can be up to $C_i$ (due to the assumption $D_i \leq T_i$), but can also be characterized in a more precise manner. The approaches in this category are presented in \cite{huangpass:dac2015,LiuChen:rtss2014} by greedily counting $C_i$ in the carry-in job. 
 
 
-%In the \emph{dynamic self-suspending task model}, the above analysis implies that the higher-priority jobs arrived after time $t_k$ \emph{should not} suspend themselves to create the maximum interference. Therefore, suppose that the first arrival time of task $\tau_i$ after $t_k$ is $t_i$, i.e., $t_i \geq t_k$. Then, the demand of task $\tau_i$ released at time $t \geq t_i$ is $\left\lceil \frac{t-t_i}{T_i} \right\rceil C_i$. So, we just have to account for the demand of the carry-in job of task $\tau_i$ executed between $t_k$ and $t_i$. The workload of the carry-in job can be up to $C_i$ (due to the assumption $D_i \leq T_i$), but can also be characterized in a more precise manner. The approaches in this category are presented in \cite{huangpass:dac2015,LiuChen:rtss2014} by greedily counting $C_i$ in the carry-in job. 
+\subsubsection{Modeling self-suspensions as release jitter}
+\label{sec:model-interfering-jitter}
 
-
-\subsubsection{Modeling self-suspensions as a release jitter}
-
-Another, more accurate, way to model the phenomena described above is using the concept of \emph{release jitter}. It basically considers 
-that the computation segments of each task $\tau_i$ are not released in a purely periodic manner but are instead subject to a release jitter. 
+Another, more accurate, way to model the phenomena described above to use the concept of \emph{release jitter}. It basically considers 
+that the computation segments of each task $\tau_i$ are not released in a purely periodic manner but are instead subject to release jitter. 
 Hence the first interfering job of $\tau_i$ may have its computation segment pushed as far as possible from the actual release of the job 
 due to its suspension behavior, while all the jobs released afterward may directly start with their computation segments and never 
-self-suspend (see $\tau_2$ in Figure~\ref{} for an example). Let $J_i$ denote that jitter on $\tau_i$'s computation segment release. 
+self-suspend (see $\tau_2$ in Figure~\ref{fig:counterexample-dynamic} for an example). Let $J_i$ denote that jitter on $\tau_i$'s computation segment release. 
 It was proven in \cite{ecrts15nelissen,BletsasReport2015} that $J_i$ is upper-bounded by $R_i-C_i$ where $R_i$ is the WCRT of $\tau_i$. 
 If an optimal priority assignment must be computed for a fixed-priority task set using the Audsley's optimal priority assignment 
 algorithm~\cite{Audsley1991aOPA}, one can pessimistically assume that $J_i$ is equal to $D_i-C_i$ \cite{huangpass:dac2015,Raj:suspension1991} 
-as long as all the interfering tasks are schedulable, i.e., $R_i \leq D_i$.
+as long as all the interfering tasks, \ie $\forall \tau_i \in hp(k)$ in fixed-priority scheduling, are schedulable, \ie, $R_i \leq D_i$.
 
 For a fixed-priority task set under the dynamic self-suspension model, the WCRT of $\tau_k$ is upper bounded by the smallest value $R_k$ 
 larger than $0$ such that 
@@ -202,16 +259,18 @@ The response time analysis for EDF can be similarly adapted.
 Consider the fixed priority task set presented in Table~\ref{table:dynamic-example}. In this case, $\tau_1$ is the highest priority task and does not self-suspend. Therefore, its WCRT is $R_1 = C_1$ and $J_1 = R_1 - C_1 = 0$. The jitter $J_2$, however, is upper bounded by $D_2 - C_2 =15$. The WCRT of task $\tau_3$ is thus upper bounded by the minimum $t$ larger than $0$ such that 
 $$t=C_3+ \sum_{i=1}^2\left\lceil \frac{t + J_i}{T_i} \right\rceil C_i = 1+\left\lceil \frac{t}{2} \right\rceil 1 +\left\lceil \frac{t+15}{20} \right\rceil 5.$$ 
 The above equality holds when $t=22$. Therefore, the WCRT of task $\tau_{3}$ is upper bounded by $22$.
+\hfill\myendproof  
 \end{example}
 
 Note that several solutions proposed in the literature \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95} for modeling the 
-self-suspending behavior of the intefering tasks as a release jitter, are flawed. Those analyses usually assume that $J_i$ can be 
+self-suspending behavior of the intefering tasks as release jitter, are flawed. Those analyses usually assume that $J_i$ can be 
 upper-bounded by the total self-suspension time $S_i$ of $\tau_i$. This is usually wrong. A detailed discussion on this matter is 
 provided in Section~\ref{sec:wrong-jitter-dynamic}. 
 
-\subsubsection{Modeling self-suspensions as a blocking time}
+\subsubsection{Modeling self-suspensions as blocking}
+\label{sec:model-interfering-blocking}
 
-In her book~\cite[Pages 164-165]{Liu:2000:RS:518501}, Jane W.S. Liu proposes an approach to quantify the interference
+In her book~\cite[Pages 164-165]{Liu:2000:RS:518501}, Jane W.S. Liu proposed an approach to quantify the interference
 higher-priority tasks by setting up the ``blocking time" induced by the self-suspensions of the interfering tasks on the 
 task $\tau_k$ under analysis. This solution, limited to fixed-priority scheduling policies, considers that a job of 
 task $\tau_k$ can suffer an extra delay on its completion due to the self-suspending behavior of each task involved in its 
@@ -220,7 +279,7 @@ response time. This delay, denoted by $B_k$, is upper bounded by
 B_k=S_k+\sum_{\forall \tau_i \in hp(k)} b_i
 \end{equation*}
 where (i) $S_k$ accounts for the contribution of the suspension intervals of the task $\tau_k$ under analysis in a similar manner to 
-what has already been discussed in Section~\ref{sec:model:oblivious}, and (ii) $b_i=min(C_i, S_i)$ accounts for the contribution of each higher priority task $\tau_i$. This equivalent ``blocking time" $B_k$ can then be used to perform a utilization-based schedulability test. For instance, using the linear utilization test of Liu and Layland \cite{Liu_1973} and assuming that the tasks are indexed in a decreasing priority order, ensuring that the condition
+what has already been discussed in Section~\ref{sec:model-interferred-oblivious}, and (ii) $b_i=min(C_i, S_i)$ accounts for the contribution of each higher priority task $\tau_i$ in $hp(k)$. This equivalent ``blocking time" $B_k$ can then be used to perform a utilization-based schedulability test. For instance, using the linear utilization test by Liu and Layland \cite{Liu_1973} and assuming that the tasks are indexed in a decreasing priority order, ensuring that the condition
 \begin{equation*}
 \frac{C_k+B_k}{T_k} + \sum_{\forall \tau_i \in hp(k)} U_i \leq k (2^{\frac{1}{k}}-1)
 \end{equation*}
@@ -233,7 +292,7 @@ R_k = B_k + C_k + \sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{R_k}{T_i} \r
 
 
 Note that even though \cite{Liu:2000:RS:518501} discusses the intuition behind this modeling strategy, it does not provide any actual proof of its correctness. 
-However, the correctness of that approach has since been proven in \cite{ChenHuangNelissen}.
+However, the correctness of that approach has since been proven in \cite{ChenHuangNelissen}. 
 
 \begin{example}
 Consider the task set presented in Table~\ref{table:dynamic-example} to illustrate the above analysis. In this case, $b_1 = 0$ and $b_2 = 5$. Therefore, $B_3 = 5$. So, the worst-case response time of task $\tau_3$ is upper bounded by the minimum $t$ larger than $0$ such that 
@@ -241,15 +300,18 @@ Consider the task set presented in Table~\ref{table:dynamic-example} to illustra
 t & = B_3+C_3+\sum_{i=1}^2 \left\lceil \frac{t}{T_i} \right\rceil C_i = 6+\left\lceil \frac{t}{2} \right\rceil 1 +\left\lceil \frac{t}{20} \right\rceil 5.
 \end{align*} 
 This equality holds when $t=32$. Therefore, the WCRT of task $\tau_{3}$ is upper bounded by $32$.
+\hfill\myendproof  
 \end{example}
 
 
 
-
+Devi (in Theorem 8 in \cite[Section 4.5]{DBLP:conf/ecrts/Devi03}) extended the above analysis to
+EDF scheduling. However, there is no proof to support the correctness at this moment.
 
 
 
 \subsubsection{Improving the modeling of segmented self-suspending tasks}
+\label{sec:model-interfering-improving}
 
 In the \emph{segmented self-suspending task model}, we can simply ignore the segmentation structure of computation segments and suspension intervals 
 and directly apply all the strategies for dynamic self-suspending task models. However, the analysis will become pessimistic. This is due to the fact 
@@ -267,7 +329,7 @@ Characterizing the worst-case
 suspending patterns of the higher priority tasks to quantify the interference under the segmented self-suspending task model is not easy. 
 Modelling the interference by a job of a self-suspending task $\tau_i$ as multiple per-segment ``chunks", spaced apart in time by 
 the respective self-suspending intervals in-between, is potentially more accurate than modelling it as a contiguous computation segment of $C_i$ units.
-However, the release offset of $\tau_i$, relative to the task analysed, which maximises the interference, needs to be identified.
+However, the worst-case release offset of $\tau_i$ in $hp(k)$, relative to the task $\tau_k$ under analysis, to maximize the interference needs to be identified.
 
 To deal with this, in \cite{RTCSA-BletsasA05} the computation segments and self-suspending intervals of each interfering task are reordered, 
 to create a pattern that dominates all such possible task release offsets. The computational segments of the interfering task are modelled 
@@ -277,13 +339,12 @@ Section~\ref{sec:wrong-jitter-segmented} the quantification of the interference 
 Another possibility is to characterize the worst-case interference in the carry-in job of a higher-priority task $\tau_i$ by analyzing 
 its self-suspending pattern, as presented in \cite{Huang:multiseg}. This approach does examine the different possible task release offsets
 and can also be used for response time analysis compatible with Audsley's optimal priority algorithm~\cite{Audsley1991aOPA}.
-
 Palencia and Gonz\'alez Harbour~\cite{PH:rtss98} provide another technique for modelling of interference by segmented interfering tasks, 
 albeit in the context of multiprocessors. %Therefore, this work is discussed later, in Section~\ref{sec:multiprocessor-HRT}.
 
   
-\subsection{Period enforcement mechanisms}   
-\label{sec:periodic-enforce}
+\subsection{Period Enforcement Mechanisms}   
+\label{sec:release-enforce}
 
 Self-suspension can cause substantial schedulability degradation, because the resulting non-determinism in the schedule can give rise 
 to unfavourable execution patterns. To alleviate the potential impact, one possibility is to enforce periodic behaviour by 
@@ -291,7 +352,9 @@ enforcing the release time of the computation segments. There exist different ca
 
 
 \subsubsection{Dynamic online period enforcement} 
-Rajkumar \cite{Raj:suspension1991} proposes a \emph{period enforcer} 
+\label{sec:period-enforce}
+
+Rajkumar \cite{Raj:suspension1991} proposed a \emph{period enforcer} 
 algorithm to handle the impact of uncertain releases (such as self-suspensions). In a nutshell, the period enforcer algorithm artificially 
 increases the length of certain suspensions \emph{dynamically, at run-time},
 whenever a task's activation pattern carries the risk of inducing undue interference in 
@@ -308,6 +371,7 @@ The period enforcer has been revisited by Chen and Brandenburg in \cite{ChenBran
 \end{enumerate}
 
 \subsubsection{Static period enforcement} 
+\label{sec:static-period-enforce}
 
 As an alternative to the online period enforcement, one may instead achieve periodicity in the activation
 of computation segments and prevent the most unfavorable execution patterns from arising, by constraining
@@ -331,8 +395,12 @@ deadline for earliest-deadline-first scheduling.
 The methods in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} assign each computation segment a fixed-priority level and a phase. 
 Unfortunately,  in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, the schedulability tests are not correct, and the mixed-integer 
 linear programming formulation proposed in \cite{RTSS-KimANR13} is unsafe for worst-case response time guarantees. 
+A detailed discussion on this matter is 
+provided in Section~\ref{sec:wrong-periodic}.
 
 \subsubsection{Slack enforcement} 
+\label{sec:slack-enforce}
+
 The slack enforcement in \cite{LR:rtas10} intends to create periodic execution enforcement 
 for self-suspending tasks so that a self-suspending task behaves like an ideal periodic task.  However, as discussed in 
 Section~\ref{sec:open-issues-existing}, the presented methods in \cite{LR:rtas10} require more rigorous proofs to support 
@@ -343,7 +411,7 @@ their correctness as the key lemma of the slack enforcement mechanism in \cite{L
   
 The schedulability analysis of distributed systems is inherently similar to the schedulability analysis of multiprocessor systems following a 
 \emph{partitioned} scheduling scheme. Each task is mapped on one processor and can never migrate to another processor. In~\cite{PH:rtss98}, 
-Palencia and Gonz\'alez Harbour extended the worst-case response time analysis for distributed systems, and hence multiprocessor systems, to segmented self-suspending tasks. They model the effect of the self-suspending time as a release jitter.
+Palencia and Gonz\'alez Harbour extended the worst-case response time analysis for distributed systems, and hence multiprocessor systems, to segmented self-suspending tasks. They model the effect of the self-suspending time as release jitter.
   
 The first suspension-aware worst-case response time analysis for dynamic self-suspending sporadic tasks assuming a \emph{global} scheduling scheme, was presented in \cite{DBLP:conf/ecrts/LiuA13}. 
 The processors are assumed to be identical and the jobs can migrate during their execution. The analysis in \cite{DBLP:conf/ecrts/LiuA13} is mainly based on the existing results in the literature for global fixed-priority and earliest deadline first scheduling for sporadic task systems without self-suspensions. Unfortunately, the schedulability test provided in \cite{DBLP:conf/ecrts/LiuA13} for global fixed-priority scheduling suffers from two errors, which were later fixed in \cite{erratu-cong-anderson}. First, the workload bound proposed in Lemma~1 (in~\cite{DBLP:conf/ecrts/LiuA13}) is unsafe. It has been acknowledged and corrected in \cite{erratu-cong-anderson} following a similar approach as in \cite{baruah2007techniques}. 
