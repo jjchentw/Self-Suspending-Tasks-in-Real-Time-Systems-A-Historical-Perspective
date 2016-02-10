@@ -185,6 +185,63 @@ elaborations. These include the following results in the literature
 \subsection{Potentially Correct Approaches}
 \label{sec:correct-solutions} 
 
+We would like to conclude this review paper by providing some positive
+information about analyzing for designing hard real-time systems that
+involve self-suspending tasks.  At the date of the writing of this
+document, we have not reached any concrete concerns of correctness for
+the following results.
+\begin{itemize}
+\item For segmented self-suspending task systems on uniprocessor
+  platforms, they are: 
+  \begin{enumerate}
+  \item the periodic enforcer from Rajkumar \cite{Raj:suspension1991}
+    if a self-suspending task
+    can only suspend at most once before any computation starts;
+  \item the result from Palencia and Gonz\'alez
+    Harbour~\cite{PH:rtss98} by using the arrival jitter of a
+    higher-priority task properly with an offset;
+  \item the ${\cal NP}$-hardness in the strong sense to find a feasible
+    schedule and negative results with respect to the speedup factors,
+    provided by Ridouard, Richard, and Cottet \cite{Ridouard_2004};
+  \item the result from Nelissen et al. \cite{ecrts15nelissen} by
+    enumerating the worst-case interference from higher-priority
+    sporadic tasks with an exhaustive search;
+  \item the result from Chen and Liu~\cite{RTSS-ChenL14} and Huang and
+    Chen \cite{WC16-suspend-DATE} by using the release-time
+    enforcement as described in
+    Section~\ref{sec:static-period-enforce};\footnote{Chen and Liu
+      also already found a typo in Theorem 3 in \cite{RTSS-ChenL14}
+      and filed a corresponding erratum in their websites.}
+  \item the result from Huang and Chen \cite{Huang:multiseg} by
+    exploring the priority assignment problem and analyzing the
+    carry-in computation segments together.
+  \end{enumerate}
+\item For dynamic self-suspending task systems on uniprocessor
+  platforms, they are:
+  \begin{enumerate}
+  \item the analysis in the book~\cite[Pages
+    164-165]{Liu:2000:RS:518501} by Liu based on the proof in \cite{ChenHuangNelissen}; 
+  \item the utilization-based analysis by Liu and Chen
+    \cite{LiuChen:rtss2014} under rate-monotonic scheduling;
+  \item the priority assignment and the schedulability analysis with a
+    speedup factor $2$, with respect to the optimal fixed-priority
+    scheduling, by Huang et
+    al. \cite{huangpass:dac2015};
+  \end{enumerate}
+\item For dynamic self-suspending task systems on homogeneous multiprocessor
+  platforms, they are:
+  \begin{enumerate}
+  \item the schedulability test for global EDF scheduling by Liu and
+    Anderson \cite{DBLP:conf/ecrts/LiuA13};
+  \item the schedulability test by Liu et
+    al. \cite{DBLP:conf/ecrts/LiuCH014} for harmonic task
+    systems with strictly periodic job arrivals;
+  \item the utilization-based schedulability analysis by Chen, Huang,
+    and Liu \cite{ChenHLRTSS2015} by considering carry-in jobs as
+    bursty behaviour.
+  \end{enumerate}
+\end{itemize}
+
 % \subsection{Open Issues for Future Researches}
 % \label{sec:open-issues-future}
 
