@@ -26,7 +26,7 @@ Let $\tau_2$ be an ordinary sporadic task with the following attributes $(C_2, T
 task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
 and that $\tau_1$ has higher priority than $\tau_2$. If one should ignore the self-suspending behavior of $\tau_1$ by 
 assuming a self-suspending task $\tau_1' = (C_1', T_1', D_1')=(2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
-with the standard response time analysis (RTA) in Eq.~(\ref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
+with the standard response time analysis (Eq.~\eqref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
 due to the self-suspension of $\tau_1$, the actual worst-case response time of 
 $\tau_2$ is $8$ and is obtained when (i) $\tau_1$ experiences its maximum self-suspending time and (ii) $\tau_2$ is 
 synchronously released with the second computation segment of $\tau_1$.
@@ -112,10 +112,9 @@ Using the task set presented in Table~\ref{table:static-example} as an example, 
 \end{example}
 
 Nevertheless, although non-intuitive, this modeling strategy is an \emph{exact} solution to compute the WCRT of \emph{dynamic} self-suspending tasks. If the computation segments and suspension intervals of $\tau_k$ interleave such that $\tau_k$ self-suspends only between the arrival of higher priority jobs
-(\ie,  a computation segment of $\tau_k$ is started whenever a higher priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions. This is used in all the analyses for dynamic self-suspension task models, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04}.
-Therefore, when there is no knowledge about how many times, when and for how long $\tau_k$ may self-suspend in each 
+(\ie,  a computation segment of $\tau_k$ is started whenever a higher priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions. Therefore, when there is no knowledge about how many times, when and for how long $\tau_k$ may self-suspend in each 
 self-suspending interval, modeling the self-suspending time of $\tau_k$ as execution time provides the exact worst-case response 
-time for $\tau_k$.
+time for $\tau_k$. This property is used in all the existing analyses for dynamic self-suspension task models, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04}.
 
 
 %This is the simplest and the most pessimistic strategy. It converts all self-suspending time into computation time. Such a strategy is also referred to as \emph{suspension-oblivious} analysis in the literature. That is, we can consider the execution time of task $\tau_i$ to be $C_i+S_i$. After this conversion, we only have ordinary sporadic real-time tasks. Therefore, all the existing results for sporadic task systems can be applied. %The proof can be done with the following simple interpretation: The suspension of a job may make the processor idle. If two jobs suspend at the same time and the processor idles in a certain time interval in the actual schedule, it can be imagined that one of these two jobs has shorter execution time (than its worst-case execution time $C_i+S_i$). Such earlier completion does not affect the schedulability analysis. Therefore, putting $C_i+S_i$ as the worst-case execution time for every task $\tau_i$ is a very safe analysis for both dynamic- and static-scheduling policies.  Such an approach has been widely used as the baseline of more accurate analyses in the literature.
@@ -150,7 +149,7 @@ in verifying whether $\sum_{j=1}^{m_k} R_k^j + \sum_{j=1}^{m_k-1} S_k^j \leq D_k
 
 \begin{example}
 \label{ex:suspension-as-split-1}   
-Let us use the task set presented in Table~\ref{table:static-example} as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA in Eq.~(\ref{eq:rta}) for ordinary sporadic real-time tasks. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
+Let us use the task set presented in Table~\ref{table:static-example} as an example. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA (Eq.~\eqref{eq:rta}) for ordinary sporadic real-time tasks. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
 \hfill\myendproof  
 \end{example}
 
@@ -164,7 +163,7 @@ Imagine that $S_3$ is decreased from $5$ to $1$ in the previous example. This an
 \subsubsection{Hybrid approaches}
 \label{sec:model-interferred-hybrid}
 
-Both methods discussed above in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-carry-in} have their pros and cons. The \emph{joint} or \emph{suspension-oblivious} in Section~\ref{sec:model-interferred-oblivious} approach has the advantage of
+Both methods discussed above in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-carry-in} have their pros and cons. The \emph{joint} or \emph{suspension-oblivious} approach has the advantage of
 respecting the minimum inter-arrival times (or periods) of the higher priority tasks during the schedulability 
 analysis of $\tau_k$. However, it has the disadvantage of assuming that the suspension intervals are preemptible by converting them as computation. 
 This renders the analysis pessimistic as it accounts for non-existing interference. The \emph{split} approach does not assume  
