@@ -1,3 +1,38 @@
 \begin{abstract}
-To be filled.
+  In operating systems, a job (process) may be swapped out from the
+  running state and it suspends itself and has to wait in the blocked
+  state until the memory subsystem or the accelerator returns the
+  required data or results from the offloaded computation.  Due to the
+  evolution in computer architecture towards using multicore systems
+  and accelerators, suspension behaviour has been observed in many
+  designs. For real-time embedded systems, self-suspension can cause
+  substantial performance/schedulability degradation. The research
+  community of real-time systems has started to investigate the impact
+  of self-suspension behaviour on the timing predictability since
+  1990, and several results have been reported in the past decades.
+
+  This paper reviews the design and analysis of scheduling algorithms
+  and schedulability tests in the light of recent developments to
+  handle self-suspending tasks in real-time systems. We have found
+  that a few existing and well-adopted approaches in this research
+  area are flawed.  In this paper, we provide 1) a systematic picture
+  to explain how self-suspending tasks can be handled in both soft and
+  hard real-time systems, 2) the existing misconceptions and their
+  potential remedies, 3) the influence of such incorrect analysis on
+  partitioned multiprocessor fixed-priority scheduling when tasks
+  synchronize access to shared resources, and 4) computational
+  complexity analysis for different self-suspension task models.
+  Although it is unfortunate that many results in this area were
+  flawed due to some misconceptions that are seemingly correct, we
+  hope that this review can serve as a milestone in this research area
+  to provide a solid base for future research to cope with
+  self-suspending task systems.
 \end{abstract}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "JRTS/JRTS.tex"
+%%% End:
