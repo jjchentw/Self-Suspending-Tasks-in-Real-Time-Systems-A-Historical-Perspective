@@ -342,7 +342,7 @@ $\tau_4$ &  $(3, 0, 0)$                   &    $?$  &   $\infty$    \\ \hline
 
 {\bf Solutions:} There is no simple way to fix the error to exploit the information provided by the segmented self-suspending task model. However, quantifying the jitter of a self-suspending task $\tau_i$ with $D_i-C_i$ in Section~\ref{sec:wrong-jitter-dynamic}  remains safe for constrained-deadline task systems since the dynamic self-suspending pattern is more general than a segmented self-suspending pattern.
 
-\subsection{Incorrect Assumptions in Critical Instant with Synchronous Releases}
+\subsection{Incorrect Assumptions on the Critical Instant}
 \label{sec:wrong-critical}
 
 Over the years, it has been well accepted that the characterization of the critical instant for self-suspending tasks is a complex problem. Nevertheless, although the complexity of verifying the existence of a feasible schedule for segmented self-suspending tasks has been proven to be ${\cal NP}$-hard in the strong sense \cite{Ridouard_2004}, the complexity of verifying the schedulability of a task set has only been studied for segmented self-suspending tasks with constrained deadlines scheduled with a fixed-priority scheduling algorithm (see Section~\ref{sec:hardness}), hence leaving hope for the existence of efficient schedulability tests for more constrained systems. 
@@ -360,24 +360,10 @@ The analysis, presented in \cite{LR:rtas10}, is based on the notion of critical 
 	\item all the remaining jobs of the higher priority tasks are released with their minimum inter-arrival time.
 \end{itemize}
 
-This definition of the critical instant is very similar to the definition of the critical instant of a non-self-suspending task. Specifically, it is based on the two intuitions that $\tau_k$ suffers the worst-case interference when (i) all higher priority tasks release their first jobs simultaneously with $\tau_k$ and (ii) they all release as many jobs as possible in each computation segment of $\tau_k$. Although intuitive, we provide examples that both statements are wrong, in which the examples already appeared in \cite{ecrts15nelissen}.
+This definition of the critical instant is very similar to the definition of the critical instant of a non-self-suspending task. Specifically, it is based on the two intuitions that $\tau_k$ suffers the worst-case interference when (i) all higher priority tasks release their first jobs simultaneously with $\tau_k$ and (ii) they all release as many jobs as possible in each computation segment of $\tau_k$. Although intuitive, we provide examples that both statements are wrong. Note that the examples provided below already appeared in \cite{ecrts15nelissen}.
 
 \subsubsection{A counterexample to the synchronous release}
 
-\begin{table} 
-\centering
-    \begin{tabular}{|c|c|c|}
- \hline
-        & $(C_i^1, S_i^1, C_i^2)$ &  $D_i=T_i$\\ 
-        \hline
-        $\tau_1$ & (1, 0, 0) &  4\\ 
-        $\tau_2$ &  (1, 0, 0) & 50  \\ 
-        $\tau_3$ & (1, 2, 3) & 100  \\
-        \hline
-    \end{tabular} 
-    \caption{Task parameters for the counter example to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
-    \label{table:ex-synch-releases}
-\end{table}
 
 \begin{figure}[t]
 \centering
@@ -495,16 +481,68 @@ This definition of the critical instant is very similar to the definition of the
 Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (\ie, the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-synch-releases}(a)). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 3 + 2 +4 = 9$$
 
+\begin{table}[t] 
+\centering
+    \begin{tabular}{|c|c|c|}
+ \hline
+        & $(C_i^1, S_i^1, C_i^2)$ &  $D_i=T_i$\\ 
+        \hline
+        $\tau_1$ & (1, 0, 0) &  4\\ 
+        $\tau_2$ &  (1, 0, 0) & 50  \\ 
+        $\tau_3$ & (1, 2, 3) & 100  \\
+        \hline
+    \end{tabular} 
+    \caption{Task parameters for the counter example to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
+    \label{table:ex-synch-releases}
+\end{table}
+
 Now, let us consider a job release pattern as shown in Figure~\ref{fig:ex-synch-releases}. Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Figure~\ref{fig:ex-synch-releases}(b)). Thus, the total response time of $\tau_3$ in a scenario where not all higher priority tasks release a job synchronously with $\tau_3$ is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 2+2+6 = 10$$
 
-{\bf Consequences:} To conclude, the synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. 
+{\bf Consequence:} To conclude, the synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. 
 It was however proven in \cite{ecrts15nelissen} that in the critical instant of a self-suspending task $\tau_k$, every higher priority task releases a job synchronously with the arrival of at least one computation segment of $\tau_k$, but not all higher priority tasks must release a job synchronously with the same computation segment.
 
-{\bf Solutions:} The problem to define the critical instant remains open even for the special case defined above. The approach in \cite{ecrts15nelissen} is an exhaustive search.
-
 \subsubsection{A counterexample to 
-always release with respect the minimum inter-arrival time}
+always release with the minimum inter-arrival time}
+
+Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau_1$, $\tau_2$ and $\tau_3$ are non-self-suspending sporadic tasks and $\tau_4$ is a self-suspending task with the lowest priority. The tasks have the parameters provided in Table~\ref{table:ex-num-releases}. The worst-case response time of $\tau_4$ is obtained when $\tau_1$ releases a job synchronously with the second computation segment of $\tau_4$ while $\tau_2$ and $\tau_3$ must release a job synchronously with the first computation segment of $\tau_4$.
+
+\begin{table}[t]
+\centering
+    \begin{tabular}{|c|c|c|}
+ \hline
+        & $(C_i^1, S_i^2, C_i^2)$ &  $D_i=T_i$\\ 
+        \hline
+        $\tau_1$ & (4, 0, 0) &  8\\ 
+        $\tau_2$ &  (1, 0, 0) & 10 \\ 
+        $\tau_3$ & (1, 0, 0) & 17 \\
+        $\tau_4$ & (265, 2, 6) & 1000\\
+        \hline
+    \end{tabular} 
+    \caption{Task parameters for the counter-example to the maximization of the number of releases.}
+    \label{table:ex-num-releases}
+\end{table}
+
+Consider two scenarios with respect to the job release pattern. In Scenario~1, the jobs of the higher priority non-self-suspending tasks are released as often as possible in each computation segment of $\tau_4$. In Scenario~2 however, one less job of task $\tau_1$ is released in (and therefore interfere with) the first computation segment of the self-suspending task. We show that the WCRT of $\tau_4$ in Scenario~2 is higher than that of Scenario~1. 
+
+Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2sc1}, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2sc2}. The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedule of the jobs is identical in this initial time window.  
+A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ (indeed, we have $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$) in both scenarios. From time $765$ onward, we separately consider Scenario~1 and~2.
+\begin{figure}
+  \centering
+  \subfloat[Scenario 1. Jobs are released as often as possible.]{\label{fig:ex_crit_inst2sc1} \includegraphics[height=1.95cm, width=\linewidth]{../figures/ex2sc1}} \\
+  \subfloat[Scenario 2. Jobs are not released as often as possible.]{\label{fig:ex_crit_inst2sc2} \includegraphics[height=1.8cm, width=\linewidth]{../figures/ex2sc2}}
+  \caption{Example showing that releasing higher priority jobs as often as possible may not always cause the maximum interference on a self-suspending task.}
+  \label{fig:ex_crit_inst2}
+\end{figure}
+
+\noindent\textbf{Scenario 1.} Continuing the release of jobs of the non-self-suspending tasks as often as possible without violating their minimum inter-arrival times, the first computation segment of $\tau_4$ finishes its execution at time $782$ as shown in Fig.~\ref{fig:ex_crit_inst2sc1}. After completion of its first computation segment, $\tau_4$ self-suspends for two time units until time $784$. As $\tau_3$ would have released a job within the self-suspending region, we delay the release of that job from time $782$ to $784$ in order to maximize the interference exerted by $\tau_3$ on the second computation segment of $\tau_4$ as shown in Fig.~\ref{fig:ex_crit_inst2sc1}. Note that, in order to respect its minimum inter-arrival time, $\tau_2$ has an offset of $6$ time units with the arrival of the second computation segment of $\tau_4$. Upon following the rest of the schedule, it can easily be seen that the job of $\tau_4$ finishes its execution at time $800$.
+
+\noindent\textbf{Scenario 2.} As shown on Fig.~\ref{fig:ex_crit_inst2sc2}, the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension region anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2sc2} as the job of $\tau_4$ finishes its execution at time $802$.\\
+
+
+{\bf Consequence:} This counter-example proves that the response time of a self-suspending task $\tau_k$ can be larger when the tasks in $hp(k)$ do not release jobs as often as possible.
+
+{\bf Solution:} The problem to define the critical instant remains open even for the special case where only the lowest priority task is self-suspending. Nelissen et al. propose a limited solution in \cite{ecrts15nelissen} based on an exhaustive search with exponential time complexity.
 
 \subsection{Counting Highest-Priority Self-Suspending Time to Reduce the Interference}
 \label{sec:wrong-highest-priority}
