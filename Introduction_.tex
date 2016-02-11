@@ -1,18 +1,10 @@
 \section{Introduction}
 
-Complex cyber-physical systems (\ie advanced embedded real-time computing systems) have \emph{timeliness} requirements over computation such that associated deadlines must be met (eg. for safety-critial systems). Appropriate analytical techniques have been developed that enable \emph{a priori} guarantees to be established over timing behaviour at run-time regarding task deadlines.  
+Complex cyber-physical systems (\ie advanced embedded real-time computing systems) have \emph{timeliness} requirements over computation such that associated deadlines must be met (\eg for safety-critical systems). Appropriate analytical techniques have been developed that enable \emph{a priori} guarantees to be established over timing behaviour at run-time regarding task deadlines.  
 The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodic computation (termed tasks). 
-Analysis presented enables the \emph{schedulability} of a set of such tasks to be established, \ie whether their deadlines will be met at run-time. This has been extended to incorporate many other task characteristics, eg. sporadic tasks\cite{Mok:1983:FDP:888951}. 
+Analysis presented enables the \emph{schedulability} of a set of such tasks to be established, \ie whether their deadlines will be met at run-time. This has been extended to incorporate many other task characteristics, \eg, sporadic tasks\cite{Mok:1983:FDP:888951}. 
 
-One underlying assumption of the majority of these schedulability analyses is that a task does not volunatarily suspend its execution -- once executing, a task can only stop as a result of pre-emption by a higher priority task, becoming blocked on a shared resource, or completing its execution for that release of the task (\ie meeting its deadline). The alternative, that a task can \emph{self-suspend}, means that the assumptions underpinning basic analysis no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition} In Figure \ref{fig:ss-intuition}(a) the classical worst-case is illustrated, where the longest time that a task will execute before completing its execution occurs at a release co-inciding with the release of all higher priority tasks (termed \emph{critical instant}). As Figure \ref{fig:ss-intuition}(b) shows, when task \emph{High} has suspended its execution time, the result is that lower-priority task \rmph{Low} now misses its deadline.
-
-\begin{figure}[t]
-\begin{center}
-\includegraphics[width=\linewidth]{../figures/SelfSuspensionIntuition.pdf}
-\end{center}
-\caption{Two tasks \emph{High} (period 5, computation time 3) and \emph{Low} (period 7, computation time 2) meet their deadlines in (a). Conventional schdulability analysis will predict maximum response times of 3 and 5 respectively. In (b), task \emph{High} self suspends (indicated by shaded box), with the result that \emph{Low} will miss its deadline at time 14.}
-\label{fig:ss-intuition}
-\end{figure}
+One underlying assumption of the majority of these schedulability analyses is that a task does not voluntarily suspend its execution -- once executing, a task can only stop as a result of preemption by a higher priority task, becoming blocked on a shared resource, or completing its execution for that release of the task (\ie meeting its deadline). The alternative, that a task can \emph{self-suspend}, means that the assumptions underpinning basic analysis no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition}. In Figure \ref{fig:ss-intuition}(a) the classical worst case is illustrated, where the longest time that a task will execute before completing its execution occurs at a release coinciding with the release of all higher priority tasks (termed \emph{critical instant}). As Figure \ref{fig:ss-intuition}(b) shows, when a higher-priority task  has suspended its execution time, the result is that the lower-priority task now misses its deadline.
 
 
 Self-suspension has become more increasingly important to model accurately within schedulability analysis. For example, a task that utilises an accelerator or external physical device~\cite{Kang:rtss07,Kato_2011} where the resulting suspension delays range from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (\eg, offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).  Whilst the maximum self-suspension time could be included as additional execution time, this would be pessimistic and potentially under utilise the processor at run-time -- if the self-suspension is for a substantial time, it is advantageous to execute an alternative task.
@@ -20,6 +12,90 @@ Self-suspension has become more increasingly important to model accurately withi
 This paper seeks to provide the first survey of existing analyses for tasks that may self-suspend, highlighting the deficiencies within these analyses. The remainder of this section provides more background and motivation of general self-suspension and the issues it causes for analysis, followed by a thorough outline of the remainder of this survey paper.
 
 
+% \begin{figure}[t]
+% \begin{center}
+% \includegraphics[width=\linewidth]{../figures/SelfSuspensionIntuition.pdf}
+% \end{center}
+% \caption{Two tasks \emph{High} (period 5, computation time 3) and \emph{Low} (period 7, computation time 2) meet their deadlines in (a). Conventional schdulability analysis will predict maximum response times of 3 and 5 respectively. In (b), task \emph{High} self suspends (indicated by shaded box), with the result that \emph{Low} will miss its deadline at time 14.}
+% \label{fig:ss-intuition}
+% \end{figure}
+
+
+\begin{figure}[t]
+\centering
+\def\uxfpga{0.4cm} 
+\subfloat[]{\scalebox{0.8}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (16,0) node[anchor=north]{$t$};
+    \draw[] (0,2) -- coordinate (xaxis) (16,2) node[anchor=north]{};
+    \foreach \x in {0,1,...,15}{
+      \draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+    }
+    \foreach \x in {0,5,10,15}{
+      \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
+    }	
+    
+    \begin{scope}[shift={(0,0)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_2 (low)$};
+    \foreach \x in {0,7,14}{ 
+        \draw[->] (\x,0) -- (\x,1.75);        		
+      }
+      \foreach \x in {3,8}{ 
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (\x, 0){};
+      }
+    \end{scope}
+    
+    \begin{scope}[shift={(0,2)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_1 (high)$};
+      \foreach \x in {0,5,10,15}{ 
+        \draw[->] (\x,0) -- (\x,1.75);        		
+      }
+      \foreach \x in {0,5,10}{ 
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (\x, 0){};
+      }
+    \end{scope}                
+  \end{tikzpicture}}}
+\subfloat[]{\scalebox{0.8}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (16,0) node[anchor=north]{$t$};
+    \draw[] (0,2) -- coordinate (xaxis) (16,2) node[anchor=north]{};
+    \foreach \x in {0,1,...,15}{
+      \draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+    }
+    \foreach \x in {0,5,10,15}{
+      \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
+    }	
+    
+    \begin{scope}[shift={(0,0)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_2 (low)$};
+    \foreach \x in {0,7,14}{ 
+        \draw[->] (\x,0) -- (\x,1.75);        		
+      }
+      \foreach \x in {3}{ 
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (\x, 0){};
+      }
+      \draw[very thick, red](13.5, 0.3) -- (14.5, 1);
+      \draw[very thick, red](13.5, 1) -- (14.5, 0.3);
+    \end{scope}
+    
+    \begin{scope}[shift={(0,2)}]
+      \node[anchor=east] at (0, 0.5) {$\tau_1 (high)$};
+      \foreach \x in {0,5,10,15}{ 
+        \draw[->] (\x,0) -- (\x,1.75);        		
+      }
+      \foreach \x in {0,7,10}{ 
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (\x, 0){};
+      }
+      \draw(6.2, 1.25) node{\tiny suspend};
+      \draw(5, 0.3) -- ( 7,0.3);
+      \draw(5, 0.5) -- ( 7,0.5);
+      \draw(5, 0.7) -- ( 7,0.7);
+    \end{scope}         
+  \end{tikzpicture}}}
+\caption{
+Two tasks $\tau_1$ (higher priority, period 5, computation time 3) and $\tau_2$ (lower priority, period 7, computation time 2) meet their deadlines in (a). Conventional schdulability analysis will predict maximum response times of 3 and 5 respectively. In (b), task $\tau_1$ suspends itself, with the result that task $\tau_2$ will miss its deadline at time 14.}
+\label{fig:ss-intuition}
+\end{figure}
 
 
 %For over half a centry, researchers in real-time systems have devoted themselves to effective design and efficient analyses of different recurrent task models to ensure that tasks can meet their specified deadlines. In most of these studies, \emph{task suspensions are usually not allowed}. That is, after a job is released, the job is either executed or stays in the ready queue, but it is not moved to the suspension state. 
