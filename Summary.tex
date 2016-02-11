@@ -185,13 +185,11 @@ elaborations. These include the following results in the literature:
 \subsection{Potentially Correct Approaches}
 \label{sec:correct-solutions} 
 
-We would like to conclude this review paper by providing some positive
-information about designing and analyzing hard real-time systems that
-involve self-suspending tasks.  Note that at the date of the writing of this
-document, there exists no concern of the correctness of the following results. % yet; therefore, they are potentially correct.
+We would like to conclude this review by providing some positive notes on the available results on the design and analyzes of hard real-time systems
+involving self-suspending tasks.  At the date of the writing of this
+document, no concern has been produced on the correctness of the following results. % yet; therefore, they are potentially correct.
 \begin{itemize}
-\item For segmented self-suspending task systems on uniprocessor
-  platforms, they are: 
+\item For segmented self-suspending task systems: 
   \begin{enumerate}
   \item the periodic enforcer from Rajkumar \cite{Raj:suspension1991}
     if a self-suspending task
@@ -200,7 +198,7 @@ document, there exists no concern of the correctness of the following results. %
     Harbour~\cite{PH:rtss98} by using the arrival jitter of a
     higher-priority task properly with an offset (also for
     multiprocessor partitioned scheduling);
-  \item the ${\cal NP}$-hardness in the strong sense to find a feasible
+  \item the proof of ${\cal NP}$-hardness in the strong sense to find a feasible
     schedule and negative results with respect to the speedup factors,
     provided by Ridouard, Richard, and Cottet \cite{Ridouard_2004};
   \item the result from Nelissen et al. \cite{ecrts15nelissen} by
@@ -217,9 +215,9 @@ document, there exists no concern of the correctness of the following results. %
     carry-in computation segments together.
   \end{enumerate}
 \item For dynamic self-suspending task systems on uniprocessor
-  platforms, they are:
+  platforms:
   \begin{enumerate}
-  \item the analysis in the book~\cite[Pages
+  \item the analysis provided in~\cite[Pages
     164-165]{Liu:2000:RS:518501} by Liu based on the proof in \cite{ChenHuangNelissen}; 
   \item the utilization-based analysis by Liu and Chen
     \cite{LiuChen:rtss2014} under rate-monotonic scheduling;
@@ -229,7 +227,7 @@ document, there exists no concern of the correctness of the following results. %
     al. \cite{huangpass:dac2015};
   \end{enumerate}
 \item For dynamic self-suspending task systems on homogeneous multiprocessor
-  platforms, they are:
+  platforms:
   \begin{enumerate}
   \item the schedulability test for global EDF scheduling by Liu and
     Anderson \cite{DBLP:conf/ecrts/LiuA13};
@@ -241,7 +239,7 @@ document, there exists no concern of the correctness of the following results. %
     bursty behaviour.
   \end{enumerate}
 \end{itemize}
-The potential solutions listed in Table~\ref{tab:summary} for the
+The solutions and fixes listed in Table~\ref{tab:summary} for the
 affected papers and statements seem to be correct.
 
 
