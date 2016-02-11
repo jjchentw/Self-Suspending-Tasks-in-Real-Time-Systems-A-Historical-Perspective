@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  20 JAN 2016 13:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  8 FEB 2016 13:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1248,9 +1248,6 @@ from higher-priority
 [38]) (./JRTS.bbl [39] [40] [41] [42]) [43] (./JRTS.aux)
 
 LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
