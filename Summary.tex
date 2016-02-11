@@ -4,9 +4,10 @@
 characteristic in real-time systems such as: (i) I/O-intensive systems
 (ii) multi-processor synchronization and scheduling, and (iii)
 computation offloading with coprocessors, like graphics processing
-units (GPUs).  This paper reviews the literature in the light of
+units (GPUs).  This paper has reviewed the literature in the light of
 recent developments in the analysis of self-suspending tasks,
-explains the general methodologies, summarizes the computational complexity classes, and points out several 
+explained the general methodologies, summarized the computational complexity classes, 
+and details a number of 
 misconceptions in the literature concerning this topic. We
 have given concrete examples to demonstrate the effect of these
 misconceptions, listed some flawed statements in the literature, and
@@ -28,19 +29,18 @@ presented potential solutions. These misconceptions include:
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
 \end{itemize}
 For completeness, all the misconceptions, open issues, closed issues,
-and inherited flaws mentioned in this paper are listed in Table~\ref{tab:summary}.
+and inherited flaws discussed in this paper are listed in Table~\ref{tab:summary}.
 
-In order to make the statements in this review rigorous, several
-individual reports are filed by the subsets of the authors. These
-include the proof \cite{ChenHuangNelissen} of the correctness of the
+This review extensively references errata reports as follows:
+the proof \cite{ChenHuangNelissen} of the correctness of the
 analysis from Jane W.S. Liu in her book \cite[Page
-164-165]{Liu:2000:RS:518501}, the re-examination and the limitations
+164-165]{Liu:2000:RS:518501}; the re-examination and the limitations
 \cite{ChenBrandenburg} of the period enforcer algorithm proposed in
-\cite{Raj:suspension1991}, the erratum report \cite{BletsasReport2015}
+\cite{Raj:suspension1991}; the erratum report \cite{BletsasReport2015}
 of the misconceptions in
-\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}, and the erratum \cite{Kim2016} of the
-misconceptions in \cite{RTSS-KimANR13}.  In order not to make this
-review too lengthy, these reports and errata are shortly summarized in
+\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}; and the erratum \cite{Kim2016} of the
+misconceptions in \cite{RTSS-KimANR13}. 
+For brevity, these errata reports are only summarized in
 this review. We encourage the readers to refer to these reports and
 errata for more detailed explanations.
 
@@ -122,7 +122,7 @@ of Theorem
 We have carefully re-examined the results related to self-suspending
 real-time tasks in the literature in the past 25 years. However, there
 are also some results in the literature that may require further
-elaborations. These include the following results in the literature
+elaborations. These include the following results in the literature:
 \begin{itemize}
 \item Devi (in Theorem 8 in \cite[Section
   4.5]{DBLP:conf/ecrts/Devi03}) extended the analysis proposed by Jane
@@ -192,6 +192,11 @@ document, in addition to the potential solutions listed in
 Table~\ref{tab:summary}, for the affected papers and statements, 
 we have not reached any concrete concerns of correctness for
 the following results.
+
+*****************\\
+\textbf{Please clarify the above sentence. Are the below a list of concerns? are they a list of unproved results?}\\
+*****************\\
+
 \begin{itemize}
 \item For segmented self-suspending task systems on uniprocessor
   platforms, they are: 
