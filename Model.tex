@@ -384,9 +384,10 @@ algorithms:
   \cite{Liu_1973} to evaluate the worst-case response time
   precisely. That is, the worst-case response time of task $\tau_k$ is
   the minimum positive $R_k$ such that
-  \[
-  R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i, 
-  \]
+  \begin{equation}
+    \label{eq:rta}
+  R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,     
+  \end{equation}
   where $hp(k)$ is the set of the tasks with higher-priority levels
   than $\tau_k$.  
 \end{itemize}
