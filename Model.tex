@@ -232,24 +232,55 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
 
 \section{Real-Time Sporadic Self-Suspending Task Models}
 \label{sec:model}
+
+
+Each sporadic task $\tau_i$ can release an infinite number of jobs (also called task instances) under the given minimum inter-arrival time (also called period) constraint $T_i$.  Each job released by a sporadic task $\tau_i$ has a relative deadline $D_i$.  That is, if a job of task $\tau_i$ arrives at time $t$, it should be finished before its absolute deadline $t+D_i$, and the next instance of the task must arrive no earlier than time $t + T_i$.
+Throughout this paper, we will use ${\bf T}$ to denote the input task
+set and use $n$ to denote the number of tasks in ${\bf T}$. 
+If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
+equal to the period $T_k$, such a task set ${\bf T}$ is an
+\emph{implicit-deadline} task set. If the relative deadline $D_k$ of
+task $\tau_k$ in ${\bf T}$ is always no more than the period $T_k$,
+such a task set ${\bf T}$ is called a \emph{constrained-deadline} task
+set. Otherwise, such a task set is called an \emph{arbitrary-deadline}
+task set. We will mainly consider constrained-deadline and
+implicit-deadline task systems, except for some parts in
+Section~\ref{sec:soft-realtime}.
   
 Self-suspending task models can be classified into \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment})
 self-suspension models. A third model, using a \emph{directed acyclic graph} (DAG) representation of task control flow, can be 
 reduced to an instance of the former two models, for analysis purposes.
 
-The dynamic self-suspension sporadic task model characterizes a task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the 
+The \emph{dynamic} self-suspension sporadic task model characterizes a task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$: $T_i$ denotes the 
 minimum inter-arrival time (or period) of $\tau_i$, $D_i$ denotes the relative deadline of $\tau_i$, $C_i$ denotes an upper bound on 
 the total execution time of each job of $\tau_i$, and $S_i$ denotes an upper bound on the total suspension time of each job of $\tau_i$.  
-
-In addition to the above four-tuple, the segmented sporadic task model further characterizes the computation segments and suspension 
+In addition to the above four-tuple, the \emph{segmented} self-suspension sporadic task model further characterizes the computation segments and suspension 
 intervals as an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$, composed of $m_i$ computation segments 
 separated by $m_i-1$ suspension intervals.  For segmented sporadic task $\tau_i$, we implicitly set 
 $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$ for notational brevity.
 
-In the DAG-based model\cite{bletsas:thesis}, each node represents either a self-suspending region or a computation segment
+In both models, the
+utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
+Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
+lengths; when absent, these are implicitly zero.
+
+From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
+without considering the juncture of I/O access, computation offloading, or synchronization. However, from an analysis perspective, such a 
+dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
+unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the 
+segmented self-suspension task model is more appropriate.   
+As we will see in the next section, it is possible to employ both the dynamic self-suspension model and the segmented self-suspension model simultaneously 
+in one task set.
+%, \eg, by using the segmented model for those tasks that can be modeled according to
+% it and using the dynamic model for all other tasks.
+
+
+
+
+In the DAG-based model\cite{bletsas:thesis}, each node represents either a self-suspending interval or a computation segment
 with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
-represents a different program execution path. A linear graph is already an instance of the segmented model.
-An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic model. 
+represents a different program execution path. A linear graph is already an instance of the segmented self-suspension model.
+An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
 %
 %with 
 %the following parameters:
@@ -260,63 +291,31 @@ An arbitrary task graph can be reduced with some information loss (pessimism) to
 %\end{align}
 %
 %where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis}.
-
-Using 
-\begin{align} 
-C_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell   \Big)         \nonumber\\
-S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} S_i^\ell   \Big)         \nonumber
-\end{align}
-
-where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis} for the converted
-instance of the dynamic model is safe. However, it is unnecessarily pessimistic, if the maximum execution time and maximum self-suspension 
-time are observed in different node paths. A more efficient conversion would use
-
+A simple and safe method is to use
+\begin{equation*} 
+C_i =  \max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell   \Big)        \mbox{   and }
+S_i =  \max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} S_i^\ell   \Big),
+\end{equation*}
+where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis}. However, it is unnecessarily pessimistic, since the maximum execution time and maximum self-suspension 
+time may be observed in different node paths. A more efficient conversion would use
 \begin{align} 
 S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\ell \in \varphi} S_i^\ell   \Big)  - C_i  \nonumber
 \end{align}
 with $C_i$ still computed as above. For the intuition (partial modelling of self-suspension as computation, which is a safe transformation) 
 see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,BletsasReport2015}.
 
-Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
-lengths; when absent, these are implicitly zero.
-
-From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
-without considering the juncture of I/O access, computation offloading, or synchronization. However, from an analysis perspective, such a 
-dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
-unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the 
-segmented self-suspension task model is more appropriate.   
-
-Each sporadic task $\tau_i$ can release an infinite number of jobs
-(also called task instances) under the given minimum inter-arrival
-time (temporal) constraint $T_i$.  That is, if a
-job of task $\tau_i$ arrives at time $t$, it should be finished before
-its absolute deadline $t+D_i$, and  the next instance of
-the task must arrive no earlier than time $t + T_i$.
-
-
-Throughout this paper, we will use ${\bf T}$ to denote the input task
-set and use $n$ to denote the number of tasks in ${\bf T}$. The
-utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
-
-If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
-equal to the period $T_k$, such a task set ${\bf T}$ is an
-\emph{implicit-deadline} task set. If the relative deadline $D_k$ of
-task $\tau_k$ in ${\bf T}$ is always no more than the period $T_k$,
-such a task set ${\bf T}$ is called a \emph{constrained-deadline} task
-set. Otherwise, such a task set is called an \emph{arbitrary-deadline}
-task set. We will mainly consider constrained-deadline and
-implicit-deadline task systems, except for some parts in
-Section~\ref{sec:soft-realtime}.
+Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
 \subsection{Examples of Dynamic Self-Suspension Model} 
 The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending regions for a task, \eg, when these may vary for different jobs by the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
 of system variables at run-time. Each of those paths may have a different
-number of self-suspending regions. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
+number of self-suspending intervals. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
 another one may self-suspend shortly before completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
-just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. Note that these two worst cases may be observed under different control flows.
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier by converting the information provided by a DAG into the dynamic self-suspension task model. 
+%Note that these two worst cases may be observed under different control flows.
   
 \subsection{Examples of Segmented Self-Suspension Model} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
@@ -326,18 +325,18 @@ model discussed earlier, but this would discard the information about the constr
 activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
 to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
 
-\subsection{Examples of the DAG Self-Suspension Model}
-The DAG Self-Suspension Model, in a simple case, can represent a program, which after some pre-processing, reaches a conditional branch.
-If the branch is taken, the rest of the computation is done on the processor; else, it is outsourced to a co-processor and the task
-self-suspends until the result is available. 
+% \subsection{Examples of the DAG Self-Suspension Model}
+% The DAG Self-Suspension Model, in a simple case, can represent a program, which after some pre-processing, reaches a conditional branch.
+% If the branch is taken, the rest of the computation is done on the processor; else, it is outsourced to a co-processor and the task
+% self-suspends until the result is available. 
 
-Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it
-is converted to an instance of either the dynamic or the segmented model, which may then serve as input to existing analysis techniques.
-For this reason, in the rest of this survey, we focus on those two models.
+% Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it
+% is converted to an instance of either the dynamic or the segmented model, which may then serve as input to existing analysis techniques.
+% For this reason, in the rest of this survey, we focus on those two models.
 
-As we will see in the next section, it is possible for both the dynamic model and the segmented model to be employed simultaneously 
-during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to 
-it and using the dynamic model for all other tasks.
+% As we will see in the next section, it is possible for both the dynamic model and the segmented model to be employed simultaneously 
+% during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to 
+% it and using the dynamic model for all other tasks.
 
 \subsection{Terminologies and Notation for Scheduling}
 
