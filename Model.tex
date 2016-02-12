@@ -12,9 +12,9 @@ We use a binary semaphore shared by two tasks assigned on two different processo
 
 % There are several synchronization protocols in the literature, some of them prevent the above self-suspending behaviour by using \emph{spin-locking} by pessimistically increasing the worst-case execution time. Some of them try to utilize the unused resource on the second processor in the above example by running other jobs. 
 
-In this paper, we will specifically examine t existing results for multiprocessor synchronization problems in Section~\ref{sec:syn}. Such problems have been specifically studied in \cite{rajkumar-1990,lakshmanan-2009,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}.
+In this paper, we will specifically examine the existing results for multiprocessor synchronization problems in Section~\ref{sec:syn}. Such problems have been specifically studied in \cite{rajkumar-1990,lakshmanan-2009,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}.
 
-{\bf Example 3: Hardware Acceleration by Using Co-Processors and Computation Offloading.} In many systems, selected portions of programs are preferably (or even necessarily) executed on dedicated hardware co-processors, to satisfy performance requirements.  Such co-processors in embedded systems include application-specific integrated circuits (ASICs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs), graphics processing units (GPUs), etc. There are two typical strategies for utilizing the hardware co-processors. One is busy-waiting, in which the software task does give up its privilege on the processor by suspending itself. Another is to suspend the software task. This strategy frees the processor so that it can be used by other ready tasks. Therefore, even in single-CPU systems more than one task may be simultaneously executed in computation: one task executing on the processor and others on each of the available co-processors. This arrangement is called \emph{limited parallelism} \cite{RTAS-AudsleyB04} and is illustrated by Figure~\ref{fig:example-fpga}. Such suspending behaviour can usually improve the performance by effectively utilizing the processor and the co-processors, as shown in Figure~\ref{fig:example-fpga}.
+{\bf Example 3: Hardware Acceleration by Using Co-Processors and Computation Offloading.} In many systems, selected portions of programs are preferably (or even necessarily) executed on dedicated hardware co-processors, to satisfy performance requirements.  Such co-processors in embedded systems include application-specific integrated circuits (ASICs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs), graphics processing units (GPUs), etc. There are two typical strategies for utilizing the hardware co-processors. One is busy-waiting, in which the software task does not give up its privilege on the processor and has to wait by spinning on the processor until the co-processor finishes the work. Another is to suspend the software task. This strategy frees the processor so that it can be used by other ready tasks. Therefore, even in single-CPU systems more than one task may be simultaneously executed in computation: one task executing on the processor and others on each of the available co-processors. This arrangement is called \emph{limited parallelism} \cite{RTAS-AudsleyB04} and is illustrated by Figure~\ref{fig:example-fpga}. Such suspending behaviour can usually improve the performance by effectively utilizing the processor and the co-processors, as shown in Figure~\ref{fig:example-fpga}.
 
 % Another domain which deploys hardware acceleration is that of General-Purpose Graphics Processor (GPGPU) computing. 
 % Unlike FPGAs which are used for the synthesis of custom co-processors, this paradigm uses standard PC hardware as an accelerator.
@@ -23,10 +23,10 @@ In this paper, we will specifically examine t existing results for multiprocesso
 % models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
 % applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
 % (single-cycle context switch) GPU threads, each performing a different part of the overall computation.
-% For many kinds of applications, e.g. scientific, or floating-point heavy, with minimal data dependencies among 
+% For many kinds of applications, \eg scientific, or floating-point heavy, with minimal data dependencies among 
 % threads, the speed-up is by tens or hundreds of times.
 
-% In the typical setup, the GPU is used as a co-processor. The native application (e.g., x86) running on the host
+% In the typical setup, the GPU is used as a co-processor. The native application (\eg, x86) running on the host
 % copies the input from the main memory to the GPU memory, and then launches the CUDA application (called ``kernel") on the GPU;
 % Upon completion, the output is copied from GPU memory to main memory. As with FPGA co-processors, it makes sense to 
 % have the host application suspend, for the duration of the CUDA kernel. 
@@ -177,7 +177,7 @@ Computation offloading with real-time constraints has been specifically studied 
 
 
 {\bf Example 4: Partitioned Scheduling for DAG-Structured Tasks.}
-To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the second processor and the subtasks with execution times $0.5,$ and $7$ on the first processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors will experience some idle time 
+To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors will experience some idle time 
 due to the precedence constraint of the DAG task. Such idle time intervals can also be considered as suspensions. 
 
 
@@ -200,8 +200,8 @@ due to the precedence constraint of the DAG task. Such idle time intervals can a
 
       \begin{scope}[shift={(6.3,2)}]
        \draw[->] (0,0) -- coordinate (xaxis) (12.5,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.3) {Proc. 1};
-       \node[anchor=east] at (0, 1.8) {Proc. 2};
+       \node[anchor=east] at (0, 0.3) {Proc. 2};
+       \node[anchor=east] at (0, 1.8) {Proc. 1};
        \foreach \x in {0,1,...,12}{
          \draw[-,below](\x,0) -- (\x,-0.1)
          node[] {\pgfmathtruncatemacro\yi{\x} \yi};
@@ -246,21 +246,45 @@ intervals as an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^
 separated by $m_i-1$ suspension intervals.  For segmented sporadic task $\tau_i$, we implicitly set 
 $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$ for notational brevity.
 
-
 In the DAG-based model\cite{bletsas:thesis}, each node represents either a self-suspending region or a computation segment
-with single-entry-single-exit control flow semantic. Each possible path from the source node to the sink node
+with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
 represents a different program execution path. A linear graph is already an instance of the segmented model.
-An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic model with 
-the following parameters:
+An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic model. 
+%
+%with 
+%the following parameters:
+%
+%\begin{align} 
+%C_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell                                      \Big)         \nonumber\\
+%S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\ell \in \varphi} S_i^\ell   \Big)  - C_i  \nonumber
+%\end{align}
+%
+%where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis}.
 
+Using 
 \begin{align} 
-C_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell                                      \Big)         \nonumber\\
-S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\ell \in \varphi} S_i^\ell   \Big)  - C_i  \nonumber
+C_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell   \Big)         \nonumber\\
+S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} S_i^\ell   \Big)         \nonumber
 \end{align}
 
-where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis}.
+where $\varphi$ denotes a control flow (path), as a set of nodes traversed~\cite{RTAS-AudsleyB04,bletsas:thesis} for the converted
+instance of the dynamic model is safe. However, it is unnecessarily pessimistic, if the maximum execution time and maximum self-suspension 
+time are observed in different node paths. A more efficient conversion would use
 
-Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension lengths; when absent, these are implicitly zero.
+\begin{align} 
+S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\ell \in \varphi} S_i^\ell   \Big)  - C_i  \nonumber
+\end{align}
+with $C_i$ still computed as above. For the intuition (partial modelling of self-suspension as computation, which is a safe transformation) 
+see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,BletsasReport2015}.
+
+Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
+lengths; when absent, these are implicitly zero.
+
+From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
+without considering the juncture of I/O access, computation offloading, or synchronization. However, from an analysis perspective, such a 
+dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
+unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the 
+segmented self-suspension task model is more appropriate.   
 
 Each sporadic task $\tau_i$ can release an infinite number of jobs
 (also called task instances) under the given minimum inter-arrival
@@ -268,12 +292,6 @@ time (temporal) constraint $T_i$.  That is, if a
 job of task $\tau_i$ arrives at time $t$, it should be finished before
 its absolute deadline $t+D_i$, and  the next instance of
 the task must arrive no earlier than time $t + T_i$.
-
-From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
-without considering the juncture of I/O access, computation offloading, or synchronization. However, from an analysis perspective, such a 
-dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
-unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the 
-segmented self-suspension task model is more appropriate.   
 
 
 Throughout this paper, we will use ${\bf T}$ to denote the input task
@@ -291,7 +309,7 @@ implicit-deadline task systems, except for some parts in
 Section~\ref{sec:soft-realtime}.
 
 \subsection{Examples of Dynamic Self-Suspension Model} 
-The dynamic self-suspension model is convenient when it is not possible to know \text{a priori} the number and/or the location of self-suspending regions for a task, e.g., when these may vary for different jobs by the same task.
+The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending regions for a task, \eg, when these may vary for different jobs by the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
 of system variables at run-time. Each of those paths may have a different
@@ -302,22 +320,26 @@ just two parameters: the worst-case execution time of the task in consideration 
   
 \subsection{Examples of Segmented Self-Suspension Model} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
-i.e., there is a deterministic number of self-suspending regions interleaved between portions of processor-based code with single-entry
+\ie, there is a deterministic number of self-suspending regions interleaved between portions of processor-based code with single-entry
 single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic
 model discussed earlier, but this would discard the information about the constraints in the location of self-suspensions inside a task 
 activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
-to derive tighter bounds on worst-case response times, where applicable, relative to analysis that only considers the dynamic model. 
+to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
 
 \subsection{Examples of the DAG Self-Suspension Model}
 The DAG Self-Suspension Model, in a simple case, can represent a program, which after some pre-processing, reaches a conditional branch.
 If the branch is taken, the rest of the computation is done on the processor; else, it is outsourced to a co-processor and the task
-self-suspends until the result is available.
+self-suspends until the result is available. 
+
+Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it
+is converted to an instance of either the dynamic or the segmented model, which may then serve as input to existing analysis techniques.
+For this reason, in the rest of this survey, we focus on those two models.
 
 As we will see in the next section, it is possible for both the dynamic model and the segmented model to be employed simultaneously 
 during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to 
 it and using the dynamic model for all other tasks.
 
-\subsection{Terminologies and Notations for Scheduling}
+\subsection{Terminologies and Notation for Scheduling}
 
 Implicitly, we will assume that the system schedules the jobs in a
 \emph{preemptive} manner, unless specified otherwise.  We will mainly focus on
@@ -326,7 +348,7 @@ will be discussed in Section~\ref{sec:multiprocessor-HRT} and
 Section~\ref{sec:soft-realtime}. 
  The cost of preemption
 has been subsumed into the worst-case execution time of each task. In
-uniprocessor systems, i.e., Section~\ref{sec:review} and
+uniprocessor systems, \ie, Section~\ref{sec:review} and
 Section~\ref{sec:misconceptions} (except Section~\ref{sec:multiprocessor-HRT}), we will consider both
 dynamic-priority scheduling and fixed-priority (FP)
 scheduling. A task changes its priority level in dynamic-priority
@@ -345,7 +367,7 @@ higher priority level, and deadline-monotonic (DM) scheduling, under which
 the task with a shorter relative deadline has a higher priority level.
 This has been explored in
 \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}.
-Moreover, in some results in the literature, e.g.,
+Moreover, in some results in the literature, \eg,
 \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, each computation
 segment in the segmented self-suspending task model has its own unique
 priority level. Such a scheduling
@@ -379,13 +401,13 @@ algorithms:
 \item Utilization-based schedulability tests: These include the
   utilization bound from Liu and Layland \cite{Liu_1973}  and the
   hyperbolic bound from Bini et al. \cite{bini2003rate}.
-\item Time-demand analysis (TDA): This is based on the critical instant
+\item Time-demand analysis (TDA) or response time analysis (RTA) \cite{lehoczky-1989}: This is based on the critical instant
   theorem in
   \cite{Liu_1973} to evaluate the worst-case response time
   precisely. That is, the worst-case response time of task $\tau_k$ is
   the minimum positive $R_k$ such that
   \begin{equation}
-    \label{eq:rta}
+   \label{eq:rta}
   R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,     
   \end{equation}
   where $hp(k)$ is the set of the tasks with higher-priority levels
@@ -408,14 +430,14 @@ To resolve the computational complexity issues in many scheduling problems in re
 \subsection{Terminologies for Multiprocessor Scheduling}
 
 On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned, and (\textit{ii}) global scheduling. , and (\textit{iii}) clustered scheduling. 
-Under partitioned scheduling, tasks are statically partitioned among processors, i.e., each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
+Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
 Partitioned fixed-priority (P-FP) scheduling is another widespread
 choice in practice due to the wide support in industrial standards
 such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc
 Under P-FP scheduling, each task has a fixed priority level and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
 %Under EDF, jobs with earlier deadlines have higher priority. 
  In contrast to partitioned scheduling, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (G-EDF), under which jobs are EDF-scheduled using a single ready queue.  
- Clustered scheduling is hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying hardware architecture to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (e.g., an automotive system)~\cite{bastoni2010}.
+ Clustered scheduling is hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying hardware architecture to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (\eg, an automotive system)~\cite{bastoni2010}.
 
 
 %%% Local Variables:
