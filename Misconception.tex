@@ -353,7 +353,8 @@ Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} proposed a pseudo-
 \item $\tau_k$ is the lowest priority task;  and
 \item all the higher priority tasks are sporadic and non-self-suspending.
 \end{itemize}
-The analysis, presented in \cite{LR:rtas10}, is based on the notion of critical instant, \ie, an instant at which, considering the state of the system, an execution request for $\tau_k$ will generate the largest response time. This critical instant was defined as follows:
+The analysis, presented in \cite{LR:rtas10}, is based on the notion of
+a critical instant, \ie, an instant at which, considering the state of the system, an execution request for $\tau_k$ will generate the largest response time. This critical instant was defined as follows:
 \begin{itemize}
 	\item every task releases a job simultaneously with $\tau_k$;
 	\item the jobs of higher priority tasks that are eligible to be released during the self-suspension interval of $\tau_k$ are delayed to be aligned with the release of the subsequent computation segment of $\tau_k$; and
@@ -519,14 +520,14 @@ Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau
         $\tau_4$ & (265, 2, 6) & 1000\\
         \hline
     \end{tabular} 
-    \caption{Task parameters for the counter-example to the maximization of the number of releases.}
+    \caption{Task parameters for the counterexample to the maximization of the number of releases.}
     \label{table:ex-num-releases}
 \end{table}
 
 Consider two scenarios with respect to the job release pattern. In Scenario~1, the jobs of the higher priority non-self-suspending tasks are released as often as possible in each computation segment of $\tau_4$. In Scenario~2 however, one less job of task $\tau_1$ is released in (and therefore interfere with) the first computation segment of the self-suspending task. We show that the WCRT of $\tau_4$ in Scenario~2 is higher than that of Scenario~1. 
 
 Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2sc1}, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2sc2}. The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedules of the jobs are identical in this initial time window.  
-A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ (indeed, we have $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$) in both scenarios. From time $765$ onward, we separately consider Scenario~1 and~2.
+A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ (indeed, we have $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$) in both scenarios. From time $765$ onward, we separately consider Scenarios~1 and~2.
 \begin{figure}
   \centering
   \subfloat[Scenario 1. Jobs are released as often as possible.]{\label{fig:ex_crit_inst2sc1} \includegraphics[height=1.95cm, width=\linewidth]{../figures/ex2sc1}} \\
@@ -540,7 +541,7 @@ A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with th
 \noindent\textbf{Scenario 2.} As shown in Fig.~\ref{fig:ex_crit_inst2sc2}, the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension region anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2sc2} as the job of $\tau_4$ finishes its execution at time $802$.\\
 
 
-{\bf Consequence:} This counter-example proves that the response time of a self-suspending task $\tau_k$ can be larger when the tasks in $hp(k)$ do not release jobs as often as possible.
+{\bf Consequence:} This counterexample proves that the response time of a self-suspending task $\tau_k$ can be larger when the tasks in $hp(k)$ do not release jobs as often as possible.
 
 {\bf Solution:} The problem to define the critical instant remains open even for the special case where only the lowest priority task is self-suspending. Nelissen et al. propose a limited solution in \cite{ecrts15nelissen} based on an exhaustive search with exponential time complexity.
 
