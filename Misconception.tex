@@ -526,19 +526,148 @@ Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau
 
 Consider two scenarios with respect to the job release pattern. In Scenario~1, the jobs of the higher priority non-self-suspending tasks are released as often as possible in each computation segment of $\tau_4$. In Scenario~2 however, one less job of task $\tau_1$ is released in (and therefore interfere with) the first computation segment of the self-suspending task. We show that the WCRT of $\tau_4$ in Scenario~2 is higher than that of Scenario~1. 
 
-Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2sc1}, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2sc2}. The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedules of the jobs are identical in this initial time window.  
+Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2}a, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2}b. The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedules of the jobs are identical in this initial time window.  
 A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ (indeed, we have $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$) in both scenarios. From time $765$ onward, we separately consider Scenarios~1 and~2.
-\begin{figure}
-  \centering
-  \subfloat[Scenario 1. Jobs are released as often as possible.]{\label{fig:ex_crit_inst2sc1} \includegraphics[height=1.95cm, width=\linewidth]{../figures/ex2sc1}} \\
-  \subfloat[Scenario 2. Jobs are not released as often as possible.]{\label{fig:ex_crit_inst2sc2} \includegraphics[height=1.8cm, width=\linewidth]{../figures/ex2sc2}}
-  \caption{Example showing that releasing higher priority jobs as often as possible may not always cause the maximum interference on a self-suspending task.}
-  \label{fig:ex_crit_inst2}
+%\begin{figure}
+%  \centering
+%  \subfloat[Scenario 1. Jobs are released as often as possible.]{\label{fig:ex_crit_inst2sc1} \includegraphics[height=1.95cm, width=\linewidth]{../figures/ex2sc1}} \\
+%  \subfloat[Scenario 2. Jobs are not released as often as possible.]{\label{fig:ex_crit_inst2sc2} %\includegraphics[height=1.8cm, width=\linewidth]{../figures/ex2sc2}}
+%  \caption{Example showing that releasing higher priority jobs as often as possible may not always cause the maximum interference on a self-suspending task.}
+%  \label{fig:ex_crit_inst2}
+%\end{figure}
+
+\begin{figure}[t]
+\centering
+\def\uxfpga{0.4cm} 
+\subfloat[Scenario 1. Jobs are released as often as possible.]{
+\scalebox{0.73}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (39,0) node[anchor=north]{$t$};
+    \foreach \x in {0,5,...,35}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x+765} \yi};
+	}
+	\foreach \x in {0,1,...,38}{
+         \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,8);
+	}	
+	\foreach \y in {2.03,4.03,6.03}{
+		\draw[] (0,\y) -- (38,\y);
+	}
+	
+	\begin{scope}[shift={(0,0)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_4$};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (1, 0){\footnotesize};
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (8, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (16, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (24, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (26, 0){\footnotesize};
+        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (31, 0){\footnotesize};  
+    		\foreach \y in {0.3,0.5,0.7}{ 
+    			\draw[] (17,\y) -- (19,\y);
+        	} 
+        \draw[] (19,0) -- (19,1);
+	\end{scope}
+
+	\begin{scope}[shift={(0,2)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (19,0) -- (19,1.75);
+        \draw[->] (36,0) -- (36,1.75);
+        \draw[->, dashed] (17,0) -- (17,1.75);
+        \draw[<->, thin, red] (17,0.5)--(19,0.5);
+        \node[anchor=east,red] at (19.3, 1) {Delay}; 
+    		\node[task7, minimum width=\uxfpga, anchor=south west] at (0, 0){\footnotesize};
+    		\node[task7, minimum width=\uxfpga, anchor=south west] at (23, 0){\footnotesize};
+	\end{scope}
+
+	\begin{scope}[shift={(0,4)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \foreach \x in {5,15,...,35}{ 
+			\draw[->] (\x,0) -- (\x,1.75);            		
+        	}
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (7, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (15, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (25, 0){\footnotesize};
+	\end{scope}                
+
+	\begin{scope}[shift={(0,6)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+        \foreach \x in {3,11,...,27}{ 
+			\draw[->] (\x,0) -- (\x,1.75);     
+			\node[task7, minimum width=4*\uxfpga, anchor=south west] at (\x, 0){\footnotesize};       		
+        	}
+        	\draw[->] (35,0) -- (35,1.75);
+	\end{scope}                
+	
+\end{tikzpicture}} }
+
+\subfloat[Scenario 2. Jobs are not released as often as possible.]{
+\scalebox{0.73}{
+	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+    \draw[->] (0,0) -- coordinate (xaxis) (39,0) node[anchor=north]{$t$};
+    \foreach \x in {0,5,...,35}{
+		\draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x+765} \yi};
+	}
+	\foreach \x in {0,1,...,38}{
+         \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,8);
+	}	
+	\foreach \y in {2.03,4.03,6.03}{
+		\draw[] (0,\y) -- (38,\y);
+	}
+	
+	\begin{scope}[shift={(0,0)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_4$};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (1, 0){\footnotesize};
+        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (8, 0){\footnotesize};
+        \node[task7, minimum width=2*\uxfpga, anchor=south west] at (20, 0){\footnotesize};
+        \node[task7, minimum width=3*\uxfpga, anchor=south west] at (27, 0){\footnotesize};
+        \node[task7, minimum width=\uxfpga, anchor=south west] at (36, 0){\footnotesize};
+    		\foreach \y in {0.3,0.5,0.7}{ 
+    			\draw[] (12,\y) -- (14,\y);
+        	} 
+        \draw[] (14,0) -- (14,1);
+	\end{scope}
+
+	\begin{scope}[shift={(0,2)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_3$};
+        \draw[->] (0,0) -- (0,1.75);
+        \draw[->] (17,0) -- (17,1.75);
+        \draw[->] (34,0) -- (34,1.75);
+    		\node[task7, minimum width=\uxfpga, anchor=south west] at (0, 0){\footnotesize};
+    		\node[task7, minimum width=\uxfpga, anchor=south west] at (19, 0){\footnotesize};
+    		\node[task7, minimum width=\uxfpga, anchor=south west] at (34, 0){\footnotesize};
+	\end{scope}
+
+	\begin{scope}[shift={(0,4)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_2$};
+        \foreach \x in {5,15,...,35}{ 
+			\draw[->] (\x,0) -- (\x,1.75);            		
+        	}
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (7, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (18, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (26, 0){\footnotesize};
+        	\node[task7, minimum width=\uxfpga, anchor=south west] at (35, 0){\footnotesize};
+	\end{scope}                
+
+	\begin{scope}[shift={(0,6)}]
+		\node[anchor=east] at (0, 0.5) {$\tau_1$};
+        \foreach \x in {3,14,22,30}{ 
+			\draw[->] (\x,0) -- (\x,1.75);     
+			\node[task7, minimum width=4*\uxfpga, anchor=south west] at (\x, 0){\footnotesize};       		
+        	}
+        	\draw[->] (38,0) -- (38,1.75);
+        \draw[->, dashed] (11,0) -- (11,1.75);
+        \draw[<->, thin, red] (11,0.5)--(14,0.5);
+        \node[anchor=east,red] at (13.8, 1) {Delay}; 
+
+	\end{scope}                
+\end{tikzpicture}} }
+\caption{Example showing that releasing higher priority jobs as often as possible may not always cause the maximum interference on a self-suspending task.}
+\label{fig:ex_crit_inst2}
 \end{figure}
 
-\noindent\textbf{Scenario 1.} Continuing the release of jobs of the non-self-suspending tasks as often as possible without violating their minimum inter-arrival times, the first computation segment of $\tau_4$ finishes its execution at time $782$ as shown in Fig.~\ref{fig:ex_crit_inst2sc1}. After completion of its first computation segment, $\tau_4$ self-suspends for two time units until time $784$. As $\tau_3$ would have released a job within the self-suspending region, we delay the release of that job from time $782$ to $784$ in order to maximize the interference exerted by $\tau_3$ on the second computation segment of $\tau_4$ as shown in Fig.~\ref{fig:ex_crit_inst2sc1}. Note that, in order to respect its minimum inter-arrival time, $\tau_2$ has an offset of $6$ time units with the arrival of the second computation segment of $\tau_4$. Upon following the rest of the schedule, it can easily be seen that the job of $\tau_4$ finishes its execution at time $800$.
+\noindent\textbf{Scenario 1.} Continuing the release of jobs of the non-self-suspending tasks as often as possible without violating their minimum inter-arrival times, the first computation segment of $\tau_4$ finishes its execution at time $782$ as shown in Fig.~\ref{fig:ex_crit_inst2}a. After completion of its first computation segment, $\tau_4$ self-suspends for two time units until time $784$. As $\tau_3$ would have released a job within the self-suspending region, we delay the release of that job from time $782$ to $784$ in order to maximize the interference exerted by $\tau_3$ on the second computation segment of $\tau_4$ as shown in Fig.~\ref{fig:ex_crit_inst2}a. Note that, in order to respect its minimum inter-arrival time, $\tau_2$ has an offset of $6$ time units with the arrival of the second computation segment of $\tau_4$. Upon following the rest of the schedule, it can easily be seen that the job of $\tau_4$ finishes its execution at time $800$.
 
-\noindent\textbf{Scenario 2.} As shown in Fig.~\ref{fig:ex_crit_inst2sc2}, the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension region anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2sc2} as the job of $\tau_4$ finishes its execution at time $802$.\\
+\noindent\textbf{Scenario 2.} As shown in Fig.~\ref{fig:ex_crit_inst2}b, the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension region anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2}a as the job of $\tau_4$ finishes its execution at time $802$.\\
 
 
 {\bf Consequence:} This counterexample proves that the response time of a self-suspending task $\tau_k$ can be larger when the tasks in $hp(k)$ do not release jobs as often as possible.
