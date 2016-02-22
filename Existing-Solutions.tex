@@ -226,7 +226,7 @@ In the worst case, each interfering task $\tau_i$ releases one carry-in job (ass
 \subsubsection{Modeling self-suspensions as release jitter}
 \label{sec:model-interfering-jitter}
 
-Another, more accurate, way to model the phenomena described above to use the concept of \emph{release jitter}. It basically considers 
+Another, more accurate, way to model the phenomena described above is to use the concept of \emph{release jitter}. It basically considers 
 that the computation segments of each task $\tau_i$ are not released in a purely periodic manner but are instead subject to release jitter. 
 Hence the first interfering job of $\tau_i$ may have its computation segment pushed as far as possible from the actual release of the job 
 due to its suspension behavior, while all the jobs released afterward may directly start with their computation segments and never 
@@ -338,7 +338,7 @@ Modelling the interference by a job of a self-suspending task $\tau_i$ as multip
 the respective self-suspending intervals in-between, is potentially more accurate than modelling it as a contiguous computation segment of $C_i$ units.
 However, the worst-case release offset of $\tau_i$ in $hp(k)$, relative to the task $\tau_k$ under analysis, to maximize the interference needs to be identified.
 
-To deal with this, in \cite{RTCSA-BletsasA05} the computation segments and self-suspending intervals of each interfering task are reordered, 
+To deal with this, in \cite{RTCSA-BletsasA05} the computation segments and self-suspending intervals of each interfering task are reordered 
 to create a pattern that dominates all such possible task release offsets. The computational segments of the interfering task are modelled 
 as distinct tasks arriving at an offset to each other and sharing a period and arrival jitter. However, as we will explain later in 
 Section~\ref{sec:wrong-jitter-segmented} the quantification of the interference in \cite{RTCSA-BletsasA05} was incorrect. 
@@ -387,7 +387,7 @@ These constant offsets are computed and specified \emph{offline}.
  
 Suppose that the offset for the $j$-th computation  segment of task $\tau_i$ is $\phi_i^j$. This means that the 
 $j$-th computation segment of task $\tau_i$ is released only at time $r_i+\phi_i^j$, where $r_i$ is the arrival time of a job 
-of task $\tau_i$. That is, even if the preceding self-suspension completes before $r_i+\phi_i^j$, the computation segment in
+of task $\tau_i$. That is, even if the preceding self-suspension completes before $r_i+\phi_i^j$, the computation segment under 
 consideration is never executed earlier. With this static enforcement, each computation segment can be represented by a sporadic 
 task with a minimum inter-arrival tome $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i,j+1}-\phi_i^j-S_i^j$ (with 
 $\phi_{i,m_i+1}$ set to $D_i$.) 
