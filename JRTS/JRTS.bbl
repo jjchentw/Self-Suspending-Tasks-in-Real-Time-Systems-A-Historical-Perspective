@@ -131,6 +131,11 @@ U.~C. Devi.
 \newblock In {\em 15th Euromicro Conference on Real-Time Systems ({ECRTS})},
   page~23, 2003.
 
+\bibitem{devi2006soft}
+U.~C. Devi.
+\newblock {\em Soft real-time scheduling on multiprocessors}.
+\newblock PhD thesis, University of North Carolina at Chapel Hill, 2006.
+
 \bibitem{DBLP:journals/ieicet/DingTT09}
 S.~Ding, H.~Tomiyama, and H.~Takada.
 \newblock Effective scheduling algorithms for {I/O} blocking with a multi-frame
@@ -256,6 +261,12 @@ J.~Lehoczky, L.~Sha, and Y.~Ding.
 \newblock The rate monotonic scheduling algorithm: exact characterization and
   average case behavior.
 \newblock In {\em RTSS}, pages 166--171, 1989.
+
+\bibitem{leontyev2010compositional}
+H.~Leontyev.
+\newblock {\em Compositional analysis techniques for multiprocessor soft
+  real-time scheduling}.
+\newblock PhD thesis, University of North Carolina at Chapel Hill, 2010.
 
 \bibitem{Leontyev072}
 H.~Leontyev and J.~Anderson.
