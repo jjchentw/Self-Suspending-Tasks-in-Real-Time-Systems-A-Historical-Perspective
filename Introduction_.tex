@@ -1,10 +1,11 @@
 \section{Introduction}
 
-Complex cyber-physical systems (\ie advanced embedded real-time computing systems) have \emph{timeliness} requirements over computation such that associated deadlines must be met (\eg for safety-critical systems). Appropriate analytical techniques have been developed that enable \emph{a priori} guarantees to be established over timing behaviour at run-time regarding computation deadlines.  
+Complex cyber-physical systems (\ie advanced embedded real-time computing systems) have \emph{timeliness} requirements %over computation 
+such that associated deadlines must be met (\eg for safety-critical systems). Appropriate analytical techniques have been developed that enable \emph{a priori} guarantees to be established over timing behaviour at run-time regarding computation deadlines.  
 The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodic computation (termed \emph{tasks}). 
 Analysis presented enables the \emph{schedulability} of a set of such tasks to be established, \ie whether their deadlines will be met at run-time. This has been extended to incorporate many other task characteristics, \eg, sporadic tasks\cite{Mok:1983:FDP:888951}. 
 
-One underlying assumption of the majority of these schedulability analyses is that a task does not voluntarily suspend its execution -- once executing, a task can only stop as a result of preemption by a higher priority task, becoming blocked on a shared resource, or completing its execution for that release of the task (\ie meeting its deadline). The alternative, that a task can \emph{self-suspend}, means that the assumptions underpinning basic analysis no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition}. In Figure \ref{fig:ss-intuition}(a) the classical worst case is illustrated, where the longest time that a task will execute before completing its execution occurs at a release coinciding with the release of all higher priority tasks (termed \emph{critical instant}). As Figure \ref{fig:ss-intuition}(b) shows, when a higher-priority task  has suspended its execution time, the result is that the lower-priority task now misses its deadline.
+One underlying assumption of the majority of these schedulability analyses is that a task does not voluntarily suspend its execution -- once executing, a task can only stop as a result of preemption by a higher priority task, becoming blocked on a shared resource that is held by another lower-priority job on the same processor, or completing its execution for that release of the task (\ie meeting its deadline). The alternative, that a task can \emph{self-suspend}, means that the assumptions underpinning basic analysis no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition}. In Figure \ref{fig:ss-intuition}(a) the classical worst case is illustrated, where the longest time that a task will execute before completing its execution occurs at a release coinciding with the release of all higher priority tasks (termed \emph{critical instant}). As Figure \ref{fig:ss-intuition}(b) shows, when a higher-priority task  has suspended its execution time, the result is that the lower-priority task now misses its deadline.
 
 
 Self-suspension has become increasingly important to model accurately within schedulability analysis. For example, a task that utilises an accelerator or external physical device~\cite{Kang:rtss07,Kato_2011} where the resulting suspension delays range from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (\eg, offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).  Whilst the maximum self-suspension time could be included as additional execution time, this would be pessimistic and potentially under utilise the processor at run-time -- if the self-suspension is for a substantial time, it is advantageous to execute an alternative task.
@@ -71,7 +72,7 @@ This paper seeks to provide the first survey of existing analyses for tasks that
     \foreach \x in {0,7,14}{ 
         \draw[->] (\x,0) -- (\x,1.75);        		
       }
-      \foreach \x in {3}{ 
+      \foreach \x in {3,13}{ 
         \node[task7, minimum width=2*\uxfpga, anchor=south west] at (\x, 0){};
       }
       \draw[very thick, red](13.5, 0.3) -- (14.5, 1);
@@ -123,16 +124,16 @@ task $\tau_i$ with predefined worst-case execution time and worst-case self-susp
 \subsection{Purpose and Organization of This Paper}
 There have been several research efforts, focusing on the design of scheduling algorithms and schedulability analysis of task systems when self-suspending tasks are present. Due to the prevailing self-suspending scenarios in modern computing systems, several results in the literature have been recently re-examined. We have found out that the literature of real-time scheduling for self-suspending task systems has been seriously flawed. Several misconceptions were adopted in the literature including 
 \begin{itemize}
-\item Incorrect quantifications of jitter for dynamic self-suspending
+\item Incorrect quantification of jitter for dynamic self-suspending
   task systems, which was used in
   \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
   misconception was unfortunately adopted in \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
   partitioned multiprocessor real-time locking protocols.
-\item Incorrect quantifications of jitter for dynamic self-suspending
+\item Incorrect quantification of jitter for dynamic self-suspending
   task systems, which was used in  \cite{RTCSA-BletsasA05}.
 \item Incorrect assumptions in the critical instant with
   synchronous releases, which was used in \cite{LR:rtas10}.
-\item Incorrectly counting highest-priority self-suspending time to reduce the
+\item Incorrectly counting highest-priority self-suspending time to reduce
   interference, which was used in  \cite{RTSS-KimANR13}. 
 \item Incorrect segmented fixed-priority scheduling with periodic
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
