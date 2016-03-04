@@ -186,8 +186,7 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 
 This misconception spread further when it was propagated by Lakshmanan et al.~\cite{lakshmanan-2009} in their derivation of worst-case response time bounds for
 partitioned multiprocessor real-time locking protocols, which in turn was reused in several later works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}. We explain the consequences and how to correct the later analyses in Section~\ref{sec:syn}. 
-
- This has been then further reused in several other works 
+ 
 Moreover this counterexample also invalidates the comparison in \cite{RidouardR06}, which compares the schedulability tests from \cite{RTCSA-KimCPKH95} and \cite[Page 164-165]{Liu:2000:RS:518501}, since the result derived from \cite{RTCSA-KimCPKH95} is unsafe.
 
 Independently, the authors of the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} used the same methods in 2004 from different perspectives. They already filed a technical report \cite{BletsasReport2015} to explain in a great detail how to handle this. 
@@ -704,7 +703,7 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
 \end{table}
 
 
-{\it Counterexample of Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, \ie, $0 < \epsilon \leq 0.1$. We have three tasks, listed in Table~\ref{table:ex-highest-priority}. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(a)). The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(b)), the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
+{\it Counterexample to Theorem 2 in \cite{RTSS-KimANR13}:} Let $\epsilon$ be a positive and very small number, \ie, $0 < \epsilon \leq 0.1$. We have three tasks, listed in Table~\ref{table:ex-highest-priority}. It is clear that $2+\epsilon = C_1+S_1 < C_i = 2+2\epsilon \leq T_1-C_1-S_1 = 2+9\epsilon$ for $i=2,3$. The above theorem states that the worst case is to release all the three tasks together at time $0$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(a)). The analysis shows that the response time of task $\tau_3$ is at most $5+6\epsilon$. However, if we release task $\tau_1$ at time $0$ and release task $\tau_2$ and task $\tau_3$ at time $1+\epsilon$ (as shown in Figure~\ref{fig:counterexample-reduce-interf}(b)), the response time of the first job of task $\tau_3$ is $6+5\epsilon$. 
 
 \begin{figure}[t]
 \centering
@@ -836,7 +835,7 @@ $S_1$ to $T_1$ and lies in the range of $0$ to $2^{\frac{1}{n-1}}-1$.
 {\it Counterexample of Theorem 3 in \cite{RTSS-KimANR13}:} Suppose that the self-suspending task $\tau_1$ has two computation segments, with $C_1^1 = C_1-\epsilon$, $C_1^2 = \epsilon$, and $S_1=S_1^1 > 0$ with very small $0 < \epsilon \ll C_1^1$. For such an example, it is pretty obvious that this self-suspending highest-priority task is like an ordinary sporadic task, \ie, self-suspension does not matter. 
  In this counterexample, the utilization bound is still Liu and Layland bound $n(2^{\frac{1}{n}}-1)$ \cite{Liu_1973}, regardless of the ratio of $S_1/T_1$. 
 
-The source of the error of Theorem 3 in \cite{RTSS-KimANR13} is due to its Theorem 2 and the footnote 4 in \cite{RTSS-KimANR13}, which claims that the case in Figure 7 in \cite{RTSS-KimANR13} is the worst case. This statement is incorrect and can be disproved by using the above counterexample. 
+The source of the error of Theorem 3 in \cite{RTSS-KimANR13} is due to its Theorem 2 and the footnote 4 in \cite{RTSS-KimANR13}, which claims that the case in Figure 7 in \cite{RTSS-KimANR13} is the worst case. This statement is incorrect and can be disproved with the above counterexample. 
 
 
 {\bf Consequences:} These examples show that Theorems 2 and 3 in \cite{RTSS-KimANR13} are flawed.  

@@ -147,7 +147,7 @@ elaborations. These include the following results in the literature:
   no \emph{potential} scheduling penalty when analyzing the interferences of the
   higher-priority tasks. (But, the suspension time of the task under
   analysis has to be converted into computation.) The correctness of the dynamic slack
-  enforcement in \cite{LR:rtas10} is heavily based on the statement in Lemma
+  enforcement in \cite{LR:rtas10} is heavily based on the statement of Lemma
   4 in \cite{LR:rtas10}. However, the proof is not rigorous for the
   following reasons:
   \begin{itemize}
@@ -191,11 +191,11 @@ document, no concern has been raised regarding the correctness of the following 
 \begin{itemize}
 \item For segmented self-suspending task systems: 
   \begin{enumerate}
-  \item the periodic enforcer from Rajkumar \cite{Raj:suspension1991}
+  \item Rajkumar's period enforcer \cite{Raj:suspension1991}
     if a self-suspending task
     can only suspend at most once before any computation starts;
-  \item the result from Palencia and Gonz\'alez
-    Harbour~\cite{PH:rtss98} by using the arrival jitter of a
+  \item the result by Palencia and Gonz\'alez
+    Harbour~\cite{PH:rtss98} using the arrival jitter of a
     higher-priority task properly with an offset (also for
     multiprocessor partitioned scheduling);
   \item the proof of ${\cal NP}$-hardness in the strong sense to find a feasible
