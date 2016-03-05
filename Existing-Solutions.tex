@@ -111,8 +111,8 @@ Using the task set presented in Table~\ref{table:static-example} as an example, 
 \hfill\myendproof  
 \end{example}
 
-Nevertheless, although non-intuitive, this modeling strategy is an \emph{exact} solution to compute the WCRT of \emph{dynamic} self-suspending tasks. If the computation segments and suspension intervals of $\tau_k$ interleave such that $\tau_k$ self-suspends only between the arrival of higher priority jobs
-(\ie,  a computation segment of $\tau_k$ is started whenever a higher priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions. Therefore, when there is no knowledge about how many times, when and for how long $\tau_k$ may self-suspend in each 
+Nevertheless, although non-intuitive, this modeling strategy is an \emph{exact} solution to compute the WCRT of \emph{dynamic} self-suspending tasks. If the computation segments and suspension intervals of $\tau_k$ interleave such that $\tau_k$ self-suspends only between the arrival of higher-priority jobs
+(\ie,  a computation segment of $\tau_k$ is started whenever a higher-priority job is released), then the resulting schedule would be similar if $\tau_k$ was indeed executing on the processor during its self-suspensions. Therefore, when there is no knowledge about how many times, when and for how long $\tau_k$ may self-suspend in each 
 self-suspending interval, modeling the self-suspending time of $\tau_k$ as execution time provides the exact worst-case response 
 time for $\tau_k$. This property is used in all the existing analyses for dynamic self-suspension task models, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04}.
 
@@ -163,7 +163,7 @@ Imagine that $S_3$ is decreased from $5$ to $1$ in the previous example. This an
 \label{sec:model-interferred-hybrid}
 
 Both methods discussed above in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-carry-in} have their pros and cons. The \emph{joint} or \emph{suspension-oblivious} approach has the advantage of
-respecting the minimum inter-arrival times (or periods) of the higher priority tasks during the schedulability 
+respecting the minimum inter-arrival times (or periods) of the higher-priority tasks during the schedulability 
 analysis of $\tau_k$. However, it has the disadvantage of assuming that the the task under analysis can be delayed by preemptions during suspension intervals since they are treated as computation intervals. 
 This renders the analysis pessimistic as it accounts for non-existing interference. The \emph{split} approach does not assume  
 preemptible suspension intervals but  considers a worst-case response time for each computation segment independently. Yet, the respective
@@ -262,7 +262,7 @@ The response time analysis for EDF can be similarly adapted.
 
 \begin{example}
 \label{ex:suspension-jitter}    
-Consider the fixed priority task set presented in Table~\ref{table:dynamic-example}. In this case, $\tau_1$ is the highest priority task and does not self-suspend. Therefore, its WCRT is $R_1 = C_1$ and $J_1 = R_1 - C_1 = 0$. The jitter $J_2$, however, is upper bounded by $D_2 - C_2 =15$. The WCRT of task $\tau_3$ is thus upper bounded by the minimum $t$ larger than $0$ such that 
+Consider the fixed-priority task set presented in Table~\ref{table:dynamic-example}. In this case, $\tau_1$ is the highest-priority task and does not self-suspend. Therefore, its WCRT is $R_1 = C_1$ and $J_1 = R_1 - C_1 = 0$. The jitter $J_2$, however, is upper bounded by $D_2 - C_2 =15$. The WCRT of task $\tau_3$ is thus upper bounded by the minimum $t$ larger than $0$ such that 
 $$t=C_3+ \sum_{i=1}^2\left\lceil \frac{t + J_i}{T_i} \right\rceil C_i = 1+\left\lceil \frac{t}{2} \right\rceil 1 +\left\lceil \frac{t+15}{20} \right\rceil 5.$$ 
 The above equality holds when $t=22$. Therefore, the WCRT of task $\tau_{3}$ is upper bounded by $22$.
 \hfill\myendproof  
@@ -285,7 +285,7 @@ response time. This delay, denoted by $B_k$, is upper bounded by
 B_k=S_k+\sum_{\forall \tau_i \in hp(k)} b_i
 \end{equation*}
 where (i) $S_k$ accounts for the contribution of the suspension intervals of the task $\tau_k$ under analysis in a similar manner to 
-what has already been discussed in Section~\ref{sec:model-interferred-oblivious}, and (ii) $b_i=min(C_i, S_i)$ accounts for the contribution of each higher priority task $\tau_i$ in $hp(k)$. This equivalent ``blocking time" $B_k$ can then be used to perform a utilization-based schedulability test. For instance, using the linear utilization test by Liu and Layland \cite{Liu_1973} and assuming that the tasks are indexed in a decreasing priority order, ensuring that the condition
+what has already been discussed in Section~\ref{sec:model-interferred-oblivious}, and (ii) $b_i=min(C_i, S_i)$ accounts for the contribution of each higher-priority task $\tau_i$ in $hp(k)$. This equivalent ``blocking time" $B_k$ can then be used to perform a utilization-based schedulability test. For instance, using the linear utilization test by Liu and Layland \cite{Liu_1973} and assuming that the tasks are indexed in a decreasing priority order, ensuring that the condition
 \begin{equation*}
 \frac{C_k+B_k}{T_k} + \sum_{\forall \tau_i \in hp(k)} U_i \leq k (2^{\frac{1}{k}}-1)
 \end{equation*}
@@ -333,7 +333,7 @@ that the segmented suspensions are not completely dynamic.
 
 %The static suspension patterns result in also certain (more predictable) suspension patterns. 
 Characterizing the worst-case 
-suspending patterns of the higher priority tasks to quantify the interference under the segmented self-suspending task model is not easy. 
+suspending patterns of the higher-priority tasks to quantify the interference under the segmented self-suspending task model is not easy. 
 Modelling the interference by a job of a self-suspending task $\tau_i$ as multiple per-segment ``chunks", spaced apart in time by 
 the respective self-suspending intervals in-between, is potentially more accurate than modelling it as a contiguous computation segment of $C_i$ units.
 However, the worst-case release offset of $\tau_i$ in $hp(k)$, relative to the task $\tau_k$ under analysis, to maximize the interference needs to be identified.
