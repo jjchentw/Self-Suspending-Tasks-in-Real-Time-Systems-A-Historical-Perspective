@@ -13,13 +13,13 @@ have given concrete examples to demonstrate the effect of these
 misconceptions, listed some flawed statements in the literature, and
 presented potential solutions. These misconceptions include:
 \begin{itemize}
-\item Incorrect quantifications of jitter for dynamic self-suspending
+\item Incorrect quantification of jitter for dynamic self-suspending
   task systems, which was used in
   \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
   misconception was unfortunately adopted in
   \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
   partitioned multiprocessor real-time locking protocols.
-\item Incorrect quantifications of jitter for segmented self-suspending
+\item Incorrect quantification of jitter for segmented self-suspending
   task systems, which was used in  \cite{RTCSA-BletsasA05}.
 \item Incorrect assumptions in the critical instant with
   synchronous releases, which was used in \cite{LR:rtas10}.
@@ -33,7 +33,7 @@ and inherited flaws discussed in this paper are listed in Table~\ref{tab:summary
 
 This review extensively references errata and reports as follows:
 the proof \cite{ChenHuangNelissen} of the correctness of the
-analysis from Jane W.S. Liu in her book \cite[Page
+analysis by Jane W.S. Liu in her book \cite[Page
 164-165]{Liu:2000:RS:518501}; the re-examination and the limitations
 \cite{ChenBrandenburg} of the period enforcer algorithm proposed in
 \cite{Raj:suspension1991}; the erratum report \cite{BletsasReport2015}
@@ -201,16 +201,16 @@ document, no concern has been raised regarding the correctness of the following 
   \item the proof of ${\cal NP}$-hardness in the strong sense to find a feasible
     schedule and negative results with respect to the speedup factors,
     provided by Ridouard, Richard, and Cottet \cite{Ridouard_2004};
-  \item the result from Nelissen et al. \cite{ecrts15nelissen} by
+  \item the result by Nelissen et al. \cite{ecrts15nelissen} by
     enumerating the worst-case interference from higher-priority
     sporadic tasks with an exhaustive search;
-  \item the result from Chen and Liu~\cite{RTSS-ChenL14} and Huang and
+  \item the result by Chen and Liu~\cite{RTSS-ChenL14} and Huang and
     Chen \cite{WC16-suspend-DATE} by using the release-time
     enforcement as described in
     Section~\ref{sec:static-period-enforce};\footnote{Chen and Liu
       found a typo in Theorem 3 in \cite{RTSS-ChenL14}
       and filed a corresponding erratum in their websites.}
-  \item the result from Huang and Chen \cite{Huang:multiseg} by
+  \item the result by Huang and Chen \cite{Huang:multiseg} by
     exploring the priority assignment problem and analyzing the
     carry-in computation segments together.
   \end{enumerate}
