@@ -204,16 +204,16 @@ Further details are provided in Section~\ref{sec:wrong-critical}.
 \subsubsection{Suspension oblivious analysis}
 \label{sec:model-interfering-oblivious}
 
-Similarly to the task under analysis, the simplest modeling strategy for the interfering tasks is the suspension oblivious approach, which consists of converting all the suspension times of those tasks into computation times. Each task $\tau_i$ is thus modeled by a non-self-suspending task $\tau_i' = (C'_i, D_i, T_i)$ with a WCET $C'_i = C_i+S_i$. After that conversion, the interfering tasks therefore become a set of usual non-self-suspending sporadic real-time tasks. Although the simplest, it is also the most pessimistic approach. It indeed considers that the suspension intervals of each interfering task $\tau_i$ are causing interference on the task $\tau_k$ under analysis. Yet, suspension intervals truly model durations during which $\tau_i$ stops executing on the processor and hence cannot prevent the execution of $\tau_k$ or any other lower priority job.
+Similarly to the task under analysis, the simplest modeling strategy for the interfering tasks is the suspension oblivious approach, which consists of converting all the suspension times of those tasks into computation times. Each task $\tau_i$ is thus modeled by a non-self-suspending task $\tau_i' = (C'_i, D_i, T_i)$ with a WCET $C'_i = C_i+S_i$. After that conversion, the interfering tasks therefore become a set of usual non-self-suspending sporadic real-time tasks. Although the simplest, it is also the most pessimistic approach. It indeed considers that the suspension intervals of each interfering task $\tau_i$ are causing interference on the task $\tau_k$ under analysis. Yet, suspension intervals truly model durations during which $\tau_i$ stops executing on the processor and hence cannot prevent the execution of $\tau_k$ or any other lower-priority job.
 
 
 \subsubsection{Modeling self-suspensions with carry-in jobs}
 \label{sec:model-carry-in}
 
 If all the higher-priority jobs/tasks are ordinary sporadic jobs/tasks without any self-suspensions, then
-the maximum number of interfering jobs that can be released by an interfering (ordinary) sporadic task $\tau_i$ in a window of length $t$, is upper bounded by $\left\lceil \frac{t}{T_i} \right\rceil$ in fixed-priority scheduling and by $\left\lfloor \frac{t}{T_i} \right\rfloor$ in EDF scheduling. The interfering workload is then given by $\sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{t}{T_i} \right\rceil C_i$ for fixed priority scheduling and by $\sum_{\forall \tau_i \in \tau \setminus \tau_k} \left\lfloor \frac{t}{T_i} \right\rfloor C_i$ for EDF scheduling. This assumes that each interfering job asks for the processor as soon as it is released, thereby preventing the task $\tau_k$ under analysis to execute.
+the maximum number of interfering jobs that can be released by an interfering (ordinary) sporadic task $\tau_i$ in a window of length $t$, is upper bounded by $\left\lceil \frac{t}{T_i} \right\rceil$ in fixed-priority scheduling and by $\left\lfloor \frac{t}{T_i} \right\rfloor$ in EDF scheduling. The interfering workload is then given by $\sum_{\forall \tau_i \in hp(k)} \left\lceil \frac{t}{T_i} \right\rceil C_i$ for fixed priority scheduling and by $\sum_{\forall \tau_i \in \tau \setminus \tau_k} \left\lfloor \frac{t}{T_i} \right\rfloor C_i$ for EDF scheduling. This assumes that each interfering job asks for the processor as soon as it is released, thereby preventing the task $\tau_k$ under analysis from executing.
 
-With self-suspending tasks however, the \emph{computation segment} of an interfering job may not require a direct access to the processor as it can be delayed by its suspension intervals. Hence, a job of task $\tau_i$ released before the release of a job of task $\tau_k$ may have all its execution time $C_i$ delayed by its suspension intervals so as to entirely interfere with $\tau_k$. 
+With self-suspending tasks however, the \emph{computation segment} of an interfering job may not require an immediate access to the processor as it can be delayed by its suspension intervals. Hence, a job of task $\tau_i$ released before the release of a job of task $\tau_k$ may have all its execution time $C_i$ delayed by its suspension intervals so as to entirely interfere with $\tau_k$. 
 This is clearly visible on the example schedule of Figure~\ref{fig:counterexample-segmented}.
 Such a job of $\tau_i$, released before the job of $\tau_k$ under analysis, but interfering with the execution of $\tau_k$, is called a \emph{carry-in job}.
 
@@ -232,9 +232,9 @@ Hence the first interfering job of $\tau_i$ may have its computation segment pus
 due to its suspension behavior, while all the jobs released afterward may directly start with their computation segments and never 
 self-suspend (see $\tau_2$ in Figure~\ref{fig:counterexample-dynamic} for an example). Let $J_i$ denote that jitter on $\tau_i$'s computation segment release. 
 It was proven in \cite{ecrts15nelissen,BletsasReport2015} that $J_i$ is upper-bounded by $R_i-C_i$ where $R_i$ is the WCRT of $\tau_i$. 
-If an optimal priority assignment must be computed for a fixed-priority task set using the Audsley's optimal priority assignment 
+If an optimal priority assignment must be computed for a fixed-priority task set using Audsley's optimal priority assignment 
 algorithm~\cite{Audsley1991aOPA}, one can pessimistically assume that $J_i$ is equal to $D_i-C_i$ \cite{huangpass:dac2015,Raj:suspension1991} 
-as long as all the interfering tasks, \ie $\forall \tau_i \in hp(k)$ in fixed-priority scheduling, are schedulable, \ie, $R_i \leq D_i$.
+as long as all the interfering tasks, \ie, $\forall \tau_i \in hp(k)$ in fixed-priority scheduling, are schedulable, \ie, $R_i \leq D_i$.
 
 
 \begin{table}[t]

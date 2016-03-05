@@ -6,12 +6,12 @@ document, no concern has been raised regarding the correctness of the following 
 
 
  We assume a well-studied soft real-time notion, in which \emph{a soft real-time task is schedulable if its tardiness can be provably bounded} (e.g., several recent dissertations have focused on this topic~\cite{leontyev2010compositional, devi2006soft}). (Such bounds would be expected to be reasonably small.) A task's tardiness is defined to be its maximum job tardiness, which is calculated as $0$ if the job finishes before its absolute deadline and a job's completion time minus the job's absolute deadline otherwise. 
-The schedulability analysis techniques on soft real-time self-suspending task systems can be categorized into two categories: suspension-oblivious analysis v.s. suspension-aware analysis.
+The schedulability analysis techniques on soft real-time self-suspending task systems can be categorized into two categories: suspension-oblivious analysis and suspension-aware analysis.
 
 \subsection{Suspension-Oblivious Analysis}
 \label{sec:sus-oblivious-soft}
 
- The suspension-oblivious analysis simply treats the suspensions as computation, as also explained in Section~\ref{sec:model-interfering-oblivious} and Section~\ref{sec:model-interferred-oblivious}. From \cite{Devi2005,Leontyev072}, tardiness is bounded under a pure computational task system (no suspensions) provided $\sum_{i=1}^{n} (C_i+S_i)/T_i \leq M$, where $M$ is the number of processors in the system. A downside of treating all suspensions as computation is that this causes utilization bound to be $\sum_{i=1}^{n} S_i/T_i$ higher, which in many cases may cause total utilization to exceed $M$.  This suspension-oblivious approach causes an $O(n)$ utilization loss, where $n$ denotes the number of self-suspending tasks in the system. 
+ The suspension-oblivious analysis simply treats the suspensions as computation, as also explained in Section~\ref{sec:model-interferred-oblivious} and Section~\ref{sec:model-interfering-oblivious}. From \cite{Devi2005,Leontyev072}, tardiness is bounded under a pure computational task system (no suspensions) provided $\sum_{i=1}^{n} (C_i+S_i)/T_i \leq M$, where $M$ is the number of processors in the system. A downside of treating all suspensions as computation is that this causes the system utilization bound to be $\sum_{i=1}^{n} S_i/T_i$ higher, which in many cases may cause total utilization to exceed $M$.  This suspension-oblivious approach causes an $O(n)$ utilization loss, where $n$ denotes the number of self-suspending tasks in the system. 
  Due to the $O(n)$ utilization loss, the suspension-oblivious analysis is pessimistic. 
 
 \subsection{Suspension-Aware Analysis}

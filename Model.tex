@@ -3,7 +3,7 @@
 
 Initially, we motivate the reasons to consider self-suspending task systems with the following examples.
 
-{\bf Example 1: I/O- or Memory-Intensive Tasks.} Since I/O and memory subsystems are much slower than processors, an I/O-intensive task may have to use DMA to transfer a large amount of data. This can take up to a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. When the I/O activity completes, the job can be moved to the ready queue to be (re)-eligible for execution. This also applies to systems in which the scratchpad memory allocated to a task is dynamically updated during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the DMA transfers to update the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory due to bus contention and competition for memory resources.
+{\bf Example 1: I/O- or Memory-Intensive Tasks.} Since I/O and memory subsystems are much slower than processors, an I/O-intensive task may have to use DMA to transfer a large amount of data. This can take from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) up to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. When the I/O activity completes, the job can be moved to the ready queue to be (re)-eligible for execution. This also applies to systems in which the scratchpad memory allocated to a task is dynamically updated during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the DMA transfers to update the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory, due to bus contention and competition for memory resources.
 
 {\bf Example 2: Multiprocessor Synchronization.} \hspace{0.1in}
 Under a suspension-based locking protocol, tasks that are denied access to a shared resource (i.e., that block on a lock) are suspended. Interestingly, on uniprocessors, the resulting suspensions can be accounted for more efficiently than general self-suspensions by considering the blocking time due to the lower-priority job(s) that hold(s) the required share resource(s). More detailed discussions about the reason why uniprocessor synchronization does not have to be considered to be self-suspension can be found in Section~\ref{sec:sem-uni}. In multiprocessor systems, self-suspensions can arise under partitioned scheduling (in which each task is assigned statically on a dedicated processor) when the tasks have to synchronize their access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). 
@@ -23,7 +23,7 @@ In this paper, we will specifically examine the existing results for multiproces
 % models such as CUDA (Compute Unified Device Architecture) which facilitate harnessing that power for general-purpose computing 
 % applications characterized by inherent parallelism. CUDA functions are implemented as hundreds or thousands of ultra-light 
 % (single-cycle context switch) GPU threads, each performing a different part of the overall computation.
-% For many kinds of applications, \eg scientific, or floating-point heavy, with minimal data dependencies among 
+% For many kinds of applications, \eg, scientific, or floating-point heavy, with minimal data dependencies among 
 % threads, the speed-up is by tens or hundreds of times.
 
 % In the typical setup, the GPU is used as a co-processor. The native application (\eg, x86) running on the host
@@ -35,7 +35,7 @@ In this paper, we will specifically examine the existing results for multiproces
 \begin{figure}[t]
   \centering
 \def\uxfpga{0.3cm} 
-\subfloat[Use FPGA in parallel (suspension aware).]{
+\subfloat[Using FPGA in parallel (suspension aware).]{
     \scalebox{0.8}{
       \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
         \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
@@ -89,7 +89,7 @@ In this paper, we will specifically examine the existing results for multiproces
   
  \end{tikzpicture}} }
 
-\subfloat[Not use FPGA in parallel (busy waiting).]{
+\subfloat[Not using FPGA in parallel (busy waiting).]{
    \scalebox{0.8}{
       \begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
         \draw[->] (0,0) -- coordinate (xaxis) (45,0) node[anchor=north]{$t$};
@@ -178,7 +178,7 @@ Computation offloading with real-time constraints has been specifically studied 
 
 {\bf Example 4: Partitioned Scheduling for DAG-Structured Tasks.}
 To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors will experience some idle time 
-due to the precedence constraint of the DAG task. Such idle time intervals can also be considered as suspensions. 
+due to the precedence constraints of the DAG task. Such idle time intervals can also be considered as suspensions. 
 
 
 
