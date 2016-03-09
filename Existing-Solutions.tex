@@ -88,11 +88,11 @@ Note that we implicitly assume uniprocessor systems in these sections. The multi
 \begin{table}[t]
   \centering
   \scalebox{0.65}{
-\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{6cm}|C{6cm}|c|}  
+\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{5cm}|C{5cm}|c|}  
   \hline
 papers/methods & year & suspension and scheduling model& interfered task & interferring tasks & flawed\\
 \hline
-Rajkumar \cite{Raj:suspension1991} & 1991 & segmented, FP & \multicolumn{2}{C{12cm}|}{A period enforcer algorithm was proposed to artificially 
+Rajkumar \cite{Raj:suspension1991} & 1991 & segmented, FP & \multicolumn{2}{C{10cm}|}{A period enforcer algorithm was proposed to artificially 
 increase certain suspension intervals so that the self-suspending tasks behave like ideal periodic tasks, Sec.~\ref{sec:period-enforce}} & \\
 \hline
  Ming \cite{MingLiRTCSA1994} & 1994 & dynamic, FP & suspension as computation, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & \checkmark\\
@@ -111,13 +111,13 @@ Bletsas and Audsley~\cite{RTCSA-BletsasA05} & 2005 & & & & \checkmark\\
 \hline
 Bletsas~\cite{bletsas:thesis} & 2007 & & & &\\
 \hline 
-Ding et al.\cite{DBLP:journals/ieicet/DingTT09} & 2009 &segmented, segmented FP & \multicolumn{2}{C{12cm}|}{enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce}} & \checkmark\\
+Ding et al.\cite{DBLP:journals/ieicet/DingTT09} & 2009 &segmented, segmented FP & \multicolumn{2}{C{10cm}|}{enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce}} & \checkmark\\
 \hline 
 Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& based on a revised critical instant theorem, Sec.~\ref{sec:existing-exact-special} & based on a revised critical instant theorem & \checkmark\\
 \hline
-Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& \multicolumn{2}{C{12cm}|}{slack enforcement, Sec.~\ref{sec:slack-enforce}}&\\
+Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& \multicolumn{2}{C{10cm}|}{slack enforcement, Sec.~\ref{sec:slack-enforce}}&\\
 \hline
-Kim et al.~\cite{RTSS-KimANR13} & 2013 & segmented, segmented FP & \multicolumn{2}{C{12cm}|}{enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce}} & \checkmark\\
+Kim et al.~\cite{RTSS-KimANR13} & 2013 & segmented, segmented FP & \multicolumn{2}{C{10cm}|}{enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce}} & \checkmark\\
 \hline
 Liu and Anderson~\cite{DBLP:conf/ecrts/LiuA13} & 2013 & multiprocessor, global FP and EDF &  suspension as computation, Sec.~\ref{sec:model-interferred-oblivious}& quantifying the interference by considering carry-in jobs in multiprocessor scheduling, Sec.~\ref{sec:multiprocessor-HRT} & \checkmark\\
 \hline 
@@ -125,15 +125,15 @@ Liu et al. \cite{DBLP:conf/ecrts/LiuCH014} & 2014 & dynamic, FP (harmonic)& susp
 \hline 
 Liu and Chen~\cite{LiuChen:rtss2014} & 2014 & dynamic, FP& suspension as computation, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in, Sec.~\ref{sec:model-carry-in} &\\
 \hline
-Chen and Liu~\cite{RTSS-ChenL14} & 2014 & segmented (one-segment), period enforcement&  \multicolumn{2}{C{12cm}|}{speed up factor guarantee with respect to the optimal schedule, Sec.~\ref{sec:static-period-enforce}}&\\
+Chen and Liu~\cite{RTSS-ChenL14} & 2014 & segmented (one-segment), period enforcement&  \multicolumn{2}{C{10cm}|}{speed up factor guarantee with respect to the optimal schedule, Sec.~\ref{sec:static-period-enforce}}&\\
 \hline
-Huang and Chen \cite{Huang:multiseg}& 2015 & segmented, FP& hybrid approaches, Sec.~\ref{sec:model-interferred-hybrid} & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}&\\
+Huang and Chen \cite{Huang:multiseg}& 2015 & segmented, FP& hybrid approaches, Sec.~\ref{sec:model-interferred-oblivious}-~\ref{sec:model-interferred-hybrid} & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}&\\
 \hline
 Huang et al.~\cite{huangpass:dac2015} & 2015 & dynamic, FP& suspension as computation, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in,  Sec.~\ref{sec:model-carry-in}&\\
 \hline
 Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revised critical instant theorem, Sec.~\ref{sec:existing-exact-special} & suspension by modeling proper jitter \ref{sec:model-interfering-jitter}&\\
 \hline
-Huang et al.~\cite{WC16-suspend-DATE} & 2016 & segmented, period enforcement& \multicolumn{2}{C{12cm}|}{speed up factor guarantee with respect to the optimal schedule, Sec.~\ref{sec:static-period-enforce}}&\\
+Huang et al.~\cite{WC16-suspend-DATE} & 2016 & segmented, period enforcement& \multicolumn{2}{C{10cm}|}{speed up factor guarantee with respect to the optimal schedule, Sec.~\ref{sec:static-period-enforce}}&\\
 \hline
 \end{tabular}
 }
