@@ -122,7 +122,7 @@ Huang and Chen \cite{Huang:multiseg}& 2015 & segmented, FP& hybrid, Sec.~\ref{se
 \hline
 Huang et al.~\cite{huangpass:dac2015} & 2015 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in,  Sec.~\ref{sec:model-carry-in}&&\\
 \hline
-Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revised critical instant, Sec.~\ref{sec:existing-exact-special} & suspension by modeling proper release jitter \ref{sec:model-interfering-jitter} and enumerating worst-case interferences&&\\
+Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revised critical instant, Sec.~\ref{sec:existing-exact-special} & suspension by modeling proper release jitter (Sec.~\ref{sec:model-interfering-jitter}) and enumerating the worst-case interferences&&\\
 \hline
 \end{tabular}
 }
@@ -133,24 +133,24 @@ Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revis
 \begin{table}
 \centering
 \scalebox{0.65}{
-\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{10.1cm}|c|}  
+\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{9cm}|c|c|}  
   \hline
-papers/methods & year & enforcement & interferring tasks & flawed\\
+papers/methods & year & suspension and scheduling model & enforcement & flawed? & fixed?\\
 \hline 
 Rajkumar \cite{Raj:suspension1991} & 1991 & segmented, FP &
 A period enforcer algorithm was proposed to artificially 
-increase certain suspension intervals so that the self-suspending tasks behave like ideal periodic tasks, Sec.~\ref{sec:period-enforce} & \\
+increase certain suspension intervals so that the self-suspending tasks behave like ideal periodic tasks, Sec.~\ref{sec:period-enforce} & &\\
 \hline 
 Ding et al.\cite{DBLP:journals/ieicet/DingTT09} & 2009 &segmented, segmented FP & 
-enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce} & \checkmark\\
+enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce} & X & ?\\
 \hline 
-Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& slack enforcement, Sec.~\ref{sec:slack-enforce}&\\
+Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& slack enforcement, Sec.~\ref{sec:slack-enforce}& ? & ?\\
 \hline
-Kim et al.~\cite{RTSS-KimANR13} & 2013 & segmented, segmented FP & enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce} & \checkmark\\
+Kim et al.~\cite{RTSS-KimANR13} & 2013 & segmented, segmented FP & enforcement for each computation segment, Sec.~\ref{sec:static-period-enforce} & X & ?\\
 \hline
-Chen and Liu~\cite{RTSS-ChenL14} & 2014 & segmented (one-segment), period enforcement&  speedup factor guarantee w.r.t. the optimal schedule, Sec.~\ref{sec:static-period-enforce}&\\
+Chen and Liu~\cite{RTSS-ChenL14} & 2014 & segmented (one-segment), period enforcement&  speedup factor guarantee w.r.t. the optimal schedule, Sec.~\ref{sec:static-period-enforce}&&\\
 \hline
-Huang et al.~\cite{WC16-suspend-DATE} & 2016 & segmented, period enforcement& speedup factor guarantee w.r.t. the optimal schedule, Sec.~\ref{sec:static-period-enforce}&\\
+Huang et al.~\cite{WC16-suspend-DATE} & 2016 & segmented, period enforcement& speedup factor guarantee w.r.t. the optimal schedule, Sec.~\ref{sec:static-period-enforce}&&\\
 \hline
 \end{tabular}
 }
