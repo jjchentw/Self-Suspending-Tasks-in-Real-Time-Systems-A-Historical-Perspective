@@ -90,41 +90,39 @@ Except Section~\ref{sec:multiprocessor-HRT}, we will implicitly assume uniproces
 \begin{table}[t]
   \centering
   \scalebox{0.65}{
-\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{5cm}|C{5cm}|c|}  
+\begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{5cm}|C{5cm}|c|c|}  
   \hline
-papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interferring tasks ($hp(k)$ under FP) & flawed\\
+papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interferring tasks ($hp(k)$ under FP) & flawed? & fixed?\\
 \hline
- Ming \cite{MingLiRTCSA1994} & 1994 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & \checkmark\\
+ Ming \cite{MingLiRTCSA1994} & 1994 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & X & \checkmark\\
 \hline
-Kim et al. \cite{RTCSA-KimCPKH95} & 1995 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & \checkmark\\
+Kim et al. \cite{RTCSA-KimCPKH95} & 1995 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & X & \checkmark\\
 \hline
-Palencia and Harbour~\cite{PH:rtss98} & 1998 & segmented, FP & split (see footnote \ref{footnote-rtss98}), Sec.~\ref{sec:model-interferred:split}  & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving} &\\
+Palencia and Harbour~\cite{PH:rtss98} & 1998 & segmented, FP & split (see footnote \ref{footnote-rtss98}), Sec.~\ref{sec:model-interferred:split}  & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving} & &\\
 \hline
-Liu~\cite[Pages 164-165]{Liu:2000:RS:518501} & 2000 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as blocking, Sec.~\ref{sec:model-interfering-blocking} &\\
+Liu~\cite[Pages 164-165]{Liu:2000:RS:518501} & 2000 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as blocking, Sec.~\ref{sec:model-interfering-blocking} & &\\
 \hline
-Devi \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03} & 2003 & dynamic, EDF & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as blocking, Sec.~\ref{sec:model-interfering-blocking} &\\ 
+Devi \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03} & 2003 & dynamic, EDF & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as blocking, Sec.~\ref{sec:model-interfering-blocking} & ? & ?\\ 
 \hline
-Audsley and Bletsas~\cite{ECRTS-AudsleyB04} & 2004 & & & & \checkmark\\ 
+Audsley and Bletsas~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} & 2004 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as release jitter, Sec.~\ref{sec:model-interfering-jitter}  & X& \checkmark\\ 
 \hline 
-Audsley and Bletsas~\cite{RTAS-AudsleyB04} & 2004 & & & & \checkmark\\ 
+Bletsas and Audsley~\cite{RTCSA-BletsasA05} & 2005 & segmented, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}& X& \checkmark\\
+\hline
+Bletsas~\cite[Chapter 5.4]{bletsas:thesis} & 2007 & dynamic or segmented, FP& hybrid, Sec. \ref{sec:model-interferred-hybrid}&segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving} & X & \checkmark\\
 \hline 
-Bletsas and Audsley~\cite{RTCSA-BletsasA05} & 2005 & & & & \checkmark\\
+Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& revised critical instant, Sec.~\ref{sec:existing-exact-special} & revised critical instant &X & \checkmark\\
 \hline
-Bletsas~\cite{bletsas:thesis} & 2007 & & & &\\
+Liu and Anderson~\cite{DBLP:conf/ecrts/LiuA13} & 2013 & multiprocessor, global FP and EDF &  suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& carry-in jobs in multiprocessor scheduling, Sec.~\ref{sec:multiprocessor-HRT} & X&\checkmark\\
 \hline 
-Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP& revised critical instant, Sec.~\ref{sec:existing-exact-special} & revised critical instant & \checkmark\\
-\hline
-Liu and Anderson~\cite{DBLP:conf/ecrts/LiuA13} & 2013 & multiprocessor, global FP and EDF &  suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& carry-in jobs in multiprocessor scheduling, Sec.~\ref{sec:multiprocessor-HRT} & \checkmark\\
+Liu et al. \cite{DBLP:conf/ecrts/LiuCH014} & 2014 & dynamic, FP (harmonic)& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& no additional impact due to self-suspension& &\\ 
 \hline 
-Liu et al. \cite{DBLP:conf/ecrts/LiuCH014} & 2014 & dynamic, FP (harmonic)& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& no additional impact due to self-suspension&\\ 
-\hline 
-Liu and Chen~\cite{LiuChen:rtss2014} & 2014 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in, Sec.~\ref{sec:model-carry-in} &\\
+Liu and Chen~\cite{LiuChen:rtss2014} & 2014 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in, Sec.~\ref{sec:model-carry-in} & &\\
 \hline
-Huang and Chen \cite{Huang:multiseg}& 2015 & segmented, FP& hybrid, Sec.~\ref{sec:model-interferred-oblivious}-~\ref{sec:model-interferred-hybrid} & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}&\\
+Huang and Chen \cite{Huang:multiseg}& 2015 & segmented, FP& hybrid, Sec.~\ref{sec:model-interferred-oblivious}-~\ref{sec:model-interferred-hybrid} & segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}& & \\
 \hline
-Huang et al.~\cite{huangpass:dac2015} & 2015 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in,  Sec.~\ref{sec:model-carry-in}&\\
+Huang et al.~\cite{huangpass:dac2015} & 2015 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as carry-in,  Sec.~\ref{sec:model-carry-in}&&\\
 \hline
-Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revised critical instant, Sec.~\ref{sec:existing-exact-special} & suspension by modeling proper release jitter \ref{sec:model-interfering-jitter} and enumerating worst-case interferences&\\
+Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revised critical instant, Sec.~\ref{sec:existing-exact-special} & suspension by modeling proper release jitter \ref{sec:model-interfering-jitter} and enumerating worst-case interferences&&\\
 \hline
 \end{tabular}
 }
