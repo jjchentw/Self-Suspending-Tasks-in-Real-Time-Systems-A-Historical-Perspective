@@ -135,7 +135,7 @@ There have been several research efforts, focusing on the design of scheduling a
   synchronous releases, which was used in \cite{LR:rtas10}.
 \item Incorrectly counting highest-priority self-suspending time to reduce
   interference, which was used in  \cite{RTSS-KimANR13}. 
-\item Incorrect segmented fixed-priority scheduling with periodic
+\item Incorrect segmented fixed-priority scheduling with period
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
 \end{itemize}
 
@@ -145,7 +145,7 @@ There have been several research efforts, focusing on the design of scheduling a
 \item summarize the existing self-suspending task models in Section~\ref{sec:model}, 
 \item provide the general methodologies to handle self-suspending task systems in hard real-time systems in Section~\ref{sec:review} and soft real-time systems in Section~\ref{sec:soft-realtime}, 
 \item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws in Section~\ref{sec:misconceptions}, 
-\item examine the inherited flaws in multiprocessor synchronization, due to the flawed analysis in self-suspending task models in Section~\ref{sec:syn}, and
+\item examine the inherited flaws in multiprocessor synchronization, due to the flawed analysis in self-suspending task models, in Section~\ref{sec:syn}, and
 \item provide the summary of the computational complexity classes of different self-suspending task models and systems in Section~\ref{sec:hardness}.
 \end{itemize}
 Some results in the literature are listed with open issues that require further detailed examination to confirm their correctness. These are listed in Section~\ref{sec:open-issues-existing}. 

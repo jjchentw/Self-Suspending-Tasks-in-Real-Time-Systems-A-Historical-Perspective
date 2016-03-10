@@ -1,9 +1,10 @@
 \section{Self-Suspending Tasks in Multiprocessor Synchronization}
 \label{sec:syn}
 
-In this section, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). As semaphores induce self-suspensions, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors unfortunately also spread to the analysis of  real-time locking protocols on partitioned multiprocessors.
+In this section, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in Section~\ref{sec:examples} to motivate the reasons for self-suspending behaviour. 
+As semaphores induce self-suspensions, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors unfortunately also spread to the analysis of  real-time locking protocols on partitioned multiprocessors.
 
-In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section \ref{sec:counterexample}. Fortunately, as we will discuss in Section \ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:misconceptions}.
+In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section \ref{sec:counterexample}. Fortunately, as we will discuss in Section \ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:wrong-jitter-dynamic}.
 
 We begin with a review of existing analysis strategies for semaphore-induced suspensions on uniprocessors and partitioned multiprocessors. 
  
@@ -207,7 +208,7 @@ However, based on the example in Section \ref{sec:counterexample}, we can immedi
 
 In Eq. \eqref{eqn:wcrt}, the effects of deferred execution  are accounted for similarly to release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
-A straightforward fix is to replace $B_i^r$ in the ceiling term (\ie, the second term in Eq. \eqref{eqn:wcrt}) with a larger, safe value such as $D_i$  or $R_i - C_i$ if $R_i \leq T_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}): assuming constrained deadlines, the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
+A straightforward remedy is to replace $B_i^r$ in the ceiling term (\ie, the second term in Eq. \eqref{eqn:wcrt}) with a larger, safe value such as $D_i$  or $R_i - C_i$ if $R_i \leq T_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}): assuming constrained deadlines, the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
 \label{eqn:wcrt-pfp-fixed}
 R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + R_i - C_i}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.

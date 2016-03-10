@@ -73,7 +73,7 @@ For this case, if the task systems are with constrained deadlines, \ie, $D_i \le
 
 It is also not difficult to see that the implicit-deadline case is also at least co${\cal NP}$-hard.  A special case of the segmented self-suspending task system is to allow each task $\tau_i$ having exactly one self-suspension interval with a \emph{fixed} length $S_i$ and one computation segment with WCET $C_i$.  Therefore, the relative deadline of the computation segment of task $\tau_i$ (after it is released to be scheduled) is $D_i = T_i-S_i$. For such a special case, it is easy to see that the optimal scheduling policy is EDF. 
 It has been proved in \cite{DBLP:conf/ecrts/Ekberg015} that verifying uniprocessor feasibility of ordinary sporadic tasks with constrained deadlines is strongly co${\cal NP}$-complete.
-By the above discussions, any ordinary constrained-deadline task system can be converted to a corresponding implicit-deadline segmented self-suspending task system, and their exact schedulability tests for EDF scheduling are identical. Since a special case of the problem is co${\cal NP}$-complete in the strong sense, the problem is co${\cal NP}$-hard in the strong sense.
+By the above discussions, any ordinary constrained-deadline sporadic task system can be converted to a corresponding implicit-deadline segmented self-suspending task system, and their exact schedulability tests for EDF scheduling are identical. Since a special case of the problem is co${\cal NP}$-complete in the strong sense, the problem is co${\cal NP}$-hard in the strong sense.
 
 
 \subsubsection{Schedulability Tests for Dynamic Self-Suspension}

@@ -148,7 +148,7 @@ In this paper, we will specifically examine the existing results for multiproces
 
 %{\bf Example 4: Computation Offloading}
 Since modern embedded systems are designed to execute complicated applications, the limited resources, such as the battery capacity, the memory size, and the processor speed, may not satisfy the required computation demand. Offloading heavy computation to some powerful computing servers has been shown as an attractive solution, including optimizations for system performance and energy saving.
-Computation offloading with real-time constraints has been specifically studied in two categories. In the first category, computation offloading always takes place at the end of a job and the post-processing time to process the result from the computing server is negligible. Such offloading scenarios do not incur self-suspending behaviour  \cite{nimmagadda2010real,DBLP:conf/ecrts/TomaC13}. In the second category, non-negligible computation time is needed, in a certain amount of time after computation offloading. For example, the computation offloading model studied in \cite{Liu_2014} defines three segments of a task: (1) the first segment is the local computation time to encrypt, extract, or compress the data, (2) the second segment is the worst-case waiting time to receive the result from the computing server, and (3) the third segment is either the local compensation if the result from the computing server is not received in time or the post processing if the result from the computing server is received in time. Another similar model for soft real-time systems is adopted by Liu et al. \cite{DBLP:conf/ecrts/LiuLZGH015} by assuming that the offloading results are always received within a specified amount of time.
+Computation offloading with real-time constraints has been specifically studied in two categories. In the first category, computation offloading always takes place at the end of a job and the post-processing time to process the result from the computing server is negligible. Such offloading scenarios do not incur self-suspending behaviour  \cite{nimmagadda2010real,DBLP:conf/ecrts/TomaC13}. In the second category, non-negligible computation time after computation offloading is needed. For example, the computation offloading model studied in \cite{Liu_2014} defines three segments of a task: (1) the first segment is the local computation time to encrypt, extract, or compress the data, (2) the second segment is the worst-case waiting time to receive the result from the computing server, and (3) the third segment is either the local compensation if the result from the computing server is not received in time or the post processing if the result from the computing server is received in time. Another similar model for soft real-time systems is adopted by Liu et al. \cite{DBLP:conf/ecrts/LiuLZGH015} by assuming that the offloading results are always received within a specified amount of time.
 
 % \begin{figure}[t]
 %   \centering
@@ -239,11 +239,12 @@ Throughout this paper, we will use ${\bf T}$ to denote the input task
 set and use $n$ to denote the number of tasks in ${\bf T}$. 
 If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
 equal to the period $T_k$, such a task set ${\bf T}$ is an
-\emph{implicit-deadline} task set. If the relative deadline $D_k$ of
+\emph{implicit-deadline} task set (system). If the relative deadline $D_k$ of
 task $\tau_k$ in ${\bf T}$ is always no more than the period $T_k$,
 such a task set ${\bf T}$ is called a \emph{constrained-deadline} task
-set. Otherwise, such a task set is called an \emph{arbitrary-deadline}
-task set. We will mainly consider constrained-deadline and
+set (system). Otherwise, such a task set is called an \emph{arbitrary-deadline}
+task set (system). In this paper, we will mainly and implicitly 
+consider constrained-deadline and
 implicit-deadline task systems, except for some parts in
 Section~\ref{sec:soft-realtime}.
   
@@ -307,7 +308,7 @@ see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,Blet
 Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
 \subsection{Examples of Dynamic Self-Suspension Model} 
-The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending regions for a task, \eg, when these may vary for different jobs by the same task.
+The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending intervals for a task, \eg, when these may vary for different jobs by the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
 of system variables at run-time. Each of those paths may have a different
@@ -319,8 +320,8 @@ just two parameters: the worst-case execution time of the task in consideration 
   
 \subsection{Examples of Segmented Self-Suspension Model} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
-\ie, there is a deterministic number of self-suspending regions interleaved between portions of processor-based code with single-entry
-single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic
+\ie, there is a deterministic number of self-suspending intervals interleaved between portions of processor-based code with single-entry
+single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic self-suspension
 model discussed earlier, but this would discard the information about the constraints in the location of self-suspensions inside a task 
 activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
 to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
@@ -353,7 +354,7 @@ dynamic-priority scheduling and fixed-priority (FP)
 scheduling. A task changes its priority level in dynamic-priority
 scheduling during run-time. One well-known dynamic-priority scheduling
 is the earliest-deadline-first (EDF) scheduling, which gives
-highest-priority to the job (in the ready queue) with the earliest
+the highest priority to the job (in the ready queue) with the earliest
 absolute deadline. Variances of EDF scheduling for self-suspending
 tasks have been explored in
 \cite{RTSS-ChenL14,Liu_2014,DBLP:conf/ecrts/Devi03,WC16-suspend-DATE}.
@@ -364,6 +365,7 @@ same priority level. Examples are rate-monotonic (RM) scheduling
 \cite{Liu_1973}, under which the task with a shorter period has a
 higher-priority level, and deadline-monotonic (DM) scheduling, under which
 the task with a shorter relative deadline has a higher-priority level.
+In this paper, if we consider fixed-priority scheduling, we will also implicitly assume that task $\tau_i$ has higher priority than task $\tau_j$ if $i < j$.
 This has been explored in
 \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}.
 Moreover, in some results in the literature, \eg,
@@ -416,7 +418,7 @@ algorithms:
 \end{itemize}
 
 
-To resolve the computational complexity issues in many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by the algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
+To resolve the computational complexity issues in many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
 %In other words, by taking the negation of the above statement, if an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then it guarantees that \emph{if the schedule derived from the algorithm ${\cal A}$ is not feasible, then the input does not admit a feasible schedule by running at speed $\frac{1}{\rho}$}.
 
 
@@ -440,6 +442,7 @@ Under P-FP scheduling, each task has a fixed-priority level and is statically as
  In contrast to partitioned scheduling, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (G-EDF), under which jobs are EDF-scheduled using a single ready queue.  
  Clustered scheduling is a hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying memory topology to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (\eg, an automotive system)~\cite{bastoni2010}.
 
+We will discuss the multiprocessor scenarios in Sections~\ref{sec:multiprocessor-HRT}~and~\ref{sec:soft-realtime}.
 
 %%% Local Variables:
 %%% mode: latex

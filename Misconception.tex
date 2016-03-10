@@ -182,7 +182,7 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 %\label{fig:counterexample-dynamic}
 %\end{figure}
 
-{\bf Consequences:} Since the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} are fully based on the analysis in Eq.~(\ref{eq:dynamic-flawed}), the above unsafe example disproves the correctness of their analyses. The source of error comes from a wrong interpretation by Ming \cite{MingLiRTCSA1994} in 1993 with respect to a paper by Audsley et al. \cite{audsley-1993}.\footnote{The technical report of \cite{audsley-1993} was referred in \cite{MingLiRTCSA1994}. Here we refer to the journal version.} Audsley et al. \cite{audsley-1993} explained that deferrable executions may result in arrival jitter and the jitter terms should be accounted while analyzing the worst-case response time. However, Ming \cite{MingLiRTCSA1994} interpreted that the jitter is the self-suspension time, which was not originally provided in \cite{audsley-1993}. Therefore, there was no proof of the correctness of the methods used in \cite{MingLiRTCSA1994}. The concept was adopted by Kim et al. \cite{RTCSA-KimCPKH95} in 1994. 
+{\bf Consequences:} Since the results in \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994} are fully based on the analysis in Eq.~(\ref{eq:dynamic-flawed}), the above unsafe example disproves the correctness of their analyses. The source of error comes from a wrong interpretation by Ming \cite{MingLiRTCSA1994} in 1994 with respect to a paper by Audsley et al. \cite{audsley-1993}.\footnote{The technical report of \cite{audsley-1993} was referred in \cite{MingLiRTCSA1994}. Here we refer to the journal version.} Audsley et al. \cite{audsley-1993} explained that deferrable executions may result in arrival jitter and the jitter terms should be accounted while analyzing the worst-case response time. However, Ming \cite{MingLiRTCSA1994} interpreted that the jitter is the self-suspension time, which was not originally provided in \cite{audsley-1993}. Therefore, there was no proof of the correctness of the methods used in \cite{MingLiRTCSA1994}. The concept was adopted by Kim et al. \cite{RTCSA-KimCPKH95} in 1995. 
 
 This misconception spread further when it was propagated by Lakshmanan et al.~\cite{lakshmanan-2009} in their derivation of worst-case response time bounds for
 partitioned multiprocessor real-time locking protocols, which in turn was reused in several later works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}. We explain the consequences and how to correct the later analyses in Section~\ref{sec:syn}. 
@@ -212,7 +212,7 @@ the suspension intervals appear with increasing self-suspending time.
 rearrangement and a fixed jitter term to represent all computation segments of a given task.
 As reported in \cite{RTCSA-BletsasA05}, this jitter term corresponds to the maximum internal jitter, within the 
 activation of the task, of any computation segment, due to variability in the length of 
-preceding computation segments and self-suspending regions.
+preceding computation segments and self-suspending intervals.
 \end{enumerate}
 The first step can be explained by using the following example of an
 implicit-deadline segmented self-suspending task with $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3) = (1, 5, 4, 3, 2)$ and $T_i=40$.  It first artificially creates a notional gap $S_i^3=40-(1+5+4+3+2)=25$. After reordering, the task parameters become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3)  = (4, 3, 2, 5, 1, 25)$.  The purpose of this reordering step was designed to avoid having to consider different release offsets for each interfering task (corresponding to its computational segments). 
@@ -348,7 +348,7 @@ However, quantifying the jitter of a self-suspending task $\tau_i$ with $D_i-C_i
 
 Over the years, it has been well accepted that the characterization of the critical instant for self-suspending tasks is a complex problem. Nevertheless, although the complexity of verifying the existence of a feasible schedule for segmented self-suspending tasks has been proven to be ${\cal NP}$-hard in the strong sense \cite{Ridouard_2004}, the complexity of verifying the schedulability of a task set has only been studied for segmented self-suspending tasks with constrained deadlines scheduled with a fixed-priority scheduling algorithm (see Section~\ref{sec:hardness}), hence leaving hope for the existence of efficient schedulability tests for more constrained systems. 
 
-Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} proposed a pseudo-polynomial worst-case response time analysis for one segmented self-suspending task $\tau_k$ (with one self-suspending interval) assuming that 
+Following that idea, Lakshmanan and Rajkumar \cite{LR:rtas10} proposed a pseudo-polynomial-time worst-case response time analysis for one segmented self-suspending task $\tau_k$ (with one self-suspending interval) assuming that 
 \begin{itemize}
 \item the scheduling algorithm is fixed-priority;
 \item $\tau_k$ is the lowest-priority task;  and
@@ -465,7 +465,7 @@ This definition of the critical instant is similar to the definition of the crit
         }
 	\end{scope}	
 \end{tikzpicture}}     
-\caption{Counter example to the synchronous release of all tasks (by \cite{LR:rtas10}).}
+\caption{A counterexample to the synchronous release of all tasks (by \cite{LR:rtas10}).}
 \label{fig:ex-synch-releases}
 \end{figure}
 
@@ -480,7 +480,7 @@ This definition of the critical instant is similar to the definition of the crit
 %\end{figure}
 \fi
 
-Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (\ie, the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation region of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation region of $\tau_3$ (see Figure~\ref{fig:ex-synch-releases}(a)). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
+Consider three implicit deadline tasks with the parameters presented in Table~\ref{table:ex-synch-releases}. Let us assume that the priorities of the tasks are assigned using the rate monotonic policy (\ie, the smaller the period, the higher the priority). We are interested in computing the worst-case response time of $\tau_3$. Following the definition of the critical instant presented in \cite{LR:rtas10}, all three tasks must release a job synchronously at time $0$. Using the standard response-time analysis for non-self-suspending tasks, we get that the worst-case response time of the first computation segment of $\tau_3$ is equal to $R_3^1 = 3$. Because the second job of $\tau_1$ would be released in the self-suspending interval of $\tau_3$ if $\tau_1$ was strictly respecting its minimum inter-arrival time, the release of the second job of $\tau_1$ is delayed so as to coincide with the release of the second computation segment of $\tau_3$ (see Figure~\ref{fig:ex-synch-releases}(a)). Considering the fact that the second job of $\tau_2$ cannot be released before time instant $50$ and hence does not interfere with the execution of $\tau_3$, the response time of the second computation segment of $\tau_3$ is thus equal to $R_3^2=4$. In total, the worst-case response time of $\tau_3$ when all tasks release a job synchronously is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 3 + 2 +4 = 9$$
 
 \begin{table}[t] 
@@ -494,7 +494,7 @@ $$R_3 = R_3^1 + S_3^1 + R_3^2 = 3 + 2 +4 = 9$$
         $\tau_3$ & (1, 2, 3) & 100  \\
         \hline
     \end{tabular} 
-    \caption{Task parameters for the counter example to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
+    \caption{Task parameters for the counterexample to the synchronous release of all tasks for Section~\ref{sec:wrong-critical}.}
     \label{table:ex-synch-releases}
 \end{table}
 
@@ -527,7 +527,7 @@ Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau
 
 Consider two scenarios with respect to the job release pattern. In Scenario~1, the jobs of the higher-priority non-self-suspending tasks are released as often as possible in each computation segment of $\tau_4$. In Scenario~2 however, one less job of task $\tau_1$ is released in (and therefore interferes with) the first computation segment of the self-suspending task. We show that the WCRT of $\tau_4$ in Scenario~2 is higher than that of Scenario~1. 
 
-Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2}a, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2}b. The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedules of the jobs are identical in this initial time window.  
+Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2}a, and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2}(b). The first $765$ time units are omitted in both figures. This is mainly due to space constraint. In both scenarios, the schedules of the jobs are identical in this initial time window.  
 A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ (indeed, we have $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$) in both scenarios. From time $765$ onward, we separately consider Scenarios~1 and~2.
 %\begin{figure}
 %  \centering
@@ -666,9 +666,9 @@ A first job of $\tau_1$, $\tau_2$ and $\tau_3$ is released synchronously with th
 \label{fig:ex_crit_inst2}
 \end{figure}
 
-\noindent\textbf{Scenario 1.} Continuing the release of jobs of the non-self-suspending tasks as often as possible without violating their minimum inter-arrival times, the first computation segment of $\tau_4$ finishes its execution at time $782$ as shown in Fig.~\ref{fig:ex_crit_inst2}a. After completion of its first computation segment, $\tau_4$ self-suspends for two time units until time $784$. As $\tau_3$ would have released a job within the self-suspending region, we delay the release of that job from time $782$ to $784$ in order to maximize the interference exerted by $\tau_3$ on the second computation segment of $\tau_4$ as shown in Fig.~\ref{fig:ex_crit_inst2}a. Note that, in order to respect its minimum inter-arrival time, $\tau_2$ has an offset of $6$ time units with the arrival of the second computation segment of $\tau_4$. Upon following the rest of the schedule, it can easily be seen that the job of $\tau_4$ finishes its execution at time $800$.
+\noindent\textbf{Scenario 1.} Continuing the release of jobs of the non-self-suspending tasks as often as possible without violating their minimum inter-arrival times, the first computation segment of $\tau_4$ finishes its execution at time $782$ as shown in Fig.~\ref{fig:ex_crit_inst2}(a). After completion of its first computation segment, $\tau_4$ self-suspends for two time units until time $784$. As $\tau_3$ would have released a job within the self-suspending interval, we delay the release of that job from time $782$ to $784$ in order to maximize the interference exerted by $\tau_3$ on the second computation segment of $\tau_4$ as shown in Fig.~\ref{fig:ex_crit_inst2}(a). Note that, in order to respect its minimum inter-arrival time, $\tau_2$ has an offset of $6$ time units with the arrival of the second computation segment of $\tau_4$. Upon following the rest of the schedule, it can easily be seen that the job of $\tau_4$ finishes its execution at time $800$.
 
-\noindent\textbf{Scenario 2.} As shown in Fig.~\ref{fig:ex_crit_inst2}b, the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension region anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2}a as the job of $\tau_4$ finishes its execution at time $802$.\\
+\noindent\textbf{Scenario 2.} As shown in Fig.~\ref{fig:ex_crit_inst2}(b), the release of a job of task $\tau_1$ is skipped at time $776$ in comparison to Scenario~1. As a result, the execution of the first computation segment of $\tau_4$ is completed at time $777$, thereby causing one job of $\tau_2$ that was released at time $780$ in Scenario 1, to \emph{not} be released during the execution of the first computation segment of $\tau_4$. The response time of the first computation segment of $\tau_4$ is thus reduced by $C_1 + C_2 = 5$ time units in comparison to Scenario 1 (see Fig.~\ref{fig:ex_crit_inst2}). Note that this deviation from Scenario 1 does not affect the fact that $\tau_1$ still releases a job synchronously with the second computation segment of $\tau_4$. The next job of $\tau_3$ however, is not released in the suspension interval anymore but $3$ time units after the arrival of $\tau_4$'s second computation segment. Moreover, the offset of $\tau_2$ with respect to the start of the second computation segment is reduced by $C_1 + C_2 = 5$ time units. This causes an extra job of $\tau_2$ to be released in the second computation segment of $\tau_4$, initiating a cascade effect: an extra job of $\tau_1$ is released in the second computation segment at time $795$, which in turn causes the release of an extra job of $\tau_3$, itself causing the arrival of one more job of $\tau_2$. Consequently, the response time of the second computation segment increases by $C_2 + C_1 + C_3 + C_2 = 7$ time units. Overall, the response time of $\tau_4$ increases by $7 - 5 = 2$ time units in comparison to Scenario~1. This is reflected in Figure~\ref{fig:ex_crit_inst2}(a ) as the job of $\tau_4$ finishes its execution at time $802$.\\
 
 
 {\bf Consequence:} This counterexample proves that the response time of a self-suspending task $\tau_k$ can be larger when the tasks in $hp(k)$ do not release jobs as often as possible.
@@ -823,7 +823,7 @@ Denote this task set as $\Gamma_{1s}$ (as also used in \cite{RTSS-KimANR13}).  S
     		\draw[->] (9.6,0) -- (9.6,1.75);
 	\end{scope}	
  \end{tikzpicture}}     
-  \caption{Counter example to the synchronous release of Theorem 2 in \cite{RTSS-KimANR13}.}
+  \caption{A counterexample to the synchronous release of Theorem 2 in \cite{RTSS-KimANR13}.}
   \label{fig:counterexample-reduce-interf}
 \end{figure}
 
@@ -937,11 +937,8 @@ Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, i
 
 {\bf Consequences:} The priority assignment algorithms in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} use the above unsafe schedulability test to verify the priority assignments. Therefore, their results are flawed due to the unsafe schedulability test.
 
-{\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority assignment. This can be observed as a reduction to 
-the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. A GMF task $G_i$ consisting of $m_i$ frames is characterized by the $3$-tuple $(\vec{C_i},\vec{D_i},\vec{T_i})$, where $\vec{C_i}$,$\vec{D_i}$, and $\vec{T_i}$ are $m_i$-ary vectors $(C_{i}^0,C_{i}^1,...,C_{i}^{m_i-1})$ of execution requirements, $(D_{i}^0,D_{i}^1,...,D_{i}^{m_i-1})$ of relative deadlines, $(T_{i}^0,T_{i}^1,...,T_{i}^{m_i-1})$ of minimum inter-arrival times, respectively.
-In fact, from the analysis perspective, a self-suspending task $\tau_i$ under the offset enforcement is equivalent to a GMF task $G_i$,  by considering the computation segments as the frames with different separation times \cite{WC16-suspend-DATE,DBLP:journals/ieicet/DingTT09}.
-
-However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
+{\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority assignment. As discussed in Section~\ref{sec:static-period-enforce}, this can be observed as a reduction to 
+the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
 
 % \subsection{Incorrect Scheduling with Slack Enforcement}
 % \label{sec:wrong-slack}
