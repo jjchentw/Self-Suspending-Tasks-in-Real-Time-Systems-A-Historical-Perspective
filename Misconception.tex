@@ -1,10 +1,10 @@
 
-\section{Misconceptions in Some Existing Results}
+\section{Existing Misconceptions in the State-of-the-Art}
 \label{sec:misconceptions}
 
 This section explains several misconceptions in some existing results by presenting concrete examples to demonstrate their overstatements. These examples are constructed case by case. Therefore, each misconception will be explained by using one specific example. 
 
-\subsection{Incorrect Quantifications of Jitter - Dynamic Self-Suspension}
+\subsection{Incorrect Quantifications of Jitter (Dynamic Self-Suspension)}
 \label{sec:wrong-jitter-dynamic}
 
 We first explain the existing misconceptions in the literature to quantify the jitter too optimistically for dynamic self-suspending task systems under fixed-priority scheduling. To calculate the worst-case response time of the task $\tau_k$ under analysis, there have been several results in the literature, \ie, \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994},  which propose to calculate the worst-case response time $R_k$ of task $\tau_k$ by finding the minimum $R_k$ with
@@ -198,7 +198,7 @@ R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+D_i-C_i}{T_i}} C_i,
 \end{equation}
 for \emph{constrained-deadline} task systems under the assumption that every higher-priority task $\tau_i$ in $hp(k)$ can meet their relative deadline constraint. It is also safe to use $\ceiling{\frac{R_k+R_i-C_i}{T_i}}$ instead of $\ceiling{\frac{R_k+D_i-C_i}{T_i}}$ in the above equation if $R_i \leq D_i \leq T_i$.
 
-\subsection{Incorrect Quantifications of Jitter - Segmented Self-Suspension}
+\subsection{Incorrect Quantifications of Jitter (Segmented Self-Suspension)}
 \label{sec:wrong-jitter-segmented}
 
 
@@ -505,7 +505,7 @@ $$R_3 = R_3^1 + S_3^1 + R_3^2 = 2+2+6 = 10$$
 It was however proven in \cite{ecrts15nelissen} that in the critical instant of a self-suspending task $\tau_k$, every higher-priority task releases a job synchronously with the arrival of at least one computation segment of $\tau_k$, but not all higher-priority tasks must release a job synchronously with the same computation segment.
 
 \subsubsection{A counterexample to 
-always release with the minimum inter-arrival time}
+the minimum inter-release time}
 
 Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau_1$, $\tau_2$ and $\tau_3$ are non-self-suspending sporadic tasks and $\tau_4$ is a self-suspending task with the lowest priority. The tasks have the parameters provided in Table~\ref{table:ex-num-releases}. The worst-case response time of $\tau_4$ is obtained when $\tau_1$ releases a job synchronously with the second computation segment of $\tau_4$ while $\tau_2$ and $\tau_3$ must release a job synchronously with the first computation segment of $\tau_4$.
 

@@ -1,4 +1,4 @@
-\section{Motivational Examples of Self-Suspending Task Systems}
+\section{Examples of Self-Suspending Task Systems}
 \label{sec:examples}
 
 Initially, we motivate the reasons to consider self-suspending task systems with the following examples.
@@ -307,7 +307,7 @@ see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,Blet
 
 Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
-\subsection{Examples of Dynamic Self-Suspension Model} 
+\subsection{Examples of Dynamic Self-Suspension} 
 The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending intervals for a task, \eg, when these may vary for different jobs by the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
@@ -318,7 +318,7 @@ by modelling the task according to the dynamic self-suspension model using
 just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier by converting the information provided by a DAG into the dynamic self-suspension task model. 
 %Note that these two worst cases may be observed under different control flows.
   
-\subsection{Examples of Segmented Self-Suspension Model} 
+\subsection{Examples of Segmented Self-Suspension} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
 \ie, there is a deterministic number of self-suspending intervals interleaved between portions of processor-based code with single-entry
 single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic self-suspension
@@ -339,7 +339,7 @@ to derive tighter bounds on worst-case response times, where applicable, compare
 % during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to 
 % it and using the dynamic model for all other tasks.
 
-\subsection{Terminologies and Notation for Scheduling}
+\subsection{Terminologies and Notations}
 
 Implicitly, we will assume that the system schedules the jobs in a
 \emph{preemptive} manner, unless specified otherwise.  We will mainly focus on
@@ -430,7 +430,7 @@ To resolve the computational complexity issues in many scheduling problems in re
 % resulting from self-suspending behaviour.
 
 
-\subsection{Terminologies for Multiprocessor Scheduling}
+\subsection{Multiprocessor Scheduling}
 
 On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned, (\textit{ii}) global scheduling, and (\textit{iii}) clustered scheduling. 
 Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
