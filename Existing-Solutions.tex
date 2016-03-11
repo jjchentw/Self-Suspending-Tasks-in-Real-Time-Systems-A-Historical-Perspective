@@ -124,7 +124,7 @@ many papers & - & - &  Nelissen et al.~\cite[Sec. IV]{ecrts15nelissen}
 \end{table}
 
 
-\begin{table}[t]
+\begin{table}[h]
   \centering
   \scalebox{0.65}{
 \begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{5cm}|C{5cm}|}  
@@ -165,7 +165,38 @@ Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revis
 \hline
 \end{tabular}
 }
-  \caption{Summary of existing methods without any enforcement mechanisms for handling self-suspending tasks in scheduling policies and schedulability analyses.}
+\vspace{0.05in}
+ \scalebox{0.65}{
+%\setlength{\extrarowheight}{0.1in}
+\begin{tabular}{||C{2cm}|C{3.3cm}||C{3cm}|C{3cm}|C{3cm}|C{3cm}|}  
+  \hline
+  & &\multicolumn{4}{C{12cm}|}{interfered task ($\tau_k$)} \\
+\cline{3-6}
+& &suspension-oblivious & split & hybrid & critical instant \\
+& &(Sec.~\ref{sec:model-interferred-oblivious}) & (Sec.~\ref{sec:model-interferred:split}) & (Sec.~\ref{sec:model-interferred-hybrid}) & (Sec.~\ref{sec:existing-exact-special}) \\
+\cline{1-6}
+\multirow{5}{*}{\rotatebox[origin=c]{90}{ interferring tasks}}& 
+suspension-oblivious
+(Sec.~\ref{sec:model-interfering-oblivious}) & used as base-lines in
+many papers & - & - &\cite[Sec. III]{LR:rtas10}, \cite[Sec. IV]{ecrts15nelissen}
+(footnote ~\ref{footnote-critical-instant})\\
+\cline{2-6}
+& carry-in jobs (Sec.~\ref{sec:model-carry-in})& \cite{LiuChen:rtss2014}, \cite{huangpass:dac2015}& \multicolumn{2}{c|}{\cite{Huang:multiseg}} & -\\
+\cline{2-6}
+& release jitter (Sec.~\ref{sec:model-interfering-jitter})&
+\cite{MingLiRTCSA1994},
+\cite{RTCSA-KimCPKH95},~\cite{ECRTS-AudsleyB04} \cite{RTAS-AudsleyB04}& \multicolumn{2}{c|}{\cite{RTCSA-BletsasA05}} &\cite[Sec. VI]{ecrts15nelissen}\\
+\cline{2-6}
+& suspension as blocking (Sec.~\ref{sec:model-interfering-blocking}) &  \cite[Pages 164-165]{Liu:2000:RS:518501}, \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03}& -& - & -\\
+\cline{2-6}
+& segmented~structures (Sec.~\ref{sec:model-interfering-improving}) &
+- & \cite{PH:rtss98} (footnote \ref{footnote-rtss98}) & \cite{RTCSA-BletsasA05}, \cite[Chapter 5.4]{bletsas:thesis}, \cite{Huang:multiseg} & -\\
+\hline
+\end{tabular}
+}
+  \caption{Summary of existing methods without any enforcement
+    mechanisms for handling self-suspending tasks in scheduling
+    policies and schedulability analyses. } 
   \label{tab:summary-methods-chornical}
 \end{table}
 
@@ -361,7 +392,10 @@ self-suspending tasks assuming that there is only one self-suspending task $\tau
 There is no work providing an exact schedulability analysis for any other cases under the dynamic self-suspending task model.
 
 The problem of the schedulability analysis of segmented self-suspending tasks has been treated in~\cite{LR:rtas10,ecrts15nelissen}, 
-again assuming only one self-suspending task $\tau_k$. The proposed solutions are based on the notion of the critical instant. 
+again assuming only one self-suspending task $\tau_k$. The proposed solutions are based on the notion of the critical instant.\footnote{\label{footnote-critical-instant}In~\cite[Secs. IV-V]{ecrts15nelissen} and
+    \cite[Sec. III]{LR:rtas10}, the higher-priority tasks are assumed
+    to be ordinary sporadic real-time tasks without any
+    self-suspension.}
 That is, they aim to find the instant at which, considering the state of the system, an execution request for $\tau_k$ will 
 generate the largest response time. Unfortunately, the analysis in \cite{LR:rtas10} has been proven to be flawed in~\cite{ecrts15nelissen}. 
 Further details are provided in Section~\ref{sec:wrong-critical}.
