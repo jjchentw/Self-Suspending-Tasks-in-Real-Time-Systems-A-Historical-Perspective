@@ -105,7 +105,7 @@ many papers & - & - &  Nelissen et al.~\cite[Sec. IV]{ecrts15nelissen}
 \cline{2-6}
 & carry-in jobs (Sec.~\ref{sec:model-carry-in})& Liu and Chen \cite{LiuChen:rtss2014} (2014), Huang et al. \cite{huangpass:dac2015} (2015)& \multicolumn{2}{l|}{Huang and Chen \cite{Huang:multiseg} (2015)} & -\\
 \cline{2-6}
-& release jitter (Sec.~\ref{sec:model-interfering-jitter})& Ming \cite{MingLiRTCSA1994} (1994), Kim et al. \cite{RTCSA-KimCPKH95}  (1995), Audsley and Bletsas~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} (2004)& \multicolumn{2}{l|}{Bletsas and Audsley~\cite{RTCSA-BletsasA05} (2005)} & Nelissen et al.~\cite[Sec. VI]{ecrts15nelissen} (2015)\\
+& release jitter (Sec.~\ref{sec:model-interfering-jitter})& Ming \cite{MingLiRTCSA1994} (1994), Kim et al. \cite{RTCSA-KimCPKH95}  (1995), Audsley and Bletsas~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} (2004)& \multicolumn{2}{L{6cm}|}{Bletsas and Audsley~\cite{RTCSA-BletsasA05} (2005) and  Bletsas~\cite[Chapter 5.4]{bletsas:thesis} (2007)} & Nelissen et al.~\cite[Sec. VI]{ecrts15nelissen} (2015)\\
 \cline{2-6}
 & suspension as blocking (Sec.~\ref{sec:model-interfering-blocking}) &  Liu~\cite[Pages 164-165]{Liu:2000:RS:518501} (2000), Devi \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03} (2003)& -& - & -\\
 \cline{2-6}
@@ -143,9 +143,9 @@ Devi \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03} & 2003 & dynamic, EDF & suspension-
 \hline
 Audsley and Bletsas~\cite{ECRTS-AudsleyB04,RTAS-AudsleyB04} & 2004 & dynamic, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& as release jitter, Sec.~\ref{sec:model-interfering-jitter}  \\%& X& \checkmark\\ 
 \hline 
-Bletsas and Audsley~\cite{RTCSA-BletsasA05} & 2005 & segmented, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving}\\%& X& \checkmark\\
+Bletsas and Audsley~\cite{RTCSA-BletsasA05} & 2005 & segmented, FP& suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious}& segmented structures with fixed offsets, Sec.~\ref{sec:model-interfering-improving}\\%& X& \checkmark\\
 \hline
-Bletsas~\cite[Chapter 5.4]{bletsas:thesis} & 2007 & dynamic or segmented, FP& hybrid, Sec. \ref{sec:model-interferred-hybrid}&segmented structures with dynamic offsets, Sec.~\ref{sec:model-interfering-improving} \\%& X & \checkmark\\
+Bletsas~\cite[Chapter 5.4]{bletsas:thesis} & 2007 & dynamic or segmented, FP& hybrid, Sec. \ref{sec:model-interferred-hybrid}&segmented structures with fixed offsets, Sec.~\ref{sec:model-interfering-improving} \\%& X & \checkmark\\
 \hline 
 Lakshmanan and Rajkumar~\cite{LR:rtas10} & 2010 & segmented, FP&
 revised critical instant, Sec.~\ref{sec:existing-exact-special} &
@@ -178,14 +178,14 @@ Nelissen et al.~\cite{ecrts15nelissen} & 2015 & segmented, FP & based on a revis
 \multirow{5}{*}{\rotatebox[origin=c]{90}{ interferring tasks}}& 
 suspension-oblivious
 (Sec.~\ref{sec:model-interfering-oblivious}) & used as base-lines in
-many papers & - & - &\cite[Sec. III]{LR:rtas10}, \cite[Sec. IV]{ecrts15nelissen}
+many papers & - & - &~\cite[Sec. III]{LR:rtas10}, \cite[Sec. IV]{ecrts15nelissen}
 (footnote ~\ref{footnote-critical-instant})\\
 \cline{2-6}
 & carry-in jobs (Sec.~\ref{sec:model-carry-in})& \cite{LiuChen:rtss2014}, \cite{huangpass:dac2015}& \multicolumn{2}{c|}{\cite{Huang:multiseg}} & -\\
 \cline{2-6}
 & release jitter (Sec.~\ref{sec:model-interfering-jitter})&
 \cite{MingLiRTCSA1994},
-\cite{RTCSA-KimCPKH95},~\cite{ECRTS-AudsleyB04} \cite{RTAS-AudsleyB04}& \multicolumn{2}{c|}{\cite{RTCSA-BletsasA05}} &\cite[Sec. VI]{ecrts15nelissen}\\
+\cite{RTCSA-KimCPKH95},~\cite{ECRTS-AudsleyB04} \cite{RTAS-AudsleyB04}& \multicolumn{2}{c|}{\cite{RTCSA-BletsasA05}, \cite[Chapter 5.4]{bletsas:thesis}} &\cite[Sec. VI]{ecrts15nelissen}\\
 \cline{2-6}
 & suspension as blocking (Sec.~\ref{sec:model-interfering-blocking}) &  \cite[Pages 164-165]{Liu:2000:RS:518501}, \cite[Sec. 4.5]{DBLP:conf/ecrts/Devi03}& -& - & -\\
 \cline{2-6}
