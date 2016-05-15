@@ -1,7 +1,7 @@
-\section{Self-Suspending Tasks in Multiprocessor Synchronization}
+\mychapter{Self-Suspending Tasks in Multiprocessor Synchronization}
 \label{sec:syn}
 
-In this section, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in Section~\ref{sec:examples} to motivate the reasons for self-suspending behaviour. 
+In this \mysectionrefnormal{}, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in \mysectionref{}~\ref{sec:examples} to motivate the reasons for self-suspending behaviour. 
 As semaphores induce self-suspensions, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors unfortunately also spread to the analysis of  real-time locking protocols on partitioned multiprocessors.
 
 In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section \ref{sec:counterexample}. Fortunately, as we will discuss in Section \ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:wrong-jitter-dynamic}.
@@ -9,7 +9,7 @@ In particular, the analysis framework to account for the additional interference
 We begin with a review of existing analysis strategies for semaphore-induced suspensions on uniprocessors and partitioned multiprocessors. 
  
 
-\subsection{Semaphores in Uniprocessor Systems}
+\mysection{Semaphores in Uniprocessor Systems}
 \label{sec:sem-uni}
 
 Under a suspension-based locking protocol, tasks that are denied access to a shared resource (i.e., that block on a lock) are suspended. Interestingly, on uniprocessors, the resulting suspensions are \emph{not} considered to be \emph{self}-suspensions and can be accounted for more efficiently than general self-suspensions.
@@ -24,7 +24,7 @@ where $B_k$ denotes the maximum duration of \emph{priority inversion}~\cite{SRL:
 Comparing Eq. \eqref{eq:dynamic-correct} (general self-suspensions) with Eq.  \eqref{eq:classic-pcp-rta} (suspensions due to semaphores), it is apparent that Eq. \eqref{eq:classic-pcp-rta} is considerably less pessimistic since the ceiling term does not include $R_i$ or $D_i$. Intuitively, this difference is due to the fact that tasks incur blocking due to semaphores only if a local lower-priority task holds the resource (\ie, when the local processor is busy). In contrast, general self-suspensions may overlap with idle intervals.
 
 
-\subsection{Semaphores in Partitioned Multiprocessor Systems}
+\mysection{Semaphores in Partitioned Multiprocessor Systems}
 \label{sec:sem-multi}
 
 When suspension-based protocols, such as the \emph{multiprocessor priority ceiling protocol (MPCP)}~\cite{rajkumar-1990}, are applied under partitioned scheduling, resources are classified according to how they are shared: if a resource is shared by two or more tasks assigned to different processors, then it is called a \emph{global resource}, otherwise it is called a \emph{local resource}.
@@ -35,7 +35,7 @@ Regardless of whether a task incurs local or remote blocking, a waiting task alw
 
 From the perspective of the local schedule on each processor, remote blocking is caused by external events (\ie, resource contention due to tasks on the other processors) and pushes the execution of higher-priority tasks to a later time point regardless of the schedule on the local processor (\ie, even if the local processor is idle). Remote blocking thus may cause additional interference on lower-priority tasks and must be analyzed as a self-suspension.
 
-In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy), just as it is the case with uniprocessor synchronization protocols like the PCP~\cite{SRL:90}. Consequently, local blocking is accounted for similarly to blocking under the PCP in the uniprocessor case (\ie, as in Eq. \eqref{eq:classic-pcp-rta}), and not as a general self-suspension (Eq. \eqref{eq:dynamic-correct}). Since local blocking can be handled similarly to the uniprocessor case, we focus on remote blocking in the remainder of this section.
+In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy), just as it is the case with uniprocessor synchronization protocols like the PCP~\cite{SRL:90}. Consequently, local blocking is accounted for similarly to blocking under the PCP in the uniprocessor case (\ie, as in Eq. \eqref{eq:classic-pcp-rta}), and not as a general self-suspension (Eq. \eqref{eq:dynamic-correct}). Since local blocking can be handled similarly to the uniprocessor case, we focus on remote blocking in the remainder of this \mysectionrefnormal{}.
 
 
 A safe, but pessimistic strategy is to simply model remote blocking as computation, which is called \emph{suspension-oblivious analysis}~\cite{BA:10b}, as previously discussed in Section~\ref{sec:model-interferred-oblivious}. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. Block et al.~\cite{block-2007} first used this strategy in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling; Lakshmanan et al.~\cite{lakshmanan-2009} also adopted this approach in their analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it is also subject to structural pessimism, and it has been shown that, in pathological cases, suspension-oblivious analysis can overestimate response times by a factor linear in both the number of tasks and the ratio of the largest and the shortest periods~\cite{wieder-2013}.
@@ -58,7 +58,7 @@ R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \fr
 
 In Eq. \eqref{eqn:wcrt}, the additional interference on $\tau_k$ due to the lock-induced deferred execution of higher-priority tasks is supposed to be captured by the term ``$+ B^r_i$'' in the interference bound  $\left \lceil \frac{R_k + B_i^r}{T_i} \right \rceil \cdot C_i$,  similarly to the misconception discussed in Section~\ref{sec:wrong-jitter-dynamic}. For completeness, we show with a counterexample that Eq. \eqref{eqn:wcrt} yields an unsafe bound in certain corner cases.
 
-\subsection{A Counterexample}
+\mysection{A Counterexample}
 \label{sec:counterexample}
 
 We show the existence of a schedule in which a task that is considered schedulable according to Eq. \eqref{eqn:wcrt} misses a deadline.
@@ -179,7 +179,7 @@ However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol
 
 The misconception here is to account for remote blocking (\ie, $B_i^r$), which is a form of self-suspension, as if it were release jitter. However, it is not sufficient to account for self-suspensions as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
-\subsection{Incorrect Contention Bound in Interface-Based Analysis}
+\mysection{Incorrect Contention Bound in Interface-Based Analysis}
 
 A related problem affects an \emph{interface-based analysis}  proposed by Nemati et al.~\cite{NBN:11}. Targeting \emph{open} real-time systems with globally shared resources (\ie, systems where the final task set composition is not known at analysis time, but tasks may share global resources nonetheless), the goal of the interface-based analysis is to extract a concise abstraction of the constraints that need to be satisfied  to guarantee the schedulability of all tasks. In particular, the analysis seeks to determine the \emph{maximum tolerable blocking time}, denoted $\fun{mtbt}_k$, that a task $\tau_k$ can tolerate without missing its deadline. 
 
@@ -203,7 +203,7 @@ Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} first  replaced
 
 However, based on the example in Section \ref{sec:counterexample}, we can immediately infer that Eqs. \eqref{eqn:rbf-1} and \eqref{eqn:rbf-2}, which ignore the effects of deferred execution due to remote blocking, are unsound in the presence of global locks. Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq.~\eqref{eqn:bloc-tolerate}, we have $\fun{mtbt}_3 \geq 12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+6\epsilon)) = 4-7\epsilon$ (for $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-7\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ can miss its deadline even without incurring any blocking, as shown in Fig. \ref{fig:counterexample_protocol}. 
 
-\subsection{A Safe Response-Time Bound}
+\mysection{A Safe Response-Time Bound}
 \label{sec:safe_bound}
 
 In Eq. \eqref{eqn:wcrt}, the effects of deferred execution  are accounted for similarly to release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.

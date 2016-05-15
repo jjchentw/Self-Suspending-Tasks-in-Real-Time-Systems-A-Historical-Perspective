@@ -1,0 +1,70 @@
+%*******************************************************
+% Table of Contents
+%*******************************************************
+%\phantomsection
+\refstepcounter{dummy}
+\pdfbookmark[1]{\contentsname}{tableofcontents}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\markboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}} 
+%*******************************************************
+% work-around to have small caps also here in the headline
+% will not work at this place if the TOC has more than 2 pages
+% use \manualmark and then the \markboth as above
+% later a modification of \automark[section]{chapter}
+%*******************************************************
+% List of Figures and of the Tables
+%*******************************************************
+%\clearpage
+
+%\begingroup 
+%    \let\clearpage\relax
+%    \let\cleardoublepage\relax
+%    \let\cleardoublepage\relax
+%    %*******************************************************
+%    % List of Figures
+%    %*******************************************************    
+%    %\phantomsection 
+%    \refstepcounter{dummy}
+%    %\addcontentsline{toc}{chapter}{\listfigurename}
+%    \pdfbookmark[1]{\listfigurename}{lof}
+%    \listoffigures
+
+%    \vspace*{8ex}
+
+%    %*******************************************************
+%    % List of Tables
+%    %*******************************************************
+%    %\phantomsection 
+%    \refstepcounter{dummy}
+%    %\addcontentsline{toc}{chapter}{\listtablename}
+%    \pdfbookmark[1]{\listtablename}{lot}
+%    \listoftables
+%        
+%    \vspace*{8ex}
+%%   \newpage
+%    
+%    %*******************************************************
+%    % List of Listings
+%    %*******************************************************      
+%%	%\phantomsection 
+%%   \refstepcounter{dummy}
+%%   %\addcontentsline{toc}{chapter}{\lstlistlistingname}
+%%   \pdfbookmark[1]{\lstlistlistingname}{lol}
+%%   \lstlistoflistings 
+%       
+%    %*******************************************************
+%    % Acronyms
+%    %*******************************************************
+%    %\phantomsection 
+%    \refstepcounter{dummy}
+%    \pdfbookmark[1]{Acronyms}{acronyms}
+%    \chapter*{Acronyms}
+%    \begin{acronym}[CSCW]
+%        \acro{DRY}{Don't Repeat Yourself}
+%        \acro{API}{Application Programming Interface}
+%        \acro{UML}{Unified Modeling Language}
+%    \end{acronym}                     
+%\endgroup
+
+\cleardoublepage

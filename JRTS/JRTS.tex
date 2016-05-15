@@ -1,8 +1,19 @@
+\documentclass[runningheads,a4paper]{llncs}
 
 \input{../preamble}
 
 \input{../header}
 \papertrue 
+\techreportfalse
+\newcommand{\mysectionref}{\iftechreport Chapter\else Section\fi}
+\newcommand{\mysectionSref}{\iftechreport Chapters\else Sections\fi}
+\newcommand{\mysectionrefnormal}{\iftechreport chapter\else section\fi}
+\newcommand{\mychapter}[1]{\iftechreport \chapter{#1}\else \section{#1}\fi}
+\newcommand{\mysection}[1]{\iftechreport \section{#1}\else \subsection{#1}\fi}
+\newcommand{\mysubsection}[1]{\iftechreport \subsection{#1}\else \subsubsection{#1}\fi}
+
+\bibliographystyle{abbrv} 
+\usepackage{cite}
 
 \begin{document}
 
