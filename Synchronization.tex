@@ -1,7 +1,7 @@
 \mychapter{Self-Suspending Tasks in Multiprocessor Synchronization}
 \label{sec:syn}
 
-In this \mysectionrefnormal{}, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in \mysectionref{}~\ref{sec:examples} to motivate the reasons for self-suspending behaviour. 
+In this \mysectionrefnormal{}, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in \mysectionref{}~\ref{sec:examples} to motivate the reasons for self-suspending behavior. 
 As semaphores induce self-suspensions, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors unfortunately also spread to the analysis of  real-time locking protocols on partitioned multiprocessors.
 
 In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section \ref{sec:counterexample}. Fortunately, as we will discuss in Section \ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:wrong-jitter-dynamic}.

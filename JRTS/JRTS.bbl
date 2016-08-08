@@ -95,6 +95,7 @@ J.-J. Chen, W.-H. Huang, and C.~Liu.
 \newblock {k2Q}: {A} quadratic-form response time and schedulability analysis
   framework for utilization-based analysis.
 \newblock {\em Computing Research Repository(CoRR)}, abs/1505.03883, 2015.
+\newblock \url{http://arxiv.org/abs/1505.03883}.
 
 \bibitem{ChenHLRTSS2015}
 J.-J. Chen, W.-H. Huang, and C.~Liu.
@@ -106,7 +107,8 @@ J.-J. Chen, W.-H. Huang, and C.~Liu.
 J.-J. Chen, W.-H. Huang, and G.~Nelissen.
 \newblock A note on modeling self-suspending time as blocking time in real-time
   systems.
-\newblock Technical report, 2015.
+\newblock {\em Computing Research Repository(CoRR)}, 2016.
+\newblock \url{http://arxiv.org/abs/1602.07750}.
 
 \bibitem{RTSS-ChenL14}
 J.-J. Chen and C.~Liu.
@@ -170,7 +172,7 @@ N.~Guan, M.~Stigge, W.~Yi, and G.~Yu.
 \newblock In {\em {IEEE} Real-Time Systems Symposium}, pages 387--397, 2009.
 
 \bibitem{han-2014}
-G.~Han, H.~Zeng, M.~Natale, X.~Liu, and W.~Dou.
+G.~Han, H.~Zeng, M.~di~Natale, X.~Liu, and W.~Dou.
 \newblock Experimental evaluation and selection of data consistency mechanisms
   for hard real-time applications on multicore platforms.
 \newblock {\em IEEE Transactions on Industrial Informatics}, 10(2):903--918,
@@ -323,13 +325,13 @@ C.~Liu and J.~H. Anderson.
 \newblock Technical report, 2015.
 
 \bibitem{LiuChen:rtss2014}
-C.~Liu and J.~Chen.
+C.~Liu and J.-J. Chen.
 \newblock Bursty-interference analysis techniques for analyzing complex
   real-time task models.
 \newblock In {\em Real-Time Systems Symposium (RTSS)}, pages 173--183, 2014.
 
 \bibitem{DBLP:conf/ecrts/LiuCH014}
-C.~Liu, J.~Chen, L.~He, and Y.~Gu.
+C.~Liu, J.-J. Chen, L.~He, and Y.~Gu.
 \newblock Analysis techniques for supporting harmonic real-time tasks with
   suspensions.
 \newblock In {\em 26th Euromicro Conference on Real-Time Systems, {ECRTS} 2014,
@@ -473,7 +475,7 @@ M.~Yang, A.~Wieder, and B.~Brandenburg.
 \newblock In {\em IEEE Real-Time Systems Symposium (RTSS)}, 2015.
 
 \bibitem{zeng-2011}
-H.~Zeng and M.~Natale.
+H.~Zeng and M.~di~Natale.
 \newblock Mechanisms for guaranteeing data consistency and flow preservation in
   {AUTOSAR} software on multi-core platforms.
 \newblock In {\em SIES}, 2011.
