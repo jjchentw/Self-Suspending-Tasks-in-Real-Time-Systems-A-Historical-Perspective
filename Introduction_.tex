@@ -122,7 +122,7 @@ The dynamic self-suspension sporadic task model characterizes each
 task $\tau_i$ with predefined worst-case execution time and worst-case self-suspending time, in which self-suspension can take place as long as it does not suspend longer than the specified worst case. The segmented self-suspending sporadic task model defines the execution behavior of a job of a task by predefined computation segments and self-suspension intervals.  
 
 \mysection{Purpose and Organization of This Paper}
-There have been several research efforts, focusing on the design of scheduling algorithms and schedulability analysis of task systems when self-suspending tasks are present. Due to the prevailing self-suspending scenarios in modern computing systems, several results in the literature have been recently re-examined. We have found out that the literature of real-time scheduling for self-suspending task systems has been seriously flawed. Several misconceptions were adopted in the literature including 
+There have been several research efforts, focusing on the design of scheduling algorithms and schedulability analyses of task systems when self-suspending tasks are present. Due to the prevailing self-suspending scenarios in modern computing systems, several results in the literature have been recently re-examined. We have found out that the literature of real-time scheduling for self-suspending task systems has been seriously flawed. Several misconceptions were adopted in the literature including 
 \begin{itemize}
 \item Incorrect quantification of jitter for dynamic self-suspending
   task systems, which was used in
@@ -137,6 +137,7 @@ There have been several research efforts, focusing on the design of scheduling a
   interference, which was used in  \cite{RTSS-KimANR13}. 
 \item Incorrect segmented fixed-priority scheduling with period
   enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
+\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter, which was used in \cite{ecrts15nelissen}.
 \end{itemize}
 
 
@@ -145,7 +146,7 @@ There have been several research efforts, focusing on the design of scheduling a
 \item summarize the existing self-suspending task models in \mysectionref{}~\ref{sec:model}, 
 \item provide the general methodologies to handle self-suspending task systems in hard real-time systems in \mysectionref{}~\ref{sec:review} and soft real-time systems in \mysectionref{}~\ref{sec:soft-realtime}, 
 \item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws in \mysectionref{}~\ref{sec:misconceptions}, 
-\item examine the inherited flaws in multiprocessor synchronization, due to the flawed analysis in self-suspending task models, in \mysectionref{}~\ref{sec:syn}, and
+\item examine the inherited flaws in multiprocessor synchronization, due to a flawed analysis in self-suspending task models, in \mysectionref{}~\ref{sec:syn}, and
 \item provide the summary of the computational complexity classes of different self-suspending task models and systems in \mysectionref{}~\ref{sec:hardness}.
 \end{itemize}
 Some results in the literature are listed with open issues that require further detailed examination to confirm their correctness. These are listed in Section~\ref{sec:open-issues-existing}. 

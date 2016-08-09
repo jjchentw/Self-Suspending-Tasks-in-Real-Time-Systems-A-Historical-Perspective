@@ -85,6 +85,12 @@ A.~Carminati, R.~de~Oliveira, and L.~Friedrich.
   protocols for real-time systems.
 \newblock {\em Journal of Systems Architecture}, 60(3):258--270, 2014.
 
+\bibitem{RTSS2016-suspension}
+J.-J. Chen.
+\newblock Computational complexity and speedup factors analyses for
+  self-suspending tasks.
+\newblock In {\em Real-Time Systems Symposium (RTSS)}, 2016.
+
 \bibitem{ChenBrandenburg}
 J.-J. Chen and B.~Brandenburg.
 \newblock A note on the period enforcer algorithm for self-suspending tasks.
@@ -119,6 +125,12 @@ J.-J. Chen and C.~Liu.
 \newblock {\bf A typo in the schedulability test in Theorem 3 was identified on
   13, May, 2015}.
   \url{http://ls12-www.cs.tu-dortmund.de/daes/media/documents/publications/downloads/2014-chen-FRD-erratum.pdf}.
+
+\bibitem{ChenECRTS2016-suspension}
+J.-J. Chen, G.~Nelissen, and W.-H. Huang.
+\newblock A unifying response time analysis framework for dynamic
+  self-suspending tasks.
+\newblock In {\em Euromicro Conference on Real-Time Systems (ECRTS)}, 2016.
 
 \bibitem{Devi2005}
 U.~Devi and J.~Anderson.
@@ -416,7 +428,7 @@ P.~Richard.
 \newblock On the complexity of scheduling real-time tasks with self-suspensions
   on one processor.
 \newblock In {\em Proceedings. 15th Euromicro Conference onReal-Time Systems,
-  {(ECRTS)}}, pages 187--194, 2003.
+  {(ECRTS)}}, pages 187--194, July 2003.
 
 \bibitem{RidouardR06}
 F.~Ridouard and P.~Richard.

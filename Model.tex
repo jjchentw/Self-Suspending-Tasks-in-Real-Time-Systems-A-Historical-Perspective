@@ -177,7 +177,7 @@ Computation offloading with real-time constraints has been specifically studied 
 
 
 {\bf Example 4: Partitioned Scheduling for DAG-Structured Tasks.}
-To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors will experience some idle time 
+To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on some processors to perform independent computation. To this end, we can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors experience some idle time 
 due to the precedence constraints of the DAG task. Such idle time intervals can also be considered as suspensions. 
 
 
@@ -302,7 +302,7 @@ time may be observed in different node paths. A more efficient conversion would 
 \begin{align} 
 S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\ell \in \varphi} S_i^\ell   \Big)  - C_i  \nonumber
 \end{align}
-with $C_i$ still computed as above. For the intuition (partial modelling of self-suspension as computation, which is a safe transformation) 
+where $C_i$ is still computed as explained above. For the intuition (partial modelling of self-suspension as computation, which is a safe transformation) 
 see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,BletsasReport2015}.
 
 Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
@@ -367,7 +367,7 @@ higher-priority level, and deadline-monotonic (DM) scheduling, under which
 the task with a shorter relative deadline has a higher-priority level.
 In this paper, if we consider fixed-priority scheduling, we will also implicitly assume that task $\tau_i$ has higher priority than task $\tau_j$ if $i < j$.
 This has been explored in
-\cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}.
+\cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE,ChenECRTS2016-suspension}.
 Moreover, in some results in the literature, \eg,
 \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, each computation
 segment in the segmented self-suspending task model has its own unique
@@ -432,8 +432,8 @@ To resolve the computational complexity issues in many scheduling problems in re
 
 \mysection{Multiprocessor Scheduling}
 
-On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned, (\textit{ii}) global scheduling, and (\textit{iii}) clustered scheduling. 
-Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and will never migrate to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
+On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned scheduling, (\textit{ii}) global scheduling, and (\textit{iii}) clustered scheduling. 
+Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
 Partitioned fixed-priority (P-FP) scheduling is another widespread
 choice in practice due to the wide support in industrial standards
 such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc

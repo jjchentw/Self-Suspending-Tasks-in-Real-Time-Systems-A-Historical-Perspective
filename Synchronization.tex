@@ -21,7 +21,7 @@ R_k = C_k+ B_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,
 \end{equation}
 where $B_k$ denotes the maximum duration of \emph{priority inversion}~\cite{SRL:90} due to blocking (\ie, the maximum amount of time that a pending job of $\tau_k$ is not scheduled while a lower-priority job executes due to contention for semaphores). Notably, Dutertre~\cite{Du:99} later confirmed the correctness of this claim  with a formal, machine-checked proof using the PVS proof assistant. 
 
-Comparing Eq. \eqref{eq:dynamic-correct} (general self-suspensions) with Eq.  \eqref{eq:classic-pcp-rta} (suspensions due to semaphores), it is apparent that Eq. \eqref{eq:classic-pcp-rta} is considerably less pessimistic since the ceiling term does not include $R_i$ or $D_i$. Intuitively, this difference is due to the fact that tasks incur blocking due to semaphores only if a local lower-priority task holds the resource (\ie, when the local processor is busy). In contrast, general self-suspensions may overlap with idle intervals.
+Comparing Eq. \eqref{eq:dynamic-correct} (general self-suspensions) with Eq.  \eqref{eq:classic-pcp-rta} (suspensions due to semaphores), it is apparent that Eq. \eqref{eq:classic-pcp-rta} is considerably less pessimistic since the ceiling term does not include $R_i$ or $D_i$ for $\tau_i \in hp(k)$. Intuitively, this difference is due to the fact that tasks incur blocking due to semaphores only if a local lower-priority task holds the resource (\ie, when the local processor is busy). In contrast, general self-suspensions may overlap with idle intervals.
 
 
 \mysection{Semaphores in Partitioned Multiprocessor Systems}
@@ -46,9 +46,9 @@ A less pessimistic alternative to suspension-oblivious analysis is to \emph{expl
 \item \cite{yang-2013} (Equation 6), \cite{bbb-2013} (Equation 1), \cite{carminati-2014} (Equations 3, 12, and 16), and \cite{kim-2014} (Equation 6)  in the context of other suspension-based locking protocols.
 \end{itemize}
 
-To state  Lakshmanan et al.'s claimed bound, some additional notation is required. In the following, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{lp(k)}$ denote the tasks with lower priority than $\tau_k$, respectively. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, let $s_k$ denote the maximum number of critical sections of $\tau_k$, and let $C_{l,j}^{\prime}$ denote an upper bound on the execution time of the $j$\xth critical section of $\tau_l$.
+To state  Lakshmanan et al.'s claimed bound, some additional notation is required. In the following, let $B_k^r$ denote an upper bound on the maximum remote blocking that a job of $\tau_k$ incurs, let $C_k^{\ast} = C_k + B_k^r$, and let $\fun{lp(k)}$ denote the tasks with lower priority than $\tau_k$. Furthermore, let $P(\tau_k)$ denote the tasks that are assigned on the same processor as $\tau_k$, let $s_k$ denote the maximum number of critical sections of $\tau_k$, and let $C_{l,j}^{\prime}$ denote an upper bound on the execution time of the $j$\xth critical section of $\tau_l$.
 
-Assuming constrained deadlines, Lakshmanan et al.~\cite{lakshmanan-2009} claimed that the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
+Assuming constrained-deadline task systems, Lakshmanan et al.~\cite{lakshmanan-2009} claimed that the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
 \label{eqn:wcrt}
 R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + B_i^r}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.
@@ -81,7 +81,7 @@ We show the existence of a schedule in which a task that is considered schedulab
     \label{table:parameters}
 \end{table}
 
-Consider four implicit deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ with parameters as listed in Table \ref{table:parameters}, indexed in decreasing order of priority, that are scheduled on two processors using P-FP scheduling. Tasks $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while task $\tau_4$ is assigned to processor 2.
+Consider four implicit-deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ with parameters as listed in Table \ref{table:parameters}, indexed in a decreasing order of priority, that are scheduled on two processors using P-FP scheduling. Tasks $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while task $\tau_4$ is assigned to processor 2.
 
 Each job of $\tau_2$ has one critical section (($s_2 = 1$) of length at most $5\varepsilon$ (\ie, $C_{2,1}^{\prime} = 5\varepsilon$), where $0 < \varepsilon \leq 1/3$, in which it accesses a global shared resource $\res_1$.
 
@@ -177,7 +177,7 @@ R_3 = \varepsilon + \left \lceil \frac{8+7\varepsilon + 0}{6} \right \rceil \cdo
 
 However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, in which a job of task $\tau_3$ arrives at time $6$ and misses its absolute deadline at time $20$. This implies that Eq. \eqref{eqn:wcrt} does not always yield a sound response-time bound. 
 
-The misconception here is to account for remote blocking (\ie, $B_i^r$), which is a form of self-suspension, as if it were release jitter. However, it is not sufficient to account for self-suspensions as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
+The misconception here is to account for remote blocking (\ie, $B_i^r$), which is a form of self-suspension, as if it is the safe release jitter. However, it is not, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
 \mysection{Incorrect Contention Bound in Interface-Based Analysis}
 
@@ -208,7 +208,7 @@ However, based on the example in Section \ref{sec:counterexample}, we can immedi
 
 In Eq. \eqref{eqn:wcrt}, the effects of deferred execution  are accounted for similarly to release jitter. However, it is not sufficient to count the duration of remote blocking as release jitter, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
-A straightforward remedy is to replace $B_i^r$ in the ceiling term (\ie, the second term in Eq. \eqref{eqn:wcrt}) with a larger, safe value such as $D_i$  or $R_i - C_i$ if $R_i \leq T_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}): assuming constrained deadlines, the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
+A straightforward remedy is to replace $B_i^r$ in the ceiling term (\ie, the second term in Eq. \eqref{eqn:wcrt}) with a larger but safe value such as $D_i$  or $R_i - C_i$ if $R_i \leq T_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}): assuming constrained deadlines, the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
 \label{eqn:wcrt-pfp-fixed}
 R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + R_i - C_i}{T_i} \right \rceil \cdot C_i + s_k \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.

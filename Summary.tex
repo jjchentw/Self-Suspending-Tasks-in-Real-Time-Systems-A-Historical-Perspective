@@ -80,6 +80,10 @@ response time analysis are incorrect & See Section
   incorrect & See Section~\ref{sec:wrong-periodic} &
   not solved\\
   \cline{2-4}
+  &\cite{ecrts15nelissen} Section VI is
+  incorrect & See Section~\ref{sec:wrong-jitter-convert-sporadic} &
+  solved\\
+  \cline{2-4}
 \hline
 \multirow{2}{*}{Inherited Flaws} &
 \cite{RTCSA-KimCPKH95,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
@@ -131,7 +135,7 @@ elaborations. These include the following results in the literature:
   due to self-suspensions from the higher-priority jobs by setting up
   the \emph{blocking time} induced by self-suspensions. However, there
   is no formal proof in \cite{DBLP:conf/ecrts/Devi03}. The proof made
-  by Chen et al. in \cite{ChenHuangNelissen} for fixed-priority
+  by Chen et al. in \cite{ChenHuangNelissen,ChenECRTS2016-suspension} for fixed-priority
   scheduling cannot be directly extended to EDF scheduling. The
   correctness of Theorem 8 in \cite[Section
   4.5]{DBLP:conf/ecrts/Devi03} should be supported with a rigorous
@@ -212,19 +216,23 @@ document, no concern has been raised regarding the correctness of the following 
       and filed a corresponding erratum in their websites.}
   \item the result by Huang and Chen \cite{Huang:multiseg} by
     exploring the priority assignment problem and analyzing the
-    carry-in computation segments together.
+    carry-in computation segments together;
+ \item the proof of co${\cal NP}$-hardness by Chen \cite{RTSS2016-suspension} based on
+   a reduction from the 3-Partition problem when there are at least two suspension intervals.
   \end{enumerate}
 \item For dynamic self-suspending task systems on uniprocessor
   platforms:
   \begin{enumerate}
   \item the analysis provided in~\cite[Pages
-    164-165]{Liu:2000:RS:518501} by Liu based on the proof in \cite{ChenHuangNelissen}; 
+    164-165]{Liu:2000:RS:518501} by Liu based on the proof in \cite{ChenHuangNelissen,ChenECRTS2016-suspension}; 
   \item the utilization-based analysis by Liu and Chen
     \cite{LiuChen:rtss2014} under rate-monotonic scheduling;
   \item the priority assignment and the schedulability analysis with a
     speedup factor $2$, with respect to the optimal fixed-priority
     scheduling, by Huang et
     al. \cite{huangpass:dac2015};
+  \item the response time analysis framework by Chen et al. \cite{ChenECRTS2016-suspension}, as described in Section~\ref{sec:model-interfering-unified};
+  \item the negative results regarding existing scheduling algorithms with respect to speedup factors by Chen \cite{RTSS2016-suspension}.
   \end{enumerate}
 \item For dynamic self-suspending task systems on homogeneous multiprocessor
   platforms:
@@ -240,7 +248,7 @@ document, no concern has been raised regarding the correctness of the following 
   \end{enumerate}
 \end{itemize}
 The solutions and fixes listed in Table~\ref{tab:summary} for the
-affected papers and statements seem to be correct.
+affected papers and statements seem correct.
 
 
 % \subsection{Open Issues for Future Researches}
