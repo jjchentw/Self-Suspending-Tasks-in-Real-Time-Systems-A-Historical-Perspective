@@ -65,13 +65,13 @@ K.~Bletsas and N.~C. Audsley.
 \bibitem{block-2007}
 A.~Block, H.~Leontyev, B.~Brandenburg, and J.~Anderson.
 \newblock A flexible real-time locking protocol for multiprocessors.
-\newblock In {\em RTCSA}, 2007.
+\newblock In {\em RTCSA}, pages 47--56, 2007.
 
 \bibitem{bbb-2013}
 B.~Brandenburg.
 \newblock Improved analysis and evaluation of real-time semaphore protocols for
   {P-FP} scheduling.
-\newblock In {\em RTAS}, 2013.
+\newblock In {\em RTAS}, pages 141--152, 2013.
 
 \bibitem{BA:10b}
 B.~Brandenburg and J.~Anderson.
@@ -94,7 +94,8 @@ J.-J. Chen.
 \bibitem{ChenBrandenburg}
 J.-J. Chen and B.~Brandenburg.
 \newblock A note on the period enforcer algorithm for self-suspending tasks.
-\newblock Technical report, 2015.
+\newblock {\em Computing Research Repository(CoRR)}, abs/1606.04386, 2016.
+\newblock http://arxiv.org/abs/1606.04386.
 
 \bibitem{DBLP:journals/corr/ChenHL15b}
 J.-J. Chen, W.-H. Huang, and C.~Liu.
@@ -107,7 +108,7 @@ J.-J. Chen, W.-H. Huang, and C.~Liu.
 J.-J. Chen, W.-H. Huang, and C.~Liu.
 \newblock {k2U}: A general framework from k-point effective schedulability
   analysis to utilization-based tests.
-\newblock In {\em Real-Time Systems Symposium (RTSS)}, 2015.
+\newblock In {\em Real-Time Systems Symposium (RTSS)}, pages 107--118, 2015.
 
 \bibitem{ChenHuangNelissen}
 J.-J. Chen, W.-H. Huang, and G.~Nelissen.
@@ -143,7 +144,7 @@ U.~C. Devi.
 \newblock An improved schedulability test for uniprocessor periodic task
   systems.
 \newblock In {\em 15th Euromicro Conference on Real-Time Systems ({ECRTS})},
-  page~23, 2003.
+  pages 23--32, 2003.
 
 \bibitem{devi2006soft}
 U.~C. Devi.
@@ -194,32 +195,36 @@ G.~Han, H.~Zeng, M.~di~Natale, X.~Liu, and W.~Dou.
 W.-H. Huang and J.-J. Chen.
 \newblock Response time bounds for sporadic arbitrary-deadline tasks under
   global fixed-priority scheduling on multiprocessors.
-\newblock In {\em RTNS}, 2015.
+\newblock In {\em RTNS}, pages 215--224, 2015.
 
 \bibitem{Huang:multiseg}
 W.-H. Huang and J.-J. Chen.
 \newblock Schedulability and priority assignment for multi-segment
   self-suspending real-time tasks under fixed-priority scheduling.
-\newblock Technical report, Dortmund, Germany, 2015.
+\newblock Technical report, Technical University of Dortmund, 2015.
+\newblock
+  \url{http://ls12-www.cs.tu-dortmund.de/daes/media/documents/publications/downloads/2015-technical-report-multi-seg-Kevin.pdf}.
 
 \bibitem{huang2015mode}
 W.-H. Huang and J.-J. Chen.
 \newblock Techniques for schedulability analysis in mode change systems under
   fixed-priority scheduling.
 \newblock In {\em Embedded and Real-Time Computing Systems and Applications
-  (RTCSA)}, 2015.
+  (RTCSA)}, pages 176--186, 2015.
 
 \bibitem{WC16-suspend-DATE}
 W.-H. Huang and J.-J. Chen.
 \newblock Self-suspension real-time tasks under fixed-relative-deadline
   fixed-priority scheduling.
-\newblock In {\em Design, Automation, and Test in Europe (DATE)}, 2016.
+\newblock In {\em Design, Automation, and Test in Europe (DATE)}, pages
+  1078--1083, 2016.
 
 \bibitem{huangpass:dac2015}
 W.-H. Huang, J.-J. Chen, H.~Zhou, and C.~Liu.
 \newblock {PASS}: Priority assignment of real-time tasks with dynamic
   suspending behavior under fixed-priority scheduling.
-\newblock In {\em Design Automation Conference ({DAC})}, 2015.
+\newblock In {\em Design Automation Conference ({DAC})}, pages 154:1--154:6,
+  2015.
 
 \bibitem{Kang:rtss07}
 W.~Kang, S.~Son, J.~Stankovic, and M.~Amirijoo.
@@ -231,12 +236,13 @@ W.~Kang, S.~Son, J.~Stankovic, and M.~Amirijoo.
 \bibitem{Kato_2011}
 S.~Kato, K.~Lakshmanan, A.~Kumar, M.~Kelkar, Y.~Ishikawa, and R.~Rajkumar.
 \newblock {{RGEM}: A Responsive {GPGPU} Execution Model for Runtime Engines}.
-\newblock In {\em 2011 {IEEE} 32nd Real-Time Systems Symposium}, 2011.
+\newblock In {\em 2011 {IEEE} 32nd Real-Time Systems Symposium}, pages 57--66,
+  2011.
 
 \bibitem{kim-2014}
 H.~Kim, S.~Wang, and R.~Rajkumar.
 \newblock {vMPCP}: a synchronization framework for multi-core virtual machines.
-\newblock In {\em RTSS}, 2014.
+\newblock In {\em RTSS}, pages 86--95, 2014.
 
 \bibitem{RTCSA-KimCPKH95}
 I.~Kim, K.~Choi, S.~Park, D.~Kim, and M.~Hong.
@@ -261,7 +267,7 @@ J.~Kim, B.~Andersson, D.~de~Niz, and R.~Rajkumar.
 K.~Lakshmanan, D.~De~Niz, and R.~Rajkumar.
 \newblock Coordinated task scheduling, allocation and synchronization on
   multiprocessors.
-\newblock In {\em RTSS}, 2009.
+\newblock In {\em RTSS}, pages 469--478, 2009.
 
 \bibitem{LR:rtas10}
 K.~Lakshmanan and R.~Rajkumar.
@@ -332,9 +338,9 @@ C.~Liu and J.~H. Anderson.
 
 \bibitem{erratu-cong-anderson}
 C.~Liu and J.~H. Anderson.
-\newblock Erratum to “suspension-aware analysis for hard real-time
-  multiprocessor scheduling”.
-\newblock Technical report, 2015.
+\newblock Erratum to ``suspension-aware analysis for hard real-time
+  multiprocessor scheduling'', 2015.
+\newblock \url{https://cs.unc.edu/~anderson/papers/ecrts13e_erratum.pdf}.
 
 \bibitem{LiuChen:rtss2014}
 C.~Liu and J.-J. Chen.
@@ -366,7 +372,7 @@ W.~Liu, J.-J. Chen, A.~Toma, T.-W. Kuo, and Q.~Deng.
   Real-Time Systems}.
 \newblock In {\em Proceedings of the The 51st Annual Design Automation
   Conference on Design Automation Conference - {DAC} {\textquotesingle}14},
-  2014.
+  pages 39:1--39:6, 2014.
 
 \bibitem{DBLP:conf/ecrts/LiuLZGH015}
 Y.~Liu, C.~Liu, X.~Zhang, W.~Gao, L.~He, and Y.~Gu.
@@ -386,18 +392,20 @@ L.~Ming.
 A.~K. Mok.
 \newblock Fundamental design problems of distributed systems for the
   hard-real-time environment.
-\newblock Technical report, Cambridge, MA, USA, 1983.
+\newblock Technical report, Massachusetts Institute of Technology, Cambridge,
+  MA, USA, 1983.
 
 \bibitem{ecrts15nelissen}
 G.~Nelissen, J.~Fonseca, G.~Raravi, and V.~Nelis.
 \newblock {Timing Analysis of Fixed Priority Self-Suspending Sporadic Tasks}.
-\newblock In {\em Euromicro Conference on Real-Time Systems (ECRTS)}, 2015.
+\newblock In {\em Euromicro Conference on Real-Time Systems (ECRTS)}, pages
+  80--89, 2015.
 
 \bibitem{NBN:11}
 F.~Nemati, M.~Behnam, and T.~Nolte.
 \newblock Independently-developed real-time systems on multi-cores with shared
   resources.
-\newblock In {\em ECRTS}, 2011.
+\newblock In {\em ECRTS}, pages 251--261, 2011.
 
 \bibitem{nimmagadda2010real}
 Y.~Nimmagadda, K.~Kumar, Y.-H. Lu, and C.~G. Lee.
@@ -416,12 +424,14 @@ J.~C. Palencia and M.~G. Harbour.
 R.~Rajkumar.
 \newblock Real-time synchronization protocols for shared memory
   multiprocessors.
-\newblock In {\em ICDCS}, 1990.
+\newblock In {\em ICDCS}, pages 116--123, 1990.
 
 \bibitem{Raj:suspension1991}
 R.~Rajkumar.
 \newblock {Dealing with Suspending Periodic Tasks.}
 \newblock Technical report, IBM T. J. Watson Research Center, 1991.
+\newblock
+  \url{http://www.cs.cmu.edu/afs/cs/project/rtmach/public/papers/period-enforcer.ps}.
 
 \bibitem{Ric03}
 P.~Richard.
@@ -440,7 +450,8 @@ F.~Ridouard and P.~Richard.
 F.~Ridouard, P.~Richard, and F.~Cottet.
 \newblock {Negative Results for Scheduling Independent Hard Real-Time Tasks
   with Self-Suspensions}.
-\newblock In {\em 25th {IEEE} International Real-Time Systems Symposium}, 2004.
+\newblock In {\em 25th {IEEE} International Real-Time Systems Symposium}, pages
+  47 -- 56, 2004.
 
 \bibitem{SRL:90}
 L.~Sha, R.~Rajkumar, and J.~Lehoczky.
@@ -465,13 +476,13 @@ A.~Toma and J.-J. Chen.
 A.~Wieder and B.~Brandenburg.
 \newblock On spin locks in {AUTOSAR}: blocking analysis of {FIFO}, unordered,
   and priority-ordered spin locks.
-\newblock In {\em RTSS}, 2013.
+\newblock In {\em RTSS}, pages 45--56, 2013.
 
 \bibitem{yang-2013}
 M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
 \newblock {PK-OMLP}: An {OMLP} based k-exclusion real-time locking protocol for
   multi- {GPU} sharing under partitioned scheduling.
-\newblock In {\em DASC}, 2013.
+\newblock In {\em DASC}, pages 207--214, 2013.
 
 \bibitem{yang-2014}
 M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
@@ -484,12 +495,12 @@ M.~Yang, H.~Lei, Y.~Liao, and F.~Rabee.
 M.~Yang, A.~Wieder, and B.~Brandenburg.
 \newblock Global real-time semaphore protocols: A survey, unified analysis, and
   comparison.
-\newblock In {\em IEEE Real-Time Systems Symposium (RTSS)}, 2015.
+\newblock In {\em IEEE Real-Time Systems Symposium (RTSS)}, pages 1--12, 2015.
 
 \bibitem{zeng-2011}
 H.~Zeng and M.~di~Natale.
 \newblock Mechanisms for guaranteeing data consistency and flow preservation in
   {AUTOSAR} software on multi-core platforms.
-\newblock In {\em SIES}, 2011.
+\newblock In {\em SIES}, pages 140--149, 2011.
 
 \end{thebibliography}
