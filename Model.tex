@@ -234,7 +234,7 @@ due to the precedence constraints of the DAG task. Such idle time intervals can 
 \label{sec:model}
 
 
-Each sporadic task $\tau_i$ can release an infinite number of jobs (also called task instances) under the given minimum inter-arrival time (also called period) constraint $T_i$.  Each job released by a sporadic task $\tau_i$ has a relative deadline $D_i$.  That is, if a job of task $\tau_i$ arrives at time $t$, it should be finished before its absolute deadline $t+D_i$, and the next instance of the task must arrive no earlier than time $t + T_i$.
+Each sporadic task $\tau_i$ can release an infinite number of jobs (also called task instances) under the given minimum inter-arrival time (also called period) constraint $T_i$.  Each job released by a sporadic task $\tau_i$ has a relative deadline $D_i$.  That is, if a job of task $\tau_i$ arrives at time $t$, it must/should be finished before its absolute deadline $t+D_i$, and the next instance of the task must arrive no earlier than time $t + T_i$.
 Throughout this paper, we will use ${\bf T}$ to denote the input task
 set and use $n$ to denote the number of tasks in ${\bf T}$. 
 If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
@@ -259,7 +259,6 @@ In addition to the above four-tuple, the \emph{segmented} self-suspension sporad
 intervals as an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,...,S_{i}^{m_i-1},C_{i}^{m_i})$, composed of $m_i$ computation segments 
 separated by $m_i-1$ suspension intervals.  For a segmented sporadic task $\tau_i$, we set 
 $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$ for notational brevity.
-
 In both models, the
 utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
 Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
@@ -308,12 +307,12 @@ see Section~\ref{sec:model-interferred-oblivious} and~\cite{RTAS-AudsleyB04,Blet
 Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
 \mysection{Examples of Dynamic Self-Suspension} 
-The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending intervals for a task, \eg, when these may vary for different jobs by the same task.
+The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending intervals for a task, \eg, when these may vary for different jobs of the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
 of system variables at run-time. Each of those paths may have a different
-number of self-suspending intervals. Alternatively, one control flow may involve a self-suspension early on, during the execution of the task, and
-another one may self-suspend shortly before completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
+number of self-suspending intervals. Alternatively, during the execution of a job of a task, one control flow may have an self-suspension interval at the beginning of the job and
+another one may self-suspend shortly before its completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
 just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier by converting the information provided by a DAG into the dynamic self-suspension task model. 
 %Note that these two worst cases may be observed under different control flows.
@@ -322,7 +321,7 @@ just two parameters: the worst-case execution time of the task in consideration 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
 \ie, there is a deterministic number of self-suspending intervals interleaved between portions of processor-based code with single-entry
 single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic self-suspension
-model discussed earlier, but this would discard the information about the constraints in the location of self-suspensions inside a task 
+model, but this would discard the information about the constraints in the location of self-suspensions inside a task 
 activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
 to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
 
@@ -353,7 +352,7 @@ uniprocessor systems, \ie, \mysectionref{}~\ref{sec:review} and
 dynamic-priority scheduling and fixed-priority (FP)
 scheduling. A task changes its priority level in dynamic-priority
 scheduling during run-time. One well-known dynamic-priority scheduling
-is the earliest-deadline-first (EDF) scheduling, which gives
+algorithm is the earliest-deadline-first (EDF) scheduling, which gives
 the highest priority to the job (in the ready queue) with the earliest
 absolute deadline. Variances of EDF scheduling for self-suspending
 tasks have been explored in
@@ -432,7 +431,7 @@ To resolve the computational complexity issues in many scheduling problems in re
 
 \mysection{Multiprocessor Scheduling}
 
-On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned scheduling, (\textit{ii}) global scheduling, and (\textit{iii}) clustered scheduling. 
+On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned scheduling, (\textit{ii}) global scheduling, and (\textit{iii}) clustered (also called semi-partitioned) scheduling. 
 Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
 Partitioned fixed-priority (P-FP) scheduling is another widespread
 choice in practice due to the wide support in industrial standards
