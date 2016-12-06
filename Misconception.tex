@@ -44,7 +44,7 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 \begin{figure}[t]
 \centering
 \def\uxfpga{0.4cm} 
-\subfloat[]{
+\subfloat[An illustrative schedule based on Eq.~(\ref{eq:dynamic-flawed})]{
 \scalebox{0.8}{
 	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
     \draw[->] (-6,0) -- coordinate (xaxis) (18,0) node[anchor=north]{$t$};
@@ -94,7 +94,8 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
 	\end{scope}                
 \end{tikzpicture}} }
 
-\subfloat[]{
+\subfloat[Another case with larger response time than that from the
+schedule based on Eq.~(\ref{eq:dynamic-flawed})]{
 \scalebox{0.8}{
 	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
     \draw[->] (0,0) -- coordinate (xaxis) (36,0) node[anchor=north]{$t$};
@@ -170,7 +171,8 @@ $\tau_3$  &      $1$   &     $0$  &  $\infty$     \\ \hline
         \draw[dotted] (34.5,0.5) -- (35.3,0.5); 
 	\end{scope}
 \end{tikzpicture}} }
-\caption{Two different schedules for the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
+\caption{A counterexample for the response time analysis based on
+  Eq.~(\ref{eq:dynamic-flawed}) by using the task set in Table~\ref{tab:counterexample-dynamic-suspension}.}
 \label{fig:counterexample-dynamic}
 \end{figure}
 
@@ -498,10 +500,10 @@ $$R_3 = R_3^1 + S_3^1 + R_3^2 = 3 + 2 +4 = 9$$
     \label{table:ex-synch-releases}
 \end{table}
 
-Now, let us consider a job release pattern as shown in Figure~\ref{fig:ex-synch-releases}. Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Figure~\ref{fig:ex-synch-releases}(b)). Thus, the total response time of $\tau_3$ in a scenario where not all higher-priority tasks release a job synchronously with $\tau_3$ is equal to 
+Now, consider a job release pattern as shown in Figure~\ref{fig:ex-synch-releases}(b). Task $\tau_2$ does not release a job synchronously with task $\tau_3$ but with its second computation segment instead. The response time of the first computation segment of $\tau_3$ is thus reduced to $R_3^1=2$. However, both $\tau_1$ and $\tau_2$ can now release a job synchronously with the second computation segment of $\tau_3$, for which the response time is now equal to $R_3^2=6$ (see Figure~\ref{fig:ex-synch-releases}(b)). Thus, the total response time of $\tau_3$ in a scenario where not all higher-priority tasks release a job synchronously with $\tau_3$ is equal to 
 $$R_3 = R_3^1 + S_3^1 + R_3^2 = 2+2+6 = 10$$
 
-{\bf Consequence:} To conclude, the synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. 
+{\bf Consequence:}  The synchronous release of all tasks does not necessarily generate the maximum interference for the self-suspending task $\tau_k$ and is thus not always a critical instant for $\tau_k$. 
 It was however proven in \cite{ecrts15nelissen} that in the critical instant of a self-suspending task $\tau_k$, every higher-priority task releases a job synchronously with the arrival of at least one computation segment of $\tau_k$, but not all higher-priority tasks must release a job synchronously with the same computation segment.
 
 \mysubsection{A counterexample to the minimum inter-release time}
