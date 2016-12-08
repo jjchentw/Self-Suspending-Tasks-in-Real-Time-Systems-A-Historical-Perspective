@@ -4,7 +4,7 @@
 In this \mysectionrefnormal{}, we consider the analysis of self-suspensions that arise on multiprocessors under P-FP scheduling when tasks synchronize access to shared resources (\eg, shared I/O devices, message buffers, or other shared data structures) with suspension-based locks (\eg, binary semaphores). This has been used specifically in \mysectionref{}~\ref{sec:examples} to motivate the reasons for self-suspending behavior. 
 As semaphores induce self-suspensions, some of the misconceptions surrounding the analysis of self-suspensions on uniprocessors unfortunately also spread to the analysis of  real-time locking protocols on partitioned multiprocessors.
 
-In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section \ref{sec:counterexample}. Fortunately, as we will discuss in Section \ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:wrong-jitter-dynamic}.
+In particular, the analysis framework to account for the additional interference due to \emph{remote blocking} first introduced by \cite{lakshmanan-2009}, and reused in several other works~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014},  is unsafe, which we show with a counterexample in Section~\ref{sec:sem-multi}. Fortunately, as we will discuss in Section~\ref{sec:safe_bound}, there are straightforward solutions based on the corrected response-time bounds discussed in Section~\ref{sec:wrong-jitter-dynamic}.
 
 We begin with a review of existing analysis strategies for semaphore-induced suspensions on uniprocessors and partitioned multiprocessors. 
  
@@ -38,7 +38,7 @@ From the perspective of the local schedule on each processor, remote blocking is
 In contrast, local blocking takes place only if a local lower-priority task holds the resource (\ie, if the local processor is busy), just as it is the case with uniprocessor synchronization protocols like the PCP~\cite{SRL:90}. Consequently, local blocking is accounted for similarly to blocking under the PCP in the uniprocessor case (\ie, as in Eq. \eqref{eq:classic-pcp-rta}), and not as a general self-suspension (Eq. \eqref{eq:dynamic-correct}). Since local blocking can be handled similarly to the uniprocessor case, we focus on remote blocking in the remainder of this \mysectionrefnormal{}.
 
 
-A safe, but pessimistic strategy is to simply model remote blocking as computation, which is called \emph{suspension-oblivious analysis}~\cite{BA:10b}, as previously discussed in Section~\ref{sec:model-interferred-oblivious}. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. Block et al.~\cite{block-2007} first used this strategy in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling; Lakshmanan et al.~\cite{lakshmanan-2009} also adopted this approach in their analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it is also subject to structural pessimism, and it has been shown that, in pathological cases, suspension-oblivious analysis can overestimate response times by a factor linear in both the number of tasks and the ratio of the largest and the shortest periods~\cite{wieder-2013}.
+A safe, but pessimistic strategy is to simply model remote blocking as computation, which is called \emph{suspension-oblivious analysis}~\cite{BA:10b}, as previously discussed in Section~\ref{sec:model-interferred-oblivious}. By overestimating the processor demand of self-suspending, higher-priority tasks, the additional delay due to deferred execution is \emph{implicitly} accounted for as part of regular interference analysis. Block et al.~\cite{block-2007} first used this strategy in the context of partitioned and global \emph{earliest deadline first (EDF)} scheduling; Lakshmanan et al.~\cite{lakshmanan-2009} also adopted this approach in their analysis of ``virtual spinning,'' where tasks suspend when blocked on a lock, but at most one task per processor may compete for a global lock at any time. However, while suspension-oblivious analysis is conceptually straightforward, it is also subject to structural pessimism, and it has been shown that, in pathological cases, suspension-oblivious analysis can overestimate response times by a factor linear in both the number of tasks and the ratio of the longest to the shortest periods~\cite{wieder-2013}.
 
 A less pessimistic alternative to suspension-oblivious analysis is to \emph{explicitly} bound the effects of deferred execution due to remote blocking, which is called \emph{suspension-aware analysis}~\cite{BA:10b}. Inspired by Ming's (flawed) analysis of self-suspensions  \cite{MingLiRTCSA1994}, Lakshmanan et al.~\cite{lakshmanan-2009} proposed such a response-time analysis framework that explicitly accounts for remote blocking.  Lakshmanan et al.'s  bound~\cite{lakshmanan-2009} was subsequently reused by several authors in
 \begin{itemize}
@@ -58,10 +58,9 @@ R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \fr
 
 In Eq. \eqref{eqn:wcrt}, the additional interference on $\tau_k$ due to the lock-induced deferred execution of higher-priority tasks is supposed to be captured by the term ``$+ B^r_i$'' in the interference bound  $\left \lceil \frac{R_k + B_i^r}{T_i} \right \rceil \cdot C_i$,  similarly to the misconception discussed in Section~\ref{sec:wrong-jitter-dynamic}. For completeness, we show with a counterexample that Eq. \eqref{eqn:wcrt} yields an unsafe bound in certain corner cases.
 
-\mysection{A Counterexample}
-\label{sec:counterexample}
+% \mysection{A Counterexample}
+% \label{sec:counterexample}
 
-We show the existence of a schedule in which a task that is considered schedulable according to Eq. \eqref{eqn:wcrt} misses a deadline.
 
 %\input{counterexample_protocol}
 
@@ -77,11 +76,13 @@ We show the existence of a schedule in which a task that is considered schedulab
         $\tau_4$ & 7             & 14 & 1 & $4-4\epsilon$ & $2$\\ 
         \hline
     \end{tabular}
-    \caption{Task parameters for the counterexample in Section~\ref{sec:counterexample}.}
+    \caption{A set of real-time sporadic tasks for demonstrating the counterexample for the misconception used in Eq.~(\ref{eqn:wcrt}).}
     \label{table:parameters}
 \end{table}
 
-Consider four implicit-deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ with parameters as listed in Table \ref{table:parameters}, indexed in a decreasing order of priority, that are scheduled on two processors using P-FP scheduling. Tasks $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while task $\tau_4$ is assigned to processor 2.
+In the following example, 
+we show the existence of a schedule in which a task that is considered schedulable according to Eq. \eqref{eqn:wcrt} misses a deadline.
+ Consider four implicit-deadline sporadic tasks ${\tau_1, \tau_2, \tau_3, \tau_4}$ with parameters as listed in Table \ref{table:parameters}, indexed in a decreasing order of priority, that are scheduled on two processors using P-FP scheduling. Tasks $\tau_1$, $\tau_2$ and $\tau_3$ are assigned to processor 1, while task $\tau_4$ is assigned to processor 2.
 
 Each job of $\tau_2$ has one critical section (($s_2 = 1$) of length at most $5\varepsilon$ (\ie, $C_{2,1}^{\prime} = 5\varepsilon$), where $0 < \varepsilon \leq 1/3$, in which it accesses a global shared resource $\res_1$.
 
@@ -163,7 +164,8 @@ R_3 = \varepsilon + \left \lceil \frac{8+7\varepsilon + 0}{6} \right \rceil \cdo
 		}
 	\end{scope}
 \end{tikzpicture}}       
-\caption{A schedule where $\tau_3$ misses a deadline.}
+\caption{A schedule where $\tau_3$ misses a deadline for the task set in Table~\ref{table:parameters}, where  task $\tau_3$ is schedulable according to the incorrect
+ response time analysis in Eq.~(\ref{eqn:wcrt}).}
 \label{fig:counterexample_protocol}
 \end{figure}
 
@@ -175,7 +177,7 @@ R_3 = \varepsilon + \left \lceil \frac{8+7\varepsilon + 0}{6} \right \rceil \cdo
 %\end{figure}
  \fi
 
-However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, in which a job of task $\tau_3$ arrives at time $6$ and misses its absolute deadline at time $20$. This implies that Eq. \eqref{eqn:wcrt} does not always yield a sound response-time bound. 
+However, there exists a schedule, shown in Fig. \ref{fig:counterexample_protocol}, in which a job of task $\tau_3$ arrives at time $6$ and misses its absolute deadline at time $20$. This shows that Eq. \eqref{eqn:wcrt} does not always yield a sound response-time bound. 
 
 The misconception here is to account for remote blocking (\ie, $B_i^r$), which is a form of self-suspension, as if it is the safe release jitter. However, it is not, as already explained in Section~\ref{sec:wrong-jitter-dynamic}.
 
@@ -201,7 +203,7 @@ Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} first  replaced
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left\{ t - \left( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i \right) \right\}.
 \end{equation}
 
-However, based on the example in Section \ref{sec:counterexample}, we can immediately infer that Eqs. \eqref{eqn:rbf-1} and \eqref{eqn:rbf-2}, which ignore the effects of deferred execution due to remote blocking, are unsound in the presence of global locks. Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq.~\eqref{eqn:bloc-tolerate}, we have $\fun{mtbt}_3 \geq 12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+6\epsilon)) = 4-7\epsilon$ (for $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-7\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ can miss its deadline even without incurring any blocking, as shown in Fig. \ref{fig:counterexample_protocol}. 
+However, based on the example in Section~\ref{sec:sem-multi}, we can immediately infer that Eqs. \eqref{eqn:rbf-1} and \eqref{eqn:rbf-2}, which ignore the effects of deferred execution due to remote blocking, are unsound in the presence of global locks. Consider $\tau_3$ in the previous example (with parameters listed in Table \ref{table:parameters}). According to Eq.~\eqref{eqn:bloc-tolerate}, we have $\fun{mtbt}_3 \geq 12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+6\epsilon)) = 4-7\epsilon$ (for $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-7\epsilon$ without missing its deadline. However, this is not true since $\tau_3$ can miss its deadline even without incurring any blocking, as shown in Fig. \ref{fig:counterexample_protocol}. 
 
 \mysection{A Safe Response-Time Bound}
 \label{sec:safe_bound}
