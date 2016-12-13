@@ -1,7 +1,7 @@
 \mychapter{Final Discussion}
 %\subsection{Summary}  
  Self-suspending behavior is becoming an increasingly prominent
-characteristic in real-time systems such as: (i) I/O-intensive systems
+characteristic in real-time systems, for example: (i) I/O-intensive systems
 (ii) multi-processor synchronization and scheduling, and (iii)
 computation offloading with coprocessors, like graphics processing
 units (GPUs).  This paper has reviewed the literature in the light of
@@ -21,10 +21,10 @@ presented potential solutions. These misconceptions include:
   partitioned multiprocessor real-time locking protocols.
 \item Incorrect quantification of jitter for segmented self-suspending
   task systems, which was used in  \cite{RTCSA-BletsasA05}.
-\item Incorrect assumptions in the critical instant with
+\item Incorrect assumptions for a critical instant with
   synchronous releases, which was used in \cite{LR:rtas10}.
 \item Incorrectly counting highest-priority self-suspending time to reduce the
-  interference, which was used in  \cite{RTSS-KimANR13}. 
+  interference on the lower-priority tasks, which was used in  \cite{RTSS-KimANR13}. 
 \item Incorrect segmented fixed-priority scheduling with period
   enforcement, which was used in
   \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
@@ -61,57 +61,55 @@ errata for more detailed explanations.
   quantification of jitter& See Section~\ref{sec:wrong-jitter-dynamic} or the
   erratum filed by the authors \cite{BletsasReport2015}& solved\\
   \cline{2-4}
-& \cite{MingLiRTCSA1994}:   Wrong quantification of jitter & See Section
-\ref{sec:wrong-jitter-dynamic} & solved\\
+  & \cite{MingLiRTCSA1994}:   Wrong quantification of jitter & See Section
+  \ref{sec:wrong-jitter-dynamic} & solved\\
   \cline{2-4}
-& \cite{RTCSA-BletsasA05}:   Wrong quantification of jitter & See Section
-\ref{sec:wrong-jitter-segmented} or \cite{BletsasReport2015}& solved\\
+  & \cite{RTCSA-BletsasA05}:   Wrong quantification of jitter & See Section
+  \ref{sec:wrong-jitter-segmented} or \cite{BletsasReport2015}& solved\\
   \cline{2-4}
-& \cite{LR:rtas10}:  Critical instant theorem in Section III and the
-response time analysis are incorrect & See Section
-\ref{sec:wrong-critical} or \cite{ecrts15nelissen} & solved\\
-\cline{2-4}
-  & \cite{RTSS-KimANR13}: Theorems 2 and 3 are incorrect & See
+  & \cite{LR:rtas10}:  Critical instant theorem in Section III and the
+  response time analysis are incorrect & See Section
+  \ref{sec:wrong-critical} or \cite{ecrts15nelissen} & solved\\
+  \cline{2-4}
+  & \cite{RTSS-KimANR13}: Incorrect accounting for the highest-priority
+  interference in Theorems 2 and 3 & See
   Section~\ref{sec:wrong-highest-priority} & solved\\
   \cline{2-4}
-  & \cite{RTSS-KimANR13}: Section IV is
-  incorrect & See Section~\ref{sec:wrong-periodic} &
+  & \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}: Wrong schedulability test for segmented
+  fixed-priority scheduling with periodic enforcement (Section IV
+  in \cite{RTSS-KimANR13}, Section 3 in \cite{DBLP:journals/ieicet/DingTT09})& See Section~\ref{sec:wrong-periodic} &
   not solved\\
   \cline{2-4}
-  & \cite{DBLP:journals/ieicet/DingTT09}: Section 3 is
-  incorrect & See Section~\ref{sec:wrong-periodic} &
-  not solved\\
-  \cline{2-4}
-  &\cite{ecrts15nelissen} Section VI is
+  &\cite{ecrts15nelissen}: Section VI is
   incorrect &\jj{?????} &
   \jj{???}\\
   \cline{2-4}
-\hline
-\multirow{2}{*}{Inherited Flaws} &
-\cite{RTCSA-KimCPKH95,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
- Adopting wrong quantifications of jitters (refer to
- Section~\ref{sec:syn} in this paper)& See
-Section~\ref{sec:safe_bound} & solved\\
-\cline{2-4}
-& \cite{DBLP:conf/ecrts/LiuA13}: Inherited flaw from
-\cite{DBLP:conf/rtss/GuanSYY09} and unsafe Lemma 1 to quantify the workload& See the erratum
-\cite{erratu-cong-anderson} filed by the authors & solved\\
-\hline
-\multirow{2}{*}{Closed Issues} & \cite[Page
-164-165]{Liu:2000:RS:518501}: schedulability test without any proof & See
-\cite{ChenHuangNelissen} for a proof& solved\\
-\cline{2-4}
- &\cite{Raj:suspension1991}: period enforcer can be used for
- deferrable task systems. It may result in deadline
- misses for self-suspending tasks and is not compatible with multiprocessor synchronization & See
- \cite{ChenBrandenburg} for the explanations.& solved\\
-\hline
-\multirow{2}{*}{Open Issues} &  \cite{DBLP:conf/ecrts/Devi03}: Proof
-of Theorem
-8  is incomplete& ?& ?\\
-\cline{2-4}
- & \cite{LR:rtas10}: Proofs for slack enforcement in Sections IV and V
- are incomplete & ?& ?\\
+  \hline
+  \multirow{2}{*}{Inherited Flaws} &
+  \cite{RTCSA-KimCPKH95,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
+  Adopting wrong quantifications of jitters (refer to
+  Section~\ref{sec:syn} in this paper)& See
+  Section~\ref{sec:safe_bound} & solved\\
+  \cline{2-4}
+  & \cite{DBLP:conf/ecrts/LiuA13}: Inherited flaw from
+  \cite{DBLP:conf/rtss/GuanSYY09} and unsafe Lemma 1 to quantify the workload& See the erratum
+  \cite{erratu-cong-anderson} filed by the authors & solved\\
+  \hline
+  \multirow{2}{*}{Closed Issues} & \cite[Page
+  164-165]{Liu:2000:RS:518501}: schedulability test without any proof & See
+  \cite{ChenHuangNelissen} for a proof& solved\\
+  \cline{2-4}
+  &\cite{Raj:suspension1991}: period enforcer can be used for
+  deferrable task systems. It may result in deadline
+  misses for self-suspending tasks and is not compatible with multiprocessor synchronization & See
+  \cite{ChenBrandenburg} for the explanations.& solved\\
+  \hline
+  \multirow{2}{*}{Open Issues} &  \cite{DBLP:conf/ecrts/Devi03}: Proof
+  of Theorem
+  8  for considering suspension as blocking in EDF is incomplete& ?& ?\\
+  \cline{2-4}
+  & \cite{LR:rtas10}: Proofs for slack enforcement in Sections IV and V
+  are incomplete & ?& ?\\
   \hline
   \hline
 \end{tabular}}
@@ -151,8 +149,8 @@ elaborations. These include the following results in the literature:
   periodic
   task.  From the scheduling point of view, this means that there is
   no \emph{potential} scheduling penalty when analyzing the interferences of the
-  higher-priority tasks. (But, the suspension time of the task under
-  analysis has to be converted into computation.) The correctness of the dynamic slack
+  higher-priority tasks. However, the suspension time of the task under
+  analysis has to be converted into computation. The correctness of the dynamic slack
   enforcement in \cite{LR:rtas10} is heavily based on the statement of Lemma
   4 in \cite{LR:rtas10}. However, the proof is not rigorous for the
   following reasons:
@@ -212,8 +210,9 @@ following results.\footnote{Papers that are published after 2015 may
   \item the result by Nelissen et al. \cite{ecrts15nelissen} by
     enumerating the worst-case interference from higher-priority
     sporadic tasks with an exhaustive search;
-  \item the result by Chen and Liu~\cite{RTSS-ChenL14} and Huang and
-    Chen \cite{WC16-suspend-DATE} by using the release-time
+  \item the result by Chen and Liu~\cite{RTSS-ChenL14}, Huang and
+    Chen \cite{WC16-suspend-DATE}, Peng and Fisher
+    \cite{Peng-Fisher-RTCSA2016}, and von der Br\"uggen et al. \cite{Bruggen16RTNS} by using the release-time
     enforcement as described in
     Section~\ref{sec:static-period-enforce};\footnote{Chen and Liu
       found a typo in Theorem 3 in \cite{RTSS-ChenL14}
