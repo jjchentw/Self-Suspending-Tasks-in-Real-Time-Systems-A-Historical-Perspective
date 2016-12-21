@@ -3,12 +3,12 @@
 
 Initially, we motivate the reasons to consider self-suspending task systems with the following examples.
 
-{\bf Example 1: I/O- or Memory-Intensive Tasks.} Since I/O and memory subsystems are much slower than processors, an I/O-intensive task may have to use DMA (Direct Memory Access) to transfer a large amount of data. This can take from a few microseconds up to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. When the I/O activity completes, the job can be moved to the ready queue to be (re)-eligible for execution. This also applies to systems in which the scratchpad memory allocated to a task is dynamically updated during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the DMA transfers to update the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory, due to bus contention and competition for memory resources.
+{\bf Example 1: I/O- or Memory-Intensive Tasks.} Since I/O and memory subsystems are much slower than processors, an I/O-intensive task may have to use DMA (Direct Memory Access) to transfer a large amount of data. This can take from a few microseconds up to milliseconds. In such a case, a job of a task executes for a certain amount of time, then initiates an I/O activity, and suspends itself. When the I/O activity completes, the job can be moved back to the ready queue to be (re)-eligible for execution. This also applies to systems in which the scratchpad memory allocated to a task is dynamically updated during its execution. In such a case, a job of a task executes for a certain amount of time, then initiates a scratchpad memory update to push its content from the scratchpad memory to the main memory and to pull some content from the main memory to the scratchpad memory, often using DMA. During the DMA transfers to update the scratchpad memory, the job suspends itself. Such memory access latency can become much more dynamic and larger when we consider multicore platforms with shared memory, due to bus contention and competition for memory resources.
 
 {\bf Example 2: Multiprocessor Synchronization.} \hspace{0.1in}
 Under a suspension-based locking protocol, tasks that are denied access to a shared resource (i.e., that block on a lock) are suspended. Interestingly, on uniprocessors, the resulting suspensions can be accounted for more efficiently than general self-suspensions by considering the blocking time due to the lower-priority job(s) that hold(s) the required share resource(s). More detailed discussions about the reason why uniprocessor synchronization does not have to be considered to be self-suspension can be found in Section~\ref{sec:sem-uni}. In multiprocessor systems, self-suspensions can arise under partitioned scheduling (in which each task is assigned statically on a dedicated processor) when the tasks have to synchronize their access to shared resources (\eg, shared I/O devices, communication buffers, or scheduler locks) with suspension-based locks (\eg, binary semaphores). 
 
-We use a binary semaphore shared by two tasks assigned on two different processors as an example. Suppose each of these two tasks has a critical section protected by the semaphore. If one of them, say task $\tau_1$, is using the semaphore on the first processor and another, say task $\tau_2$, executing on the second processor intends to enter its critical section, then task $\tau_2$ has to wait until the critical section of task $\tau_1$ finishes on the first processor. During the execution of task $\tau_1$'s critical section, task $\tau_2$ \emph{suspends} itself. 
+We use a binary semaphore shared by two tasks assigned on two different processors as an example. Suppose each of these two tasks has a critical section protected by the semaphore. If one of them, say task $\tau_1$, is using the semaphore on the first processor and another, say task $\tau_2$, is executing on the second processor intends to enter its critical section, then task $\tau_2$ has to wait until the critical section of task $\tau_1$ finishes on the first processor. During the execution of task $\tau_1$'s critical section, task $\tau_2$ \emph{suspends} itself. 
 
 % There are several synchronization protocols in the literature, some of them prevent the above self-suspending behavior by using \emph{spin-locking} by pessimistically increasing the worst-case execution time. Some of them try to utilize the unused resource on the second processor in the above example by running other jobs. 
 
@@ -235,12 +235,14 @@ due to the precedence constraints of the DAG task. Such idle time intervals can 
 
 
 Each sporadic task $\tau_i$ can release an infinite number of jobs (also called task instances) under the given minimum inter-arrival time (also called period) constraint $T_i$.  Each job released by a sporadic task $\tau_i$ has a relative deadline $D_i$.  That is, if a job of task $\tau_i$ arrives at time $t$, it must/should be finished before its absolute deadline $t+D_i$, and the next instance of the task must arrive no earlier than time $t + T_i$.
+The \emph{worst-case execution time} of task $\tau_i$ is $C_i$. That is, the execution time of a job of task $\tau_i$ is at most $C_i$.
+The sporadic task model characterizes a task $\tau_i$ as a three-tuple $(C_i,T_i,D_i)$.
 Throughout this paper, we will use ${\bf T}$ to denote the input task
 set and use $n$ to denote the number of tasks in ${\bf T}$. 
-If the relative deadline $D_k$ of task $\tau_k$ in ${\bf T}$ is always
+If the relative deadline $D_k$ of each task $\tau_k$ in ${\bf T}$ is 
 equal to the period $T_k$, such a task set ${\bf T}$ is an
 \emph{implicit-deadline} task set (system). If the relative deadline $D_k$ of
-task $\tau_k$ in ${\bf T}$ is always no more than the period $T_k$,
+each task $\tau_k$ in ${\bf T}$ is no more than the period $T_k$,
 such a task set ${\bf T}$ is called a \emph{constrained-deadline} task
 set (system). Otherwise, such a task set is called an \emph{arbitrary-deadline}
 task set (system). In this paper, we will mainly and implicitly 
@@ -277,7 +279,7 @@ in one task set.
 
 
 
-In the DAG-based model\cite{bletsas:thesis}, each node represents either a self-suspending interval or a computation segment
+In the DAG-based self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspending interval or a computation segment
 with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
 represents a different program execution path. A linear graph is already an instance of the segmented self-suspension model.
 An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
@@ -314,15 +316,14 @@ of system variables at run-time. Each of those paths may have a different
 number of self-suspending intervals. Alternatively, during the execution of a job of a task, one control flow may have an self-suspension interval at the beginning of the job and
 another one may self-suspend shortly before its completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
-just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier by converting the information provided by a DAG into the dynamic self-suspension task model. 
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier, by converting the information provided by a DAG into the dynamic self-suspension task model. 
 %Note that these two worst cases may be observed under different control flows.
   
 \mysection{Examples of Segmented Self-Suspension} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
 \ie, there is a deterministic number of self-suspending intervals interleaved between portions of processor-based code with single-entry
 single-exit control-flow semantics. Many applications exhibit this structure. Such tasks can always be modelled according to the dynamic self-suspension
-model, but this would discard the information about the constraints in the location of self-suspensions inside a task 
-activation. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
+model, but this would discard the information about the constraints in the location of self-suspensions intervals of a job, \eg, in the control flow. The segmented self-suspension model preserves this information, and in principle, this can be used by timing analysis tools 
 to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
 
 % \mysection{Examples of the DAG Self-Suspension Model}
@@ -345,7 +346,7 @@ Implicitly, we will assume that the system schedules the jobs in a
 uniprocessor systems; however some results for multiprocessor systems
 will be discussed in Section~\ref{sec:multiprocessor-HRT} and
 \mysectionref{}~\ref{sec:soft-realtime}. 
- The cost of preemption
+We assume that the cost of preemption
 has been subsumed into the worst-case execution time of each task. In
 uniprocessor systems, \ie, \mysectionref{}~\ref{sec:review} and
 \mysectionref{}~\ref{sec:misconceptions} (except Section~\ref{sec:multiprocessor-HRT}), we will consider both
@@ -361,11 +362,11 @@ tasks have been explored in
 For fixed-priority scheduling, in general, a task is assigned to a
 unique priority level, and all the jobs generated by the task have the
 same priority level. Examples are rate-monotonic (RM) scheduling
-\cite{Liu_1973}, under which the task with a shorter period has a
+\cite{Liu_1973}, under which a task with a shorter period has a
 higher-priority level, and deadline-monotonic (DM) scheduling, under which
-the task with a shorter relative deadline has a higher-priority level.
+a task with a shorter relative deadline has a higher-priority level.
 In this paper, if we consider fixed-priority scheduling, we will also implicitly assume that task $\tau_i$ has higher priority than task $\tau_j$ if $i < j$.
-This has been explored in
+Such task-level fixed-priority scheduling strategies for the self-suspension task models have been explored in
 \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE,ChenECRTS2016-suspension}.
 Moreover, in some results in the literature, \eg,
 \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}, each computation
@@ -417,7 +418,7 @@ algorithms:
 \end{itemize}
 
 
-To resolve the computational complexity issues in many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
+To resolve the computational complexity issues of many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
 %In other words, by taking the negation of the above statement, if an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then it guarantees that \emph{if the schedule derived from the algorithm ${\cal A}$ is not feasible, then the input does not admit a feasible schedule by running at speed $\frac{1}{\rho}$}.
 
 
@@ -432,14 +433,14 @@ To resolve the computational complexity issues in many scheduling problems in re
 \mysection{Multiprocessor Scheduling}
 
 On a multiprocessor platform, scheduling algorithms can usually be divided into three major categories: (\textit{i}) partitioned scheduling, (\textit{ii}) global scheduling, and (\textit{iii}) clustered (also called semi-partitioned) scheduling. 
-Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. A partitioned algorithm example is partitioned earliest-deadline-first (P-EDF), which uses the EDF algorithm as the per-processor scheduler. 
+Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. An often used multiprocessor partitioned scheduling algorithm is partitioned earliest-deadline-first (P-EDF), which applies EDF on each processor individually.
 Partitioned fixed-priority (P-FP) scheduling is another widespread
 choice in practice due to the wide support in industrial standards
 such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc
 Under P-FP scheduling, each task has a fixed-priority level and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
 %Under EDF, jobs with earlier deadlines have higher priority. 
  In contrast to partitioned scheduling, under global scheduling, a single global ready queue is used for storing ready jobs.  Jobs are allowed to migrate from one processor to another at any time. A global scheduling algorithm example is global EDF (G-EDF), under which jobs are EDF-scheduled using a single ready queue.  
- Clustered scheduling is a hybrid of partitioned and global scheduling in which tasks are statically assigned to a cluster of processors, among which the task can freely migrate. On multi- and many-core systems, clusters are often aligned to the underlying memory topology to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (\eg, an automotive system)~\cite{bastoni2010}.
+ Clustered scheduling is a hybrid of partitioned and global scheduling in which most tasks are statically assigned to processors and the others have predefined migration patterns. %On multi- and many-core systems, clusters are often aligned to the underlying memory topology to prevent expensive migration costs between remote cores. %It has been shown that such migration overhead reductions could enhance the overall performance in embedded systems with stringent SWaP constraints (\eg, an automotive system)~\cite{bastoni2010}.
 
 We will discuss the multiprocessor scenarios in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}.
 

@@ -7,16 +7,19 @@ This \mysectionrefnormal{} explains several misconceptions in some existing resu
 \mysection{Incorrect Quantifications of Jitter (Dynamic Self-Suspension)}
 \label{sec:wrong-jitter-dynamic}
 
-We first explain the existing misconceptions in the literature to quantify the jitter too optimistically for dynamic self-suspending task systems under fixed-priority scheduling. To calculate the worst-case response time of the task $\tau_k$ under analysis, there have been several results in the literature, \ie, \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994},  which propose to calculate the worst-case response time $R_k$ of task $\tau_k$ by finding the minimum $R_k$ with
+
+We first explain the misconceptions in the literature that quantify the jitter too optimistically for dynamic self-suspending
+task systems under fixed-priority scheduling. 
+To calculate the worst-case response time of the task $\tau_k$ under analysis, there have been several results in the literature, \ie, \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994},  which propose to calculate the worst-case response time $R_k$ of task $\tau_k$ by finding the minimum $R_k$ with
 \begin{equation}
-R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+S_k}{T_i}} C_i.
+R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+S_k}{T_i}} C_i,
 \label{eq:dynamic-flawed}
 \end{equation}
-The term $hp(k)$ is the set of the tasks with higher-priority levels than task $\tau_k$. 
+where the term $hp(k)$ is the set of the tasks with higher-priority levels than task $\tau_k$. 
 This analysis basically assumes that a safe estimate for $R_k$ can be computed if
 every higher-priority task $\tau_i$ is modelled as an ordinary sporadic
 task with worst-case execution time $C_i$ and release jitter $S_i$.
-Intuitively, it represents the potential internal jitter, \textit{within} an activation of $\tau_i$, \ie, when its execution time $C_i$ is considered by disregarding any time intervals when $\tau_i$ is preempted. 
+Intuitively, it represents the potential internal jitter \textit{within} an activation of $\tau_i$, \ie, when its execution time $C_i$ is considered by disregarding any time intervals when $\tau_i$ is preempted. 
 However, it is not the real jitter in the general cases, because the execution of $\tau_i$ can be pushed further, to be shown in the following example.
 
 
@@ -226,14 +229,14 @@ there is no variation between the worst-case and the actual-case execution/suspe
 
 
 
-Instead of going into the detailed mathematical formulations, we will demonstrate the misconception  in the above steps with the following example listed in Table~\ref{tab:counterexample-segmented}, by assuming that there is no variation between the worst-case and the actual-case execution/suspension times.
-In this example, there is only one self-suspending task $\tau_3$. In
+Instead of going into the detailed mathematical formulations, we will demonstrate the misconception  in the above steps with the following example in Table~\ref{tab:counterexample-segmented} that has only one self-suspending task $\tau_3$ and there is no variation between the worst-case and the actual-case execution/suspension times.
+In
 this specific example,  neither step 1 nor step 2 has any effect. The
 analysis in \cite{RTCSA-BletsasA05} can be imagined as replacing the
 self-suspending task $\tau_3$ with a sporadic task without any jitter or self-suspension, with $C_3=2$ and $D_3=T_3=15$. Therefore, the analysis in \cite{RTCSA-BletsasA05}  concludes that the worst-case response time of task $\tau_4$ is at most $15$ since $C_4+\sum_{i=1}^{3}\ceiling{\frac{15}{T_i}} C_i = 3+ 6 + 4 + 2= 15$.
 
 
-However, the schedule of Figure \ref{fig:counterexample-segmented} which is perfectly legal, disproves this.
+However, the perfectly legal schedule of Figure \ref{fig:counterexample-segmented} disproves this.
 In that schedule, $\tau_1$, $\tau_2$, and $\tau_3$ arrive at $t=0$ and a job of $\tau_4$ arrives at $t=40$ and has a response time of 
 $18$ time units.
 
