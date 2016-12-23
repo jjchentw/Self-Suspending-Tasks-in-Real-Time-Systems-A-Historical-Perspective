@@ -515,11 +515,11 @@ Moreover, we should also note that such a treatment is only valid for
 analyzing the worst-case response time for task $\tau_k'$ under the
 assumption that $S_k$ is converted into computation, i.e., $C_k'=C_k+S_k$. If the analysis
 considers self-suspending behavior of task $\tau_k$, such a
-combination in the analysis can be incorrect. For example, in Section~VI by Nelissen et al.~\cite{ecrts15nelissen}, they
-converted the higher-priority segmented self-suspension tasks into ordinary sporadic tasks with jitters 
-but the suspension time of the task under analysis was not converted into computation. The analysis in 
-Section~VI~in~\cite{ecrts15nelissen} is optimistic.
- A detailed discussion on this misconception is provided in Section~\ref{sec:wrong-jitter-convert-sporadic}.
+combination in the analysis can be incorrect. For example, in Section~VI of the work by Nelissen et al.~\cite{ecrts15nelissen},
+the higher-priority segmented self-suspension tasks are converted into ordinary sporadic tasks with jitters 
+but the suspension time of the task under analysis is not converted into computation. 
+We will discuss this misconception in Section~\ref{sec:wrong-jitter-convert-sporadic}.
+ 
 
 
 

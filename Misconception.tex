@@ -983,16 +983,15 @@ discussion, in our setting in Table~\ref{table:ex-wrong-jitter-split},
 there is only one job of task $\tau_2'$ that can interfere with a job
 of task $\tau_3$.
 
-By the above conversion, the interfering job of task $\tau_2'$
+Due to this conversion, the interfering job of task $\tau_2'$
 hits either the first or the second computation segment of task
 $\tau_3$. In both cases, that computation segment of task $\tau_3$ can be
 finished within $19$ time units, \ie, $3+6 +
-\ceiling{\frac{19}{10}}\times 5 = 19$. For the other segment of task
-$\tau_3$ that is not interfered by the job of task $\tau_2'$, the
-segment can be finished within $3+5=8$ time units.  Therefore, the
+\ceiling{\frac{19}{10}}\times 5 = 19$. The other segment of task
+$\tau_3$, that is not interfered by the job of task $\tau_2'$,
+ can be finished within $3+5=8$ time units.  Therefore, the
 above analysis concludes that the worst-case response time of task
 $\tau_3$ is $19+S_3^1 + 8 = 31$.
-
 However, the perfectly legal schedule in
 Figure~\ref{fig:counterexample-wrong-jitter-split} disproves this.  In
 that schedule, the response time of task $\tau_3$ is $36$.
@@ -1008,7 +1007,7 @@ that schedule, the response time of task $\tau_3$ is $36$.
         $\tau_3$ & $(3, 4, 3)$ & $35$ & $1000$  \\ 
         \hline
     \end{tabular} 
-    \caption{A set of segmented self-suspending tasks for demonstrating the misconception when analyzing the schedulability of task $\tau_k$ by combining the release jitter approach (for the higher-priority interferring tasks) and  explicit self-suspension behavior (for the interfered task $\tau_k)$ in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
+    \caption{A set of segmented self-suspending tasks for demonstrating the misconception which analyzes the schedulability of task $\tau_k$ by combining the release jitter approach for the higher-priority interferring tasks and  the explicit self-suspension behavior for the interfered task $\tau_k$, presented in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
     \label{table:ex-wrong-jitter-split}
 \end{table}
 
@@ -1064,19 +1063,23 @@ that schedule, the response time of task $\tau_3$ is $36$.
         \node[task7, minimum width=5*\uxfpga, anchor=south west] at (30, 0){\footnotesize};
 	\end{scope}
   \end{tikzpicture}}       
-\caption{A schedule to release the three tasks in
-  Table~\ref{table:ex-wrong-jitter-split} simultaneously. This schedule shows that the self-suspension behavior of task $\tau_2$ matters, as explained in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
+\caption{A schedule that releases the three tasks in
+  Table~\ref{table:ex-wrong-jitter-split} simultaneously. It shows that the self-suspension behavior of task $\tau_2$ matters, as explained in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
   \label{fig:counterexample-wrong-jitter-split}
 \end{figure}
 
 
-{\bf Consequences:} This example shows that the analysis in Section VI by Nelissen et al. \cite{ecrts15nelissen} is flawed.  
+{\bf Consequences:} The analysis by Nelissen et al. in Section~VI of
+\cite{ecrts15nelissen} that treats higher-priority self-suspension
+tasks by introducing safe release jitters and accounts for the
+self-suspending behavior of $\tau_3$ explicitly is flawed as shown in
+the example.
 
 {\bf Solutions:} Each computation segment of a higher-priority task
-should be treated as an individual sporadic task with jitter. That is,
-the treatment in Section~VI by Nelissen et al. \cite{ecrts15nelissen} remains valid
+should be treated as an individual sporadic task with jitter. This means that
+the treatment in Section~VI of \cite{ecrts15nelissen} remains valid
 if each computation segment of a higher-priority task $\tau_i$ is
-converted to a sporadic task with proper jitter.
+converted into an ordinary sporadic task with proper jitter. In our example here, the segmented self-suspending task $\tau_2$ should be converted into two ordinary sporadic tasks with proper jitter.
 
 
 %%% Local Variables:
