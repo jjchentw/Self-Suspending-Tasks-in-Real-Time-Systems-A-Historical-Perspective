@@ -515,11 +515,13 @@ Moreover, we should also note that such a treatment is only valid for
 analyzing the worst-case response time for task $\tau_k'$ under the
 assumption that $S_k$ is converted into computation, i.e., $C_k'=C_k+S_k$. If the analysis
 considers self-suspending behavior of task $\tau_k$, such a
-conversion can be incorrect. For example, Theorem 2 by Nelissen et al. \cite{ecrts15nelissen}
-is optimistic by converting the higher-priority self-suspending tasks into ordinary sporadic tasks 
-with jitters and applying response time analyses based on the split approach for task $\tau_k$.
+combination in the analysis can be incorrect. For example, in Section~VI by Nelissen et al.~\cite{ecrts15nelissen}, they
+converted the higher-priority segmented self-suspension tasks into ordinary sporadic tasks with jitters 
+but the suspension time of the task under analysis was not converted into computation. The analysis in 
+Section~VI~in~\cite{ecrts15nelissen} is optimistic.
+ A detailed discussion on this misconception is provided in Section~\ref{sec:wrong-jitter-convert-sporadic}.
 
-% A detailed discussion on this misconception is provided in Section~\ref{sec:wrong-jitter-convert-sporadic} to explain a flaw in \cite{ecrts15nelissen}.
+
 
 \mysubsection{Modeling self-suspensions as blocking}
 \label{sec:model-interfering-blocking}
