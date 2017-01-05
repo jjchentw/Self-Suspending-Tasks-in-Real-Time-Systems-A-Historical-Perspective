@@ -1,35 +1,37 @@
 \mychapter{Final Discussion}
 %\subsection{Summary}  
  Self-suspending behavior is becoming an increasingly prominent
-characteristic in real-time systems, for example: (i) I/O-intensive systems
-(ii) multi-processor synchronization and scheduling, and (iii)
-computation offloading with coprocessors, like graphics processing
-units (GPUs).  This paper has reviewed the literature in the light of
+characteristic in real-time systems, for example due to (i)~I/O-intensive tasks,
+(ii)~multi-processor synchronization and scheduling, and (iii)~computation
+offloading with coprocessors such as GPUs.  This paper has reviewed the literature in the light of
 recent developments in the analysis of self-suspending tasks,
 explained the general methodologies, summarized the computational complexity classes, 
 and detailed a number of 
 misconceptions in the literature concerning this topic. We
 have given concrete examples to demonstrate the effect of these
 misconceptions, listed some flawed statements in the literature, and
-presented potential solutions. These misconceptions include:
-\begin{itemize}
-\item Incorrect quantification of jitter for dynamic self-suspending
-  task systems, which was used in
-  \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
-  misconception was unfortunately adopted in
-  \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
-  partitioned multiprocessor real-time locking protocols.
-\item Incorrect quantification of jitter for segmented self-suspending
-  task systems, which was used in  \cite{RTCSA-BletsasA05}.
-\item Incorrect assumptions for a critical instant with
-  synchronous releases, which was used in \cite{LR:rtas10}.
-\item Incorrectly counting highest-priority self-suspending time to reduce the
-  interference on the lower-priority tasks, which was used in  \cite{RTSS-KimANR13}. 
-\item Incorrect segmented fixed-priority scheduling with period
-  enforcement, which was used in
-  \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
-\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter, which was used in \cite{ecrts15nelissen}.
-\end{itemize}
+presented potential solutions. 
+%% NOTE: this is heavily repetitive with the intro; let's refer only to the table
+%% for the sake of brevity.
+%These misconceptions include:
+%\begin{itemize}
+%\item Incorrect quantification of jitter for dynamic self-suspending
+%  task systems, which was used in
+%  \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
+%  misconception was unfortunately adopted in
+%  \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} to analyze the worst-case response time for
+%  partitioned multiprocessor real-time locking protocols.
+%\item Incorrect quantification of jitter for segmented self-suspending
+%  task systems, which was used in  \cite{RTCSA-BletsasA05}.
+%\item Incorrect assumptions for a critical instant with
+%  synchronous releases, which was used in \cite{LR:rtas10}.
+%\item Incorrectly counting highest-priority self-suspending time to reduce the
+%  interference on the lower-priority tasks, which was used in  \cite{RTSS-KimANR13}. 
+%\item Incorrect segmented fixed-priority scheduling with period
+%  enforcement, which was used in
+%  \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
+%\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter, which was used in \cite{ecrts15nelissen}.
+%\end{itemize}
 For completeness, all the misconceptions, open issues, closed issues,
 and inherited flaws discussed in this paper are listed in Table~\ref{tab:summary}.
 
@@ -43,7 +45,7 @@ of the misconceptions in
 \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05}; and the erratum \cite{Kim2016} of the
 misconceptions in \cite{RTSS-KimANR13}. 
 For brevity, these errata and reports are only summarized in
-this review. We encourage the readers to refer to these reports and
+this review. We encourage interested readers to refer to these reports and
 errata for more detailed explanations.
 
 
@@ -107,10 +109,10 @@ errata for more detailed explanations.
   \hline
   \multirow{2}{*}{Open Issues} &  \cite{DBLP:conf/ecrts/Devi03}: Proof
   of Theorem
-  8  for considering suspension as blocking in EDF is incomplete& ?& ?\\
+  8  for considering suspension as blocking in EDF is incomplete& ?& unresolved\\
   \cline{2-4}
   & \cite{LR:rtas10}: Proofs for slack enforcement in Sections IV and V
-  are incomplete & ?& ?\\
+  are incomplete & ?& unresolved\\
   \hline
   \hline
 \end{tabular}}
@@ -122,19 +124,19 @@ errata for more detailed explanations.
 \end{table}
 
 
-\mysection{Open Issues in the Existing Results}
+\mysection{Unresolved Issues}
 \label{sec:open-issues-existing}  
 We have carefully re-examined the results related to self-suspending
 real-time tasks in the literature in the past 25 years. However, there
 are also some results in the literature that may require further
-elaborations. These include the following results in the literature:
+elaboration. These include the following results in the literature:
 \begin{itemize}
 \item Devi (in Theorem 8 in \cite[Section
   4.5]{DBLP:conf/ecrts/Devi03}) extended the analysis proposed by Jane
   W.S. Liu in her book \cite[Page 164-165]{Liu:2000:RS:518501} to
   EDF scheduling. This method quantifies the additional interference
   due to self-suspensions from the higher-priority jobs by setting up
-  the \emph{blocking time} induced by self-suspensions. However, there
+  the blocking time induced by self-suspensions. However, there
   is no formal proof in \cite{DBLP:conf/ecrts/Devi03}. The proof made
   by Chen et al. in \cite{ChenHuangNelissen,ChenECRTS2016-suspension} for fixed-priority
   scheduling cannot be directly extended to EDF scheduling. The
@@ -149,7 +151,7 @@ elaborations. These include the following results in the literature:
   self-suspending task so that the task behaves like an ideal ordinary
   periodic
   task.  From the scheduling point of view, this means that there is
-  no \emph{potential} scheduling penalty when analyzing the interferences of the
+  no scheduling penalty when analyzing the interferences of the
   higher-priority tasks. However, the suspension time of the task under
   analysis has to be converted into computation. The correctness of the dynamic slack
   enforcement in \cite{LR:rtas10} is heavily based on the statement of Lemma
@@ -162,8 +164,8 @@ elaborations. These include the following results in the literature:
     Level-$i$ busy period at $s$, then $s$ can be shifted to the left
     to coincide with the start of the Level-$i$ busy period. Doing so
     will not decrease the Level-$i$ interference over $R$.}'' This
-    argument has to be proved by also handling cases in which a task
-    may suspend before the $Level-i$ busy period. This results in the
+    argument has to be expanded to also handle cases in which a task
+    suspends before the $Level-i$ busy period. This results in the
     possibility that a higher-priority task $\tau_j$ starts with the
     second computation segment in the Level-$i$ busy
     period. Therefore, the first and the third paragraphs in the proof
@@ -173,34 +175,32 @@ elaborations. These include the following results in the literature:
       introduced by dynamic slack enforcement is that under worst-case
       interference from higher-priority tasks there is no slack
       available to $J_j^p$ between $f_j^p$ and $\rho_j^p + R_j$.
-      $\ldots$ The second segment of $\tau_j$ is never delayed under
+      \emph{[\ldots]} The second segment of $\tau_j$ is never delayed under
       this transformation, and is released sporadically.} '' In fact,
     the slack enforcement may make the second computation segment
-    arrive earlier than its worst-case. For example, we can greedily
+    arrive earlier than its worst case. For example, we can greedily
     start with the worst-case interference of task $\tau_j$ in the
     first iteration, and do not release the higher-priority tasks
     (higher than $\tau_j$) after the arrival of the second job of task
     $\tau_j$. This can immediately create some release jitter of the
     second computation segment $C_j^2$.
   \end{itemize}
-  With the same reasons, the static slack enforcement algorithm in
+  For similar reasons, the static slack enforcement algorithm in
   \cite{LR:rtas10} also requires a more rigorous proof.
 \end{itemize}
 
-\mysection{Potentially Correct Approaches}
+\mysection{Non-Implicated Approaches}
 \label{sec:correct-solutions} 
 
-We would like to conclude this review by providing some positive notes on the available results on the design and analyses of hard real-time systems
-involving self-suspending tasks.  At the date of the writing of this
-document, no concern has been raised regarding the correctness of the
-following results.\footnote{Papers that are published after 2015 may
-  not be discussed/included here due to the lack of careful examinations by the authors.} % yet; therefore, they are potentially correct.
+We would like to conclude this review on a  positive note regarding the available results on the design and analyses of hard real-time systems
+involving self-suspending tasks.  At the time of writing, no concerns have been raised regarding the correctness of the
+following results.\footnote{This list is not exhaustive as not all self-suspension results that were published after 2015 have been carefully examined by the authors.} % yet; therefore, they are potentially correct.
 \begin{itemize}
 \item For segmented self-suspending task systems: 
   \begin{enumerate}
   \item Rajkumar's period enforcer \cite{Raj:suspension1991}
     if a self-suspending task
-    can only suspend at most once before any computation starts;
+    can only suspend at most once and only before any computation starts;
   \item the result by Palencia and Gonz\'alez
     Harbour~\cite{PH:rtss98} using the arrival jitter of a
     higher-priority task properly with an offset (also for
@@ -212,13 +212,13 @@ following results.\footnote{Papers that are published after 2015 may
     enumerating the worst-case interference from higher-priority
     sporadic tasks with an exhaustive search;
   \item the result by Chen and Liu~\cite{RTSS-ChenL14}, Huang and
-    Chen \cite{WC16-suspend-DATE}, Peng and Fisher
-    \cite{Peng-Fisher-RTCSA2016}, and von der Br\"uggen et al. \cite{Bruggen16RTNS} by using the release-time
+    Chen \cite{WC16-suspend-DATE}, Peng and Fisher~\cite{Peng-Fisher-RTCSA2016}, 
+    and von der Br\"uggen et al. \cite{Bruggen16RTNS} using the release-time
     enforcement as described in
     Section~\ref{sec:static-period-enforce};\footnote{Chen and Liu
       found a typo in Theorem 3 in \cite{RTSS-ChenL14}
       and filed a corresponding erratum in their websites.}
-  \item the result by Huang and Chen \cite{Huang:multiseg} by
+  \item the result by Huang and Chen \cite{Huang:multiseg}
     exploring the priority assignment problem and analyzing the
     carry-in computation segments together;
  \item the proof of co${\cal NP}$-hardness by Chen
@@ -229,18 +229,17 @@ following results.\footnote{Papers that are published after 2015 may
   platforms:
   \begin{enumerate}
   \item the analysis provided in~\cite[Pages
-    164-165]{Liu:2000:RS:518501} by Liu based on the proof in \cite{ChenHuangNelissen,ChenECRTS2016-suspension}; 
+    164-165]{Liu:2000:RS:518501} by Liu as proved by Chen et al. \cite{ChenHuangNelissen,ChenECRTS2016-suspension}; 
   \item the utilization-based analysis by Liu and Chen
     \cite{LiuChen:rtss2014} under rate-monotonic scheduling;
   \item the priority assignment and the schedulability analysis with a
-    speedup factor $2$, with respect to the optimal fixed-priority
+    speedup factor $2$, with respect to optimal fixed-priority
     scheduling, by Huang et
     al. \cite{huangpass:dac2015};
-  \item the response time analysis framework by Chen et al. \cite{ChenECRTS2016-suspension}, as described in Section~\ref{sec:model-interfering-unified};
+  \item the response-time analysis framework by Chen et al. \cite{ChenECRTS2016-suspension}, as described in Section~\ref{sec:model-interfering-unified};
   \item the negative results regarding existing scheduling algorithms with respect to speedup factors by Chen \cite{RTSS2016-suspension}.
   \end{enumerate}
-\item For dynamic self-suspending task systems on homogeneous multiprocessor
-  platforms:
+\item For dynamic self-suspending task systems on identical multiprocessors:
   \begin{enumerate}
   \item the schedulability test for global EDF scheduling by Liu and
     Anderson \cite{DBLP:conf/ecrts/LiuA13};
@@ -248,12 +247,13 @@ following results.\footnote{Papers that are published after 2015 may
     al. \cite{DBLP:conf/ecrts/LiuCH014} for harmonic task
     systems with strictly periodic job arrivals;
   \item the utilization-based schedulability analysis by Chen, Huang,
-    and Liu \cite{ChenHLRTSS2015} by considering carry-in jobs as
+    and Liu \cite{ChenHLRTSS2015} considering carry-in jobs as
     bursty behavior.
   \end{enumerate}
 \end{itemize}
-The solutions and fixes listed in Table~\ref{tab:summary} for the
-affected papers and statements seem correct.
+To the best of our knowledge, 
+the solutions and fixes listed in Table~\ref{tab:summary} for the
+affected papers and statements appear to be correct.
 
 
 % \subsection{Open Issues for Future Researches}
