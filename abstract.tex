@@ -8,25 +8,22 @@
   In general computing systems, a job (process/task) may suspend itself
   whilst it is waiting for some activity to complete, \eg, an accelerator
   to return required data or results from offloaded computation.
-  For real-time embedded systems, such self-suspension can cause
-  substantial performance/schedulability degradation. This has led to the
+  In real-time systems, such self-suspension can cause
+  substantial performance/schedulability degradation. This observation, first made in 1988, has led to the
   investigation of the impact of self-suspension behavior on
-  timing predictability since 1990.
+  timing predictability, and many relevant results have been published since.
+  Unfortunately, as it has recently come to light, a number of the existing analysis approaches are flawed.
 
-  This paper reviews the design and analysis of scheduling algorithms
+  To provide a correct platform on which future research can be built,
+  this paper reviews the state of the art in the design and analysis of scheduling algorithms
   and schedulability tests for self-suspending tasks in real-time systems. 
-  We report that a number of these existing approaches are flawed.  
-  As a result, we provide (1) a systematic description
+  We provide (1)~a systematic description
   of how self-suspending tasks can be handled in both soft and
-  hard real-time systems; (2) an explanation of the existing misconceptions 
-  and their potential remedies; (3) an assessment of the influence of 
+  hard real-time systems; (2)~an explanation of the existing misconceptions 
+  and their potential remedies; (3)~an assessment of the influence of 
   such flawed analysis on partitioned multiprocessor fixed-priority scheduling when tasks
-  synchronize access to shared resources; and (4) a computational
-  complexity analysis for different self-suspension task models.
-
-  In summary, this paper provides a state-of-art review of existing real-time
-  analysis of self-suspending tasks to provide a correct platform on which future
-  research can be built. 
+  synchronize access to shared resources; and (4)~a discussion of the computational
+  complexity of analyses for different self-suspension task models.
 
 \iftechreport
 \vfill
