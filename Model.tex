@@ -275,7 +275,7 @@ lengths; when absent, these are implicitly zero.
 From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
 without considering the control flow surrounding I/O accesses, computation offloading, or synchronization. However, from an analysis perspective, such a 
 dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
-unspecified. On the other hand, if the suspending patterns are well-defined and characterized with known suspending intervals, the 
+unspecified. On the other hand, if the suspension patterns are well-defined and characterized with known suspension intervals, the 
 segmented self-suspension task model is more appropriate.   
 As we will see in the next \mysectionrefnormal{}, it is possible to employ both the dynamic self-suspension model and the segmented self-suspension model simultaneously 
 in one task set.
@@ -285,7 +285,7 @@ in one task set.
 
 
 
-In the DAG-based self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspending interval or a computation segment
+In the DAG-based self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspension interval or a computation segment
 with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
 represents a different program execution path. A linear graph is already an instance of the segmented self-suspension model.
 An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
@@ -315,11 +315,11 @@ in Section~\ref{sec:model-interferred-oblivious}; see also and~\cite{RTAS-Audsle
 Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
 \mysection{Examples of Dynamic Self-Suspension} 
-The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspending intervals for a task, \eg, when these may vary for different jobs of the same task.
+The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspension intervals for a task, \eg, when these may vary for different jobs of the same task.
 
 For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
 of system variables at run-time. Each of those paths may have a different
-number of self-suspending intervals. Alternatively, during the execution of a job of a task, one control flow may have an self-suspension interval at the beginning of the job and
+number of self-suspension intervals. Alternatively, during the execution of a job of a task, one control flow may have an self-suspension interval at the beginning of the job and
 another one may self-suspend shortly before its completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
 by modelling the task according to the dynamic self-suspension model using
 just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task, as explained earlier, by converting the information provided by a DAG into the dynamic self-suspension task model. 
@@ -327,7 +327,7 @@ just two parameters: the worst-case execution time of the task in consideration 
   
 \mysection{Examples of Segmented Self-Suspension} 
 The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
-\ie, there is a deterministic number of self-suspending intervals interleaved between portions of processor-based code with single-entry
+\ie, there is a deterministic number of self-suspension intervals interleaved between portions of processor-based code with single-entry
 single-exit control-flow semantics. Such tasks can always be modeled according to the dynamic self-suspension
 model, but this would discard the information about the constraints in the location of self-suspensions intervals of a job, \eg, in the control flow. The segmented self-suspension model preserves this information, and in principle, this can be used 
 to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
@@ -393,7 +393,7 @@ response times of all the jobs of task $\tau_k \in {\bf T}$ for any
 \emph{legal sequence} of the jobs of ${\bf T}$. A sequence of jobs of
 the task system ${\bf T}$ is a legal sequence if any two consecutive
 jobs of task $\tau_i \in {\bf T}$ are separated by \emph{at least}
-$T_i$ and the self-suspending and computation behavior are upper
+$T_i$ and the self-suspension and computation behavior are upper
 bounded by the defined parameters. The goal of response time analysis is to
 analyze the worst-case response time of a certain task $\tau_k$ in the
 task set ${\bf T}$ or all the tasks in ${\bf T}$.
