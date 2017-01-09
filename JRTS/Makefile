@@ -10,7 +10,7 @@ ALL = ${MAIN}.pdf
 all: ${ALL}
 
 
-TEX  := $(shell find .    -name '*.tex')
+TEX  := $(shell find ..   -name '*.tex')
 
 %.pdf: ${TEX}
 	latexmk -pdf $*.tex
