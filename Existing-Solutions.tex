@@ -8,7 +8,7 @@ strategies commonly adopted in the state-of-the-art approaches to analyze and so
 correct in essence, many published results based on those generic analysis frameworks have been corrupted by a set of 
 misconceptions which led to incorrect solutions. In an attempt to stop the propagation of erroneous results, a detailed 
 description of the various misunderstandings of the self-suspending task model, together with the demonstration of 
-counter-intuitive results, is provided in \mysectionref{}~\ref{sec:misconceptions}.
+counterintuitive results, is provided in \mysectionref{}~\ref{sec:misconceptions}.
 
 The worst-case response time, and hence the schedulability, of task $\tau_k$ is impacted not only by 
 the possible self-suspension behavior of $\tau_k$ itself, but also by
@@ -28,7 +28,7 @@ attributes $(C_2, T_2, D_2)=(5,10,10)$ and $\tau_1$ be a segmented self-suspendi
 task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
 and that $\tau_1$ has a higher priority than $\tau_2$. If one would ignore the self-suspending behavior of $\tau_1$ by 
 assuming a self-suspending task $\tau_1' = (C_1', T_1', D_1')=(2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
-with the standard response time analysis (Eq.~\eqref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
+with the standard response-time analysis (Eq.~\eqref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
 due to the self-suspension of $\tau_1$, the actual worst-case response time of 
 $\tau_2$ is $8$ and is obtained when (i) $\tau_1$ experiences its maximum self-suspension time and (ii) $\tau_2$ is 
 synchronously released with the second computation segment of $\tau_1$.
@@ -348,7 +348,7 @@ An alternative is to individually compute the WCRT of each of the computation se
 The WCRT of $\tau_k$ is then upper-bounded by the sum of the segments' worst-case response times added to $S_k$, the maximum length of the overall
 self-suspension intervals. 
  
-Let $R_k^j$ denote the worst-case response time of the computation segment $C_k^j$. The schedulability test for task $\tau_k$ checks if $\sum_{j=1}^{m_k} R_k^j + \sum_{j=1}^{m_k-1} S_k^j \leq D_k $. 
+Let $R_k^j$ denote the worst-case response time of the computation segment $C_k^j$. The schedulability test for task $\tau_k$ succeeds if $\sum_{j=1}^{m_k} R_k^j + \sum_{j=1}^{m_k-1} S_k^j \leq D_k $. 
 
 \begin{table}[t]
 \centering
@@ -375,7 +375,7 @@ Consider the task set presented in Table~\ref{table:static-example}. The worst-c
 The above test can be fairly pessimistic, especially when $S_k$ is short. 
 \begin{example}
 \label{ex:suspension-as-split-2}   
-Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet, the suspension oblivious approach mentioned in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$.
+Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet the suspension-oblivious approach discussed in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$.
 \hfill\myendproof  
 \end{example} 
 
@@ -516,7 +516,7 @@ analyzing the worst-case response time for task $\tau_k'$ under the
 assumption that $S_k$ is converted into computation, \ie, $C_k'=C_k+S_k$. If the analysis
 considers self-suspending behavior of task $\tau_k$, such a
 combination in the analysis can be incorrect. For example, in Section~VI of the work by Nelissen et al.~\cite{ecrts15nelissen},
-the higher-priority segmented self-suspension tasks are converted into ordinary sporadic tasks with jitters 
+the higher-priority segmented self-suspending tasks are converted into ordinary sporadic tasks with jitters 
 but the suspension time of the task under analysis is not converted into computation. 
 We will discuss this misconception in Section~\ref{sec:wrong-jitter-convert-sporadic}.
  
@@ -618,7 +618,7 @@ Case 4:$(1, 1)$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6
   \leq D_i \leq T_i$). Chen et al. \cite{ChenECRTS2016-suspension}
   developed a unifying framework that dominates the other existing
   schedulability tests and response time analyses for task $\tau_k$ in
-  a dynamic self-suspension task system under fixed-priority
+  a dynamic self-suspending task system under fixed-priority
   scheduling. The analysis in \cite{ChenECRTS2016-suspension} is valid
   for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots,
   x_{k-1})$, in which $x_i$ is either $0$ or $1$. The framework
