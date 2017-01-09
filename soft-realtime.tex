@@ -4,7 +4,7 @@
 For a hard real-time task, its deadline must be met; while for a soft real-time task, missing some deadlines can be tolerated. We have discussed the self-suspending tasks in hard real-time systems in the previous \mysectionrefnormal{}s. In this \mysectionrefnormal{}, we will review the existing results for scheduling soft real-time systems when the tasks can suspend themselves. So far, no concern has been raised regarding the correctness of the results discussed in this \mysectionrefnormal{}. 
 
 
- We assume a well-studied soft real-time notion, in which \emph{a soft real-time task is schedulable if its tardiness can be provably bounded} (e.g., several recent dissertations have focused on this topic~\cite{leontyev2010compositional, devi2006soft}). Such bounds would be expected to be reasonably small. A task's tardiness is defined as its maximum job tardiness, which is $0$ if the job finishes before its absolute deadline or is the job's completion time minus the job's absolute deadline otherwise. 
+ We assume a well-studied soft real-time notion, in which \emph{a soft real-time task is schedulable if its tardiness can be provably bounded} (\eg, several recent dissertations have focused on this topic~\cite{leontyev2010compositional, devi2006soft}). Such bounds would be expected to be reasonably small. A task's tardiness is defined as its maximum job tardiness, which is $0$ if the job finishes before its absolute deadline or is the job's completion time minus the job's absolute deadline otherwise. 
 The schedulability analysis techniques on soft real-time self-suspending task systems can be categorized into two categories: suspension-oblivious analysis and suspension-aware analysis.
 
 \mysection{Suspension-Oblivious Analysis}

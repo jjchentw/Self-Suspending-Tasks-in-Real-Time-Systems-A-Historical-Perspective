@@ -13,7 +13,7 @@ We begin with a review of existing analysis strategies for semaphore-induced sus
 \mysection{Semaphores in Uniprocessor Systems}
 \label{sec:sem-uni}
 
-Under a suspension-based locking protocol, tasks that are denied access to a shared resource (i.e., that block on a lock) are suspended. Interestingly, on uniprocessors, the resulting suspensions are \emph{not} considered to be \emph{self}-suspensions and can be accounted for more efficiently than general self-suspensions.
+Under a suspension-based locking protocol, tasks that are denied access to a shared resource (\ie, that block on a lock) are suspended. Interestingly, on uniprocessors, the resulting suspensions are \emph{not} considered to be \emph{self}-suspensions and can be accounted for more efficiently than general self-suspensions.
 
 For example, consider semaphore-induced suspensions as they arise under the classic \emph{priority ceiling protocol} (PCP)~\cite{SRL:90}. Audsley et al.~\cite{audsley-1993} established that (in the absence of release jitter and assuming constrained deadlines) the response time of task $\tau_k$ under the PCP is given by the least non-negative $R_k \leq D_k$ that satisfies the following equation:
 \begin{equation}

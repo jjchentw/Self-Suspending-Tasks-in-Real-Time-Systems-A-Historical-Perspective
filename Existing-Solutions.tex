@@ -80,7 +80,7 @@ synchronously released with the second computation segment of $\tau_1$.
 \end{figure}
 
 
-As discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis for a set of self-suspending tasks has been proven to be intractable in the general case. For those reasons, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing individual research results in the literature, e.g., \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analysis and design concepts in the literature. Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis (\ie, $\tau_2$ in the above example) and the task interfering with the analyzed task, respectively. Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
+As discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis for a set of self-suspending tasks has been proven to be intractable in the general case. For those reasons, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing individual research results in the literature, \eg, \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analysis and design concepts in the literature. Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis (\ie, $\tau_2$ in the above example) and the task interfering with the analyzed task, respectively. Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
 Moreover, Section~\ref{sec:release-enforce} presents  release enforcement mechanisms to reduce the impact due to self-suspension. 
 % in which the links to the existing methods are summarized in Table~\ref{tab:summary-methods-enforcement}. 
 
@@ -384,7 +384,7 @@ This strategy is not widely used alone, but can be used as part of hybrid approa
 \mysubsection{Hybrid approaches}
 \label{sec:model-interferred-hybrid}
 
-Both methods discussed in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-interferred:split} have their pros and cons. The \emph{joint} (i.e., \emph{suspension-oblivious}) approach has the advantage of
+Both methods discussed in Sections~\ref{sec:model-interferred-oblivious} and~\ref{sec:model-interferred:split} have their pros and cons. The \emph{joint} (\ie, \emph{suspension-oblivious}) approach has the advantage of
 respecting the minimum inter-arrival times (or periods) of the higher-priority tasks during the schedulability 
 analysis of $\tau_k$. However, it has the disadvantage of assuming that the task under analysis can be delayed by preemptions during suspension intervals since they are treated as computation intervals. 
 This renders the analytical pessimism as it accounts for non-existing interference. The \emph{split} approach does not assume  
@@ -464,7 +464,7 @@ In the worst case, each interfering task $\tau_i$ releases one carry-in job (ass
 \mysubsection{Modeling self-suspensions as release jitter}
 \label{sec:model-interfering-jitter}
 
-A more accurate way to model the phenomena described above is to use the concept of \emph{release jitter}, e.g., in \cite{ecrts15nelissen,BletsasReport2015,huangpass:dac2015,Raj:suspension1991,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95}.
+A more accurate way to model the phenomena described above is to use the concept of \emph{release jitter}, \eg, in \cite{ecrts15nelissen,BletsasReport2015,huangpass:dac2015,Raj:suspension1991,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95}.
  It basically considers 
 that the computation segments of each task $\tau_i$ are not released in a purely periodic manner but are instead subject to release jitter. 
 Hence the first interfering job of $\tau_i$ may have its computation segment pushed as far as possible from the actual release of the job 
@@ -513,7 +513,7 @@ provided in Section~\ref{sec:wrong-jitter-dynamic}.
 
 Moreover, we should also note that such a treatment is only valid for
 analyzing the worst-case response time for task $\tau_k'$ under the
-assumption that $S_k$ is converted into computation, i.e., $C_k'=C_k+S_k$. If the analysis
+assumption that $S_k$ is converted into computation, \ie, $C_k'=C_k+S_k$. If the analysis
 considers self-suspending behavior of task $\tau_k$, such a
 combination in the analysis can be incorrect. For example, in Section~VI of the work by Nelissen et al.~\cite{ecrts15nelissen},
 the higher-priority segmented self-suspension tasks are converted into ordinary sporadic tasks with jitters 
@@ -614,7 +614,7 @@ Case 4:$(1, 1)$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6
   \end{table}
 
   Suppose that all tasks $\tau_i$ for $1 \leq i \leq k-1$ are
-  schedulable under the given fixed-priority scheduling, (i.e., $R_i
+  schedulable under the given fixed-priority scheduling, (\ie, $R_i
   \leq D_i \leq T_i$). Chen et al. \cite{ChenECRTS2016-suspension}
   developed a unifying framework that dominates the other existing
   schedulability tests and response time analyses for task $\tau_k$ in
