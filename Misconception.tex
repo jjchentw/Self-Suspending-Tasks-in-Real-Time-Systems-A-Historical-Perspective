@@ -12,7 +12,7 @@ We first explain the misconceptions in the literature that quantify the jitter t
 task systems under fixed-priority scheduling. 
 To calculate the worst-case response time of the task $\tau_k$ under analysis, there have been several results in the literature, \ie, \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994},  which propose to calculate the worst-case response time $R_k$ of task $\tau_k$ by finding the minimum $R_k$ with
 \begin{equation}
-R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+S_k}{T_i}} C_i,
+R_k = C_k+ S_k+\sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k+S_i}{T_i}} C_i,
 \label{eq:dynamic-flawed}
 \end{equation}
 where the term $hp(k)$ is the set of the tasks with higher-priority levels than task $\tau_k$. 
