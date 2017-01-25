@@ -53,7 +53,7 @@ To state  Lakshmanan et al.'s claimed bound, some additional notation is require
 Assuming constrained-deadline task systems, Lakshmanan et al.~\cite{lakshmanan-2009} claimed that the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
 \label{eqn:wcrt}
-R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + B_i^r}{T_i} \right \rceil \times C_i + s_k \times \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.
+R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + B_i^r}{T_i} \right \rceil \times C_i + (s_k+1) \times \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j \leq s_l} C_{l,j}^{\prime}.
 \end{equation}
 
 
@@ -90,7 +90,7 @@ Each job of $\tau_2$ has one critical section ($s_2 = 1$) of length at most $5\v
 
 Each job of $\tau_4$ has one critical section ($s_4 = 1$) of length at most $4-4\varepsilon$ (\ie, $C_{4,1}^{\prime} = 4-4\varepsilon$), in which it also accesses $\res_1$.
 
-Consider the response time of $\tau_3$. Since $\tau_3$ does not access any global resource and because it is the lowest-priority task on processor $1$, it does not incur any global or local blocking, \ie, $B_3^r = 0$ and $s_3 \times \sum_{\tau_l \in \fun{lp}(3) \cap P(\tau_3)} \max_{1 \leq j < s_l} C_{l,j}^{\prime} = 0$. With regard to the remote blocking incurred by each higher-priority task, we have $B_1^r = 0$ because $\tau_1$ does not request any global resource. Further, each time when a job of $T_2$ requests $\res_1$, it may be delayed by $\tau_4$ for a duration of at most $4-4\varepsilon$. Thus the maximum remote blocking of $\tau_2$ is bounded by $B_2^r = C_{4,1}^{\prime} = 4-4\varepsilon$.\footnote{In general, the upper bound on blocking of course depends on the specific locking protocol in use, but in this example, by construction, the stated bound holds under any reasonable locking protocol. Recent surveys of multiprocessor semaphore protocols may be found in \cite{bbb-2013,yang-2015}.} Therefore, according to Eq. \eqref{eqn:wcrt}, the response time of $\tau_3$ is claimed by  Lakshmanan et al.'s analysis~\cite{lakshmanan-2009} to be bounded by
+Consider the response time of $\tau_3$. Since $\tau_3$ does not access any global resource and because it is the lowest-priority task on processor $1$, it does not incur any global or local blocking, \ie, $B_3^r = 0$ and $(s_3+1) \times \sum_{\tau_l \in \fun{lp}(3) \cap P(\tau_3)} \max_{1 \leq j \leq s_l} C_{l,j}^{\prime} = 0$. With regard to the remote blocking incurred by each higher-priority task, we have $B_1^r = 0$ because $\tau_1$ does not request any global resource. Further, each time when a job of $\tau_2$ requests $\res_1$, it may be delayed by $\tau_4$ for a duration of at most $4-4\varepsilon$. Thus the maximum remote blocking of $\tau_2$ is bounded by $B_2^r = C_{4,1}^{\prime} = 4-4\varepsilon$.\footnote{In general, the upper bound on blocking of course depends on the specific locking protocol in use, but in this example, by construction, the stated bound holds under any reasonable locking protocol. Recent surveys of multiprocessor semaphore protocols may be found in \cite{bbb-2013,yang-2015}.} Therefore, according to Eq. \eqref{eqn:wcrt}, the response time of $\tau_3$ is claimed by  Lakshmanan et al.'s analysis~\cite{lakshmanan-2009} to be bounded by
 \begin{equation*}
 R_3 = \varepsilon + \left \lceil \frac{8+7\varepsilon + 0}{6} \right \rceil \cdot 2 + \left \lceil \frac{8+7\varepsilon + 4-4\varepsilon}{13} \right \rceil \cdot (4+6\varepsilon) = 8+7\varepsilon.
 \end{equation*}
@@ -215,7 +215,7 @@ In Eq. \eqref{eqn:wcrt}, the effects of deferred execution  are accounted for si
 A straightforward remedy is to replace $B_i^r$ in the ceiling term (\ie, the second term in Eq. \eqref{eqn:wcrt}) with a larger but safe value such as $D_i$  or $R_i - C_i$ if $R_i \leq T_i$ (as discussed in Section~\ref{sec:wrong-jitter-dynamic}): assuming constrained deadlines, the response time of task $\tau_k$ is bounded by the least non-negative $R_k \leq D_k$ that satisfies the equation
 \begin{equation}
 \label{eqn:wcrt-pfp-fixed}
-R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + R_i - C_i}{T_i} \right \rceil \times C_i + s_k \times \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j < s_l} C_{l,j}^{\prime}.
+R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \frac{R_k + R_i - C_i}{T_i} \right \rceil \times C_i + (s_k+1) \times \sum_{\tau_l \in \fun{lp(k)} \cap P(\tau_k)} \max_{1 \leq j \leq s_l} C_{l,j}^{\prime}.
 \end{equation}
 
 
