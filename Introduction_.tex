@@ -3,11 +3,11 @@
 Complex cyber-physical systems (\ie, advanced embedded real-time computing systems) have \emph{timeliness} requirements %over computation 
 such that  deadlines associated with individual computations must be met (\eg, in safety-critical control systems). Appropriate analytical techniques have been developed that enable \emph{a priori} guarantees to be established on timing behavior at run-time regarding computation deadlines.  
 The seminal work by Liu and Layland \cite{Liu_1973} considers the scheduling of periodically triggered computations, which are usually termed \emph{tasks}. 
-The analysis they presented enables the \emph{schedulability} of a set of such tasks to be established, \ie, whether their deadlines will be met at run-time. This has been extended to incorporate many other task characteristics, \eg, sporadic activations~\cite{Mok:1983:FDP:888951}. 
+The analysis they presented enables the \emph{schedulability} of a set of such tasks to be established, \ie, whether their deadlines will be met at run-time. This initial analysis has since been extended to incorporate many other task characteristics, \eg, sporadic activations~\cite{Mok:1983:FDP:888951}. 
 
 One underlying assumption of the majority of these schedulability analyses is that a task does not voluntarily suspend its execution --- once executing, a task ceases to execute only as a result of either a preemption by a higher-priority task, becoming blocked on a shared resource that is held by a lower-priority task on the same processor, or completing its execution (for the current activation of the task). This is a strong assumption that lies at the root of Liu and Layland's seminal analysis \cite{Liu_1973}, as it implies that the processor is contributing some useful work (\ie, the system progresses) whenever there exist incomplete jobs in the system (\ie, if some computations have been triggered, but not yet completed). 
 
-The alternative --- that tasks can \emph{self-suspend}, meaning that computations can cease to progress despite being incomplete --- conversely has the effect that key insights underpinning the analysis no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition}. In Figure \ref{fig:ss-intuition}(a) the classical worst case (termed \emph{critical instant}) is illustrated, where the longest interval between the arrival time and the finishing time of an instance of a task occurs when a release coinciding with the release of all higher priority tasks and all followup jobs of the higher-priority tasks are released as early as possible by satisfying the inter-arrival-time constraint. As Figure \ref{fig:ss-intuition}(b) shows, when a higher-priority task is allowed to suspend its execution, it is possible that a lower-priority task misses its deadline even if its deadline can be met under the critical-instant scenario defined above. The classical critical instant theorem~\cite{Liu_1973} thus does not apply to self-suspending task systems.
+Allowing tasks to \emph{self-suspend}, meaning that computations can cease to progress despite being incomplete, conversely has the effect that key insights underpinning the analysis of non-self-suspending tasks no longer hold. As an example, consider the execution scenario in Figure~\ref{fig:ss-intuition}. Figure \ref{fig:ss-intuition}(a) illustrates the worst case execution scenario for non-self-suspending tasks (\ie, where the longest interval between the arrival time and the finishing time of an instance of a task occurs). This worst-case, termed \emph{critical instant}, occurs when a job release coincides with the release of all higher priority tasks and all followup jobs of the higher-priority tasks are released as early as possible by satisfying the inter-arrival-time constraint. However, if a higher-priority task is allowed to suspend its execution, Figure \ref{fig:ss-intuition}(b) shows that it is possible that a lower-priority task misses its deadline even if its deadline can be met under the critical-instant scenario defined above. The classical critical instant theorem~\cite{Liu_1973} thus does not apply to self-suspending task systems.
 
 
 Self-suspension has become increasingly important to model accurately within schedulability analysis. For example, a task that utilizes an accelerator or external physical device~\cite{Kang:rtss07,Kato_2011} can be modelled as a self-suspending task, where the resulting suspension delays range from a few microseconds (\eg, a write operation on a flash drive~\cite{Kang:rtss07}) to a few hundreds of milliseconds (\eg, offloading computation to GPUs~\cite{Kato_2011,Liu_2014}).  Whilst the maximum self-suspension time could be included as additional execution time, this would be pessimistic and potentially under-utilize the processor at run-time. If the self-suspension time is substantial, exploiting the self-suspension time effectively by executing other tasks properly would lead to a performance increase. Therefore, the scheduling strategies and the timing analyses should consider such features to make the best use of the potential self-suspension time.
@@ -127,41 +127,41 @@ In contrast, the introduction of suspension behavior has a negative impact on th
 One specific problem due to self-suspending behavior is the \emph{deferrable} execution phenomenon. In the ordinary sporadic and periodic task model, the critical instant theorem by Liu and Layland \cite{Liu_1973} provides concrete worst-case scenarios for fixed-priority scheduling.  That is, the critical instant of a task defines an instant at which, considering the state of the system, an execution request for the task will generate the worst-case response time (if the job completes before next jobs of the task are released).
 However, with self-suspensions, no critical instant theorem has yet been established.
 % Even worse, the suspending behavior incurs the jitter of the workload to be executed. 
-Therefore, when real-time tasks may suspend, the system behavior may become very different. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for ordinary periodic real-time task systems, as provided by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it was shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, do not  provide any bounded performance guarantees. 
+Therefore, when real-time tasks may suspend, the system behavior may become very different \gn{I do not understand what is meant by this last sentence. What does ``very different'' means?. It is very generic, not precise. What is the message we want to pass?}. For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for ordinary periodic real-time task systems, as provided by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it was shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, do not  provide any bounded performance guarantees. 
 
-Self-suspending tasks can be classified into two models: \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
-The dynamic self-suspension sporadic task model characterizes each
-task $\tau_i$ with predefined \emph{total} worst-case execution time and \emph{total} worst-case self-suspension time bounds, such that a job of task $\tau_i$ can exhibit any number of self-suspensions of arbitrary duration as long as the sum of the suspension (respectively, execution) intervals does not exceed the specified total worst-case self-suspension (respectively, execution) time bounds. The segmented self-suspending sporadic task model defines the execution behavior of a job of a task as a sequence of predefined computation segments and self-suspension intervals.  
+Self-suspending tasks can be classified into two models: the \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
+The dynamic self-suspension %sporadic 
+task model characterizes each
+task $\tau_i$ with predefined \emph{total} worst-case execution time and \emph{total} worst-case self-suspension time bounds, such that a job of task $\tau_i$ can exhibit any number of self-suspensions of arbitrary duration as long as the sum of the suspension (respectively, execution) intervals does not exceed the specified total worst-case self-suspension (respectively, execution) time bounds. The segmented self-suspending sporadic task model defines the execution behavior of a job of a task as a known sequence of predefined computation segments and self-suspension intervals.  
 
 \mysection{Purpose and Organization of This Paper}
-Much prior work has explored the design of scheduling algorithms and schedulability analyses of task systems when self-suspending tasks are present. Motivated by the proliferation of self-suspending scenarios in modern real-time systems, the topic has received renewed attention in recent years and several results have been re-examined. Unfortunately, we have found that large parts of the literature on real-time scheduling with self-suspensions has been seriously flawed. Several misconceptions were adopted in the literature including: 
+Much prior work has explored the design of scheduling algorithms and schedulability analyses of task systems when self-suspending tasks are present. Motivated by the proliferation of self-suspending scenarios in modern real-time systems, the topic has received renewed attention in recent years and several results have been re-examined. Unfortunately, we have found that large parts of the literature on real-time scheduling with self-suspensions has been seriously flawed by misconceptions. Several errors were discovered, including: 
 \begin{itemize}
 \item Incorrect quantification of jitter for dynamic self-suspending
-  task systems, which was used in
+  task systems
   \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
   misconception was unfortunately carried forward in \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} in the analysis of worst-case response times under
-  partitioned multiprocessor real-time locking protocols.
+  partitioned multiprocessor real-time locking protocols;
 \item Incorrect quantification of jitter for dynamic self-suspending
-  task systems, which was used in  \cite{RTCSA-BletsasA05}.
-\item Incorrect assumptions for a critical instant with
-  synchronous releases, which was used in \cite{LR:rtas10}.
+  task systems \cite{RTCSA-BletsasA05};
+\item Incorrect assumptions on the critical instant as defined in \cite{LR:rtas10}.
 \item Incorrectly counting highest-priority self-suspension time to reduce the
-  interference on the lower-priority tasks, which was used in  \cite{RTSS-KimANR13}. 
+  interference on the lower-priority tasks  \cite{RTSS-KimANR13}; 
 \item Incorrect segmented fixed-priority scheduling with period
-  enforcement, which was used in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09}.
-\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter, which was used in \cite{ecrts15nelissen}.
+  enforcement \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09};
+\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter\cite{ecrts15nelissen}.
 \end{itemize}
 
 
 \noindent Due to the above misconceptions and the lack of a survey of this research area, the authors, who have been active in this area in the past years, have jointly worked together to review the existing results in this area. This review paper serves to
 \begin{itemize}
-\item summarize the existing self-suspending task models in \mysectionref{}~\ref{sec:model}, 
-\item provide the general methodologies to handle self-suspending task systems in hard real-time systems in \mysectionref{}~\ref{sec:review} and soft real-time systems in \mysectionref{}~\ref{sec:soft-realtime}, 
-\item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws in \mysectionref{}~\ref{sec:misconceptions}, 
-\item examine the inherited flaws in multiprocessor synchronization, due to a flawed analysis in self-suspending task models, in \mysectionref{}~\ref{sec:syn}, and
-\item provide the summary of the computational complexity classes of different self-suspending task models and systems in \mysectionref{}~\ref{sec:hardness}.
+\item summarize the existing self-suspending task models (\mysectionref{}~\ref{sec:model}); 
+\item provide the general methodologies to handle self-suspending task systems in hard real-time systems in \mysectionref{}~\ref{sec:review} and soft real-time systems (\mysectionref{}~\ref{sec:soft-realtime});
+\item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws (\mysectionref{}~\ref{sec:misconceptions}); 
+\item examine the inherited flaws in multiprocessor synchronization, due to a flawed analysis in self-suspending task models (\mysectionref{}~\ref{sec:syn});
+\item provide the summary of the computational complexity classes of different self-suspending task models and systems (\mysectionref{}~\ref{sec:hardness}).
 \end{itemize}
-Some results in the literature are listed in Section~\ref{sec:open-issues-existing} with open issues that require further detailed examination to confirm their correctness. 
+Further, some results in the literature are listed in Section~\ref{sec:open-issues-existing} with open issues that require further detailed examination to confirm their correctness. 
 % We have also listed the potential future research topics pertaining to self-suspending task models in Section~\ref{sec:open-issues-future}.
 
 During the preparation of this review paper, several reports~ \cite{ChenHuangNelissen,ChenBrandenburg,erratu-cong-anderson,BletsasReport2015}  have been filed to discuss the flaws, limits, and proofs of individual papers and results. In the interest of brevity, these reports are summarized here only at a high level, as including them in full detail is beyond the scope of this already long paper.

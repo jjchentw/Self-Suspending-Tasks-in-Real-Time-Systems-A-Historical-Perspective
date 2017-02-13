@@ -6,13 +6,13 @@
 
 
   In general computing systems, a job (process/task) may suspend itself
-  whilst it is waiting for some activity to complete, \eg, an accelerator
-  to return required data or results from offloaded computation.
+  whilst it is waiting for some activity to complete,~\eg, an accelerator
+  to return data. % or results from offloaded computation.
   In real-time systems, such self-suspension can cause
   substantial performance/schedulability degradation. This observation, first made in 1988, has led to the
-  investigation of the impact of self-suspension behavior on
+  investigation of the impact of self-suspension on
   timing predictability, and many relevant results have been published since.
-  Unfortunately, as it has recently come to light, a number of the existing analysis approaches are flawed.
+  Unfortunately, as it has recently come to light, a number of the existing results are flawed.
 
   To provide a correct platform on which future research can be built,
   this paper reviews the state of the art in the design and analysis of scheduling algorithms
@@ -21,7 +21,7 @@
   of how self-suspending tasks can be handled in both soft and
   hard real-time systems; (2)~an explanation of the existing misconceptions 
   and their potential remedies; (3)~an assessment of the influence of 
-  such flawed analysis on partitioned multiprocessor fixed-priority scheduling when tasks
+  such flawed analyses on partitioned multiprocessor fixed-priority scheduling when tasks
   synchronize access to shared resources; and (4)~a discussion of the computational
   complexity of analyses for different self-suspension task models.
 
