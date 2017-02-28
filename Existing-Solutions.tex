@@ -323,7 +323,7 @@ Nevertheless, for some cases, this modeling strategy is an \emph{exact} solution
 self-suspension interval, modeling the self-suspension time of $\tau_k$ as execution time provides the exact worst-case response 
 time for $\tau_k$ under FP scheduling. 
 
-For example, Huang et al. in \cite[Theorem 3]{huangpass:dac2015} provided the following necessary condition for any fixed-priority scheduling: 
+For example, \cite[Theorem 3]{huangpass:dac2015} provides the following necessary condition for any fixed-priority scheduling: 
 
 \emph{ If there exists a feasible fixed-priority preemptive scheduling
   algorithm, then, for each task $\tau_k$, there exists $t$ with $0 < t \leq D_k$ such that}
@@ -515,7 +515,7 @@ Moreover, we should also note that such a treatment is only valid for
 analyzing the worst-case response time for task $\tau_k'$ under the
 assumption that $S_k$ is converted into computation, \ie, $C_k'=C_k+S_k$. If the analysis
 considers self-suspending behavior of task $\tau_k$, such a
-combination in the analysis can be incorrect. For example, in Section~VI of the work by Nelissen et al.~\cite{ecrts15nelissen},
+combination in the analysis can be incorrect. For example, in Section~VI of~\cite{ecrts15nelissen},
 the higher-priority segmented self-suspending tasks are converted into ordinary sporadic tasks with jitters 
 but the suspension time of the task under analysis is not converted into computation. 
 We will discuss this misconception in Section~\ref{sec:wrong-jitter-convert-sporadic}.
@@ -615,11 +615,10 @@ Case 4:$(1, 1)$ & $4+ \ceiling{\frac{t+6+0}{10}} 4 + \ceiling{\frac{t+1+0}{19}}6
 
   Suppose that all tasks $\tau_i$ for $1 \leq i \leq k-1$ are
   schedulable under the given fixed-priority scheduling, (\ie, $R_i
-  \leq D_i \leq T_i$). Chen et al. \cite{ChenECRTS2016-suspension}
-  developed a unifying framework that dominates the other existing
+  \leq D_i \leq T_i$). In \cite{ChenECRTS2016-suspension}, a unifying framework that dominates the other existing
   schedulability tests and response time analyses for task $\tau_k$ in
   a dynamic self-suspending task system under fixed-priority
-  scheduling. The analysis in \cite{ChenECRTS2016-suspension} is valid
+  scheduling was proposed. The analysis in \cite{ChenECRTS2016-suspension} is valid
   for any arbitrary vector assignment $\vec{x} = (x_1, x_2, \ldots,
   x_{k-1})$, in which $x_i$ is either $0$ or $1$. The framework
   quantifies the release jitter of task $\tau_i$ in the following
@@ -657,10 +656,9 @@ in Cases 2 and 4 are the tightest.
 The reason for the correctness of the release jitter in
 Eq.~(\ref{eq:TDA-suspension-tighter0}) is based on a careful revision
 of the critical instant theorem to include the self-suspension time
-into the window of interest. Chen et
-al. \cite{ChenECRTS2016-suspension} also showed the dominance of the
+into the window of interest. The dominance over the
 other existing (correct) schedulability tests and response time
-analyses. To obtain the tightest worst-case response time of task
+analyses was also demonstrated. To obtain the tightest worst-case response time of task
 $\tau_k$, we should consider all the $2^{k-1}$ possible combinations
 of $\vec{x}$, implying exponential time complexity. The complexity can
 also be reduced by using a linear approximation of the test in
@@ -747,7 +745,7 @@ consideration is never executed earlier. With this static enforcement, each comp
 task with a minimum inter-arrival time $T_i$, a WCET $C_i^j$, and a relative deadline $\phi_{i}^{j+1}-\phi_i^j-S_i^j$ (with 
 $\phi_{i}^{m_i+1}$ set to $D_i$).
 Suppose that the offset for each computation segment is specified. This can be observed as a reduction to 
-the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. A GMF task $G_i$ consisting of $m_i$ frames is characterized by the $3$-tuple $(\vec{C_i},\vec{D_i},\vec{T_i})$, where $\vec{C_i}$,$\vec{D_i}$, and $\vec{T_i}$ are $m_i$-ary vectors $(C_{i}^0,C_{i}^1,...,C_{i}^{m_i-1})$ of execution requirements, $(D_{i}^0,D_{i}^1,...,D_{i}^{m_i-1})$ of relative deadlines, $(T_{i}^0,T_{i}^1,...,T_{i}^{m_i-1})$ of minimum inter-arrival times, respectively.
+the generalized multiframe (GMF) task model introduced in~\cite{baruah1999generalized}. A GMF task $G_i$ consisting of $m_i$ frames is characterized by the $3$-tuple $(\vec{C_i},\vec{D_i},\vec{T_i})$, where $\vec{C_i}$,$\vec{D_i}$, and $\vec{T_i}$ are $m_i$-ary vectors $(C_{i}^0,C_{i}^1,...,C_{i}^{m_i-1})$ of execution requirements, $(D_{i}^0,D_{i}^1,...,D_{i}^{m_i-1})$ of relative deadlines, $(T_{i}^0,T_{i}^1,...,T_{i}^{m_i-1})$ of minimum inter-arrival times, respectively.
 In fact, from the analysis perspective, a self-suspending task $\tau_i$ under the offset enforcement is equivalent to a GMF task $G_i$,  by considering the computation segments as the frames with different separation times \cite{WC16-suspend-DATE,DBLP:journals/ieicet/DingTT09}.
 
 Such approaches have been presented in 
@@ -756,9 +754,9 @@ implicit-deadline self-suspending task systems with at most one self-suspension 
 offset $\phi_i^2$ always to $\frac{T_i+S_i^1}{2}$ and the relative deadline of the first computation segment of task $\tau_i$ to 
 $\frac{T_i-S_i^1}{2}$. This is the first method in the literature with \emph{speedup factor} guarantees by using the revised relative 
 deadline for earliest-deadline-first scheduling. This has been recently improved 
-by von der Br\"uggen et al. \cite{Bruggen16RTNS} based on a simple strategy, called Shortest Execution Interval First Deadline
+\cite{Bruggen16RTNS} based on a simple strategy, called Shortest Execution Interval First Deadline
 Assignment (SEIFDA). That is, the tasks are assigned relative deadlines according to a greedy order from the smallest $T_i-S_i$ to the largest $T_i-S_i$.
-Moreover, approaches based on Mixed Integer Linear Programming (MILP) are also developed by Peng and Fisher \cite{Peng-Fisher-RTCSA2016} and von der Br\"uggen et al. \cite{Bruggen16RTNS}.
+Moreover, approaches based on Mixed Integer Linear Programming (MILP) were also proposed in \cite{Peng-Fisher-RTCSA2016,Bruggen16RTNS}.
 For more than one self-suspension interval per task, Huang and Chen \cite{WC16-suspend-DATE} showed that assigning the relative deadline of each of the computation segments of a task equally also leads to a bounded speedup factor.
 
 
@@ -793,8 +791,8 @@ Unfortunately, the schedulability test provided in \cite{DBLP:conf/ecrts/LiuA13}
 Secondly, it is optimistic to claim that there are at most $M-1$ carry-in jobs in the general case. This flaw has been inherited from an error in  
 previous work \cite{DBLP:conf/rtss/GuanSYY09}, which was pointed out and further corrected in \cite{sun2014improving,DBLP:conf/rtns/HuangC15}.  Therefore, by adopting the analysis from \cite{DBLP:conf/rtns/HuangC15}, which is consistent with the analysis in \cite{DBLP:conf/ecrts/LiuA13}, the problem can easily be fixed. The reader is referred to \cite{erratu-cong-anderson} for further details.
  
-Dong and Liu \cite{dong-liu-RTSS2016} explored global earliest-deadline-first (global EDF) scheduling for dynamic self-suspending tasks. They presented an approach to selectively convert the self-suspension time of a few tasks into computation and performed the schedulability tests purely based on the utilization of the computation after conversion.
-Chen et al. \cite{ChenHLRTSS2015} studied global rate-monotonic scheduling in multiprocessor systems, including dynamic self-suspending tasks. The proposed utilization-based schedulability analysis  can easily be extended to handle constrained-deadline task systems and any given fixed-priority assignment.
+The authors of \cite{dong-liu-RTSS2016} explored global earliest-deadline-first (global EDF) scheduling for dynamic self-suspending tasks. They presented an approach to selectively convert the self-suspension time of a few tasks into computation and performed the schedulability tests purely based on the utilization of the computation after conversion.
+In \cite{ChenHLRTSS2015}, the authors studied global rate-monotonic scheduling in multiprocessor systems, including dynamic self-suspending tasks. The proposed utilization-based schedulability analysis  can easily be extended to handle constrained-deadline task systems and any given fixed-priority assignment.
   
   
 

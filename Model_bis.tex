@@ -243,7 +243,7 @@ due to the precedence constraints of the DAG task. Such idle time intervals can 
 We now recall the definition of the classic sporadic task model (without self-suspensions)~\cite{Liu_1973,Mok:1983:FDP:888951} and then introduce the main models of self-suspensions. 
 
 The sporadic task model characterizes a task $\tau_i$ as a three-tuple $(C_i,T_i,D_i)$. Each sporadic task $\tau_i$ can release an infinite number of jobs (also called task instances) under the given minimum inter-arrival time (also called period) constraint $T_i$.  Each job released by a sporadic task $\tau_i$ has a relative deadline $D_i$.  That is, if a job of task $\tau_i$ arrives at time $t$, it must (in hard real-time systems), or should (in soft real-time systems) be finished before its absolute deadline at time $t+D_i$, and the next instance of the task must arrive no earlier than time $t + T_i$.
-The \emph{worst-case execution time} of task $\tau_i$ is $C_i$. That is, the execution time of a job of task $\tau_i$ is at most $C_i$.
+The \emph{worst-case execution time} of task $\tau_i$ is $C_i$. That is, the execution time of a job of task $\tau_i$ is at most $C_i$. The utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
 
 Throughout this paper, we will use ${\bf T}$ to denote the %input 
 task
@@ -256,42 +256,57 @@ In this paper, unless explicitly noted otherwise (for instance in some parts of
 \mysectionref{}~\ref{sec:soft-realtime}),
 we consider only constrained- and
 implicit-deadline task systems.
+
   
 Two main models of self-suspending tasks exist; the \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment})
-self-suspension models. A third model, using a \emph{directed acyclic graph} (DAG) representation of task control flow, can be 
+self-suspension models. A third model, using a \emph{directed acyclic graph} (DAG) representation of the task control flow, can be 
 reduced to an instance of the former two models, for analysis purposes \cite{bletsas:thesis}.
 
-The \emph{dynamic} self-suspension sporadic task model characterizes a task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$. As for the sporadic task model, $T_i$ denotes the 
+\paragraph{Dynamic Self-Suspension Model} 
+
+The {dynamic} self-suspension sporadic task model characterizes a task $\tau_i$ as a four-tuple $(C_i,S_i,T_i,D_i)$. As for the sporadic task model, $T_i$ denotes the 
 minimum inter-arrival time (or period) of $\tau_i$, $D_i$ denotes the relative deadline of $\tau_i$ and $C_i$ is an upper bound on 
 the total execution time of each job of $\tau_i$. The new parameter $S_i$ denotes an upper bound on the total suspension time of each job of $\tau_i$.  
 
-The \emph{segmented} self-suspension sporadic task model extends the four-tuple above by further characterizing the computation segments and suspension 
-intervals as an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,\ldots, $ $S_{i}^{m_i-1},C_{i}^{m_i})$. Each job of $\tau_i$ is assumed to be composed of $m_i$ computation segments 
+The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspension intervals for a task, \eg, when these may vary for different jobs of the same task.
+
+For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
+of system variables at run-time. Each of those paths may have a different
+number of self-suspension intervals. Additionally, during the execution of a job of a task, one control flow may have a self-suspension interval at the beginning of the job and
+another one may self-suspend shortly before its completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
+by modelling the task according to the dynamic self-suspension model using
+just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. %As explained in \mysectionref{}~\ref{sec:dag_model}, this can be done by converting the information provided by a DAG into the dynamic self-suspension task model. 
+%Note that these two worst cases may be observed under different control flows.
+
+\paragraph{Segmented Self-Suspension Model} 
+
+The {segmented} self-suspension sporadic task model extends the four-tuple of the dynamic model by further characterizing the computation segments and suspension 
+intervals using an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,\ldots, $ $S_{i}^{m_i-1},C_{i}^{m_i})$. Each job of $\tau_i$ is assumed to be composed of $m_i$ computation segments 
 separated by $m_i-1$ suspension intervals. The execution time of the $\ell^{\text{th}}$ computation segment is upper bounded by  $C_{i}^{\ell}$, and the length of the $k^{\text{th}}$ suspension interval is upper bounded by $S_{i}^{\ell}$. For a segmented sporadic task $\tau_i$, we have that 
 $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$.
 
-In both models, the
-utilization of task $\tau_i$ is defined as $U_i=C_i/T_i$.
-Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
-lengths; when absent, these are implicitly assumed to be zero.
+The segmented self-suspension model is a natural choice when the code structure of a task exhibits a certain linearity,
+\ie, there is a deterministic number of self-suspension intervals interleaved with portions of processor-based code with single-entry
+single-exit control-flow semantics. Such tasks can always be modeled according to the dynamic self-suspension
+model, but this would discard the information about the constraints in the location of self-suspensions intervals of a job, \ie, in the control flow. The segmented self-suspension model preserves this information, and in principle, this can be used 
+to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
 
-From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
-without considering the control flow surrounding I/O accesses, computation offloading, or synchronization. However, from an analysis perspective, such a 
-dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
-unspecified. On the other hand, if the suspension patterns are well-defined and characterized with known suspension intervals, the 
-segmented self-suspension task model is more appropriate.   
-As we will see in the next \mysectionrefnormal{}, it is possible to employ both the dynamic self-suspension model and the segmented self-suspension model simultaneously 
-in one task set.
+\paragraph{DAG-based Self-Suspension Model} 
+
+
+In the {DAG-based} self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspension interval or a computation segment
+with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
+represents a different program execution path. Note that a linear graph is already an instance of the segmented self-suspension model.
+An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
+
+
 %, \eg, by using the segmented model for those tasks that can be modeled according to
 % it and using the dynamic model for all other tasks.
 
 
 
 
-In the \emph{DAG-based} self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspension interval or a computation segment
-with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
-represents a different program execution path. Note that a linear graph is already an instance of the segmented self-suspension model.
-An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
+
 %
 %with 
 %the following parameters:
@@ -315,25 +330,24 @@ S_i =  &\max_{\forall \varphi} \Big(  \sum_{\ell \in \varphi} C_i^\ell + \sum_{\
 where $C_i$ is still computed as explained above. We will explain the underlying intuition  (partial modeling of self-suspension as computation, which is a safe transformation) 
 in Section~\ref{sec:model-interferred-oblivious} (see also~\cite{RTAS-AudsleyB04,BletsasReport2015}).
 
-Note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
+\paragraph{}
 
-\mysection{Examples of Dynamic Self-Suspension} 
-The dynamic self-suspension model is convenient when it is not possible to know \textit{a priori} the number and/or the location of self-suspension intervals for a task, \eg, when these may vary for different jobs of the same task.
+Note that all of the above models can additionally be augmented with \emph{lower bounds} for segment execution times and suspension 
+lengths; when absent, these are implicitly assumed to be zero.
 
-For example, in the general case, it is possible for a task to have many possible control flows, with the actual execution path depending on the value
-of system variables at run-time. Each of those paths may have a different
-number of self-suspension intervals. Additionally, during the execution of a job of a task, one control flow may have a self-suspension interval at the beginning of the job and
-another one may self-suspend shortly before its completion. Under such circumstances, it is convenient to be able to collapse all these possibilities
-by modelling the task according to the dynamic self-suspension model using
-just two parameters: the worst-case execution time of the task in consideration and an upper bound for the time spent in self-suspension by any job of the task. As explained earlier, this can be done by converting the information provided by a DAG into the dynamic self-suspension task model. 
-%Note that these two worst cases may be observed under different control flows.
+
+From the system designer's perspective, the dynamic self-suspension model provides an easy way to specify self-suspending systems 
+without considering the control flow surrounding I/O accesses, computation offloading, or synchronization. However, from an analysis perspective, such a 
+dynamic model may lead to quite pessimistic results in terms of schedulability since the occurrence of suspensions within a job is 
+unspecified. On the other hand, if the suspension patterns are well-defined and characterized with known suspension intervals, the 
+segmented self-suspension task model is more appropriate.   
+Note that it is possible to employ both the dynamic self-suspension model and the segmented self-suspension model simultaneously 
+in one task set.
+Further note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
+
+
   
-\mysection{Examples of Segmented Self-Suspension} 
-The segmented self-suspension model, on the other hand, is a natural choice when the code structure of a task exhibits a certain linearity,
-\ie, there is a deterministic number of self-suspension intervals interleaved with portions of processor-based code with single-entry
-single-exit control-flow semantics. Such tasks can always be modeled according to the dynamic self-suspension
-model, but this would discard the information about the constraints in the location of self-suspensions intervals of a job, \ie, in the control flow. The segmented self-suspension model preserves this information, and in principle, this can be used 
-to derive tighter bounds on worst-case response times, where applicable, compared to analysis that only considers the dynamic self-suspension model. 
+
 
 % \mysection{Examples of the DAG Self-Suspension Model}
 % The DAG Self-Suspension Model, in a simple case, can represent a program, which after some pre-processing, reaches a conditional branch.
@@ -348,7 +362,10 @@ to derive tighter bounds on worst-case response times, where applicable, compare
 % during the analysis of the same task set: for example, by using the segmented model for those tasks that can be modeled according to 
 % it and using the dynamic model for all other tasks.
 
-\mysection{Terminologies and Notation}
+
+\mysection{Assumptions and Terminology}
+
+\mysubsection{Scheduling}
 
 Implicitly, we will assume that the system schedules  jobs in a
 \emph{preemptive} manner, unless specified otherwise.  We will mainly focus on
@@ -359,16 +376,14 @@ We assume that the cost of preemption
 has been subsumed into the worst-case execution time of each task. In
 uniprocessor systems, \ie, in \mysectionref{}~\ref{sec:review} and
 \mysectionref{}~\ref{sec:misconceptions} (except Section~\ref{sec:multiprocessor-HRT}), we will consider both
-dynamic-priority scheduling and fixed-priority (FP)
-scheduling. Under a dynamic-priority scheduling policy, 
-a task may change its priority level at run-time. One well-known dynamic-priority scheduling
-algorithm is the earliest-deadline-first (EDF) scheduling, which gives
-the highest priority to the job (in the ready queue) with the earliest
-absolute deadline. Variances of EDF scheduling for self-suspending
+fixed-priority (FP) and earliest deadline first (EDF)
+scheduling as well as some of their variants. Under EDF, 
+a task may change its priority at run-time; the highest priority being given to the job (in the ready queue) with the earliest
+absolute deadline. Variants of EDF scheduling for self-suspending
 tasks have been explored in
 \cite{RTSS-ChenL14,Liu_2014,DBLP:conf/ecrts/Devi03,WC16-suspend-DATE}.
 
-For fixed-priority scheduling, in general, a task is assigned to a
+For fixed-priority scheduling, in general, a task is assigned a
 unique priority level, and all the jobs generated by the task have the
 same priority level. Examples are rate-monotonic (RM) scheduling
 \cite{Liu_1973}, under which a task with a shorter period has a
@@ -383,17 +398,19 @@ segment in the segmented self-suspending task model has its own unique
 priority level. Such a scheduling
 policy is referred to as \emph{segmented fixed-priority scheduling}.
 
-For hard real-time tasks, each job should be finished before its
-absolute deadline. For soft real-time tasks, deadline misses are
-possible. We will mainly focus on hard real-time tasks. 
+For \emph{hard real-time} tasks, each job should be finished before its
+absolute deadline. For \emph{soft real-time} tasks, deadline misses are
+allowed. We will mainly focus on hard real-time tasks. 
 Soft real-time tasks will be briefly considered in
 \mysectionref{}~\ref{sec:soft-realtime}.
 
-The response time of a job is its finishing time minus its arrival
-time.  The worst-case response time (WCRT) of a real-time task
+\mysubsection{Analysis}
+
+The \emph{response time} of a job is defined as the difference between its finishing time and its arrival
+time. The \emph{worst-case response time} (WCRT) of a real-time task
 $\tau_k$ in a task set ${\bf T}$ is defined as an upper bound on the
 response times of all the jobs of task $\tau_k \in {\bf T}$ for any
-\emph{legal sequence} of the jobs of ${\bf T}$. A sequence of jobs of
+\emph{legal sequence} of jobs of ${\bf T}$. A sequence of jobs of
 the task system ${\bf T}$ is a legal sequence if any two consecutive
 jobs of task $\tau_i \in {\bf T}$ are separated by \emph{at least}
 $T_i$ and the self-suspension and computation behavior are upper
@@ -401,33 +418,29 @@ bounded by the defined parameters. The goal of response time analysis is to
 analyze the worst-case response time of a certain task $\tau_k$ in the
 task set ${\bf T}$ or all the tasks in ${\bf T}$.
 
-A task set ${\bf T}$ is \emph{schedulable} by a scheduling algorithm if its resulting worst-case response time of each task 
+A task set ${\bf T}$ is said to be \emph{schedulable} by a scheduling algorithm $\mathcal{A}$ if the worst-case response time of each task 
 $\tau_k$ in ${\bf T}$ is no more than its relative deadline $D_k$.
-A \emph{schedulability test} of a scheduling algorithm is a test to
-verify whether its resulting worst-case response time of each task
-$\tau_k$ in ${\bf T}$ is no more than its relative deadline $D_k$. For
-the ordinary sporadic task systems without self-suspension, there are
-two usual types of schedulability tests for fixed-priority scheduling
-algorithms:
+A \emph{schedulability test} for a scheduling algorithm $\mathcal{A}$ is a test checking whether a task set ${\bf T}$ is schedulable with $\mathcal{A}$. There are
+two usual types of schedulability tests:
 \begin{itemize}
-\item Utilization-based schedulability tests: These include the
-  utilization bounds by Liu and Layland \cite{Liu_1973}  and the
-  hyperbolic bound by Bini et al. \cite{bini2003rate}.
-\item Time-demand analysis (TDA) or response time analysis (RTA) \cite{lehoczky-1989}: This is based on the critical instant
-  theorem in
-  \cite{Liu_1973} to evaluate the worst-case response time
-  precisely. That is, the worst-case response time of task $\tau_k$ is
-  the minimum positive $R_k$ such that \gn{this bound is limited to FP with constrained deadlines but the section is more generic than that. We should precisely state in which context this equation is correct}
-  \begin{equation}
-   \label{eq:rta}
-  R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,     
-  \end{equation}
-  where $hp(k)$ is the set of the tasks with higher-priority levels
-  than $\tau_k$.  
+\item Utilization-based schedulability tests. Examples of such tests are the
+  utilization bounds by Liu and Layland \cite{Liu_1973} and the hyperbolic bound by Bini et al. \cite{bini2003rate}.
+\item Time-demand analysis (TDA) or response time analysis (RTA) \cite{lehoczky-1989}. Several exact tests exist for periodic and sporadic tasks without suspension (\eg, \cite{Liu_1973,spuri_96, goossens1997non, goossens1999feasibility, zhang2009schedulability}). %For fixed priority sporadic tasks without suspension, those tests are based on the critical instant
+  %theorem in \cite{Liu_1973} to evaluate the worst-case response time
+  %precisely.  
+  %That is, the worst-case response time of task $\tau_k$ is
+%  the minimum positive $R_k$ such that \gn{this bound is limited to FP with constrained deadlines but the section is more generic than that. We should precisely state in which context this equation is correct}
+%  \begin{equation}
+%   \label{eq:rta}
+%  R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,     
+%  \end{equation}
+%  where $hp(k)$ is the set of the tasks with higher-priority levels
+%  than $\tau_k$.  
 \end{itemize}
+We consider both type of analyses in this paper.
 
 
-\gn{this paragraph should somewhat be part of the bullet list above. It is kind of disconnected from the rest.} To solve the computational complexity issues of many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
+To solve the computational complexity issues of many scheduling problems in real-time systems, approximation algorithms based on \textit{resource augmentation} with respect to \emph{speedup factors} have attracted much attention.  If an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then any task set that is schedulable (under the optimal scheduling policy) at the original platform speed is also schedulable by algorithm ${\cal A}$ when all the processors have speed $\rho$ times the original platform speed.
 %In other words, by taking the negation of the above statement, if an algorithm ${\cal A}$ has a \emph{speedup factor} $\rho$, then it guarantees that \emph{if the schedule derived from the algorithm ${\cal A}$ is not feasible, then the input does not admit a feasible schedule by running at speed $\frac{1}{\rho}$}.
 
 
@@ -438,11 +451,11 @@ algorithms:
 % have to be revisited and extended to handle the scheduling penalties
 % resulting from self-suspending behavior.
 
+\mysubsection{Platform}
 
-\mysection{Multiprocessor Scheduling}
+Most of this paper focuses on single processor scheduling. However, the multiprocessor case is discussed in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}. When addressing the scheduling of tasks on multiprocessor, we distinguish between two major categories of multiprocessor real-time schedulers:  (\textit{i}) partitioned scheduling and (\textit{ii}) global scheduling. 
 
-Two major categories of multiprocessor real-time schedulers are  (\textit{i}) partitioned scheduling and (\textit{ii}) global scheduling. 
-Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. An often used multiprocessor partitioned scheduling algorithm is partitioned earliest-deadline-first (P-EDF), which applies EDF on each processor individually.
+Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. An often used multiprocessor partitioned scheduling algorithm is partitioned EDF (P-EDF), which applies EDF on each processor individually.
 Partitioned fixed-priority (P-FP) scheduling is another widespread
 choice in practice due to the wide support in industrial standards
 such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc
@@ -450,7 +463,20 @@ Under P-FP scheduling, each task has a fixed-priority level and is statically as
 %Under EDF, jobs with earlier deadlines have higher priority. 
  In contrast to partitioned scheduling, under global scheduling,  ready jobs are dynamically dispatched to available processors, \ie, jobs are allowed to migrate from one processor to another at any time. For example, global EDF (G-EDF) is a global scheduling algorithm under which jobs are EDF-scheduled using a single ready queue (at least conceptually; actual implementations may use several synchronized queues).  
 
-We will discuss the multiprocessor scenarios in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}.
+%\mysection{Multiprocessor Scheduling}
+
+%\gn{it looks weird to have a subsection specifically for multicore. Why do we need to insists on multicore than on singlecore. In fact this subsection looks like a copy paste from the introduction of another paper that has nothing to do with this one. We must find a way to integrate this in the general flow of this chapter.}
+
+%Two major categories of multiprocessor real-time schedulers are  (\textit{i}) partitioned scheduling and (\textit{ii}) global scheduling. 
+%Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. Different processors can apply different scheduling algorithms. An often used multiprocessor partitioned scheduling algorithm is partitioned earliest-deadline-first (P-EDF), which applies EDF on each processor individually.
+%Partitioned fixed-priority (P-FP) scheduling is another widespread
+%choice in practice due to the wide support in industrial standards
+%such as AUTOSAR, and in many RTOSs like VxWorks, RTEMS, ThreadX, \etc
+%Under P-FP scheduling, each task has a fixed-priority level and is statically assigned to a specific processor, and each processor is scheduled independently as a uniprocessor.  
+%Under EDF, jobs with earlier deadlines have higher priority. 
+% In contrast to partitioned scheduling, under global scheduling,  ready jobs are dynamically dispatched to available processors, \ie, jobs are allowed to migrate from one processor to another at any time. For example, global EDF (G-EDF) is a global scheduling algorithm under which jobs are EDF-scheduled using a single ready queue (at least conceptually; actual implementations may use several synchronized queues).  
+
+%We will discuss the multiprocessor scenarios in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}.
 
 %%% Local Variables:
 %%% mode: latex
