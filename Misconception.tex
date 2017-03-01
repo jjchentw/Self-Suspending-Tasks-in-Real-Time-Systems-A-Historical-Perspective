@@ -960,7 +960,7 @@ the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{ba
 % \label{sec:wrong-slack}
 
 
-\mysection{Incorrect Use of Release Jitter without Converting Suspension into Computation}
+\mysection{Incorrect Conversion of Higher Priority Self-Suspending Tasks}
 \label{sec:wrong-jitter-convert-sporadic}
 
 
@@ -1069,7 +1069,7 @@ that schedule, the response time of task $\tau_3$ is $36$.
 \end{figure}
 
 
-{\bf Consequences:} The analysis by Nelissen et al. in Section~VI of
+{\bf Consequences:} The analysis in Section~VI of
 \cite{ecrts15nelissen} that analyzes higher-priority self-suspending 
 tasks by introducing safe release jitters and accounts for the
 self-suspending behavior of $\tau_3$ explicitly is flawed as shown in
@@ -1079,7 +1079,7 @@ the example.
 should be treated as an individual sporadic task with jitter. This means that
 the treatment in Section~VI of \cite{ecrts15nelissen} remains valid
 if each computation segment of a higher-priority task $\tau_i$ is
-converted into an ordinary sporadic task with proper jitter. In our example here, the segmented self-suspending task $\tau_2$ should be converted into two ordinary sporadic tasks with proper jitter.
+converted into an ordinary sporadic task with proper jitter. In our example here, the segmented self-suspending task $\tau_2$ should be converted into two ordinary sporadic tasks with proper jitter. This error and appropriate solutions were published in \cite{nelissen-errata-ECRTS15}.
 
 
 %%% Local Variables:

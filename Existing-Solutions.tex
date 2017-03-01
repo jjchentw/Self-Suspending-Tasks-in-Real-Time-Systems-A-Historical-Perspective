@@ -10,77 +10,77 @@ misconceptions which led to incorrect solutions. In an attempt to stop the propa
 description of the various misunderstandings of the self-suspending task model, together with the demonstration of 
 counterintuitive results, is provided in \mysectionref{}~\ref{sec:misconceptions}.
 
-The worst-case response time, and hence the schedulability, of task $\tau_k$ is impacted not only by 
-the possible self-suspension behavior of $\tau_k$ itself, but also by
-the self-suspension behavior of  higher-priority jobs. As illustrated
-in the example below, this is even possible when task $\tau_k$ is an
-ordinary sporadic task.
+%As already introduced in \mysectionref{}~\ref{sec:intro} and exemplified below, the worst-case response time, and hence the schedulability, of a task $\tau_k$ is impacted not only by 
+%the possible self-suspension behavior of $\tau_k$ itself, but also by
+%the self-suspension behavior of  higher-priority jobs. %As illustrated
+%in the example below, this is even possible when task $\tau_k$ is an
+%ordinary sporadic task.
 
 %\begin{example}
 %\label{ex:taui_ss}
 %Let $\tau_2$ be a self-suspending task characterized as follows $((C,S,C),T,D)$ and $\tau_1$ be a non-self-suspending task defined by $(C,T,D)$. Assume that a fixed priority scheduling algorithm is used to schedule those tasks and that $\tau_1$ has a higher priority than $\tau_2$. If one should ignore the self-suspension behavior of $\tau_2$ by assuming an equivalent non-self-suspending task $\tau_2' = (C+C,T,D )$, the worst-case response time of $\tau_2'$ computed with the usual RTA \cite{...} would be .... Yet, as illustrated on Figure~\ref{fig:ex_sched:taui_ss}, the worst-case response time of $\tau_2$ is ... and is obtained when (i) $\tau_2$ experiences its maximum self-suspension time and (ii) $\tau_1$ is synchronously released with the second computation segment of $\tau_2$. 
 %\end{example}
 
-\begin{example}
-\label{ex:tauh_ss} 
-Let $\tau_2$ be an ordinary sporadic task with the following
-attributes $(C_2, T_2, D_2)=(5,10,10)$ and $\tau_1$ be a segmented self-suspending  sporadic
-task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
-and that $\tau_1$ has a higher priority than $\tau_2$. If one would ignore the self-suspending behavior of $\tau_1$ by 
-assuming a self-suspending task $\tau_1' = (C_1', T_1', D_1')=(2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
-with the standard response-time analysis (Eq.~\eqref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
-due to the self-suspension of $\tau_1$, the actual worst-case response time of 
-$\tau_2$ is $8$ and is obtained when (i) $\tau_1$ experiences its maximum self-suspension time and (ii) $\tau_2$ is 
-synchronously released with the second computation segment of $\tau_1$.
-\hfill\myendproof  
-\end{example}
+%\begin{example}
+%\label{ex:tauh_ss} 
+%Let $\tau_2$ be an ordinary sporadic task with the following
+%attributes $(C_2, T_2, D_2)=(5,10,10)$ and $\tau_1$ be a segmented self-suspending  sporadic
+%task defined as $((C_1^1, S_1^1, C_1^2), T_1, D_1)=((1,2,1),8,8)$. Assume that $\tau_2$ and $\tau_1$ are scheduled with a fixed-priority scheduling algorithm on a uniprocessor system
+%and that $\tau_1$ has a higher priority than $\tau_2$. If one would ignore the self-suspending behavior of $\tau_1$ by 
+%assuming a self-suspending task $\tau_1' = (C_1', T_1', D_1')=(2, 8, 8)$, the worst-case response time of $\tau_2$ computed 
+%with the standard response-time analysis (Eq.~\eqref{eq:rta}) would be $R_2 = 7$. However, as illustrated in Figure~\ref{fig:simple-example-suspension},
+%due to the self-suspension of $\tau_1$, the actual worst-case response time of 
+%$\tau_2$ is $8$ and is obtained when (i) $\tau_1$ experiences its maximum self-suspension time and (ii) $\tau_2$ is 
+%synchronously released with the second computation segment of $\tau_1$.
+%\hfill\myendproof  
+%\end{example}
+%
+%
+%\begin{figure}[t]
+%\centering
+%\def\uxfpga{0.4cm} 
+%\scalebox{1}{
+%	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
+%    \draw[->] (0,0) -- coordinate (xaxis) (15,0) node[anchor=north]{$t$};
+%    \draw[] (0,2) -- coordinate (xaxis) (12,2) node[anchor=north]{};
+%    \foreach \x in {0,1,...,12}{
+%      \draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+%    }
+%    \foreach \x in {0,3,4,8,9,10}{
+%      \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
+%    }	
+%    
+%    \begin{scope}[shift={(0,0)}]
+%      \node[anchor=east] at (0, 0.5) {$\tau_2$};
+%      \draw[->] (3,0) -- (3,1.75);
+%      \draw[<-,thin,red] (3,1.3) -- (7.5,1.3);
+%      \draw[->,thin,red] (8.5,1.3) -- (11,1.3);
+%
+%
+%        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (4, 0){};
+%        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 0){};
+%
+%      \draw[] (11.05,0) -- (11.05,1.5);
+%      \node[anchor=east,red] at (8.5, 1.39) {$8$};
+%      \draw[dotted] (11.5,0.5) -- (12.3,0.5); 
+%    \end{scope}
+%    
+%    \begin{scope}[shift={(0,2)}]
+%      \node[anchor=east] at (0, 0.5) {$\tau_1$};
+%      \foreach \x in {0,8}{ 
+%        \draw[->] (\x,0) -- (\x,1.75);        		
+%      }
+%      \foreach \x in {0,3,8,9}{ 
+%        \node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){};
+%      }
+%    \end{scope}                
+%  \end{tikzpicture}}
+%\caption{Self-suspension can cause substantial schedulability degradation for task $\tau_2$ as shown in Example \ref{ex:tauh_ss}.}
+%\label{fig:simple-example-suspension}
+%\end{figure}
 
 
-\begin{figure}[t]
-\centering
-\def\uxfpga{0.4cm} 
-\scalebox{1}{
-	\begin{tikzpicture}[x=\uxfpga,y=\uy,auto, thick]
-    \draw[->] (0,0) -- coordinate (xaxis) (15,0) node[anchor=north]{$t$};
-    \draw[] (0,2) -- coordinate (xaxis) (12,2) node[anchor=north]{};
-    \foreach \x in {0,1,...,12}{
-      \draw[-,below](\x,0) -- (\x,-0.3) node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-    }
-    \foreach \x in {0,3,4,8,9,10}{
-      \draw[-,very thin,lightgray, dashed](\x,0.3) -- (\x,4);
-    }	
-    
-    \begin{scope}[shift={(0,0)}]
-      \node[anchor=east] at (0, 0.5) {$\tau_2$};
-      \draw[->] (3,0) -- (3,1.75);
-      \draw[<-,thin,red] (3,1.3) -- (7.5,1.3);
-      \draw[->,thin,red] (8.5,1.3) -- (11,1.3);
-
-
-        \node[task7, minimum width=4*\uxfpga, anchor=south west] at (4, 0){};
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (10, 0){};
-
-      \draw[] (11.05,0) -- (11.05,1.5);
-      \node[anchor=east,red] at (8.5, 1.39) {$8$};
-      \draw[dotted] (11.5,0.5) -- (12.3,0.5); 
-    \end{scope}
-    
-    \begin{scope}[shift={(0,2)}]
-      \node[anchor=east] at (0, 0.5) {$\tau_1$};
-      \foreach \x in {0,8}{ 
-        \draw[->] (\x,0) -- (\x,1.75);        		
-      }
-      \foreach \x in {0,3,8,9}{ 
-        \node[task7, minimum width=\uxfpga, anchor=south west] at (\x, 0){};
-      }
-    \end{scope}                
-  \end{tikzpicture}}
-\caption{Self-suspension can cause substantial schedulability degradation for task $\tau_2$ as shown in Example \ref{ex:tauh_ss}.}
-\label{fig:simple-example-suspension}
-\end{figure}
-
-
-As discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis for a set of self-suspending tasks has been proven to be intractable in the general case. For those reasons, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing individual research results in the literature, \eg, \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analysis and design concepts in the literature. Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis (\ie, $\tau_2$ in the above example) and the task interfering with the analyzed task, respectively. Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
+As discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis of a set of self-suspending tasks has been proven to be intractable in the general case. For that reason, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing each and every individual research results published in the scientific literature, \eg, \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analyses and modeling strategies commonly adopted across those works . Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis (\ie, $\tau_2$ in the above example) and the task interfering with the analyzed task, respectively. Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
 Moreover, Section~\ref{sec:release-enforce} presents  release enforcement mechanisms to reduce the impact due to self-suspension. 
 % in which the links to the existing methods are summarized in Table~\ref{tab:summary-methods-enforcement}. 
 
@@ -334,7 +334,7 @@ For example, \cite[Theorem 3]{huangpass:dac2015} provides the following necessar
   \end{equation}
 \emph{where $hp(\tau_k)$ is the set of the tasks with higher-priority levels than task $\tau_k$.} 
 
-The above condition used in Eq.~(\ref{eq:necessary-fp-scheduling}) is an exact analysis if $D_k \leq T_k$ and all the tasks in $hp(k)$ are ordinary sporadic real-time tasks without any suspensions. By Eq.~(\ref{eq:necessary-fp-scheduling}), it is necessary to model the suspension time of the task under analysis as the computation time if we consider dynamic self-suspending tasks under fixed-priority scheduling. Such a modeling strategy to consider suspension as computation for the task under analysis is widely used in all the existing analyses for the dynamic self-suspension task model under fixed-priority scheduling, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04,Liu:2000:RS:518501} (see Table~\ref{tab:summary-methods}, in which some multiprocessor cases from \cite{DBLP:conf/ecrts/LiuA13,DBLP:conf/ecrts/LiuCH014} are also covered). However, such a modeling strategy is not always exact for the dynamic self-suspension task model if other scheduling strategies (instead of fixed-priority scheduling) are applied.
+Eq.~(\ref{eq:necessary-fp-scheduling}) is an exact analysis if $D_k \leq T_k$ and all the tasks in $hp(k)$ are ordinary sporadic real-time tasks without any suspensions. By Eq.~(\ref{eq:necessary-fp-scheduling}), it is necessary to model the suspension time of the task under analysis as computation time if we consider dynamic self-suspending tasks under fixed-priority scheduling. Such a modeling strategy to consider suspension as computation for the task under analysis is widely used in all the existing analyses for the dynamic self-suspension task model under fixed-priority scheduling, \eg, \cite{LiuChen:rtss2014,huangpass:dac2015,MingLiRTCSA1994,RTCSA-KimCPKH95,RTAS-AudsleyB04,ECRTS-AudsleyB04,Liu:2000:RS:518501} (see Table~\ref{tab:summary-methods}, in which some multiprocessor cases from \cite{DBLP:conf/ecrts/LiuA13,DBLP:conf/ecrts/LiuCH014} are also covered). However, such a modeling strategy is not always exact for the dynamic self-suspension task model if other scheduling strategies (instead of fixed-priority scheduling) are applied.
 
 
 %This is the simplest and the most pessimistic strategy. It converts all self-suspension time into computation time. Such a strategy is also referred to as \emph{suspension-oblivious} analysis in the literature. That is, we can consider the execution time of task $\tau_i$ to be $C_i+S_i$. After this conversion, we only have ordinary sporadic real-time tasks. Therefore, all the existing results for sporadic task systems can be applied. %The proof can be done with the following simple interpretation: The suspension of a job may make the processor idle. If two jobs suspend at the same time and the processor idles in a certain time interval in the actual schedule, it can be imagined that one of these two jobs has shorter execution time (than its worst-case execution time $C_i+S_i$). Such earlier completion does not affect the schedulability analysis. Therefore, putting $C_i+S_i$ as the worst-case execution time for every task $\tau_i$ is a very safe analysis for both dynamic- and static-scheduling policies.  Such an approach has been widely used as the baseline of more accurate analyses in the literature.
@@ -368,7 +368,15 @@ Let $R_k^j$ denote the worst-case response time of the computation segment $C_k^
 
 \begin{example}
 \label{ex:suspension-as-split-1}   
-Consider the task set presented in Table~\ref{table:static-example}. The worst-case response times of $C_3^1=1$ and $C_3^2=1$ are both $5$ by using the usual RTA (Eq.~\eqref{eq:rta}) for ordinary sporadic real-time tasks. Therefore, we know that the worst-case response time of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
+Consider the task set presented in Table~\ref{table:static-example}. The usual RTA for fixed priority sporadic real-time tasks without self-suspension \cite{Liu_1973} tells us that the WCRT of a task $\tau_k$ is upper bounded by the smallest positive solution to
+  \begin{equation}
+   \label{eq:rta}
+  R_k = C_k+ \sum_{\tau_i \in hp(k)}\ceiling{\frac{R_k}{T_i}} C_i,     
+  \end{equation}
+  where $hp(k)$ is the set of the tasks with higher-priorities
+  than $\tau_k$.
+
+Therefore, the WCRT of $C_3^1$ and $C_3^2$ are both $5$. Hence, we know that the WCRT of task $\tau_3$ is at most $R_3^1 + R_3^2 + S_3 = 5 + 5 + 5 = 15$.
 \hfill\myendproof  
 \end{example}
 
