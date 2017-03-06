@@ -686,7 +686,7 @@ The first jobs of $\tau_1$, $\tau_2$, and $\tau_3$ are released synchronously wi
 
 {\bf Solution:} The problem of defining the critical instant remains open even for the special case where only the lowest-priority task is self-suspending. Nelissen et al. propose a limited solution in \cite{ecrts15nelissen} based on an exhaustive search with exponential time complexity.
 
-\mysection{Counting Highest-Priority Self-suspension time to Reduce the Interference}
+\mysection{Counting Highest-Priority Self-Suspension Time to Reduce the Interference}
 \label{sec:wrong-highest-priority}
 
 We now present a misconception which exploits the  self-suspension time  of the highest-priority task to reduce its interference to the lower-priority sporadic tasks. 
@@ -955,6 +955,16 @@ segmented fixed-priority scheduling with periodic enforcement in Section~\ref{se
 
 {\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority assignment. As discussed in Section~\ref{sec:static-period-enforce}, this can be observed as a reduction to 
 the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
+
+A simple fix can be achieved by applying the following concept to
+classify the interfering higher-priority computation segments into two
+types: carry-in executions and non-carry-in executions.  When
+analyzing the response time of a computation segment, we can
+pessimistically account for one higher-priority carry-in computation
+segment per task, due to the assumption that the task systems are with
+constrained deadlines and the higher-priority computation segments
+have to meet their deadlines. With this concept, a fix can be found in~\cite{Kim2016}.
+
 
 % \mysection{Incorrect Scheduling with Slack Enforcement}
 % \label{sec:wrong-slack}
