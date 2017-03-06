@@ -25,7 +25,8 @@ clean:
 #COMPARE_TO ?= HEAD
 #COMPARE_TO = d8a396c
 #COMPARE_TO = d1b3e65
-COMPARE_TO = 77fc283
+#COMPARE_TO = 74289f2
+COMPARE_TO = ef21781
 
 diff:
 	 git latexdiff  --ignore-latex-errors --whole-tree --main ${MAIN}.tex --latexmk  -o diff-to-${COMPARE_TO}.pdf ${COMPARE_TO} --latexopt --force --latexopt --shell-escape --exclude-textcmd=section --exclude-textcmd=subsection --exclude-textcmd=subsubsection --no-cleanup
