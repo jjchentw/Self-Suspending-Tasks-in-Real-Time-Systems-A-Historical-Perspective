@@ -284,10 +284,37 @@ size=6mm]
 \input{../Hardness}
 \input{../Summary}
 
+\newpage
+
+\chapter*{Change Logs}
+
+In addition to some rewordings, the following significant changes have
+been made after the first version:
+\begin{enumerate}
+\item Eq.~\eqref{eq:dynamic-flawed} is revised with
+  $\ceiling{\frac{R_k + S_{\textcolor{blue}{i}}}{T_i}}$  since the first
+  version used $\ceiling{\frac{R_k + S_{\textcolor{red}{k}}}{T_i}}$
+  with a typo.
+\item Eq.~\eqref{eqn:wcrt} is revised with \textcolor{blue}{$s_k+1$} instead of
+  \textcolor{red}{$s_k$} since the notation used in this report is different
+  from the original source in \cite{lakshmanan-2009}.
+\item The misconception in Section~\ref{sec:wrong-periodic} is 
+  listed as a solved issue due to the errata \cite{Kim2016}, published
+  in August 2016.
+\item Section~\ref{sec:model-interfering-unified} is added due to a
+  recent result in \cite{ChenECRTS2016-suspension}, published in July 2016
+\item Section~\ref{sec:wrong-jitter-convert-sporadic} is added due to
+  a recent errata \cite{nelissen-errata-ECRTS15}, published in
+  February 2017.
+\item Chapter~\ref{sec:hardness} is updated due to the latest result
+  in \cite{RTSS2016-suspension,DBLP:conf/rtns/MohaqeqiE016}.
+\item Papers published in 2016 are added and discussed.
+\end{enumerate}
+(All the indexes are based on the latest version, i.e., 2nd ver.)
+
 
 \bibliographystyle{abbrv}
 \bibliography{../bibliography/biblio}{}
-
 
 
 %\setlength\bibitemsep{1pt}
