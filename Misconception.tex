@@ -956,14 +956,14 @@ segmented fixed-priority scheduling with periodic enforcement in Section~\ref{se
 {\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority assignment. As discussed in Section~\ref{sec:static-period-enforce}, this can be observed as a reduction to 
 the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
 
-A simple fix can be achieved by applying the following concept to
-classify the interfering higher-priority computation segments into two
-types: carry-in executions and non-carry-in executions.  When
-analyzing the response time of a computation segment, we can
-pessimistically account for one higher-priority carry-in computation
+A simple fix can be achieved by classifying the interfering
+higher-priority computation segments into two types: carry-in and
+non-carry-in computation segments, presented in \cite{Kim2016}.  When
+analyzing the response time of a computation segment, the approach in \cite{Kim2016}
+pessimistically accounts for one higher-priority carry-in computation
 segment per task, due to the assumption that the task systems are with
-constrained deadlines and the higher-priority computation segments
-have to meet their deadlines. With this concept, a fix can be found in~\cite{Kim2016}.
+constrained deadlines and as the higher-priority computation segments
+have to meet their deadlines.
 
 
 % \mysection{Incorrect Scheduling with Slack Enforcement}
@@ -988,7 +988,8 @@ conclude that there is only one active job of task $\tau_2$ in time
 interval $(a, a+39]$, in which a job of task $\tau_3$ arrives at time
 $a$. Theorem 2 in \cite{ecrts15nelissen} exploited the above property
 and converted task $\tau_2$ to an ordinary sporadic task, denoted as
-task $\tau_2'$ here, with jitter equal to $22$. By the above
+task $\tau_2'$ here, with jitter equal to $22$ and worst-case
+execution time equal to $3+3=6$. By the above
 discussion, in our setting in Table~\ref{table:ex-wrong-jitter-split},
 there is only one job of task $\tau_2'$ that can interfere with a job
 of task $\tau_3$.
@@ -1080,10 +1081,11 @@ that schedule, the response time of task $\tau_3$ is $36$.
 
 
 {\bf Consequences:} The analysis in Section~VI of
-\cite{ecrts15nelissen} that analyzes higher-priority self-suspending 
-tasks by introducing safe release jitters and accounts for the
-self-suspending behavior of $\tau_3$ explicitly is flawed as shown in
-the example.
+\cite{ecrts15nelissen}, that accounts for the self-suspending behavior
+of $\tau_3$ explicitly and analyzes the interference from the
+higher-priority self-suspending tasks by converting each of them into
+an ordinary sporadic task (without self-suspension) with a safe
+release jitter, is flawed as shown in the example.
 
 {\bf Solutions:} Each computation segment of a higher-priority task
 should be treated as an individual sporadic task with jitter. This means that

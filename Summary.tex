@@ -127,7 +127,7 @@ errata for more detailed explanations.
 We have carefully re-examined the results related to self-suspending
 real-time tasks in the literature in the past 25 years. However, there
 are also some results in the literature that may require further
-elaboration. These include the following results in the literature:
+elaboration, including:
 \begin{itemize}
 \item Devi (in Theorem 8 in \cite[Section
   4.5]{DBLP:conf/ecrts/Devi03}) extended the analysis proposed by Jane
@@ -178,8 +178,7 @@ elaboration. These include the following results in the literature:
     the slack enforcement may make the second computation segment
     arrive earlier than its worst case. For example, we can greedily
     start with the worst-case interference of task $\tau_j$ in the
-    first iteration, and do not release the higher-priority tasks
-    (higher than $\tau_j$) after the arrival of the second job of task
+    first iteration, and do not release the higher-priority tasks of task $\tau_j$ after the arrival of the second job of task
     $\tau_j$. This can immediately create some release jitter of the
     second computation segment $C_j^2$.
   \end{itemize}
