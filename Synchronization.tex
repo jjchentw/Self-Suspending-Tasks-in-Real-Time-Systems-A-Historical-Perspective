@@ -190,13 +190,13 @@ A related problem affects an \emph{interface-based analysis}  proposed by Nemati
 Recall from classic uniprocessor time-demand analysis \cite{lehoczky-1989} that, \emph{in the absence of jitter or self-suspensions}, a task $\tau_k$ is considered schedulable if
 \begin{equation}
 \label{eqn:rbf-1}
-\exists t \in (0,D_k]: \fun{rbf_{FP}}(k,t) \leq t, 
+\exists t \in (0,D_k]: B_k+\fun{rbf_{FP}}(k,t) \leq t, 
 \end{equation}
 where $\fun{rbf_{FP}}(k,t)$ is the \emph{request bound function} of $\tau_k$, which is given by
 
 \begin{equation}
 \label{eqn:rbf-2}
-\fun{rbf_{FP}}(k,t) = C_k + B_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i.
+\fun{rbf_{FP}}(k,t) = C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i.
 \end{equation}
 
 Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:

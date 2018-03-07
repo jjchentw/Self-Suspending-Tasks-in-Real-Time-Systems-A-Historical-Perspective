@@ -134,7 +134,7 @@ For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, re
 Self-suspending tasks can be classified into two models: the \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
 The dynamic self-suspension %sporadic 
 task model characterizes each
-task $\tau_i$ with predefined \emph{total} worst-case execution time and \emph{total} worst-case self-suspension time bounds, such that a job of task $\tau_i$ can exhibit any number of self-suspensions of arbitrary duration as long as the sum of the suspension (respectively, execution) intervals does not exceed the specified total worst-case self-suspension (respectively, execution) time bounds. The segmented self-suspending sporadic task model defines the execution behavior of a job of a task as a known sequence of predefined computation segments and self-suspension intervals.  
+task $\tau_i$ with predefined \emph{total} worst-case execution time and \emph{total} worst-case self-suspension time bounds, such that a job of task $\tau_i$ can exhibit any number of self-suspensions of arbitrary duration as long as the sum of the suspension (respectively, execution) intervals does not exceed the specified total worst-case self-suspension (respectively, execution) time bounds. The segmented self-suspending sporadic task model defines the execution behavior of a job of a task as a known sequence of predefined computation segments and self-suspension intervals.  The models will be explained in \mysectionref{}~\ref{sec:model}.
 
 \mysection{Purpose and Organization of This Paper}
 Much prior work has explored the design of scheduling algorithms and schedulability analyses of task systems when self-suspending tasks are present. Motivated by the proliferation of self-suspending scenarios in modern real-time systems, the topic has received renewed attention in recent years and several results have been re-examined. Unfortunately, we have found that large parts of the literature on real-time scheduling with self-suspensions has been seriously flawed by misconceptions. Several errors were discovered, including: 
@@ -144,14 +144,14 @@ Much prior work has explored the design of scheduling algorithms and schedulabil
   \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-KimCPKH95,MingLiRTCSA1994}.  This
   misconception was unfortunately carried forward in \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009} in the analysis of worst-case response times under
   partitioned multiprocessor real-time locking protocols;
-\item Incorrect quantification of jitter for dynamic self-suspending
+\item Incorrect quantification of jitter for segmented self-suspending
   task systems \cite{RTCSA-BletsasA05};
 \item Incorrect assumptions on the critical instant as defined in \cite{LR:rtas10}.
 \item Incorrectly counting highest-priority self-suspension time to reduce the
   interference on the lower-priority tasks  \cite{RTSS-KimANR13}; 
 \item Incorrect segmented fixed-priority scheduling with period
   enforcement \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09};
-\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter\cite{ecrts15nelissen}.
+\item Incorrect conversion of higher-priority self-suspending tasks into sporadic tasks with release jitter \cite{ecrts15nelissen}.
 \end{itemize}
 
 

@@ -209,23 +209,35 @@ for \emph{constrained-deadline} task systems under the assumption that every hig
 
 
 We now explain a misconception in the literature regarding an optimistic quantification of the jitter of segmented self-suspending task systems under fixed-priority scheduling.  The analysis in \cite{RTCSA-BletsasA05} adopts two steps: 
-\begin{enumerate}
-\item The computation segments and the self-suspension intervals (including a ``notional''
-self-suspension corresponding to the interval between the completion of the task and its next arrival)
-are reordered such that the computation segments appear with decreasing execution time and
-the suspension intervals appear with increasing self-suspension time.
-\item Each computation segment is modelled as a sporadic task with a fixed offset corresponding to the above
-rearrangement and a fixed jitter term to represent all computation segments of a given task.
-As reported in \cite{RTCSA-BletsasA05}, this jitter term corresponds to the maximum internal jitter, within the 
-activation of the task, of any computation segment, due to variability in the length of 
-preceding computation segments and self-suspension intervals.
-\end{enumerate}
-The first step can be explained by using the following example of an
-implicit-deadline segmented self-suspending task with $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3) = (1, 5, 4, 3, 2)$ and $T_i=40$.  It first artificially creates a notional gap $S_i^3=40-(1+5+4+3+2)=25$. After reordering, the task parameters become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3)  = (4, 3, 2, 5, 1, 25)$.  The purpose of this reordering step is to avoid having to consider different release offsets for each interfering task (corresponding to its computational segments). 
+
+ The first step reorders the computation segments and the
+  self-suspension intervals (including a ``notional'' self-suspension
+  corresponding to the interval between the completion of the task and
+  its next arrival) such that the computation segments appear with
+  decreasing execution time and the suspension intervals appear with
+  increasing self-suspension time. This can be explained by
+  using the following example of an implicit-deadline segmented
+  self-suspending task with $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3) = (1,
+  5, 4, 3, 2)$ and $T_i=40$.  It first artificially creates a notional
+  gap $S_i^3=40-(1+5+4+3+2)=25$. After reordering, the task parameters
+  become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3) = (4, 3, 2, 5, 1,
+  25)$.  The purpose of this reordering step is to avoid having to
+  consider different release offsets for each interfering task
+  (corresponding to its computational segments).
 %This is broadly analogous  to how Mok and Chen [REF] reorder task frames in their analysis for the multiframe task model.
+
+
 The second step, which was designed to capture the effects of the variation in the length of 
-computation segments or self-suspension intervals, would have no effect if 
+computation segments or self-suspension intervals, will not be
+explained here as it does not have any effect if 
 there is no variation between the worst-case and the actual-case execution/suspension times.
+% Each computation segment is modelled as a sporadic task with a fixed offset corresponding to the above
+% rearrangement and a fixed jitter term to represent all computation segments of a given task.
+% As reported in \cite{RTCSA-BletsasA05}, this jitter term corresponds to the maximum internal jitter, within the 
+% activation of the task, of any computation segment, due to variability in the length of 
+% preceding computation segments and self-suspension intervals.
+
+
 
 
 
@@ -535,8 +547,9 @@ Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau
     \label{table:ex-num-releases}
 \end{table}
 
-Consider two scenarios with respect to the job release pattern. Scenario~1 is a result of the proposed critical instant, in which the jobs of the higher-priority non-self-suspending tasks are released as early and often as possible in each computation segment of $\tau_4$. We show that the WCRT of $\tau_4$  is higher in Scenario~2.
- In Scenario~2, one less job of task $\tau_1$ is released in (and therefore interferes with) the first computation segment of the self-suspending task.
+Consider two scenarios with respect to the job release pattern. Scenario~1 is a result of the proposed critical instant, in which the jobs of the higher-priority non-self-suspending tasks are released as early and often as possible to interfere with each computation segment of $\tau_4$. 
+ In Scenario~2, one less job of task $\tau_1$ is released before the first computation segment of the self-suspending task finishes.
+We show that the WCRT of $\tau_4$  is higher in the second scenario.
 
 Scenario~1 is depicted in Fig.~\ref{fig:ex_crit_inst2}(a), and Scenario~2 in Fig.~\ref{fig:ex_crit_inst2}(b). The first $765$ time units are omitted in both figures. In both scenarios, the schedules of the jobs are identical in this initial time window.  
 The first jobs of $\tau_1$, $\tau_2$, and $\tau_3$ are released synchronously with the arrival of the first computation segment of $\tau_4$ at time $0$. The subsequent jobs of these three tasks are released as early and often as possible respecting the minimum inter-arrival times of the respective tasks. That is, they are released periodically with periods $T_1$, $T_2$ and $T_3$, respectively. With this release pattern, it is easy to compute that the $97^\text{th}$ job of $\tau_1$ is released at time $768$, the $78^\text{th}$ job of $\tau_2$ at time $770$ and the $46^\text{th}$ job of $\tau_3$ at time $765$. As a consequence, at time $765$, $\tau_4$ has finished executing $259$ time units of its first execution segment out of $265$ in both scenarios, \ie, $765 - 96 \times 4 - 77 \times 1 - 45 \times 1 = 259$.  From time $765$ onward, we separately consider Scenarios~1 and~2.
@@ -855,7 +868,9 @@ The source of the error of Theorem 3 in \cite{RTSS-KimANR13} is due to its Theor
 
 {\bf Consequences:} Theorems 2 and 3 in \cite{RTSS-KimANR13} are flawed.  
 
-{\bf Solutions:} The three assumptions, \ie, one highest-priority segmented self-suspending task, controlled suspension behavior and controlled execution time  in \cite{RTSS-KimANR13} actually imply that the self-suspending behavior of task $\tau_1$ can be modeled as several sporadic tasks with the same minimum inter-arrival time. That is, if the $j$-th computation segment of task $\tau_1$ starts its execution at time $t$, the earliest time for this computation segment to be executed again in the next job of task $\tau_1$ is at least $t+T_1$. Therefore, a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling strategy if $C_1+S_1 \leq D_1$ and for $2 \leq k \leq n$
+{\bf Solutions:} The three assumptions, \ie, one highest-priority segmented self-suspending task, controlled suspension behavior, and controlled execution time  in \cite{RTSS-KimANR13} actually imply that the self-suspending behavior of task $\tau_1$ can be modeled as several sporadic tasks with the same minimum inter-arrival time. More precisely, there is no need to consider self-suspension of task $\tau_1$, but we have to effectively consider each computation segment as a highest-priority sporadic task during the response time analysis. When the $j$-th computation segment of task $\tau_1$ starts its execution at time $t$, the earliest time for this computation segment to be executed again in the next job of task $\tau_1$ is at least $t+T_1$. 
+
+Therefore, a constrained-deadline task $\tau_k$ can be feasibly scheduled by the fixed-priority scheduling strategy if $C_1+S_1 \leq D_1$ and for $2 \leq k \leq n$
   \begin{equation}
     \label{eq:tda-fixed}
 \exists 0 < t \leq D_k, \qquad C_k + \sum_{i=1}^{k-1}\ceiling{\frac{t}{T_i}}C_i \leq t.    
@@ -872,15 +887,15 @@ We now introduce misconceptions that may happen due to periodic enforcement if i
 
 
 Consider the example listed in Table~\ref{table:ex-periodic}. Suppose that the offset of the computation segment $C_2^1$ is $0$ and the offset of the computation segment $C_2^2$ is $10$. This setting creates three sporadic tasks.
-Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest priority and $C_2^2$ the lowest priority. It should be clear that the worst-case response time of $C_2^1$ is $5$ and the worst-case response time of $C_1$ is $15$. We focus on the WCRT analysis of $C_2^2$.
+Suppose that the segmented fixed priority assignment assigns $C_2^1$ the highest priority and $C_2^2$ the lowest priority. It should be clear that the worst-case response time of the computation segment $C_2^1$ is $5$ and the worst-case response time of the computation segment $C_1$ is $15$. We focus on the WCRT analysis of $C_2^2$.
 
 
-Since the two computation segments of task $\tau_2$ should not have any overlap, one may think that during the analysis of the worst-case response time of $C_2^2$, we do not have to consider the computation segment $C_2^1$. The worst-case response time of $C_2^2$ (after its constant offset $10$) for this case is $26$ since $\ceiling{\frac{26}{30}} C_1 + C_2^2 = 26$. 
+Since the two computation segments of task $\tau_2$ should not have any overlap, one may think that during the analysis of the worst-case response time of the computation segment $C_2^2$, we do not have to consider the computation segment $C_2^1$. The worst-case response time of the computation segment $C_2^2$ (after its constant offset $10$) for this case is $26$ since $\ceiling{\frac{26}{30}} C_1 + C_2^2 = 26$. 
 Since $26+10 < 40$, one may conclude that this enforcement results in a feasible schedule. This analysis is adopted in Section IV in \cite{RTSS-KimANR13} and Section 3 in \cite{DBLP:journals/ieicet/DingTT09}. 
 
 Unfortunately, this analysis is incorrect.
 %it is not.
-Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of $C_2^2$ is larger than $30$, which leads to a deadline miss.
+Figure~\ref{fig:counterexample-FP-segment-level} provides a concrete schedule, in which the response time of the computation segment $C_2^2$ is larger than $30$, which leads to a deadline miss.
 % In fact, the $5$ units of execution time of $C_2^1$ push $C_1$ and result in a deadline miss of task $\tau_2$.
 
 \begin{table} [t]
@@ -980,10 +995,10 @@ the response time of task $\tau_k$ by accounting for the self-suspending behavio
 the example listed in Table~\ref{table:ex-wrong-jitter-split}.  Task
 $\tau_1$ obviously meets its deadline.  Task $\tau_2$ can be validated
 to meet its deadline by using the split approach, \ie, $8 + 12+ 8 =
-28$. The jitter of task $\tau_2$ is hence at most $28-2\times 3 = 22$.
+28$. The jitter of task $\tau_2$ is hence at most $R_2-C_2=28-2\times 3 = 22$.
 
-Since the jitter of task $\tau_2$ is small, \ie,
-$\ceiling{\frac{t+22}{T_3}} = 1$ for any $0 \leq t \leq 39$, we can
+Since %the jitter of task $\tau_2$ is small, \ie,
+$\ceiling{\frac{t+22}{T_2}} = 1$ for any $0 \leq t \leq 39$, we can
 conclude that there is only one active job of task $\tau_2$ in time
 interval $(a, a+39]$, in which a job of task $\tau_3$ arrives at time
 $a$. Theorem 2 in \cite{ecrts15nelissen} exploited the above property

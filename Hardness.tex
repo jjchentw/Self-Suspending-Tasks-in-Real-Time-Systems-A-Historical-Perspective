@@ -20,9 +20,9 @@ This \mysectionrefnormal{} reviews the difficulty of designing scheduling algori
         &  & in the strong & in the strong & in the strong\\
         & & sense \cite{DBLP:conf/rtns/MohaqeqiE016,RTSS2016-suspension}& sense \cite{RTSS2016-suspension}& sense \cite{RTSS2016-suspension}\\
         \hline
-        Dynamic & \multirow{3}{*}{unknown} & & co${\cal NP}$-hard & \multirow{3}{*}{unknown}\\
-         Self-Suspension & & unknown &in the strong& \\
-        Models & & & sense \cite{RTSS2016-suspension}& \\
+        Dynamic & \multirow{3}{*}{unknown} & (at least) ${\cal NP}$-hard & co${\cal NP}$-hard & \multirow{3}{*}{unknown}\\
+         Self-Suspension & &  in the weak&in the strong& \\
+        Models & & sense \cite{DBLP:conf/rtss/Ekberg017}& sense \cite{RTSS2016-suspension}& \\
         \hline
     \end{tabular}
     \vskip 0.2in
@@ -80,14 +80,17 @@ In this case, the computational complexity of schedulability tests is $co{\cal N
 \paragraph{Preemptive Dynamic-Priority Scheduling:} 
 In this case, if the task systems have constrained deadlines, \ie, $D_i \leq T_i$, the computational complexity of this problem is at least co${\cal NP}$-hard in the strong sense, since a special case of this problem is co${\cal NP}$-complete in the strong sense \cite{DBLP:conf/ecrts/Ekberg015}. It has been proved in \cite{DBLP:conf/ecrts/Ekberg015} that verifying uniprocessor feasibility of ordinary sporadic tasks with constrained deadlines is strongly co${\cal NP}$-complete.  Therefore, when we consider constrained-deadline self-suspending task systems, the complexity class is at least co${\cal NP}$-hard in the strong sense.
 
-It is also not difficult to see that the implicit-deadline case is also at least co${\cal NP}$-hard.  A special case of the segmented self-suspending task system is to allow each task $\tau_i$ to have exactly one self-suspension interval with a \emph{fixed} length $S_i$ and one computation segment with WCET $C_i$.  Therefore, the relative deadline of the computation segment of task $\tau_i$ (after it is released to be scheduled) is $D_i = T_i-S_i$. For such a special case, it is easy to see that the optimal scheduling policy is EDF. 
+It is also not difficult to see that the implicit-deadline case is also at least co${\cal NP}$-hard.  A special case of the segmented self-suspending task system is to allow each task $\tau_i$ to have exactly one self-suspension interval with a \emph{fixed} length $S_i$ and one computation segment with WCET $C_i$.  Therefore, the relative deadline of the computation segment of task $\tau_i$ (after it is released to be scheduled) is $D_i = T_i-S_i$. 
+For such a special case, self-suspension of a task is equivalent to a release offset of $S_i$. Therefore, there is no need to consider any self-suspension behavior any further. Scheduling in such a scenario is equivalent to ordinary constrained-deadline sporadic real-time task systems, in which preemptive EDF is optimal.
 It has been proved in \cite{DBLP:conf/ecrts/Ekberg015} that verifying uniprocessor feasibility of ordinary sporadic tasks with constrained deadlines is strongly co${\cal NP}$-complete.
 By the above discussions, any ordinary constrained-deadline sporadic task system can be converted to a corresponding implicit-deadline segmented self-suspending task system, and their exact schedulability tests for EDF scheduling are identical. Since a special case of the problem is co${\cal NP}$-complete in the strong sense, the problem is co${\cal NP}$-hard in the strong sense.
 
 
 \mysubsection{Dynamic Self-Suspending Tasks}
 \paragraph{Preemptive Fixed-Priority Scheduling:}   
-In this case, the complexity class is at least as hard as that in the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly ${\cal NP}$-hard and the complexity class of the schedulability test is unknown. 
+In this case, the complexity class is at least as hard as that in the ordinary sporadic task systems under fixed-priority scheduling. It is shown in \cite{EisenbrandR08} that the response time analysis is at least weakly ${\cal NP}$-hard and the complexity class of the schedulability test problem is shown weakly ${\cal NP}$-complete by Ekberg and Wang~\cite{DBLP:conf/rtss/Ekberg017}. Therefore, the schedulability test problem for self-suspending task systems under fixed-priority scheduling is at least weakly ${\cal NP}$-hard.
+
+
 The computational complexity due to the additional dynamic self-suspending behavior is in general \emph{unknown} up to now.  The only exception is the special case mentioned in Section~\ref{sec:existing-exact-special} when there is only one dynamic self-suspending sporadic task assigned to the lowest priority and the higher-priority tasks are ordinary sporadic tasks. That is, the computational complexity of this special case remains the same as that of non-self-suspending sporadic task systems. Whether the problem (with dynamic self-suspension) is ${\cal NP}$-hard in the weak or strong sense is an open problem.
 
 \paragraph{Preemptive Dynamic-Priority Scheduling:} 
