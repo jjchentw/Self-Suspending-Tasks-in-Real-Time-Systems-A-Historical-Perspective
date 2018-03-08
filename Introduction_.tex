@@ -120,7 +120,7 @@ Two tasks $\tau_1$ (higher priority, period 5, relative deadline 5, computation 
 
 When  periodic or sporadic tasks may self-suspend, the scheduling problem becomes much harder to handle. 
 
-For the ordinary periodic task model (without self-suspensions), Liu and Layland~ \cite{Liu_1973} studied the earliest-deadline-first (EDF) scheduling algorithm and fixed-priority (FP) scheduling. They showed EDF to be optimal (with respect to the satisfaction of deadlines), and established that, among FP scheduling algorithms, the rate-monotonic (RM) scheduling algorithm is optimal~\cite{Liu_1973}. Both EDF and RM are simple, polynomial-time algorithms. 
+For the ordinary periodic task model (without self-suspensions), Liu and Layland~ \cite{Liu_1973} studied the earliest-deadline-first (EDF) scheduling algorithm and fixed-priority (FP) scheduling. They showed EDF to be optimal (with respect to the satisfaction of deadlines), and established that, among FP scheduling algorithms, the rate-monotonic (RM) scheduling algorithm is optimal~\cite{Liu_1973}. %Both EDF and RM are simple scheduling algorithms. 
 
 In contrast, the introduction of suspension behavior has a negative impact on the timing predictability and causes intractability in hard real-time systems~\cite{Ridouard_2004}. It was shown by Ridouard et al. \cite{Ridouard_2004} that finding an optimal schedule (to meet all deadlines) is ${\cal NP}$-hard in the strong sense even when the suspending behavior is known a priori.
 
@@ -129,7 +129,7 @@ One specific problem due to self-suspending behavior is the \emph{deferrable} ex
 However, with self-suspensions, no critical instant theorem has yet been established. This makes it difficult to efficiently test the schedulability. Even worse, the effective scheduling strategies for non-self-suspending tasks may not work very well for self-suspending tasks.
 % Even worse, the suspending behavior incurs the jitter of the workload to be executed. 
 %\gn{I do not understand what is meant by this last sentence. What does ``very different'' %means?. It is very generic, not precise. What is the message we want to pass?}. 
-For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for ordinary periodic real-time task systems, as provided by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it was shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, do not  provide any bounded performance guarantees. 
+For example, it is known that EDF (RM, respectively) has a $100\%$ ($69.3\%$, respectively) utilization bound for ordinary periodic real-time task systems on uniprocessor systems, as provided by Liu and Layland \cite{Liu_1973}. However, with self suspensions,  it was shown in \cite{Ridouard_2004,RTSS-ChenL14} that most existing scheduling strategies, including EDF and RM, do not  provide any bounded performance guarantees. 
 
 Self-suspending tasks can be classified into two models: the \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment}) self-suspension models.
 The dynamic self-suspension %sporadic 
@@ -158,7 +158,7 @@ Much prior work has explored the design of scheduling algorithms and schedulabil
 \noindent Due to the above misconceptions and the lack of a survey of this research area, the authors, who have been active in this area in the past years, have jointly worked together to review the existing results in this area. This review paper serves to
 \begin{itemize}
 \item summarize the existing self-suspending task models (\mysectionref{}~\ref{sec:model}); 
-\item provide the general methodologies to handle self-suspending task systems in hard real-time systems in \mysectionref{}~\ref{sec:review} and soft real-time systems (\mysectionref{}~\ref{sec:soft-realtime});
+\item provide the general methodologies to handle self-suspending task systems in hard real-time systems (\mysectionref{}~\ref{sec:review}) and soft real-time systems (\mysectionref{}~\ref{sec:soft-realtime});
 \item explain the misconceptions in the literature, their consequences, and potential solutions to fix those flaws (\mysectionref{}~\ref{sec:misconceptions}); 
 \item examine the inherited flaws in multiprocessor synchronization, due to a flawed analysis in self-suspending task models (\mysectionref{}~\ref{sec:syn});
 \item provide the summary of the computational complexity classes of different self-suspending task models and systems (\mysectionref{}~\ref{sec:hardness}).

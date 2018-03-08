@@ -1,7 +1,7 @@
 \mychapter{Examples of Self-Suspending Task Systems}
 \label{sec:examples}
 
-Self-suspensions arise in real-time systems for a range of reasons. To motivate the need for suspension-aware analysis, we initially review four common causes. 
+Self-suspensions arise in real-time systems for a range of reasons. To motivate the need for suspension-aware analysis, we initially review three common causes. 
 
 
 {\bf Example 1: I/O- or Memory-Intensive Tasks.}  \hspace{0.1in}
@@ -186,58 +186,58 @@ Computation offloading with real-time constraints has been specifically studied 
 % \end{figure}
 
 
-{\bf Example 4: Partitioned Scheduling for DAG-Structured Tasks.}
- \hspace{0.1in}
-To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on several processors to perform independent computation in parallel. We can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors experience some idle time 
-due to the precedence constraints of the DAG task. Such idle time intervals can also be considered to be suspensions~\cite{fonseca2016response}. 
+% {\bf Example 4: Partitioned Scheduling for DAG-Structured Tasks.}
+%  \hspace{0.1in}
+% To fully utilize the power of multiprocessor systems, a task may be parallelized such that it can be executed simultaneously on several processors to perform independent computation in parallel. We can use a \emph{directed acyclic graph (DAG)} to model the dependency of the subtasks in a sporadic task. Each vertex in the DAG represents a subtask. For example, the DAG structure used in Figure~\ref{fig:example-dac} shows that there are five subtasks of this DAG task, in which the numbers within the vertices are the corresponding execution times. Suppose that we design a partitioned schedule to assign the subtasks with execution times $3,4,$ and $2$ on the first processor and the subtasks with execution times $0.5,$ and $7$ on the second processor to balance the workload on these two processors. As shown in the schedule in Figure~\ref{fig:example-dac}, both processors experience some idle time 
+% due to the precedence constraints of the DAG task. Such idle time intervals can also be considered to be suspensions~\cite{fonseca2016response}. 
 
 
 
 
-\begin{figure}[t]
-  \centering
-    \scalebox{0.8}{
-\def\uxDAG{0.75cm} 
-      \begin{tikzpicture}[x=\uxDAG,auto, thick]
-    \node [draw,circle](t0)at(0,4){$0.5$};
-    \node [draw,circle](t1)at(0,2){$3$};
-    \node [draw,circle](t2)at(2,3){$4$};
-    \node [draw,circle](t3)at(2,2){$7$};
-    \node [draw,circle](t4)at(4,4){$2$};
-    \draw[->] (t3) -- (t4);%kappa 1    
-    \draw[->] (t1) -- (t2);%kappa 1    
-    \draw[->] (t1) -- (t3);%kappa 2
-    \draw[->] (t2) -- (t4);%kappa 3    
+% \begin{figure}[t]
+%   \centering
+%     \scalebox{0.8}{
+% \def\uxDAG{0.75cm} 
+%       \begin{tikzpicture}[x=\uxDAG,auto, thick]
+%     \node [draw,circle](t0)at(0,4){$0.5$};
+%     \node [draw,circle](t1)at(0,2){$3$};
+%     \node [draw,circle](t2)at(2,3){$4$};
+%     \node [draw,circle](t3)at(2,2){$7$};
+%     \node [draw,circle](t4)at(4,4){$2$};
+%     \draw[->] (t3) -- (t4);%kappa 1    
+%     \draw[->] (t1) -- (t2);%kappa 1    
+%     \draw[->] (t1) -- (t3);%kappa 2
+%     \draw[->] (t2) -- (t4);%kappa 3    
 
-      \begin{scope}[shift={(6.3,2)}]
-       \draw[->] (0,0) -- coordinate (xaxis) (12.5,0) node[anchor=north]{$t$};
-       \node[anchor=east] at (0, 0.3) {Proc. 2};
-       \node[anchor=east] at (0, 1.8) {Proc. 1};
-       \foreach \x in {0,1,...,12}{
-         \draw[-,below](\x,0) -- (\x,-0.1)
-         node[] {\pgfmathtruncatemacro\yi{\x} \yi};
-       }
-         \node[task7, minimum width=0.5*\uxDAG, anchor=south west] at (0, 0){\tiny $.5$};         
-         \node[task7, minimum width=3*\uxDAG, anchor=south west] at (0, 1.5){\footnotesize $3$};
-         \node[task7, minimum width=4*\uxDAG, anchor=south west] at (3, 1.5){\footnotesize $4$};
-         \node[task7, minimum width=7*\uxDAG, anchor=south west] at (3, 0){\footnotesize $7$};
-         \node[task7, minimum width=2*\uxDAG, anchor=south west] at (10, 1.5){\footnotesize $2$};
+%       \begin{scope}[shift={(6.3,2)}]
+%        \draw[->] (0,0) -- coordinate (xaxis) (12.5,0) node[anchor=north]{$t$};
+%        \node[anchor=east] at (0, 0.3) {Proc. 2};
+%        \node[anchor=east] at (0, 1.8) {Proc. 1};
+%        \foreach \x in {0,1,...,12}{
+%          \draw[-,below](\x,0) -- (\x,-0.1)
+%          node[] {\pgfmathtruncatemacro\yi{\x} \yi};
+%        }
+%          \node[task7, minimum width=0.5*\uxDAG, anchor=south west] at (0, 0){\tiny $.5$};         
+%          \node[task7, minimum width=3*\uxDAG, anchor=south west] at (0, 1.5){\footnotesize $3$};
+%          \node[task7, minimum width=4*\uxDAG, anchor=south west] at (3, 1.5){\footnotesize $4$};
+%          \node[task7, minimum width=7*\uxDAG, anchor=south west] at (3, 0){\footnotesize $7$};
+%          \node[task7, minimum width=2*\uxDAG, anchor=south west] at (10, 1.5){\footnotesize $2$};
 
-         \draw[thick] (7,1.87) -- (8.5, 1.87) node[anchor=south]{suspension}-- (10,1.87);
-         \draw[thick] (7,1.775) -- (8.5, 1.775) node[anchor=south]{}-- (10,1.775);
-         \draw[thick] (7,1.68) -- (8.5, 1.68) node[anchor=south]{}-- (10,1.68);
-         \draw[thick] (0.54,0.37) -- (1.75, 0.37) node[anchor=south]{suspension}-- (3,0.37);
-         \draw[thick] (0.54,0.275) -- (1.75, 0.275) node[anchor=south]{}-- (3,0.275);
-         \draw[thick] (0.54,0.17) -- (1.75, 0.17) node[anchor=south]{}-- (3,0.17);
-         \draw[thick] (10,0.37) -- (11.3, 0.37) node[anchor=south]{suspension}-- (12,0.37);
-         \draw[thick] (10,0.275) -- (11.3, 0.275) node[anchor=south]{}-- (12,0.275);
-         \draw[thick] (10,0.17) -- (11.3, 0.17) node[anchor=south]{}-- (12,0.17);
-         \draw (12,0) -- (12,0.5);
-       \end{scope}
-  \end{tikzpicture}}       
-  \caption{An example of partitioned DAG schedule.}
-  \label{fig:example-dac}
-\end{figure}
+%          \draw[thick] (7,1.87) -- (8.5, 1.87) node[anchor=south]{suspension}-- (10,1.87);
+%          \draw[thick] (7,1.775) -- (8.5, 1.775) node[anchor=south]{}-- (10,1.775);
+%          \draw[thick] (7,1.68) -- (8.5, 1.68) node[anchor=south]{}-- (10,1.68);
+%          \draw[thick] (0.54,0.37) -- (1.75, 0.37) node[anchor=south]{suspension}-- (3,0.37);
+%          \draw[thick] (0.54,0.275) -- (1.75, 0.275) node[anchor=south]{}-- (3,0.275);
+%          \draw[thick] (0.54,0.17) -- (1.75, 0.17) node[anchor=south]{}-- (3,0.17);
+%          \draw[thick] (10,0.37) -- (11.3, 0.37) node[anchor=south]{suspension}-- (12,0.37);
+%          \draw[thick] (10,0.275) -- (11.3, 0.275) node[anchor=south]{}-- (12,0.275);
+%          \draw[thick] (10,0.17) -- (11.3, 0.17) node[anchor=south]{}-- (12,0.17);
+%          \draw (12,0) -- (12,0.5);
+%        \end{scope}
+%   \end{tikzpicture}}       
+%   \caption{An example of partitioned DAG schedule.}
+%   \label{fig:example-dac}
+% \end{figure}
 
 
 
@@ -263,7 +263,8 @@ implicit-deadline task systems.
 
   
 Two main models of self-suspending tasks exist: the \emph{dynamic} self-suspension and \emph{segmented} (or \emph{multi-segment})
-self-suspension models. A third model, using a \emph{directed acyclic graph} (DAG) representation of the task control flow, can be 
+self-suspension models. These two models have been recently augmented by hybrid self-suspension models~\cite{DBLP:conf/rtcsa/BruggenHC17}.
+An additional model, using a \emph{directed acyclic graph} (DAG) representation of the task control flow, can be 
 reduced to an instance of the former two models, for analysis purposes \cite{bletsas:thesis}.
 
 \paragraph{Dynamic Self-Suspension Model:} 
@@ -286,7 +287,7 @@ just two parameters: the worst-case execution time of the task in consideration 
 
 The {segmented} self-suspension sporadic task model extends the four-tuple of the dynamic model by further characterizing the computation segments and suspension 
 intervals using an array $(C_{i}^1,S_{i}^1,C_{i}^2,S_{i}^2,\ldots, $ $S_{i}^{m_i-1},C_{i}^{m_i})$. Each job of $\tau_i$ is assumed to be composed of $m_i$ computation segments 
-separated by $m_i-1$ suspension intervals. The execution time of the $\ell^{\text{th}}$ computation segment is upper bounded by  $C_{i}^{\ell}$, and the length of the $k^{\text{th}}$ suspension interval is upper bounded by $S_{i}^{\ell}$. For a segmented sporadic task $\tau_i$, we have 
+separated by $m_i-1$ suspension intervals. The execution time of the $\ell^{\text{th}}$ computation segment is upper bounded by  $C_{i}^{\ell}$, and the length of the $\ell^{\text{th}}$ suspension interval is upper bounded by $S_{i}^{\ell}$. For a segmented sporadic task $\tau_i$, we have 
 $C_i = \sum_{\ell=1}^{m_i} C_i^\ell$ and $S_i=\sum_{\ell=1}^{m_i-1} S_i^\ell$.
 
 The segmented self-suspension model is a natural choice when the code structure of a task exhibits a certain linearity,
@@ -295,10 +296,16 @@ single-exit control-flow semantics. Such tasks can always be modeled according t
 model, but this would discard the information about the constraints in the location of self-suspensions intervals of a job, \ie, in the control flow. The segmented self-suspension model preserves this information, which can be potentially used
 to derive tighter bounds on worst-case response times or exploited for designing better scheduling strategies.
 
+\paragraph{Hybrid Self-Suspension Model:} 
+
+The dynamic self-suspension model is very flexible but inaccurate, whilst the segmented self-suspension model is very restrictive but very accurate. The hybrid self-suspension task models proposed in \cite{DBLP:conf/rtcsa/BruggenHC17} assume that in addition to $S_i$, each task $\tau_i$ has at most a known number of $m_i-1$ suspension intervals.  This means that the execution of each job of $\tau_i$ is composed of at most $m_i$ \emph{computation} segments separated by $m_i-1$ \emph{suspension} intervals, similar to the segmented self-suspension model. The sum of the execution times of the computation segments of a job of task $\tau_i$ is at most its WCET $C_i$, while the sum of the lengths of the self-suspension intervals of a job of task $\tau_i$ is at most its worst-case suspension time $S_i$. Depending on the known information, different hybrid self-suspension models were proposed in~\cite{DBLP:conf/rtcsa/BruggenHC17} 
+with different
+trade-offs between flexibility and accuracy.
+
 \paragraph{DAG-based Self-Suspension Model:} 
 
 
-In the {DAG-based} self-suspension model\cite{bletsas:thesis}, each node represents either a self-suspension interval or a computation segment
+In the {DAG-based} self-suspension model~\cite{bletsas:thesis}, each node represents either a self-suspension interval or a computation segment
 with single-entry-single-exit control flow semantics. Each possible path from the source node to the sink node
 represents a different program execution path. Note that a linear graph is already an instance of the segmented self-suspension model.
 An arbitrary task graph can be reduced with some information loss (pessimism) to an instance of the dynamic self-suspension model. 
@@ -347,6 +354,9 @@ unspecified. By contrast, if the suspension patterns are well-defined and charac
 segmented self-suspension task model is more appropriate.   
 Note that it is possible to employ both the dynamic self-suspension model and the segmented self-suspension model simultaneously 
 in one task set.
+The hybrid self-suspension models can be adopted
+with different
+trade-offs between flexibility and accuracy.
 Further note that the DAG self-suspension model is a representational model without its own scheduling analysis. For analysis purposes, it is converted to an instance of either the dynamic or the segmented self-suspension model, which may then serve as input to existing analysis techniques. 
 
 
@@ -460,7 +470,7 @@ To solve the computational complexity issues of many scheduling problems in real
 
 \mysubsection{Platform:}
 
-Most of this paper focuses on single processor systems. However, the multiprocessor case is discussed in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}. When addressing the scheduling of tasks on multiprocessor, we distinguish between two major categories of multiprocessor real-time schedulers:  (\textit{i}) partitioned scheduling and (\textit{ii}) global scheduling. 
+Most of this paper focuses on single processor systems. However, the multiprocessor case is discussed in Section~\ref{sec:multiprocessor-HRT}~and~\mysectionref{}~\ref{sec:soft-realtime}. When addressing the scheduling of tasks on multiprocessor systems, we distinguish between two major categories of multiprocessor real-time schedulers:  (\textit{i}) partitioned scheduling and (\textit{ii}) global scheduling. 
 
 Under partitioned scheduling, tasks are statically partitioned among processors, \ie, each task is bound to execute on a specific processor and never migrates to another processor. An often used multiprocessor partitioned scheduling algorithm is partitioned EDF (P-EDF), which applies EDF on each processor individually.
 Partitioned fixed-priority (P-FP) scheduling is another widespread
