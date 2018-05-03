@@ -9,7 +9,7 @@ analyze and solve the self-suspending task scheduling problem.
 Although such strategies are correct in essence, many
 previously-proposed strategies for handling self-suspending tasks
  rely upon incorrect assumptions or misconceptions regarding the
- demand induced by self-suspension, leading to incorrect results.
+ computation demand induced by self-suspension, leading to incorrect results.
  Fortunately, once these misconceptions are identified and corrected, these general strategies can still be applied.  
  A detailed 
 description of the various misunderstandings of the self-suspending task model, together with the demonstration of 
@@ -91,7 +91,7 @@ counterintuitive results, is provided in \mysectionref{}~\ref{sec:misconceptions
 %\end{figure}
 
 
-As to be discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis of a set of self-suspending tasks has been proven to be intractable in the general case. For that reason, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing individual research results in the literature, \eg, \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analyses and modeling strategies commonly adopted across those works. Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis and the task interfering with the analyzed task, respectively. In Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering}, both the segmented and the dynamic self-suspending task models will be used, where Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
+As to be discussed in details in \mysectionref{}~\ref{sec:hardness}, performing the timing analysis of a set of self-suspending tasks has been proven to be intractable in the general case. For that reason, most work adopts some common strategies to simplify the worst-case response time analysis of self-suspending tasks. Instead of reviewing and summarizing individual research results in the literature, \eg, \cite{Raj:suspension1991,RTCSA-KimCPKH95,MingLiRTCSA1994,PH:rtss98,ECRTS-AudsleyB04,RTAS-AudsleyB04,RTCSA-BletsasA05,LR:rtas10,RTSS-KimANR13,LiuChen:rtss2014,huangpass:dac2015,Huang:multiseg,WC16-suspend-DATE}, we will present the high-level analyses and modeling strategies commonly adopted across those works. Specifically, we will present those strategies in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} by decoupling the modeling of the task under analysis and the task interfering with the analyzed task, respectively. In Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering}, both the segmented and the dynamic self-suspending task models are considered, where Table~\ref{tab:summary-methods} provides a summary to show how the methods explained in Section~\ref{sec:model-interferred} and Section~\ref{sec:model-interfering} are linked to the existing results in the literature. 
 Moreover, Section~\ref{sec:release-enforce} presents  release enforcement mechanisms to reduce the impact due to self-suspension. 
 % in which the links to the existing methods are summarized in Table~\ref{tab:summary-methods-enforcement}. 
 
@@ -402,10 +402,17 @@ Therefore, the WCRT of $C_3^1$ and $C_3^2$ are both $5$. Hence, we know that the
 
 %The above test can be fairly pessimistic, especially when $S_k$ is short. 
 
-The idea of the above test is based on a safe but rather pessimistic approach where each computation segment of task $\tau_k$ always suffers from the worst-case interference. However, such worst-case interference may not be able to be constructed consecutively due to the release pattern of the higher-priority tasks, shown in the following example:
+The idea of the above test is based on a safe but rather pessimistic approach where each computation segment of task $\tau_k$ always suffers from the worst-case interference.
+However, it may not be possible to construct such worst-case interference
+for every computation segment of a job of task $\tau_k$ since the release patterns of the
+higher priority tasks are also constrained by their temporal properties, shown in the following example:
 \begin{example}
 \label{ex:suspension-as-split-2}   
-Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet the suspension-oblivious approach discussed in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$. Note that the reason why $R_3^1 + R_3^2 + S_3$ is pessimistic is because the amount of interfering higher-priority workload in an interval length $10$ (i.e., 8 time units) for calculating $R_3^1 + R_3^2=10$ is more than any possible release pattern in an interval length of $10$ (i.e., 6 time units).
+Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet the suspension-oblivious approach discussed in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$. 
+The reason why considering $R_3^1 + R_3^2 + S_3$ is pessimistic is that
+a job of task $\tau_2$,  under such an analysis, is considered to interfere with both the first and the second
+computation segments of a job of task $\tau_3$. However,  a job of task $\tau_2$ can
+only interfere with one of the two segments of a job of task $\tau_3$ in any possible release patterns.
 \hfill\myendproof  
 \end{example} 
 
@@ -559,7 +566,7 @@ We will discuss this misconception in Section~\ref{sec:wrong-jitter-convert-spor
 
 In her book~\cite[Pages 164-165]{Liu:2000:RS:518501}, Jane W.S. Liu proposed an approach to quantify the interference of
 higher-priority tasks by setting up the ``blocking time" induced by the self-suspensions of the interfering tasks on the 
-task $\tau_k$ under analysis.\footnote{It is in fact not clear why suspension induces blocking.  The authors in \cite{ChenECRTS2016-suspension} noted that ``Even though the authors in this paper are able to provide a proof to support the correctness, the authors are not able to provide any rationale behind this method which treats suspension time as blocking time.'' Here, we still use the original notion from Jane Liu for the presentation.} This solution, limited to fixed-priority scheduling policies, considers that a job of 
+task $\tau_k$ under analysis.\footnote{It is in fact not clear why suspension induces blocking.  The authors in \cite{ChenECRTS2016-suspension} noted that ``Even though the authors in this paper are able to provide a proof to support the correctness, the authors are not able to provide any rationale behind this method which treats suspension time as blocking time.'' Here, we still use the original wording introduced by Jane Liu for consistency with the existing literature.} This solution, limited to fixed-priority scheduling policies, considers that a job of 
 task $\tau_k$ can suffer an extra delay on its completion due to the self-suspending behavior of each task involved in its 
 response time. This delay, denoted by $B_k$, is upper bounded by 
 \begin{equation*}
@@ -794,8 +801,8 @@ For more than one self-suspension interval per task, Huang and Chen \cite{WC16-s
 
 
 If the underlying scheduling algorithm is EDF, then the release
-enforcement can also be relaxed. That is, it has been already
-explained in \cite{Bruggen16RTNS,RTSS-ChenL14} that releasing its
+enforcement can also be relaxed. It has been already
+shown in \cite{Bruggen16RTNS,RTSS-ChenL14} that releasing its
 $j$-th frame at the moment when its $j-1$-th self-suspension interval
 finishes by respecting the original setting of the absolute deadline
 of the $j$-th frame does not change the schedulability condition, as

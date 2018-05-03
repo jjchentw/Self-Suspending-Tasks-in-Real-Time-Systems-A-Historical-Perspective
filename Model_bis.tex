@@ -18,6 +18,9 @@ We use a binary semaphore shared by two tasks assigned on two different processo
 
 In this paper, we will specifically examine the existing results for multiprocessor synchronization protocols in \mysectionref{}~\ref{sec:syn}. %Such problems have been specifically studied in \cite{rajkumar-1990,lakshmanan-2009,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014}. 
 
+
+
+
 {\bf Example 3: Hardware Acceleration by Using Co-Processors and Computation Offloading.} \hspace{0.1in}
  In many embedded systems, selected portions of programs are preferably (or even necessarily) executed on dedicated hardware co-processors to satisfy performance requirements.  Such co-processors include for instance application-specific integrated circuits (ASICs), digital signal processors (DSPs), field-programmable gate arrays (FPGAs), graphics processing units (GPUs), etc. There are two typical strategies for utilizing hardware co-processors. One is busy-waiting, in which the software task does not give up its privilege on the processor and has to wait by spinning on the processor until the co-processor finishes the requested work (see Figure~\ref{fig:example-fpga}(b) for an example). Another is to suspend the software task. This strategy frees the processor so that it can be used by other ready tasks. Therefore, even in single-CPU systems more than one task may be simultaneously executed in computation: one task executing on the processor and others on each of the available co-processors. This arrangement is called \emph{limited parallelism} \cite{RTAS-AudsleyB04}, which improves the performance by effectively utilizing the processor and the co-processors, as shown in Figure~\ref{fig:example-fpga}(a).
 
@@ -192,7 +195,7 @@ Computation offloading with real-time constraints has been specifically studied 
 % due to the precedence constraints of the DAG task. Such idle time intervals can also be considered to be suspensions~\cite{fonseca2016response}. 
 
 
-{\bf Other Examples.} In addition to the above examples, there are also other applications where self-suspension behavior has been observed in the literature. Examples are scheduling of parallel tasks where each subtask is statically assigned on one designated  processor~\cite{fonseca2016response}, real-time tasks in multicore systems with shared memory~\cite{DBLP:conf/dac/HuangCR16}, timing analysis of deferrable servers~\cite{ChenHLRTSS2015}, and dynamic reconfigurable FPGAs for real-time applications~\cite{DBLP:conf/rtss/BiondiBPRMB16}. 
+{\bf Other Examples:} Self-suspension behavior has been observed in other applications. Examples are scheduling of parallel tasks where each subtask is statically assigned on one designated  processor~\cite{fonseca2016response}, real-time tasks in multicore systems with shared memory~\cite{DBLP:conf/dac/HuangCR16}, timing analysis of deferrable servers~\cite{ChenHLRTSS2015}, and dynamic reconfigurable FPGAs for real-time applications~\cite{DBLP:conf/rtss/BiondiBPRMB16}. 
 
 % \begin{figure}[t]
 %   \centering

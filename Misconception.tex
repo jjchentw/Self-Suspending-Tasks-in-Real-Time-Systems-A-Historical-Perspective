@@ -216,18 +216,17 @@ For the purpose of
 bounding the interference from a segmented self-suspending task, the
 analysis in~\cite{RTCSA-BletsasA05} reorders the computation segments
 and the self-suspension intervals such that the computation segments
-appear with decreasing execution times and the suspension intervals
-appear with increasing suspension times. Upper-bounds are used for the
-execution times of the former and lower-bounds for the lengths of the
-latter. Among the self-suspension intervals, a ``notional''
-self-suspension corresponding to the interval between the completion
-of the task and its next arrival is included. The purpose of this
+appear with decreasing (upper-bounded) execution times and the suspension intervals
+appear with increasing (lower-bounded) suspension times.
+Among the self-suspension intervals, a ``notional''
+self-suspension corresponding to the interval between the completion time
+of a job of task $\tau_i$ and the arrival time of the next job of task $\tau_i$ is included. The purpose of this
 reordering step is to avoid having to consider different release
 offsets for each interfering task (corresponding to its computational
 segments). Using the following example of an implicit-deadline
 segmented self-suspending task, with deterministic segment execution
 times and self-suspension lengths, for convenience: Let $(C_i^1,
-S_i^1, C_i^2, S_i^2, C_i^3)= (1,5,4,3,2)$ and $T_i=40$ and $R_i=25$.
+S_i^1, C_i^2, S_i^2, C_i^3)= (1,5,4,3,2)$, $T_i=40$, and $R_i=25$.
 The notional gap is $S_i^3=40-25=15$. After reordering, the parameters
 become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3) = (4,3,2,5,1,15)$.
 
@@ -254,7 +253,7 @@ release. In \cite{RTCSA-BletsasA05} it was incorrectly argued that it
 is safe to only consider the variability in the lengths of
 preceding computation segments and self-suspension intervals. In
 the worst case though, one should also consider the variability resulting
-from interference by tasks of even higher priorities.
+from interference by tasks with higher priorities.
 
 Instead of going into the detailed mathematical formulations, we will demonstrate the misconception with the following example in Table~\ref{tab:counterexample-segmented}, which has only one self-suspending task $\tau_3$ and there is no variation between the worst-case and the actual-case execution/suspension times.
 In
