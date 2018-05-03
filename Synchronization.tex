@@ -187,25 +187,19 @@ The misconception here is to account for remote blocking (\ie, $B_i^r$), which i
 
 A related problem affects an \emph{interface-based analysis}  proposed by Nemati et al.~\cite{NBN:11}. Targeting \emph{open} real-time systems with globally shared resources (\ie, systems where the final task set composition is not known at analysis time, but tasks may share global resources nonetheless), the goal of the interface-based analysis is to extract a concise abstraction of the constraints that need to be satisfied  to guarantee the schedulability of all tasks. In particular, the analysis seeks to determine the \emph{maximum tolerable blocking time}, denoted $\fun{mtbt}_k$, that a task $\tau_k$ can tolerate without missing its deadline. 
 
-Recall from classic uniprocessor time-demand analysis \cite{lehoczky-1989} that, \emph{in the absence of jitter or self-suspensions}, a task $\tau_k$ is considered schedulable if
+Recall from classic uniprocessor time-demand analysis that, \emph{in the absence of jitter or self-suspensions}, a task $\tau_k$ is considered schedulable under non-preemptive fixed-priority scheduling if
 \begin{equation}
 \label{eqn:rbf-1}
-\exists t \in (0,D_k]: B_k+\fun{rbf_{FP}}(k,t) \leq t, 
+\exists t \in (0,D_k]: B_k+ C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i \leq t,
 \end{equation}
-where $\fun{rbf_{FP}}(k,t)$ is the \emph{request bound function} of $\tau_k$, which is given by
-
-\begin{equation}
-\label{eqn:rbf-2}
-\fun{rbf_{FP}}(k,t) = C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i.
-\end{equation}
-
-Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} first  replaced $\fun{rbf_{FP}}(k,t)$ with its definition, and then substituted  $B_k$ with $\fun{mtbt}_k$. Solving for $\fun{mtbt}_k$ yields:
+where $B_k$ is the blocking time of task $\tau_k$.
+Starting from Eq. \eqref{eqn:rbf-1}, Nemati et al.~\cite{NBN:11} substituted  $B_k$ with $\fun{mtbt}_k$ (the maximum tolerable blocking time of task $\tau_k$). Solving for $\fun{mtbt}_k$ yields:
 \begin{equation}
 \label{eqn:bloc-tolerate}
 \fun{mtbt}_k = \max_{0<t \leq D_k} \left\{ t - \left( C_k + \sum_{\tau_i \in \fun{hp}(k)} \left \lceil \frac{t}{T_i} \right \rceil \cdot C_i \right) \right\}.
 \end{equation}
 
-However, based on the example in Section~\ref{sec:sem-multi}, we can immediately infer that Eqs. \eqref{eqn:rbf-1} and \eqref{eqn:rbf-2}, which ignore the effects of deferred execution due to remote blocking, are unsound in the presence of global locks. Consider $\tau_3$ in the previous example (with parameters as listed in Table \ref{table:parameters}). According to Eq.~\eqref{eqn:bloc-tolerate}, we have $\fun{mtbt}_3 \geq 12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+6\epsilon)) = 4-7\epsilon$ (for $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-7\epsilon$ time units without missing its deadline. However, this is not true since $\tau_3$ can miss its deadline even without incurring any blocking, as shown in Fig. \ref{fig:counterexample_protocol}. 
+However, based on the example in Section~\ref{sec:sem-multi}, we can immediately infer that Eq.~\eqref{eqn:rbf-1}, which ignore the effects of deferred execution due to remote blocking, are unsound in the presence of global locks. Consider $\tau_3$ in the previous example (with parameters as listed in Table \ref{table:parameters}). According to Eq.~\eqref{eqn:bloc-tolerate}, we have $\fun{mtbt}_3 \geq 12 - (\epsilon + \lceil 12 / 6 \rceil \cdot 2 + \lceil 12 / 13 \rceil \cdot (4+6\epsilon)) = 4-7\epsilon$ (for $t=12$), which implies that $\tau_3$ can tolerate a maximum blocking time of at least $4-7\epsilon$ time units without missing its deadline. However, this is not true since $\tau_3$ can miss its deadline even without incurring any blocking, as shown in Fig. \ref{fig:counterexample_protocol}. 
 
 \mysection{A Safe Response-Time Bound}
 \label{sec:safe_bound}
@@ -219,7 +213,7 @@ R_k = C_k^{\ast} + \sum_{\tau_i \in \fun{hp(k)} \cap P(\tau_k)} \left \lceil \fr
 \end{equation}
 
 
-Similarly, the term $\sum_{\tau_i \in \fun{hp}(k)} \lceil t / T_i \rceil \cdot C_i$ in Eqs. \eqref{eqn:rbf-2} and \eqref{eqn:bloc-tolerate} should be replaced with $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+D_i) / T_i \rceil \cdot C_i$ or $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+R_i-C_i) / T_i \rceil \cdot C_i$ to properly account for the deferred execution of higher-priority tasks.
+Similarly, the term $\sum_{\tau_i \in \fun{hp}(k)} \lceil t / T_i \rceil \cdot C_i$ in Eqs. \eqref{eqn:rbf-1} and \eqref{eqn:bloc-tolerate} should be replaced with $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+D_i) / T_i \rceil \cdot C_i$ or $\sum_{\tau_i \in \fun{hp}(k)} \lceil (t+R_i-C_i) / T_i \rceil \cdot C_i$ to properly account for the deferred execution of higher-priority tasks.
 
 Finally, the already mentioned papers~\cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} that based their analysis on Eq. \eqref{eqn:wcrt} can be fixed by simply using Eq. \eqref{eqn:wcrt-pfp-fixed} instead, because they merely reused the unsafe suspension-aware response-time bound introduced in \cite{lakshmanan-2009} without further modifications. The actual, novel contributions in \cite{zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014} remain unaffected by this correction.
   

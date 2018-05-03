@@ -208,29 +208,36 @@ for \emph{constrained-deadline} task systems under the assumption that every hig
 \label{sec:wrong-jitter-segmented}
 
 
-We now explain a misconception in the literature regarding an optimistic quantification of the jitter of segmented self-suspending task systems under fixed-priority scheduling.  The analysis in \cite{RTCSA-BletsasA05} adopts two steps: 
+We now explain a misconception in the literature regarding an
+optimistic quantification of the jitter of segmented self-suspending
+task systems under fixed-priority scheduling.
 
- The first step reorders the computation segments and the
-  self-suspension intervals (including a ``notional'' self-suspension
-  corresponding to the interval between the completion of the task and
-  its next arrival) such that the computation segments appear with
-  decreasing execution time and the suspension intervals appear with
-  increasing self-suspension time. This can be explained by
-  using the following example of an implicit-deadline segmented
-  self-suspending task with $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3) = (1,
-  5, 4, 3, 2)$ and $T_i=40$.  It first artificially creates a notional
-  gap $S_i^3=40-(1+5+4+3+2)=25$. After reordering, the task parameters
-  become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3) = (4, 3, 2, 5, 1,
-  25)$.  The purpose of this reordering step is to avoid having to
-  consider different release offsets for each interfering task
-  (corresponding to its computational segments).
+For the purpose of
+bounding the interference from a segmented self-suspending task, the
+analysis in~\cite{RTCSA-BletsasA05} reorders the computation segments
+and the self-suspension intervals such that the computation segments
+appear with decreasing execution times and the suspension intervals
+appear with increasing suspension times. Upper-bounds are used for the
+execution times of the former and lower-bounds for the lengths of the
+latter. Among the self-suspension intervals, a ``notional''
+self-suspension corresponding to the interval between the completion
+of the task and its next arrival is included. The purpose of this
+reordering step is to avoid having to consider different release
+offsets for each interfering task (corresponding to its computational
+segments). Using the following example of an implicit-deadline
+segmented self-suspending task, with deterministic segment execution
+times and self-suspension lengths, for convenience: Let $(C_i^1,
+S_i^1, C_i^2, S_i^2, C_i^3)= (1,5,4,3,2)$ and $T_i=40$ and $R_i=25$.
+The notional gap is $S_i^3=40-25=15$. After reordering, the parameters
+become $(C_i^1, S_i^1, C_i^2, S_i^2, C_i^3, S_i^3) = (4,3,2,5,1,15)$.
+
 %This is broadly analogous  to how Mok and Chen [REF] reorder task frames in their analysis for the multiframe task model.
 
 
-The second step, which was designed to capture the effects of the variation in the length of 
-computation segments or self-suspension intervals, will not be
-explained here as it does not have any effect if 
-there is no variation between the worst-case and the actual-case execution/suspension times.
+% The second step, which was designed to capture the effects of the variation in the length of 
+% computation segments or self-suspension intervals, will not be
+% explained here as it does not have any effect if 
+% there is no variation between the worst-case and the actual-case execution/suspension times.
 % Each computation segment is modelled as a sporadic task with a fixed offset corresponding to the above
 % rearrangement and a fixed jitter term to represent all computation segments of a given task.
 % As reported in \cite{RTCSA-BletsasA05}, this jitter term corresponds to the maximum internal jitter, within the 
@@ -239,11 +246,19 @@ there is no variation between the worst-case and the actual-case execution/suspe
 
 
 
+In \cite{bletsas:thesis}, an error in the quantification of the
+notional gap was already identified and fixed.  However, there remains
+an error in the specified jitter term, designed to capture the variability in
+the start times of the computation segments, relative to the job
+release. In \cite{RTCSA-BletsasA05} it was incorrectly argued that it
+is safe to only consider the variability in the lengths of
+preceding computation segments and self-suspension intervals. In
+the worst case though, one should also consider the variability resulting
+from interference by tasks of even higher priorities.
 
-
-Instead of going into the detailed mathematical formulations, we will demonstrate the misconception  in the above steps with the following example in Table~\ref{tab:counterexample-segmented}, which has only one self-suspending task $\tau_3$ and there is no variation between the worst-case and the actual-case execution/suspension times.
+Instead of going into the detailed mathematical formulations, we will demonstrate the misconception with the following example in Table~\ref{tab:counterexample-segmented}, which has only one self-suspending task $\tau_3$ and there is no variation between the worst-case and the actual-case execution/suspension times.
 In
-this specific example,  neither step 1 nor step 2 has any effect. The
+this specific example,  reordering has no effect. The
 analysis in \cite{RTCSA-BletsasA05} can be imagined as replacing the
 self-suspending task $\tau_3$ with a sporadic task without any jitter or self-suspension, with $C_3=2$ and $D_3=T_3=15$. Therefore, the analysis in \cite{RTCSA-BletsasA05}  concludes that the worst-case response time of task $\tau_4$ is at most $15$ since $C_4+\sum_{i=1}^{3}\ceiling{\frac{15}{T_i}} C_i = 3+ 6 + 4 + 2= 15$.
 
@@ -358,7 +373,7 @@ $\tau_4$ &  $(3, 0, 0)$                   &    $?$  &   $\infty$    \\ \hline
 %\label{fig:counterexample-segmented}
 %\end{figure}
 
-{\bf Consequences:} This example shows that the analysis in \cite{RTCSA-BletsasA05} is flawed.  The authors in \cite{RTCSA-BletsasA05}  already filed a technical report \cite{BletsasReport2015}.
+{\bf Consequences:} This example shows that the analysis in \cite{RTCSA-BletsasA05} is flawed.  The authors in \cite{RTCSA-BletsasA05}  already filed a fix in~\cite{BletsasReport2015}.
 
 {\bf Solutions:} When attempting to fix the error in the jitter quantification, there is no simple way to exploit the additional 
 information provided by the segmented self-suspending task model.
@@ -543,7 +558,7 @@ Consider a task set of $4$ tasks $\tau_1, \tau_2, \tau_3, \tau_4$ in which $\tau
         $\tau_4$ & (265, 2, 6) & 1000\\
         \hline
     \end{tabular} 
-    \caption{A set of segmented self-suspending tasks used to  demonstrated that it is a misconception to believe that releasing interfering jobs as early and often as possible yields a worst-case scenario, as discussed in Section~\ref{sec:wrong-critical}. }
+    \caption{A set of segmented self-suspending tasks used to  demonstrate that it is a misconception to believe that releasing interfering jobs as early and often as possible yields a worst-case scenario, as discussed in Section~\ref{sec:wrong-critical}. }
     \label{table:ex-num-releases}
 \end{table}
 
@@ -1033,7 +1048,7 @@ that schedule, the response time of task $\tau_3$ is $36$.
         $\tau_3$ & $(3, 4, 3)$ & $35$ & $1000$  \\ 
         \hline
     \end{tabular} 
-    \caption{A set of segmented self-suspending tasks for demonstrating the misconception which analyzes the schedulability of task $\tau_k$ by combining the release jitter approach for the higher-priority interferring tasks and  the explicit self-suspension behavior for the interfered task $\tau_k$, presented in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
+    \caption{A set of segmented self-suspending tasks for demonstrating the misconception which analyzes the schedulability of task $\tau_k$ by combining the release jitter approach for the higher-priority interfering tasks and  the explicit self-suspension behavior for the interfered task $\tau_k$, presented in Section~\ref{sec:wrong-jitter-convert-sporadic}.}
     \label{table:ex-wrong-jitter-split}
 \end{table}
 

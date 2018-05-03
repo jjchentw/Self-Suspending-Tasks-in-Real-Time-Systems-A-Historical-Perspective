@@ -115,7 +115,7 @@ Section~\ref{sec:multiprocessor-HRT} will shortly discuss how to handle self-sus
 % & &suspension-oblivious & split & hybrid & critical instant \\
 % & &(Sec.~\ref{sec:model-interferred-oblivious}) & (Sec.~\ref{sec:model-interferred:split}) & (Sec.~\ref{sec:model-interferred-hybrid}) & (Sec.~\ref{sec:existing-exact-special}) \\
 % \cline{1-6}
-% \multirow{5}{*}{\rotatebox[origin=c]{90}{ interferring tasks ($hp(k)$ under FP)}}& 
+% \multirow{5}{*}{\rotatebox[origin=c]{90}{ interfering tasks ($hp(k)$ under FP)}}& 
 % suspension-oblivious
 % (Sec.~\ref{sec:model-interfering-oblivious}) & used as base-lines in
 % many papers & - & - &  Nelissen et al.~\cite[Sec. IV]{ecrts15nelissen}
@@ -151,7 +151,7 @@ Section~\ref{sec:multiprocessor-HRT} will shortly discuss how to handle self-sus
 %\fi
 \begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{4cm}|C{6cm}|}  
   \hline
-papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interferring tasks ($hp(k)$ under FP) \\%& flawed? & fixed?\\
+papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interfering tasks ($hp(k)$ under FP) \\%& flawed? & fixed?\\
 \hline
  Ming \cite{MingLiRTCSA1994} & 1994 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} \\% & X & \checkmark\\
 \hline
@@ -210,7 +210,7 @@ suspension-oblivious
 many papers & - & - &~\cite[Sec. III]{LR:rtas10}, \cite[Sec. IV]{ecrts15nelissen}
 (footnote ~\ref{footnote-critical-instant})\\
 \cline{2-6}
-\multirow{4}{*}{\rotatebox[origin=c]{90}{ interferring tasks}}& carry-in jobs (Sec.~\ref{sec:model-carry-in})& \cite{LiuChen:rtss2014}, \cite{huangpass:dac2015}& \multicolumn{2}{c|}{\cite{Huang:multiseg}} & -\\
+\multirow{4}{*}{\rotatebox[origin=c]{90}{ interfering tasks}}& carry-in jobs (Sec.~\ref{sec:model-carry-in})& \cite{LiuChen:rtss2014}, \cite{huangpass:dac2015}& \multicolumn{2}{c|}{\cite{Huang:multiseg}} & -\\
 \cline{2-6}
 & release jitter (Sec.~\ref{sec:model-interfering-jitter}, Sec.~\ref{sec:model-interfering-unified})&
 \cite{MingLiRTCSA1994},
@@ -235,7 +235,7 @@ many papers & - & - &~\cite[Sec. III]{LR:rtas10}, \cite[Sec. IV]{ecrts15nelissen
 %   \scalebox{0.65}{
 % \begin{tabular}{||C{2.5cm}|C{1cm}|C{3cm}||C{5cm}|C{5cm}|c|c|}  
 %   \hline
-% papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interferring tasks ($hp(k)$ under FP) & flawed? & fixed?\\
+% papers/methods & year & suspension and scheduling model& interfered task ($\tau_k$)& interfering tasks ($hp(k)$ under FP) & flawed? & fixed?\\
 % \hline
 %  Ming \cite{MingLiRTCSA1994} & 1994 & dynamic, FP & suspension-oblivious, Sec.~\ref{sec:model-interferred-oblivious} & as release jitter, Sec.~\ref{sec:model-interfering-jitter} & X & \checkmark\\
 % \hline
@@ -405,7 +405,7 @@ Therefore, the WCRT of $C_3^1$ and $C_3^2$ are both $5$. Hence, we know that the
 The idea of the above test is based on a safe but rather pessimistic approach where each computation segment of task $\tau_k$ always suffers from the worst-case interference. However, such worst-case interference may not be able to be constructed consecutively due to the release pattern of the higher-priority tasks, shown in the following example:
 \begin{example}
 \label{ex:suspension-as-split-2}   
-Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet the suspension-oblivious approach discussed in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$. Please note that the reason why $R_3^1 + R_3^2 + S_3$ is pessimistic is because the amount of interferring higher-priority workload in an interval length $10$ (i.e., 8 time units) for calculating $R_3^1 + R_3^2=10$ is more than any possible release pattern in an interval length of $10$ (i.e., 6 time units).
+Consider the same task set presented in Example~\ref{ex:suspension-as-split-1} by decreasing $S_3$ from $5$ to $1$. This analysis still considers that both computation segments suffer from the worst-case interference from the two higher-priority tasks. It then returns $R_3^1 + R_3^2 + S_3 = 5 + 5 + 1 =11$ as the (upper bound on the) worst-case response time of $\tau_3$. Yet the suspension-oblivious approach discussed in Section~\ref{sec:model-interferred-oblivious} shows that the worst-case response time of $\tau_3$ is at most $9$. Note that the reason why $R_3^1 + R_3^2 + S_3$ is pessimistic is because the amount of interfering higher-priority workload in an interval length $10$ (i.e., 8 time units) for calculating $R_3^1 + R_3^2=10$ is more than any possible release pattern in an interval length of $10$ (i.e., 6 time units).
 \hfill\myendproof  
 \end{example} 
 
