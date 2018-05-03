@@ -969,7 +969,7 @@ segmented fixed-priority scheduling with periodic enforcement in Section~\ref{se
 {\bf Consequences:} The priority assignment algorithms in \cite{RTSS-KimANR13,DBLP:journals/ieicet/DingTT09} use the above unsafe schedulability test to verify the priority assignments. Therefore, their results are flawed due to the unsafe schedulability test.
 
 {\bf Solutions:} This requires us to revisit the schedulability test of a given segmented fixed-priority assignment. As discussed in Section~\ref{sec:static-period-enforce}, this can be observed as a reduction to 
-the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:journals/corr/ChenHL15b,huang2015mode}. 
+the generalized multiframe (GMF) task model introduced by Baruah et al.~\cite{baruah1999generalized}. However, most of the existing fixed-priority scheduling results for the GMF task model assume a unique priority level \emph{per task}. To the best of our knowledge, the only results that can be applied for a unique level \emph{per computation segment} are the utilization-based analysis in \cite{DBLP:conf/rtss/ChenHL16,huang2015mode}. 
 
 A simple fix can be achieved by classifying the interfering
 higher-priority computation segments into two types: carry-in and
@@ -995,7 +995,7 @@ the response time of task $\tau_k$ by accounting for the self-suspending behavio
 the example listed in Table~\ref{table:ex-wrong-jitter-split}.  Task
 $\tau_1$ obviously meets its deadline.  Task $\tau_2$ can be validated
 to meet its deadline by using the split approach, \ie, $8 + 12+ 8 =
-28$. The jitter of task $\tau_2$ is hence at most $R_2-C_2=28-2\times 3 = 22$.
+28$. The jitter of task $\tau_2$ is hence at most $R_2-C_2=28-(3+ 3) = 22$.
 
 Since %the jitter of task $\tau_2$ is small, \ie,
 $\ceiling{\frac{t+22}{T_2}} = 1$ for any $0 \leq t \leq 39$, we can

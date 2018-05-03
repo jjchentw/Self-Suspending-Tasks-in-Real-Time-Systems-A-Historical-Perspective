@@ -1,5 +1,5 @@
 
-MainFile    = report
+MainFile    = report2
 MainTeXFile = $(MainFile).tex
 PDFFile     = $(MainTeXFile:%.tex=%.pdf)
 
