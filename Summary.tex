@@ -52,14 +52,14 @@ errata for more detailed explanations.
 
 \begin{table}[h!t]
   \centering
-\scalebox{0.8}{
-\begin{tabular}{||C{3cm}|L{7cm}||C{3cm}|C{2cm}|}  
+\scalebox{0.9}{
+\begin{tabular}{||C{1.8cm}|L{7cm}||C{2.5cm}|C{1.6cm}|}  
   \hline
   \hline
   Type of Arguments& Affected papers and statements &
   Potential Solutions & (flaw/issue) status\\
   \hline
-  \multirow{6}{*}{Conceptual Flaws} & \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04}: Wrong
+  & \cite{ECRTS-AudsleyB04,RTAS-AudsleyB04}: Wrong
   quantification of jitter& See Section~\ref{sec:wrong-jitter-dynamic} or the
   erratum filed by the authors \cite{BletsasReport2015}& solved\\
   \cline{2-4}
@@ -73,7 +73,7 @@ errata for more detailed explanations.
   response time analysis are incorrect & See Section
   \ref{sec:wrong-critical} or \cite{ecrts15nelissen} & solved\\
   \cline{2-4}
-  & \cite{RTSS-KimANR13}: Incorrect accounting for the highest-priority
+  Conceptual Flaws& \cite{RTSS-KimANR13}: Incorrect accounting for the highest-priority
   interference in Theorems 2 and 3 & See
   Section~\ref{sec:wrong-highest-priority} & solved\\
   \cline{2-4}
@@ -86,7 +86,7 @@ errata for more detailed explanations.
   solved\\
   \cline{2-4}
   \hline
-  \multirow{2}{*}{Inherited Flaws} &
+  \hspace{1.5cm} Inherited Flaws&
   \cite{RTCSA-KimCPKH95,zeng-2011,bbb-2013,yang-2013,kim-2014,han-2014,carminati-2014,yang-2014,lakshmanan-2009}:
   Adopting wrong quantifications of jitters (refer to
   Section~\ref{sec:syn} in this paper)& See
@@ -96,16 +96,16 @@ errata for more detailed explanations.
   \cite{DBLP:conf/rtss/GuanSYY09} and unsafe Lemma 1 to quantify the workload& See the erratum
   \cite{erratu-cong-anderson} filed by the authors & solved\\
   \hline
-  \multirow{2}{*}{Closed Issues} & \cite[Page
+  & \cite[Page
   164-165]{Liu:2000:RS:518501}: schedulability test without any proof & See
   \cite{ChenHuangNelissen} for a proof& solved\\
   \cline{2-4}
-  &\cite{Raj:suspension1991}: period enforcer can be used for
+  Closed Issues&\cite{Raj:suspension1991}: period enforcer can be used for
   deferrable task systems. It may result in deadline
   misses for self-suspending tasks and is not compatible with existing multiprocessor synchronization analyses& See
   \cite{ChenBrandenburg-2016-LITES} for the explanations.& solved\\
   \hline
-  \multirow{2}{*}{Open Issues} &  \cite{DBLP:conf/ecrts/Devi03}: Proof
+  Open\hspace{0.2in} Issues &  \cite{DBLP:conf/ecrts/Devi03}: Proof
   of Theorem
   8  for considering suspension as blocking in EDF is incomplete& ?& unresolved\\
   \cline{2-4}
@@ -174,7 +174,7 @@ elaboration, including:
       interference from higher-priority tasks there is no slack
       available to $J_j^p$ between $f_j^p$ and $\rho_j^p + R_j$.
       \emph{[\ldots]} The second segment of $\tau_j$ is never delayed under
-      this transformation, and is released sporadically.} '' In fact,
+      this transformation, and is released sporadically.}'' In fact,
     the slack enforcement may make the second computation segment
     arrive earlier than its worst case. For example, we can greedily
     start with the worst-case interference of task $\tau_j$ in the
